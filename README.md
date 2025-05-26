@@ -1,0 +1,1 @@
+A website with a collection of interactive puzzles. Used to explore whatever technologies I'm currently interested in.
