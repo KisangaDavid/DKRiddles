@@ -30,7 +30,7 @@ function RatRiddlePage() {
   const [allCheckedHouses, setAllCheckedHouses] = useState([]);
   const [curCheckedHouses, setCurCheckedHouses] = useState(new Set());
   const [bonusChallenge, setBonusChallenge] = useState(false);
-  const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
+
   const {width, height} = useWindowSize();
   const theme = useTheme();
 
@@ -166,8 +166,8 @@ function RatRiddlePage() {
             divider={<Divider orientation="vertical" flexItem />}
             spacing={2}
           >
-            <Button variant="contained" disabled = {curCheckedHouses.size !== 2 || curDay > 5} onClick={() => nextDay()}>&nbsp;&nbsp;Next Day&nbsp;&nbsp;</Button>
-            <Button variant="contained" disabled = {curCheckedHouses.size !== 2} onClick={() => submitRiddleAnswer()}>Submit Answer</Button>
+            <Button variant="contained" disabled = {curCheckedHouses.size !== 2 || curDay > 5} onClick={nextDay}>&nbsp;&nbsp;Next Day&nbsp;&nbsp;</Button>
+            <Button variant="contained" disabled = {curCheckedHouses.size !== 2} onClick={submitRiddleAnswer}>Submit Answer</Button>
           </Stack>
         </Zoom>
       }

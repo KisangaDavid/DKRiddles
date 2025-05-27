@@ -1,17 +1,55 @@
 import { useState, useEffect } from 'react'
 
+import { styled } from '@mui/material/styles';
+import Rat from '/src/assets/rat.svg';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
 
-import MenuDrawerConents from '/src/components/common/MenuDrawerContents.jsx';
-import Drawer from '@mui/material/Drawer';
-import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
-import Zoom from '@mui/material/Zoom';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
 import TopBar from '/src/components/common/TopBar.jsx';
 
 
 function HomePage() {
+
+  const SyledCard = styled(Card)(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    padding: 0,
+    height: '100%',
+    backgroundColor: (theme.vars || theme).palette.background.paper,
+    '&:hover': {
+      backgroundColor: 'transparent',
+      cursor: 'pointer',
+    },
+    '&:focus-visible': {
+      outline: '3px solid',
+      outlineColor: 'hsla(210, 98%, 48%, 0.5)',
+      outlineOffset: '2px',
+    },
+  }));
+
+  const SyledCardContent = styled(CardContent)({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 4,
+  padding: 16,
+  flexGrow: 1,
+  '&:last-child': {
+    paddingBottom: 16,
+  },
+});
+
+const StyledTypography = styled(Typography)({
+  display: '-webkit-box',
+  WebkitBoxOrient: 'vertical',
+  WebkitLineClamp: 2,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+});
+
 
   return (
     <Box sx={{
@@ -24,6 +62,39 @@ function HomePage() {
     }}>
       <TopBar text="Home Page" isHomePage={true} sx={{width: "100%"}}/>
       WIP. Currently only the hiding rat riddle is done - go check it out using the dropdown menu on the top left.
+            <Grid container spacing={2} columns={12}>
+        <Grid size={{ xs: 12, md: 6 }}>
+          <SyledCard
+            variant="outlined"
+            // onFocus={() => handleFocus(0)}
+            // onBlur={handleBlur}
+            tabIndex={0}
+            // className={focusedCardIndex === 0 ? 'Mui-focused' : ''}
+          > 
+              <CardMedia
+              component="img"
+              alt="green iguana"
+              image={Rat}
+              sx={{
+                aspectRatio: '16 / 9',
+                borderBottom: '1px solid',
+                borderColor: 'divider',
+              }}
+            />
+              <SyledCardContent>
+              <Typography gutterBottom variant="caption" component="div">
+                tag 1
+              </Typography>
+              <Typography gutterBottom variant="h6" component="div">
+                title 1
+              </Typography>
+              <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                description 1
+              </StyledTypography>
+            </SyledCardContent>
+          </SyledCard>
+          </Grid>
+          </Grid>
     </Box>
   );
 }

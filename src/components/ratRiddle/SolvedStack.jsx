@@ -8,10 +8,18 @@ function SolvedStack({totalDays, setBonusChallenge}) {
   return (
     <> 
       {totalDays == 4 ? 
-        <p>
-          Impressive work! You found the rat in just {totalDays} days, which
-          is optimal. Now try your hand at the extra tough bonus challenge!
-        </p>
+        <>
+          <p>
+            Impressive work! You found the rat in just {totalDays} days, which
+            is optimal. Now try your hand at the extra tough bonus challenge!
+          </p>
+          <Button 
+            variant="contained" 
+            onClick={() => setBonusChallenge(true)}
+          >
+          Bonus Challenge
+          </Button>
+        </>
         : 
         <p>
           Good work, you found the rat in {totalDays} days! It's possible to
@@ -19,19 +27,6 @@ function SolvedStack({totalDays, setBonusChallenge}) {
           again!
         </p>
       }
-      <Stack
-        direction="row"
-        justifyContent="center" 
-        divider={<Divider orientation="vertical" flexItem />}
-        spacing={2}
-      >
-        <Button 
-          variant="contained" 
-          onClick={() => setBonusChallenge(true)}
-        >
-          Bonus Challenge
-        </Button>
-      </Stack>    
     </>
   );
 }
