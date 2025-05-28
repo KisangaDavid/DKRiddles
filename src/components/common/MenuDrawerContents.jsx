@@ -27,7 +27,7 @@ function MenuDrawerContents({setMenuDrawerOpen, isHomePage}) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton sx={{py: "1.5vh"}} onClick={() => navigate("/")}>
+          <ListItemButton sx={{py: "1.5vh"}} onClick={() => {navigate("/")}}>
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>

@@ -23,8 +23,8 @@ function UnsolvedStack({curDay, totalDays, path, allCheckedHouses, handleSliderC
         <p> The rat can easily escape this arrangement of traps, use the slider above to see how! </p>
         <p>
           On day {curDay + 1}, the rat {curDay == 0 ? "starts in" : "scurries over to"} house {path[curDay] + 1}. 
-          You trap houses{" "} {allCheckedHouses.length != 0 ? Math.min(...allCheckedHouses[curDay]) + 1 : 0} and 
-          {allCheckedHouses.length != 0 ? Math.max(...allCheckedHouses[curDay]) + 1 : 0}.
+          You trap houses{" "} {allCheckedHouses.length != 0 ? Math.min(...allCheckedHouses[curDay]) + 1 : 0} {" "}
+          and {allCheckedHouses.length != 0 ? Math.max(...allCheckedHouses[curDay]) + 1 : 0}.
         </p>
       </Stack>
    </Box>
