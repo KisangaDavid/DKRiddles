@@ -50,7 +50,6 @@ const StyledTypography = styled(Typography)({
   textOverflow: 'ellipsis',
 });
 
-
   return (
     <Box sx={{
       display:"flex",
@@ -58,18 +57,16 @@ const StyledTypography = styled(Typography)({
       alignItems: "center",
       height: "100vh",
       width: "100vw",
-      overflow: "hidden"
+      overflow: "hidden",
+      backgroundImage:'radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))',
     }}>
-      <TopBar text="Home Page" isHomePage={true} sx={{width: "100%"}}/>
+      <TopBar text="Home Page" isHomePage={true} />
       WIP. Currently only the hiding rat riddle is done - go check it out using the dropdown menu on the top left.
             <Grid container spacing={2} columns={12}>
         <Grid size={{ xs: 12, md: 6 }}>
           <SyledCard
             variant="outlined"
-            // onFocus={() => handleFocus(0)}
-            // onBlur={handleBlur}
             tabIndex={0}
-            // className={focusedCardIndex === 0 ? 'Mui-focused' : ''}
           > 
               <CardMedia
               component="img"

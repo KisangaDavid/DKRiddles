@@ -129,11 +129,12 @@ function RatRiddlePage() {
       alignItems: "center",
       height: "100vh",
       width: "100vw",
-      overflow: "hidden"
+      overflow: "hidden",
+      backgroundImage:'radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))',
     }}>
-    <TopBar text="The Hiding Rat" isHomePage={false} sx={{width: "100%"}}/>
+    <TopBar text="The Hiding Rat" isHomePage={false} />
     {confetti && <Confetti width={width} height={height}/>}
-    <Box sx={{width: "80vw", position: "relative", mb:"2vh"}}>
+    <Box sx={{width: "80vw", position: "relative", mb:"1vh"}}>
       <p> 
         Ever on the lookout for side hustles, our friend Mr. Riddle Man has accepted a request to get rid of a neighborhood's rat problem (for a lucrative fee, of course.) 
         After some investigation, he discovers that the neighborhood is actually being plagued by just a single rat, which scurries to an adjacent house every night.
