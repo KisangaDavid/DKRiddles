@@ -1,8 +1,9 @@
 import { alpha } from '@mui/material/styles';
 import { typographyClasses } from '@mui/material/Typography';
+import { chipClasses } from '@mui/material/Chip';
 import { buttonBaseClasses } from '@mui/material/ButtonBase';
 import { svgIconClasses } from '@mui/material/SvgIcon';
-import { gray } from './themePrimitives';
+import { gray, green, red} from './themePrimitives';
 
 export const styleOverrides = {
   MuiCard: {
@@ -124,6 +125,20 @@ export const styleOverrides = {
       root: {
         minWidth: 0,
       },
+    },
+  },
+  MuiChip: {
+    defaultProps: {
+      size: 'small',
+    },
+    styleOverrides: {
+      root: ({ theme }) => ({
+        border: '1px solid',
+        borderRadius: '999px',
+        [`& .${chipClasses.label}`]: {
+          fontWeight: 600,
+        },
+      }),
     },
   },
 };

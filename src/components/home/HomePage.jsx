@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { useNavigate } from "react-router";
 
 import { styled } from '@mui/material/styles';
-import Rat from '/src/assets/rat.svg';
+import Chip from '@mui/material/Chip';
+import ratRiddleThumbnail from '/src/assets/ratRiddleThumbnail.png' // TODO: make this transparent
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -14,6 +16,13 @@ import TopBar from '/src/components/common/TopBar.jsx';
 
 function HomePage() {
 
+  const [activatedChip, setActivatedChip] = useState(0);
+  const navigate = useNavigate();
+
+
+  const handleChipClick = () => {
+    console.log("Chip clicked!");
+  }
   const SyledCard = styled(Card)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
@@ -49,7 +58,7 @@ const StyledTypography = styled(Typography)({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
 });
-
+// TODO: make a puzzleCard component 
   return (
     <Box sx={{
       display:"flex",
@@ -61,32 +70,113 @@ const StyledTypography = styled(Typography)({
       backgroundImage:'radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))',
     }}>
       <TopBar text="Home Page" isHomePage={true} />
-      WIP. Currently only the hiding rat riddle is done - go check it out using the dropdown menu on the top left.
-            <Grid container spacing={2} columns={12}>
-        <Grid size={{ xs: 12, md: 6 }}>
+      WIP. Currently only the hiding rat riddle is done - check it out by clicking on it below or using the dropdown menu on the top left.
+           <Box
+          sx={{
+            display: 'inline-flex',
+            flexDirection: 'row',
+            gap: 3,
+            overflow: 'auto',
+          }}
+        >
+      <Chip 
+        size="medium" 
+        onClick={() => setActivatedChip(0)} 
+        label= "Puzzles"
+        sx={{
+              backgroundColor: activatedChip == 0 ? 'hsla(222, 21.30%, 12.00%, 0.51)' : 'hsla(208, 100.00%, 3.70%, 0.64)',
+              border: activatedChip === 0 ? 1 : 'none'
+            }} />
+          <Chip onClick={() => setActivatedChip(1)}
+            size="medium"
+            label="Placeholder 1"
+            sx={{
+              backgroundColor: activatedChip == 1 ? 'hsla(222, 21.30%, 12.00%, 0.51)' : 'hsla(208, 100.00%, 3.70%, 0.64)',
+              border: activatedChip === 1 ? 1 : 'none'
+            }}
+          />
+          <Chip onClick={() => setActivatedChip(2)}
+            size="medium"
+            label="Placeholder 2"
+            sx={{
+              backgroundColor: activatedChip == 2 ? 'hsla(222, 21.30%, 12.00%, 0.51)' : 'hsla(208, 100.00%, 3.70%, 0.64)',
+              border: activatedChip === 2 ? 1 : 'none'
+            }}
+          />
+          </Box>
+        <Grid container spacing={2} columns={12} direction = "row" sx={{width: "60vw"}}>
+          <Grid size={ 4 }>
           <SyledCard
             variant="outlined"
-            tabIndex={0}
+             onClick={() => navigate("/ratRiddle")}
           > 
               <CardMedia
               component="img"
-              alt="green iguana"
-              image={Rat}
+              image={ratRiddleThumbnail}
               sx={{
-                aspectRatio: '16 / 9',
                 borderBottom: '1px solid',
                 borderColor: 'divider',
               }}
             />
               <SyledCardContent>
               <Typography gutterBottom variant="caption" component="div">
-                tag 1
+                Puzzle #1
               </Typography>
               <Typography gutterBottom variant="h6" component="div">
-                title 1
+                The Hiding Rat
               </Typography>
               <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                description 1
+                Help Mr. Riddle Man catch a sneaky rat!
+              </StyledTypography>
+            </SyledCardContent>
+          </SyledCard>
+          </Grid>
+        <Grid size={ 4 }>
+          <SyledCard
+            variant="outlined"
+          > 
+              <CardMedia
+              component="img"
+              image={ratRiddleThumbnail}
+              sx={{
+                borderBottom: '1px solid',
+                borderColor: 'divider',
+              }}
+            />
+              <SyledCardContent>
+              <Typography gutterBottom variant="caption" component="div">
+                Placeholder Puzzle #2
+              </Typography>
+              <Typography gutterBottom variant="h6" component="div">
+                Placeholder Title #2
+              </Typography>
+              <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                Placeholder Description #2
+              </StyledTypography>
+            </SyledCardContent>
+          </SyledCard>
+          </Grid>
+                  <Grid size={ 4 }>
+          <SyledCard
+            variant="outlined"
+          > 
+              <CardMedia
+              component="img"
+              image={ratRiddleThumbnail}
+              sx={{
+                borderBottom: '1px solid',
+                borderColor: 'divider',
+              }}
+            />
+              <SyledCardContent>
+              <Typography gutterBottom variant="caption" component="div">
+                Placeholder Puzzle #3
+              </Typography>
+              <Typography gutterBottom variant="h6" component="div">
+                Placeholder Title #3
+              </Typography>
+              <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+                Placeholder Description #3
               </StyledTypography>
             </SyledCardContent>
           </SyledCard>
