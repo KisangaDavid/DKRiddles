@@ -11,7 +11,6 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
 
     const navigate = useNavigate();
 
-    // TODO: standardize the size of the img
     const SyledCard = styled(Card)(({ theme }) => ({
         display: 'flex',
         flexDirection: 'column',
@@ -28,7 +27,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
             outlineOffset: '2px',
         },
     }));
-// there is only one toher ther there asdf there there klknthee rer aes
+
     const SyledCardContent = styled(CardContent)({
         display: 'flex',
         flexDirection: 'column',
@@ -36,7 +35,6 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
         padding: 16,
         flexGrow: 1,
         height: "100%",
-        // minHeight: "90%",
         '&:last-child': {
             paddingBottom: 16,
         },
@@ -67,7 +65,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
         />
         <SyledCardContent>
             <Typography gutterBottom variant="caption" component="div">
-                Puzzle #{puzzleNumber}
+                Envelope #{puzzleNumber}
             </Typography>
             <Typography gutterBottom variant="h6" component="div">
                 {puzzleName}
