@@ -13,7 +13,7 @@ import TopBar from '/src/components/common/TopBar.jsx';
 // TODO: see how an envelope image with a pop up of the text would look like
 function HomePage() {
 
-  const [activatedChip, setActivatedChip] = useState(0);
+  const [activatedChip, setActivatedChip] = useState(-1);
 
   const handleChipClick = () => {
     console.log("Chip clicked!");
@@ -35,7 +35,7 @@ function HomePage() {
         Mr. Riddle Man - a name shrouded in mystery. Renowed by many to be the world's foremost puzzle expert, he is often called upon
         to solve the world's toughest conundrums - and none have stumped him yet. Despite his world-famous status, no one knows his true identity. 
         That's all you know about the man - at least all you <i>did</i> know, until a  ... <i>puzzling</i> set of envelopes arrived at 
-        your doorstep this morning. You notice a letter laying atop the envelopes.<br />  
+        your doorstep this morning. You notice a letter laying atop the envelopes. <br />  
       </p>
     </Box>
            <Box
@@ -51,7 +51,7 @@ function HomePage() {
       <Chip 
         size="medium" 
         onClick={() => setActivatedChip(0)} 
-        label= "Note"
+        label= "Letter"
         sx={{
               backgroundColor: activatedChip == 0 ? 'hsla(222, 21.30%, 12.00%, 0.51)' : 'hsla(208, 100.00%, 3.70%, 0.64)',
               border: activatedChip === 0 ? 1 : 'none'
@@ -70,9 +70,10 @@ function HomePage() {
             <Box sx={{width: "60vw",  height: "60%", display: "flex", alignItems: "center", justifyContent: "center"}}>
               <p style={{ textAlign: 'left' }}>
                 I am Mr. Riddle Man. I grow weary of my power and status, and so wish to pass the title of Mr. Riddle Man to another.
-                Attatched to this note you shall find a set of envelopes. Each envelope contains a puzzle - solve them all in their entirety, 
+                Attatched to this letter you shall find a set of envelopes. Each envelope contains a puzzle - solve them all in their entirety, 
                 and I shall name you as my successor. Should you choose to accept, I advise secrecy of the highest order - the identity of a Riddle Man must always be hidden, 
-                as there are those in this world who stand much to gain from our demise. Prove your commitment to the cause by solving my riddles , and in time I will reveal to you the secrets of the Riddle Men, as well as my true identity.
+                as there are those in this world who stand much to gain from our demise. Prove your commitment to the cause by solving my riddles, 
+                and in time I will reveal to you the secrets a Riddle Man, as well as my true identity.
                 <br />  <br />
                 I will be watching, <br />
                 Mr. Riddle Man
@@ -84,7 +85,7 @@ function HomePage() {
             <Grid size={{ sm: 6, lg: 4 }}>
               <PuzzleCard 
                 puzzleImage = {ratRiddleThumbnail} 
-                puzzleName = "The Hiding Rat" 
+                puzzleName = "The Sneaky Rat" 
                 puzzleNumber = "1" 
                 puzzleDescription = "Help Mr. Riddle Man catch a sneaky rat!"
                 puzzlePath = "/ratRiddle" 

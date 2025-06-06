@@ -20,7 +20,7 @@ function UnsolvedStack({curDay, totalDays, path, allCheckedHouses, handleSliderC
           max={totalDays} 
           onChange={handleSliderChange}
         />
-        <p> The rat can easily escape this arrangement of traps, use the slider above to see how! </p>
+        <p> You set the traps ... but fail to catch the rat. After some thinking, you realize that the rat could easily escape this arrangement of traps with the following strategy: </p>
         <p>
           On day {curDay + 1}, the rat {curDay == 0 ? "starts in" : "scurries over to"} house {path[curDay] + 1}. 
           You trap houses{" "} {allCheckedHouses.length != 0 ? Math.min(...allCheckedHouses[curDay]) + 1 : 0} {" "}

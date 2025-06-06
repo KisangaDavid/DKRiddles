@@ -52,7 +52,7 @@ function MenuDrawerContents({setMenuDrawerOpen, isHomePage}) {
               <ListItemIcon>
                 <ExtensionIcon />
               </ListItemIcon>
-              <ListItemText primary={"The Hiding Rat"} />
+              <ListItemText primary={"The Sneaky Rat"} />
             </ListItemButton>
         </ListItem>
           <ListItem disablePadding>

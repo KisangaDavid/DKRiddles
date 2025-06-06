@@ -29,7 +29,6 @@ function RatRiddlePage() {
   const [wasmModule, setWasmModule] = useState(null);
   const [allCheckedHouses, setAllCheckedHouses] = useState([]);
   const [curCheckedHouses, setCurCheckedHouses] = useState(new Set());
-  const [bonusChallenge, setBonusChallenge] = useState(false);
 
   const {width, height} = useWindowSize();
   const theme = useTheme();
@@ -108,7 +107,6 @@ function RatRiddlePage() {
     setPath([]);
     setPrevDay(-1);
     setConfetti(false);
-    setBonusChallenge(false);
   }
 
   const handleSliderChange = (_, value) => {
@@ -129,21 +127,23 @@ function RatRiddlePage() {
       alignItems: "center",
       height: "100vh",
       width: "100vw",
-      overflow: "hidden",
+      overflow: "auto",
       backgroundImage:'radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))',
     }}>
-    <TopBar text="The Hiding Rat" isHomePage={false} />
+    <TopBar text="Envelope #1: The Sneaky Rat" isHomePage={false} />
     {confetti && <Confetti width={width} height={height}/>}
     <Box sx={{width: "80vw", position: "relative", mb:"1vh"}}>
       <p> 
-        Ever on the lookout for side hustles, our friend Mr. Riddle Man has accepted a request to get rid of a neighborhood's rat problem (for a lucrative fee, of course.) 
-        After some investigation, he discovers that the neighborhood is actually being plagued by just a single rat, which scurries to an adjacent house every night.
-        Unfortunately, Mr. Riddle Man does not know the current position of the rat, and can only afford to buy two reusable rat traps. Even so, he knows that if he traps houses 
-        1 and 2 on the first day, 2 and 3 on the second day, 3 and 4 on the third day, and so on, he is guaranteed to catch the rat in 7 days. Can you save our friend some time, 
-        and propose a plan that is guaranteed to catch the rat in less than 7 days? 
+        You open the first envelope. Inside you find a notecard, along with two rat traps. The notecard reads: <br />
+        <i>You will find that the neighborhood adjacent to yours is suffering from a mysterious rat infestation. 
+        Solve their rodent problem using only the two provided rat traps and your own logical ability.</i> <br /> <br /> After arriving at the rat infested neighborhood 
+        and doing some preliminary investigation, you discover that the neighborhood is actually being plagued by just a single rat, 
+        which sneaks over to an adjacent house every night. You know that if you trap houses 1 and 2 on the first day, 2 and 3 on the second day,
+        3 and 4 on the third day, and so on, you can guarantee that you'll catch the rat in 7 days. However, Mr. Riddle Man will not accept anything but perfection - 
+        what strategy can you employ that is guaranteed to catch the rat in the least amount of days?
       </p>
     </Box>
-    <Box sx={{position: "relative", width: "80vw", height: "50vh"}}>
+    <Box sx={{position: "relative", width: "75vw", height: "50vh"}}>
       <RowOfHouses 
         NUM_HOUSES={NUM_HOUSES}   
         submittedTraps={submittedTraps} 
@@ -172,33 +172,18 @@ function RatRiddlePage() {
           </Stack>
         </Zoom>
       }
-      {submittedTraps && solved && bonusChallenge &&
+      {submittedTraps && solved &&
         <Zoom 
           mountOnEnter 
           unmountOnExit 
           in={true}
           timeout={theme.transitions.duration.standard}
         >
-          <Box>
-            <BonusChallenge 
-              numBonusHouses={Math.floor(Math.random() * (10) + 20)}
-              checkBonusAnswer={wasmModule != null ? wasmModule.exports.checkBonusAnswer : () =>{}}
-              setConfetti={setConfetti}
-            />
-          </Box>
-        </Zoom>
-      }
-      {submittedTraps && solved && !bonusChallenge &&
-        <Zoom 
-          mountOnEnter 
-          unmountOnExit 
-          in={true}
-          timeout={theme.transitions.duration.standard}
-        >
-         <Box>
+         <Box >
           <SolvedStack 
+            checkBonusAnswer={wasmModule != null ? wasmModule.exports.checkBonusAnswer : () =>{}}
+            setConfetti={setConfetti}      
             totalDays={totalDays} 
-            setBonusChallenge={setBonusChallenge}
           />
          </Box>
        </Zoom>
@@ -222,7 +207,7 @@ function RatRiddlePage() {
       </Zoom>
 }
       <Button 
-        sx={{position: "absolute", left: 0}}
+        sx={{position: "relative", float: "left", top: submittedTraps && solved ? "-4vh" : 0}}
         variant="text" color="secondary"
         startIcon={<RefreshIcon />}
         onClick={resetPuzzle}

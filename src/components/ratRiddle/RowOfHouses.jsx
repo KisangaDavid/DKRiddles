@@ -34,7 +34,7 @@ function RowOfHouses({
   };
 
   return ( 
-    <Box sx={{pb: "2vh"}}>
+    <Box>
       {(!submittedTraps || path.length != 0) ?
         <p> Day: {curDay + 1} </p>
         :

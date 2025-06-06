@@ -1,33 +1,30 @@
-import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
+import Box from '@mui/material/Box';
 import Button from "@mui/material/Button";
+import BonusChallenge from './BonusChallenge.jsx'
 import { useTheme } from '@mui/material/styles';
 
-function SolvedStack({totalDays, setBonusChallenge}) {
+function SolvedStack({totalDays, checkBonusAnswer, setConfetti}) {
+
+
   const theme = useTheme();
   return (
-    <> 
+    <Box sx={{position: "relative", top: "-4vw"}}> 
       {totalDays == 4 ? 
-        <>
-          <p>
-            Impressive work! You found the rat in just {totalDays} days, which
-            is optimal. Now try your hand at the extra tough bonus challenge!
-          </p>
-          <Button 
-            variant="contained" 
-            onClick={() => setBonusChallenge(true)}
-          >
-          Bonus Challenge
-          </Button>
-        </>
+        <BonusChallenge 
+            numBonusHouses={Math.floor(Math.random() * (10) + 20)}
+            totalDays = {totalDays}
+            checkBonusAnswer={checkBonusAnswer}
+            setConfetti={setConfetti}
+          />
         : 
         <p>
-          Good work, you found the rat in {totalDays} days! It's possible to
-          find the rat in even fewer days though, reset the puzzle to try
-          again!
+          You set the traps, and on the {totalDays}th day catch the rat! Just as you go to grab it, the rat suddenly disappears in a flash of smoke, leaving behind a note smelling faintly of cheese. The note reads:<br />
+          <i>Not bad, you have caught my rat in only {totalDays} days. However, a true Riddle Man must always strive for the optimal solution, and this is not it!</i><br />
+           <br /> 
+          Reset the puzzle to try again!
         </p>
       }
-    </>
+    </Box>
   );
 }
 

@@ -39,7 +39,7 @@ function TopBar({text, isHomePage}) {
         boxShadow: 0,
         bgcolor: 'transparent',
         backgroundImage: 'none',
-        my: '2vh',
+        my: '1.5vh',
         width: "75vw"
       }}>
          <StyledToolbar variant="dense">
