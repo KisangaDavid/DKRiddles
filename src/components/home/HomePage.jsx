@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useTheme } from '@mui/material/styles';
 
 import Chip from '@mui/material/Chip';
 import ratRiddleThumbnail from '/src/assets/ratRiddleThumbnail.png' // TODO: see how this looks transparent
 import underConstruction from '/src/assets/underConstruction.jpg'
 import PuzzleCard from './PuzzleCard';
+import RiddleManLetter from '/src/assets/riddleManLetter.jpg';
 
 import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
@@ -11,8 +13,10 @@ import TopBar from '/src/components/common/TopBar.jsx';
 
 // TODO: add animations 
 // TODO: see how an envelope image with a pop up of the text would look like
+// TODO: change Home page to introduction
 function HomePage() {
 
+  const theme = useTheme();
   const [activatedChip, setActivatedChip] = useState(-1);
 
   const handleChipClick = () => {
@@ -26,7 +30,7 @@ function HomePage() {
       alignItems: "center",
       height: "100vh",
       width: "100vw",
-      overflow: "hidden",
+      overflow: "auto",
       backgroundImage:'radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))',
     }}>
       <TopBar text="Home Page" isHomePage={true} />
@@ -34,18 +38,19 @@ function HomePage() {
       <p> 
         Mr. Riddle Man - a name shrouded in mystery. Renowed by many to be the world's foremost puzzle expert, he is often called upon
         to solve the world's toughest conundrums - and none have stumped him yet. Despite his world-famous status, no one knows his true identity. 
-        That's all you know about the man - at least all you <i>did</i> know, until a  ... <i>puzzling</i> set of envelopes arrived at 
-        your doorstep this morning. You notice a letter laying atop the envelopes. <br />  
+        That's all you know about the man - at least all you <i>did</i> know, until a ... <i>puzzling</i> set of envelopes arrived at 
+        your doorstep this morning. You notice a letter lying atop the envelopes. <br />  
       </p>
     </Box>
            <Box
           sx={{
             display: 'flex',
             flexDirection: { xs: 'column', sm: 'row' },
-          width: '75%',
-          alignItems: { xs: 'start', md: 'center' },
-          gap: 1,
-          overflow: 'auto',
+            width: '75%',
+            alignItems: { xs: 'start', md: 'center' },
+            gap: 1,
+            overflow: 'auto',
+            mb: "2vh"
           }}
         >
       <Chip 
@@ -65,29 +70,34 @@ function HomePage() {
             }}
           />
           </Box>
-          {/* box containing a multitude of envelopes */}
           {activatedChip == 0 &&
-            <Box sx={{width: "60vw",  height: "60%", display: "flex", alignItems: "center", justifyContent: "center"}}>
+          <Grid container spacing={4} columns={12} direction = "row" sx={{display: "flex",width: "70vw"}}>
+            <Grid size={{ sm: 6, lg: 6 }}>
+            <img src={RiddleManLetter} style={{objectFit: "contain", height: "100%", width: "100%", borderRadius: (theme.vars || theme).shape.borderRadius}}/>
+          </Grid>
+          <Grid size={{ sm: 6, lg: 6}} style={{display: "flex", justifyContent: 'center', alignItems: "center"}}>              
               <p style={{ textAlign: 'left' }}>
-                I am Mr. Riddle Man. I grow weary of my power and status, and so wish to pass the title of Mr. Riddle Man to another.
+                The letter reads: <br /> <br />
+                <i>I am Mr. Riddle Man. I grow weary of my power and status, and so wish to pass the title of Mr. Riddle Man to another.
                 Attatched to this letter you shall find a set of envelopes. Each envelope contains a puzzle - solve them all in their entirety, 
                 and I shall name you as my successor. Should you choose to accept, I advise secrecy of the highest order - the identity of a Riddle Man must always be hidden, 
                 as there are those in this world who stand much to gain from our demise. Prove your commitment to the cause by solving my riddles, 
-                and in time I will reveal to you the secrets a Riddle Man, as well as my true identity.
+                and in time I will reveal to you the secrets of the Riddle Men, as well as my true identity.
                 <br />  <br />
                 I will be watching, <br />
-                Mr. Riddle Man
+                Mr. Riddle Man </i>
               </p>
-            </Box>
+            </Grid>
+            </Grid>
           }
         {activatedChip == 1 &&
-          <Grid container spacing={2} columns={12} direction = "row" sx={{width: "60vw"}}>
+          <Grid container spacing={2} columns={12} direction = "row" sx={{width: "75vw"}}>
             <Grid size={{ sm: 6, lg: 4 }}>
               <PuzzleCard 
                 puzzleImage = {ratRiddleThumbnail} 
                 puzzleName = "The Sneaky Rat" 
                 puzzleNumber = "1" 
-                puzzleDescription = "Help Mr. Riddle Man catch a sneaky rat!"
+                puzzleDescription = "Concoct the perfect plan to catch a sneaky rat!"
                 puzzlePath = "/ratRiddle" 
               />
             </Grid>
