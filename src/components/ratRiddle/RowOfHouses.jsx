@@ -4,6 +4,7 @@ import mouseTrap from "/src/assets/mouseTrap.svg";
 import rat from "/src/assets/rat.svg";
 import Grid from "@mui/material/Grid";
 import Slide from "@mui/material/Slide";
+import Fade from '@mui/material/Fade'
 import Zoom from "@mui/material/Zoom";
 import Box from "@mui/material/Box";
 import { useTheme } from '@mui/material/styles';
@@ -36,7 +37,9 @@ function RowOfHouses({
   return ( 
     <Box>
       {(!submittedTraps || path.length != 0) ?
+      <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
         <p> Day: {curDay + 1} </p>
+        </Fade>
         :
         <p> <br /> </p>
       }
@@ -53,13 +56,11 @@ function RowOfHouses({
           >
             <Stack spacing={0}>
               <p>{index + 1}</p>
-              <Zoom in={true} unmountOnExit mountOnEnter>
               <img
                 className="houseImg"
                 src={emptyHouse}
                 onClick={!submittedTraps ? () => trapHouse(index) : undefined}
               />
-              </Zoom>
               <Box
                 style={{overflow: "clip", height:"7vw"}}
               >

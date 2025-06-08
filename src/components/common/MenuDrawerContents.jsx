@@ -11,7 +11,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
 
-function MenuDrawerContents({setMenuDrawerOpen, isHomePage}) {
+function MenuDrawerContents({setMenuDrawerOpen, isIntroPage}) {
 
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ function MenuDrawerContents({setMenuDrawerOpen, isHomePage}) {
             <ListItemIcon>
               <KeyboardDoubleArrowLeftIcon />
             </ListItemIcon>
-            <ListItemText primary={isHomePage ? "Back to Home Page" : "Back to Puzzle"} />
+            <ListItemText primary={isIntroPage ? "Back to Introduction" : "Back to Puzzle"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -31,7 +31,7 @@ function MenuDrawerContents({setMenuDrawerOpen, isHomePage}) {
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
-            <ListItemText primary={"Home"} />
+            <ListItemText primary={"Introduction"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -39,7 +39,7 @@ function MenuDrawerContents({setMenuDrawerOpen, isHomePage}) {
             <ListItemIcon>
             <HelpOutlineIcon />
             </ListItemIcon>
-            <ListItemText primary={isHomePage ? "About this site" : "About This Puzzle"} />
+            <ListItemText primary={isIntroPage ? "About this site" : "About This Puzzle"} />
         </ListItemButton>
         </ListItem>
     </List>

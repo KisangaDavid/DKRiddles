@@ -11,7 +11,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import MenuDrawerContents from './MenuDrawerContents';
 
-function TopBar({text, isHomePage}) {
+function TopBar({text, isIntroPage}) {
 
   const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
 
@@ -61,13 +61,14 @@ function TopBar({text, isHomePage}) {
       <Drawer 
         open={menuDrawerOpen} 
         onClose={() => setMenuDrawerOpen(false)}
+        aria-hidden={false}
         slotProps={{
           paper: {
             sx: { 
               backgroundImage: 'radial-gradient(ellipse 100% 150% at 160% 50%, hsl(210, 100%, 16%), hsla(210, 95.00%, 6.80%, 0.64))' }
           }
         }}>
-        <MenuDrawerContents setMenuDrawerOpen={() => setMenuDrawerOpen()} isHomePage={isHomePage}/>
+        <MenuDrawerContents setMenuDrawerOpen={() => setMenuDrawerOpen()} isIntroPage={isIntroPage}/>
       </Drawer>
       </>
   );

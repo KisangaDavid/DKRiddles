@@ -1,5 +1,5 @@
 import RatRiddlePage from './components/ratRiddle/RatRiddlePage.jsx';
-import HomePage from './components/home/HomePage.jsx';
+import IntroductionPage from './components/intro/IntroductionPage.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Routes, Route } from "react-router";
 import { styleOverrides } from './components/common/styleOverrides.js';
@@ -10,6 +10,12 @@ const theme = createTheme({
           cssVariables: {
             colorSchemeSelector: 'data-mui-color-scheme',
             cssVarPrefix: 'template',
+          },
+          transitions: {
+            duration: {
+              standardTextFade: 1000,
+              longTextFade: 2000
+            }
           },
           colorSchemes, 
           typography,
@@ -24,7 +30,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />}/>
+          <Route path="/" element={<IntroductionPage />}/>
           <Route path="/ratRiddle" element={<RatRiddlePage />}/>
           </Routes>
       </BrowserRouter>

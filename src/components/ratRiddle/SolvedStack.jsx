@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import Button from "@mui/material/Button";
+import Fade from '@mui/material/Fade';
 import BonusChallenge from './BonusChallenge.jsx'
 import { useTheme } from '@mui/material/styles';
 
@@ -8,6 +8,7 @@ function SolvedStack({totalDays, checkBonusAnswer, setConfetti}) {
 
   const theme = useTheme();
   return (
+    <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
     <Box sx={{position: "relative", top: "-4vw"}}> 
       {totalDays == 4 ? 
         <BonusChallenge 
@@ -23,8 +24,10 @@ function SolvedStack({totalDays, checkBonusAnswer, setConfetti}) {
            <br /> 
           Reset the puzzle to try again!
         </p>
+        
       }
     </Box>
+    </Fade>
   );
 }
 

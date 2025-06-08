@@ -6,23 +6,17 @@ import ratRiddleThumbnail from '/src/assets/ratRiddleThumbnail.png' // TODO: see
 import underConstruction from '/src/assets/underConstruction.jpg'
 import PuzzleCard from './PuzzleCard';
 import RiddleManLetter from '/src/assets/riddleManLetter.jpg';
-
+import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
 import TopBar from '/src/components/common/TopBar.jsx';
 
 // TODO: add animations 
-// TODO: see how an envelope image with a pop up of the text would look like
-// TODO: change Home page to introduction
-function HomePage() {
+function IntroductionPage() {
 
   const theme = useTheme();
   const [activatedChip, setActivatedChip] = useState(-1);
 
-  const handleChipClick = () => {
-    console.log("Chip clicked!");
-  }
-  
   return (
     <Box sx={{
       display:"flex",
@@ -33,7 +27,8 @@ function HomePage() {
       overflow: "auto",
       backgroundImage:'radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))',
     }}>
-      <TopBar text="Home Page" isHomePage={true} />
+      <TopBar text="Introduction" isIntroPage={true} />
+      <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
        <Box sx={{width: "75vw", position: "relative", mb:"1vh"}}>
       <p> 
         Mr. Riddle Man - a name shrouded in mystery. Renowed by many to be the world's foremost puzzle expert, he is often called upon
@@ -42,6 +37,8 @@ function HomePage() {
         your doorstep this morning. You notice a letter lying atop the envelopes. <br />  
       </p>
     </Box>
+    </Fade>
+    <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
            <Box
           sx={{
             display: 'flex',
@@ -70,12 +67,19 @@ function HomePage() {
             }}
           />
           </Box>
+          </Fade>
           {activatedChip == 0 &&
           <Grid container spacing={4} columns={12} direction = "row" sx={{display: "flex",width: "70vw"}}>
-            <Grid size={{ sm: 6, lg: 6 }}>
+            <Grid size={{ sm: 12, lg: 6 }}>
+            <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
             <img src={RiddleManLetter} style={{objectFit: "contain", height: "100%", width: "100%", borderRadius: (theme.vars || theme).shape.borderRadius}}/>
+            </Fade>
           </Grid>
-          <Grid size={{ sm: 6, lg: 6}} style={{display: "flex", justifyContent: 'center', alignItems: "center"}}>              
+          <Grid size={{ sm: 12, lg: 6}} style={{display: "flex", justifyContent: 'center', alignItems: "center"}}>   
+            <Fade in={true}  mountOnEnter unmountOnExit style = {{
+                    transitionDelay: 500
+                  }}
+                  timeout={theme.transitions.duration.standardTextFade}>           
               <p style={{ textAlign: 'left' }}>
                 The letter reads: <br /> <br />
                 <i>I am Mr. Riddle Man. I grow weary of my power and status, and so wish to pass the title of Mr. Riddle Man to another.
@@ -87,6 +91,7 @@ function HomePage() {
                 I will be watching, <br />
                 Mr. Riddle Man </i>
               </p>
+              </Fade>
             </Grid>
             </Grid>
           }
@@ -99,6 +104,7 @@ function HomePage() {
                 puzzleNumber = "1" 
                 puzzleDescription = "Concoct the perfect plan to catch a sneaky rat!"
                 puzzlePath = "/ratRiddle" 
+                transitionDelay={0}
               />
             </Grid>
           <Grid size={{ sm: 6, lg: 4 }}>
@@ -108,6 +114,7 @@ function HomePage() {
               puzzleNumber = "2" 
               puzzleDescription = "Mr. Riddle Man isn't ready to show this puzzle yet, come back later!"
               puzzlePath = "/" 
+              transitionDelay={250}
             />
           </Grid>
             <Grid size={{ sm: 6, lg: 4 }}>
@@ -117,6 +124,7 @@ function HomePage() {
                 puzzleNumber = "2" 
                 puzzleDescription = "Mr. Riddle Man isn't ready to show this puzzle yet, come back later!"
                 puzzlePath = "/" 
+                transitionDelay={500}
               />
             </Grid>
           </Grid>
@@ -125,4 +133,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default IntroductionPage;

@@ -1,13 +1,14 @@
 import { styled } from '@mui/material/styles';
 import { useNavigate } from "react-router";
-
+import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+// TODO: implement staggered fade
 
-function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, puzzlePath}) {
+function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, puzzlePath, transitionDelay}) {
 
     const navigate = useNavigate();
 
@@ -49,6 +50,9 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
     });
 
   return (
+    <Fade in={true} mountOnEnter unmountOnExit timeout={1000} style={{
+                    transitionDelay: transitionDelay
+                  }}>
    <SyledCard
         variant="outlined"
         onClick={() => navigate(puzzlePath)}
@@ -75,6 +79,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
             </StyledTypography>
         </SyledCardContent>
     </SyledCard>
+    </Fade>
   );
 }
 

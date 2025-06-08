@@ -7,11 +7,11 @@ import RowOfHouses from './RowOfHouses.jsx';
 import SolvedStack from './SolvedStack.jsx';
 import UnsolvedStack from './UnsolvedStack.jsx';
 import Confetti from 'react-confetti'
-import BonusChallenge from './BonusChallenge.jsx'
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Zoom from '@mui/material/Zoom';
+import Fade from '@mui/material/Fade';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import Box from "@mui/material/Box";
 import TopBar from '../common/TopBar.jsx';
@@ -133,16 +133,26 @@ function RatRiddlePage() {
     <TopBar text="Envelope #1: The Sneaky Rat" isHomePage={false} />
     {confetti && <Confetti width={width} height={height}/>}
     <Box sx={{width: "80vw", position: "relative", mb:"1vh"}}>
+      <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
       <p> 
         You open the first envelope. Inside you find a notecard, along with two rat traps. The notecard reads: <br />
         <i>You will find that the neighborhood adjacent to yours is suffering from a mysterious rat infestation. 
-        Solve their rodent problem using only the two provided rat traps and your own logical ability.</i> <br /> <br /> After arriving at the rat infested neighborhood 
+        Solve their rodent problem using only the two provided rat traps and your own logical ability.</i> 
+      </p>
+      </Fade>
+      <Fade in={true} mountOnEnter unmountOnExit 
+        timeout={theme.transitions.duration.standardTextFade}>
+      <p>After arriving at the rat infested neighborhood 
         and doing some preliminary investigation, you discover that the neighborhood is actually being plagued by just a single rat, 
         which sneaks over to an adjacent house every night. You know that if you trap houses 1 and 2 on the first day, 2 and 3 on the second day,
         3 and 4 on the third day, and so on, you can guarantee that you'll catch the rat in 7 days. However, Mr. Riddle Man will not accept anything but perfection - 
         what strategy can you employ that is guaranteed to catch the rat in the least amount of days?
       </p>
+      </Fade>
+      
     </Box>
+      <Fade in={true} mountOnEnter unmountOnExit 
+        timeout={theme.transitions.duration.standardTextFade}>
     <Box sx={{position: "relative", width: "75vw", height: "50vh"}}>
       <RowOfHouses 
         NUM_HOUSES={NUM_HOUSES}   
@@ -154,13 +164,10 @@ function RatRiddlePage() {
         curDay={curDay} 
         prevDay={prevDay}
       />
+      
       {!submittedTraps && 
-        <Zoom 
-          mountOnEnter 
-          unmountOnExit 
-          in={true}
-          timeout = {theme.transitions.duration.enteringScreen}
-        >
+        <Fade in={true} mountOnEnter unmountOnExit 
+        timeout={theme.transitions.duration.standardTextFade}>
           <Stack 
             direction="row"
             justifyContent="center" 
@@ -170,15 +177,9 @@ function RatRiddlePage() {
             <Button variant="contained" disabled = {curCheckedHouses.size !== 2 || curDay > 5} onClick={nextDay}>&nbsp;&nbsp;Next Day&nbsp;&nbsp;</Button>
             <Button variant="contained" disabled = {curCheckedHouses.size !== 2} onClick={submitRiddleAnswer}>Submit Answer</Button>
           </Stack>
-        </Zoom>
+        </Fade>
       }
       {submittedTraps && solved &&
-        <Zoom 
-          mountOnEnter 
-          unmountOnExit 
-          in={true}
-          timeout={theme.transitions.duration.standard}
-        >
          <Box >
           <SolvedStack 
             checkBonusAnswer={wasmModule != null ? wasmModule.exports.checkBonusAnswer : () =>{}}
@@ -186,15 +187,8 @@ function RatRiddlePage() {
             totalDays={totalDays} 
           />
          </Box>
-       </Zoom>
       }
       {submittedTraps && !solved &&
-        <Zoom 
-          in={true} 
-          mountOnEnter 
-          unmountOnExit 
-          timeout={theme.transitions.duration.standard}
-        > 
           <Box>
             <UnsolvedStack 
               curDay={curDay} 
@@ -204,8 +198,7 @@ function RatRiddlePage() {
               handleSliderChange={handleSliderChange} 
             />
           </Box>
-      </Zoom>
-}
+      }
       <Button 
         sx={{position: "relative", float: "left", top: submittedTraps && solved ? "-4vh" : 0}}
         variant="text" color="secondary"
@@ -215,7 +208,9 @@ function RatRiddlePage() {
         Reset Puzzle
       </Button>
     </Box>
+    </Fade>
     </Box>
+    
   )
 }
 
