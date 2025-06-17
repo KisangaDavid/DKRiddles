@@ -12,6 +12,7 @@ function UnsolvedStack({curDay, totalDays, path, allCheckedHouses, handleSliderC
       <Stack justifyContent="center" alignItems="center" >
         <Slider 
           sx={{ width: '40%'}} 
+          // color="secondary"
           defaultValue={1}  
           valueLabelFormat={(value) => "Day " + value} 
           valueLabelDisplay="auto" 

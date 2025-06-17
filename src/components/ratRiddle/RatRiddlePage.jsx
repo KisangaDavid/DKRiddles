@@ -10,7 +10,6 @@ import Confetti from 'react-confetti'
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-import Zoom from '@mui/material/Zoom';
 import Fade from '@mui/material/Fade';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import Box from "@mui/material/Box";
@@ -133,7 +132,7 @@ function RatRiddlePage() {
     <TopBar text="Envelope #1: The Sneaky Rat" isHomePage={false} />
     {confetti && <Confetti width={width} height={height}/>}
     <Box sx={{width: "80vw", position: "relative", mb:"1vh"}}>
-      <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
+      <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.longTextFade}>
       <p> 
         You open the first envelope. Inside you find a notecard, along with two rat traps. The notecard reads: <br />
         <i>You will find that the neighborhood adjacent to yours is suffering from a mysterious rat infestation. 
@@ -141,7 +140,9 @@ function RatRiddlePage() {
       </p>
       </Fade>
       <Fade in={true} mountOnEnter unmountOnExit 
-        timeout={theme.transitions.duration.standardTextFade}>
+        timeout={theme.transitions.duration.longTextFade} style={{
+                    transitionDelay: 350
+                  }}>
       <p>After arriving at the rat infested neighborhood 
         and doing some preliminary investigation, you discover that the neighborhood is actually being plagued by just a single rat, 
         which sneaks over to an adjacent house every night. You know that if you trap houses 1 and 2 on the first day, 2 and 3 on the second day,
@@ -152,7 +153,10 @@ function RatRiddlePage() {
       
     </Box>
       <Fade in={true} mountOnEnter unmountOnExit 
-        timeout={theme.transitions.duration.standardTextFade}>
+        timeout={theme.transitions.duration.longTextFade}
+        style={{
+                    transitionDelay: 800 // add a lil to make it look nicer
+                  }}>
     <Box sx={{position: "relative", width: "75vw", height: "50vh"}}>
       <RowOfHouses 
         NUM_HOUSES={NUM_HOUSES}   
@@ -174,8 +178,8 @@ function RatRiddlePage() {
             divider={<Divider orientation="vertical" flexItem />}
             spacing={2}
           >
-            <Button variant="contained" disabled = {curCheckedHouses.size !== 2 || curDay > 5} onClick={nextDay}>&nbsp;&nbsp;Next Day&nbsp;&nbsp;</Button>
-            <Button variant="contained" disabled = {curCheckedHouses.size !== 2} onClick={submitRiddleAnswer}>Submit Answer</Button>
+            <Button variant="contained"  disabled = {curCheckedHouses.size !== 2 || curDay > 5}  onClick={nextDay}>&nbsp;&nbsp;Next Day&nbsp;&nbsp;</Button>
+            <Button variant="contained" disabled = {curCheckedHouses.size !== 2}  onClick={submitRiddleAnswer}>Submit Answer</Button>
           </Stack>
         </Fade>
       }

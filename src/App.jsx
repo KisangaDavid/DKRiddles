@@ -14,6 +14,7 @@ const theme = createTheme({
           transitions: {
             duration: {
               standardTextFade: 1000,
+              standardImageFade: 1500,
               longTextFade: 2000
             }
           },

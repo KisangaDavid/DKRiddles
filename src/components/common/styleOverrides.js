@@ -3,7 +3,7 @@ import { typographyClasses } from '@mui/material/Typography';
 import { chipClasses } from '@mui/material/Chip';
 import { buttonBaseClasses } from '@mui/material/ButtonBase';
 import { svgIconClasses } from '@mui/material/SvgIcon';
-import { gray, green, red} from './themePrimitives';
+import { gray } from './themePrimitives';
 
 export const styleOverrides = {
   MuiCard: {

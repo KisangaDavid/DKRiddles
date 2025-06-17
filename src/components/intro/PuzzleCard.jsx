@@ -1,32 +1,34 @@
 import { styled } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { useNavigate } from "react-router";
+
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-// TODO: implement staggered fade
 
 function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, puzzlePath, transitionDelay}) {
 
+    const theme = useTheme();
     const navigate = useNavigate();
 
     const SyledCard = styled(Card)(({ theme }) => ({
-        display: 'flex',
-        flexDirection: 'column',
-        padding: 0,
-        height: '100%',
-        backgroundColor: (theme.vars || theme).palette.background.paper,
-        '&:hover': {
-            backgroundColor: 'transparent',
-            cursor: 'pointer',
-        },
-        '&:focus-visible': {
-            outline: '3px solid',
-            outlineColor: 'hsla(210, 98%, 48%, 0.5)',
-            outlineOffset: '2px',
-        },
+      display: 'flex',
+      flexDirection: 'column',
+      padding: 0,
+      height: '100%',
+      backgroundColor: (theme.vars || theme).palette.background.paper,
+      '&:hover': {
+        backgroundColor: 'transparent',
+        cursor: 'pointer',
+      },
+      '&:focus-visible': {
+          outline: '3px solid',
+          outlineColor: 'hsla(210, 98%, 48%, 0.5)',
+          outlineOffset: '2px',
+      },
     }));
 
     const SyledCardContent = styled(CardContent)({

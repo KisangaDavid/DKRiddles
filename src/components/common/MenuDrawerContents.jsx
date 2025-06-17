@@ -35,44 +35,44 @@ function MenuDrawerContents({setMenuDrawerOpen, isIntroPage}) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-        <ListItemButton sx={{py: "1.5vh"}}>
-            <ListItemIcon>
-            <HelpOutlineIcon />
-            </ListItemIcon>
-            <ListItemText primary={isIntroPage ? "About this site" : "About This Puzzle"} />
-        </ListItemButton>
+          <ListItemButton sx={{py: "1.5vh"}}>
+              <ListItemIcon>
+                <HelpOutlineIcon />
+              </ListItemIcon>
+              <ListItemText primary={isIntroPage ? "About this site" : "About This Puzzle"} />
+          </ListItemButton>
         </ListItem>
-    </List>
+      </List>
       <Divider />
       <ListItem>
         <ListItemText primary={"All Puzzles"} /></ListItem>
       <List>
         <ListItem disablePadding>
-        <ListItemButton sx={{py: "1.5vh"}} onClick={() => navigate("/ratRiddle")}>
-              <ListItemIcon>
-                <ExtensionIcon />
-              </ListItemIcon>
-              <ListItemText primary={"The Sneaky Rat"} />
-            </ListItemButton>
+          <ListItemButton sx={{py: "1.5vh"}} onClick={() => navigate("/ratRiddle")}>
+            <ListItemIcon>
+              <ExtensionIcon />
+            </ListItemIcon>
+            <ListItemText primary={"The Sneaky Rat"} />
+          </ListItemButton>
         </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton sx={{py: "1.5vh"}}>
-              <ListItemIcon>
-                <ExtensionIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Placeholder Puzzle 2"} />
-            </ListItemButton>
-          </ListItem>
         <ListItem disablePadding>
-            <ListItemButton sx={{py: "1.5vh"}}>
-              <ListItemIcon>
-                <ExtensionIcon /> 
-              </ListItemIcon>
-              <ListItemText primary={"Placeholder Puzzle 3"} />
-            </ListItemButton>
-          </ListItem>
+          <ListItemButton sx={{py: "1.5vh"}}>
+            <ListItemIcon>
+              <ExtensionIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Placeholder Puzzle 2"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{py: "1.5vh"}}>
+            <ListItemIcon>
+              <ExtensionIcon /> 
+            </ListItemIcon>
+            <ListItemText primary={"Placeholder Puzzle 3"} />
+          </ListItemButton>
+        </ListItem>
       </List>
-      </>
+    </>
   );
 }
 
