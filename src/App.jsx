@@ -1,4 +1,5 @@
 import RatRiddlePage from './components/ratRiddle/RatRiddlePage.jsx';
+import HorseRiddlePage from './components/horseRiddle/HorseRiddlePage.jsx';
 import IntroductionPage from './components/intro/IntroductionPage.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Routes, Route } from "react-router";
@@ -33,6 +34,7 @@ function App() {
         <Routes>
           <Route path="/" element={<IntroductionPage />}/>
           <Route path="/ratRiddle" element={<RatRiddlePage />}/>
+          <Route path="/horseRiddle" element={<HorseRiddlePage />}/>
           </Routes>
       </BrowserRouter>
     </ThemeProvider>

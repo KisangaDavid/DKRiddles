@@ -124,7 +124,7 @@ function IntroductionPage() {
               puzzleName = "Puzzle in Progress!" 
               puzzleNumber = "2" 
               puzzleDescription = "Mr. Riddle Man isn't ready to show this puzzle yet, come back later!"
-              puzzlePath = "/" 
+              puzzlePath = "/horseRiddle" 
               transitionDelay={350}
             />
           </Grid>
