@@ -34,32 +34,35 @@ function HorseRiddlePage() {
       setWasmModule(instance);
   })}, []);
 
+  const submitAllRacesAndCheck = () => {
+    // submitRace([0,1,2,3,4]);
+    // submitRace([5,6,7,8,9]);
+    // submitRace([10,11,12,13,14]);
+    // submitRace([15,16,17,18,19]);
+    // submitRace([20,21,22,23,24]);
+    // submitRace([0,6,12,17,22]);
+    // submitRace([17,6,15,24,20]);
+    // let horsesToSubmit = [20, 24, 22]; // it's saying 0 could be faster than 20
+    // let horsesToSubmitInt = 0;
+    // for (const horse of horsesToSubmit) {
+    //   horsesToSubmitInt <<= 5;
+    //   horsesToSubmitInt |= horse;
+    // }
+    // console.log("horses to submit int: " + horsesToSubmitInt);
+    let ans = wasmModule.exports.doEverything()// 22, 24, 20
+    console.log("answer from wasm: " + ans);
+  }
 
   const submitRace = (horses) => {
     console.log(horses)
     let intRepHorsesToRace = 0;
     for (const horse of horses) {
-        horsesToRace <<= 5;
-        horsesToRace = horsesToRace | horse;
-        
+      intRepHorsesToRace <<= 5;
+      intRepHorsesToRace = intRepHorsesToRace | horse;
     }
-    console.log("horses to race: " + horsesToRace);
-    wasmModule.exports.submitRace(intRepHorsesToRace)
-    let intPath = wasmModule.exports.checkRiddleAnswer(BigInt(`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`));
-    let path = []
-    if(intPath != -1) {
-      for(let i = 0; i <= curDay; i++) {
-        path.push(intPath & 0x07);
-        intPath >>= 3;
-      }
-      path.reverse();
-    }
-    setAllCheckedHouses(allCheckedHouses.concat(curCheckedHouses));
-    setCurCheckedHouses(new Set());
-    setTotalDays(curDay + 1);
-    setCurDay(0);
-    setSubmittedTraps(true);
-    setPath(path);
+    console.log("int rep of horses to race: " + intRepHorsesToRace);
+    let intRes = wasmModule.exports.submitRace(intRepHorsesToRace);
+    console.log("intRes of horses to race: " + intRes)
   }
 
 
@@ -90,7 +93,7 @@ function HorseRiddlePage() {
         3 and 4 on the third day, and so on, you can guarantee that you'll catch the rat in 7 days. However, Mr. Riddle Man will not accept anything but perfection - 
         what strategy can you employ that is guaranteed to catch the rat in the least amount of days?
       </p>
-      <Button onClick={() => submitRace([2,3,4,15,23])}>Button!</Button>
+      <Button onClick={() => submitAllRacesAndCheck()}>Button!</Button>
       {/* </Fade> */}
       
     </Box>

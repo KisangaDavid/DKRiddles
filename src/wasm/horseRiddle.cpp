@@ -18,14 +18,12 @@ class Horse {
     private:
         static inline uint32_t positionGenerator {0};
 };
-
+// static inline = initial numbers dont get populated for some reason
 class HorseRiddle {
     public:
         Horse horses[25];
 
-        HorseRiddle() {
-            randomizeHorseOrder(12, 1000);
-        }
+        HorseRiddle() = default;
 
         void randomizeHorseOrder(uint32_t state, uint32_t num_shuffles) {
             uint32_t idx1 {};
@@ -51,22 +49,22 @@ class HorseRiddle {
             return orderedHorses[0];
         }
 
-        std::vector<uint32_t > checkAnswer(std::vector<uint32_t > inputPositions) {
+        std::vector<uint32_t> checkAnswer(std::vector<uint32_t> inputPositions) {
             for (uint32_t inputPosition : inputPositions) {
-                std::vector<uint32_t > sources = getSources();
+                std::vector<uint32_t> sources = getSources();
                 if (sources.size() != 1) {
                     for (uint32_t source : sources) {
                         if (source != inputPosition) {
-                            return std::vector<uint32_t > {POTENTIALLY_FASTER_HORSE_CODE, source, inputPosition};
+                            return std::vector<uint32_t> {POTENTIALLY_FASTER_HORSE_CODE, source, inputPosition};
                         }
                     }
                 }
                 if (sources[0] != inputPosition) {
-                    return std::vector<uint32_t > {DEFINITE_FASTER_HORSE_CODE, sources[0], inputPosition};
+                    return std::vector<uint32_t> {DEFINITE_FASTER_HORSE_CODE, sources[0], inputPosition};
                 }
                 horses[sources[0]].isDeleted = true;
             }
-            return std::vector<uint32_t > {HORSE_ORDER_CORRECT_CODE};
+            return std::vector<uint32_t> {HORSE_ORDER_CORRECT_CODE, 0, 0};
         }
 
     private:
@@ -100,8 +98,8 @@ class HorseRiddle {
             }
         }
 
-        std::vector<uint32_t > getSources() {
-            std::vector<uint32_t > sources {};
+        std::vector<uint32_t> getSources() {
+            std::vector<uint32_t> sources {};
             for(uint32_t i {0}; i < NUM_HORSES; i++) {
                 if(horses[i].isDeleted) {
                     continue;
@@ -120,16 +118,15 @@ class HorseRiddle {
         }
 };
 
-HorseRiddle horseRiddle;
-// Some MEGA jank where we initialize a new HorseRiddle every time a race is submitted, but data is carried over because horses is marked as static
-// [[clang::export_name("initHorsePuzzle")]]
-// uint32_t initHorseRiddle(uint64_t num1) {
-//     HorseRiddle horseRiddle;
-//     horseRiddle.randomizeHorseOrder(12, 1000);
-// }
 
-[[clang::export_name("submitRace")]]
-uint32_t submitRace(uint32_t input) {
+
+// [[clang::export_name("initPuzzle")]]
+void initPuzzle(HorseRiddle& horseRiddle) {
+    horseRiddle.randomizeHorseOrder(12, 1000);
+}
+
+// [[clang::export_name("submitRace")]]
+uint32_t submitRace(uint32_t input, HorseRiddle& horseRiddle) {
     // unpack the input and then submit the race
     std::vector<uint32_t> horsesToRace {};
     uint32_t fiveBitMask = 0x1f; // 5 bit mask
@@ -138,39 +135,56 @@ uint32_t submitRace(uint32_t input) {
         input >>= 5; 
     }
     horseRiddle.submitRace(horsesToRace);
-    return 1;
+    return input;
 }
-//     
-//   uint32_t position = 0;
-//   std::vector<uint32_t > deletedNodes {};
-//   while(num1 > 0) {
-//     if(num1 & 1) {
-//       deletedNodes.push_back(position);
-//     }
-//     num1 >>= 1;
-//     ++position;
-//   }
 
-//   while(num1 > 0) {
-//     if(num1 & 1) {
-//       deletedNodes.push_back(position);
-//     }
-//     num1 >>= 1;
-//     ++position;
-//   }
+// [[clang::export_name("checkAnswer")]]
+uint32_t checkAnswer(uint32_t input, HorseRiddle& horseRiddle) {
+    std::vector<uint32_t> submittedHorses {};
+    uint32_t fiveBitMask = 0x1f; // 5 bit mask
+    for (uint32_t i {0}; i < 3; i++) {
+        submittedHorses.push_back(input & fiveBitMask);
+        input >>= 5; 
+    }
+    std::vector<uint32_t> answer = horseRiddle.checkAnswer(submittedHorses);
+    uint32_t answerIntForm = 0;
+    for(uint32_t i : answer) {
+        answerIntForm <<= 5;
+        answerIntForm = answerIntForm | i;
+    }
+    return answerIntForm;
+}    
+
+[[clang::export_name("doEverything")]]
+uint32_t doEverything() {
+    HorseRiddle horseRiddle;
+    initPuzzle(horseRiddle);
+    submitRace(34916, horseRiddle);
+    submitRace(5446921, horseRiddle);
+    submitRace(10858926, horseRiddle);
+    submitRace(16270931, horseRiddle);
+    submitRace(21682936, horseRiddle);
+    submitRace(209462, horseRiddle);
+    submitRace(18038548, horseRiddle);
+    return checkAnswer(21270, horseRiddle);
+}
+
 int main() {
-    submitRace(2200055);
+
+    uint32_t res = doEverything();
+    return static_cast<int>(res);
+    // checkAnswer(21270);
     // // HorseRiddle horseRiddle;
-    // std::vector<uint32_t > myRace1 {0,1,2,3,4};
-    // std::vector<uint32_t > myRace2 {5,6,7,8,9};
-    // std::vector<uint32_t > myRace3 {10,11,12,13,14};
-    // std::vector<uint32_t > myRace4 {15,16,17,18,19};
-    // std::vector<uint32_t > myRace5 {20,21,22,23,24};
-    // std::vector<uint32_t > myRace6 {0,6,12,17,22};
-    // std::vector<uint32_t > myRace7 {17,6,15,24,20};
-    // std::vector<uint32_t > positions {22,24,20};
-    // // std::vector<uint32_t > myRace7 {20, 6,  // 22 is a LOCK race 4 is group 2 race 2 is group 3
-    // // std::vector<uint32_t > myRace {1,2,3,4,5};
+    // std::vector<uint32_t> myRace1 {0,1,2,3,4};
+    // std::vector<uint32_t> myRace2 {5,6,7,8,9};
+    // std::vector<uint32_t> myRace3 {10,11,12,13,14};
+    // std::vector<uint32_t> myRace4 {15,16,17,18,19};
+    // std::vector<uint32_t> myRace5 {20,21,22,23,24};
+    // std::vector<uint32_t> myRace6 {0,6,12,17,22};
+    // std::vector<uint32_t> myRace7 {17,6,15,24,20};
+    // std::vector<uint32_t> positions {22,24,20};
+    // // std::vector<uint32_t> myRace7 {20, 6,  // 22 is a LOCK race 4 is group 2 race 2 is group 3
+    // // std::vector<uint32_t> myRace {1,2,3,4,5};
     // int race1Winner = horseRiddle.submitRace(myRace1);
     // int race2Winner = horseRiddle.submitRace(myRace2);
     // int race3Winner = horseRiddle.submitRace(myRace3);
@@ -180,8 +194,6 @@ int main() {
     // int race7Winner = horseRiddle.submitRace(myRace7);
     // // final 3: 22, 24, 20
     // // race 7: 2 & 3 from race 6 (17,6), 2nd from race 4 (15), 2nd 3rd from dub squad (race 5) (24,20)
-    // std::vector<uint32_t > answer2 = horseRiddle.checkAnswer({1,2,3});
-    // std::vector<uint32_t > answer1 = horseRiddle.checkAnswer(positions);
-    
-    return 0;
+    // std::vector<uint32_t> answer2 = horseRiddle.checkAnswer({1,2,3});
+    // std::vector<uint32_t> answer1 = horseRiddle.checkAnswer(positions);
 }
