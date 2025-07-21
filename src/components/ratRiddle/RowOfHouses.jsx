@@ -57,7 +57,7 @@ function RowOfHouses({
             <Stack spacing={0}>
               <p>{index + 1}</p>
               <img
-                className="houseImg"
+                className="houseImg" // TODO: get rid of this
                 src={emptyHouse}
                 onClick={!submittedTraps ? () => trapHouse(index) : undefined}
               />
