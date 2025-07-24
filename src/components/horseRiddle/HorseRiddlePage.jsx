@@ -14,6 +14,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import Box from "@mui/material/Box";
 import TopBar from '../common/TopBar.jsx';
 import HorseGridElement from './HorseGridElement.jsx';
+import HorseRaceResults from './HorseRaceResults.jsx';
 
 const NUM_HORSES = 25;
 const RACE_LENGTH = 5;
@@ -22,10 +23,11 @@ function HorseRiddlePage() {
 
   const [wasmModule, setWasmModule] = useState(null);
   const [currentRace, setCurrentRace] = useState([]);
-  const [allRaces, setAllRaces] = useState([]);
+  const [finishedRaces, setFinishedRaces] = useState([]);
   const {width, height} = useWindowSize();
   const theme = useTheme();
 
+  // let prevRacesFlattened = finishedRaces.flat();
   // unused, but required by wasm binary
   const imports = {
     "wasi_snapshot_preview1": {
@@ -56,7 +58,7 @@ function HorseRiddlePage() {
   //     horsesToSubmitInt |= horse;
   //   }
   // }
-
+  console.log("finished races: " + finishedRaces.length);
   const addRemoveHorseToRace = (horseIdx) => {
     if (currentRace.includes(horseIdx)) {
       removeHorseFromRace(horseIdx);
@@ -71,16 +73,27 @@ function HorseRiddlePage() {
     setCurrentRace(currentRace => currentRace.filter(idx => idx != horseIdx));
   }
 
-  const submitRace = (horses) => {
-    console.log(horses) // use currentRace mayhaps
+  const submitRace = () => {
+    console.log(currentRace) // use currentRace mayhaps
     let intRepHorsesToRace = 0;
-    for (const horse of horses) {
+    for (const horse of currentRace) {
       intRepHorsesToRace <<= 5;
       intRepHorsesToRace = intRepHorsesToRace | horse;
     }
+    
+    setCurrentRace([]);
+    console.log("finished races: " + finishedRaces);
     console.log("int rep of horses to race: " + intRepHorsesToRace);
     let intRes = wasmModule.exports.submitRace(intRepHorsesToRace);
     console.log("intRes of horses to race: " + intRes)
+    let horseOrder = [];
+    for(let i = 0; i < RACE_LENGTH; i++) {
+      horseOrder.push(intRes & 0x1f)
+      intRes >>= 5;
+    } // 35970 is what we want
+    console.log("horse order: " + horseOrder);
+    setFinishedRaces([...finishedRaces, ...horseOrder.reverse()]);
+    
   }
 
   const checkAnswer = (horsesToSubmit) => {
@@ -116,7 +129,8 @@ function HorseRiddlePage() {
       </p>
     </Box>
 
-      <Box sx={{display: "flex", flexDirection: "column", width: "75vw", position: "relative", mb:"1vh"}}>
+      <Box sx={{display: "flex", alignItems: "center", flexDirection: "column", width: "75vw", position: "relative", mb:"2vh", minHeight:"15vh"}}>
+        <p>Current Race:</p>
         <Grid 
           container 
           spacing={1} 
@@ -124,14 +138,15 @@ function HorseRiddlePage() {
           direction = "row" 
           sx={{
             display: "flex",
-            width: "75%"
+            width: "50%"
           }}
         >
       {currentRace.map((horseIdx, idx) => (
         <HorseGridElement key={idx} horseNumber={horseIdx + 1} onClick={() => removeHorseFromRace(horseIdx)}/>))}
       </Grid> 
         </Box>
-      <Box sx={{display: "flex", flexDirection: "row", width: "75vw", position: "relative", mb:"1vh"}}>
+      <Box sx={{display: "flex", justifyContent: "space-between", flexDirection: "row", width: "75vw", position: "relative", mb:"1vh"}}>
+      <Box sx={{display: "flex", flexDirection: "column", width: "30vw", position: "relative", mb:"1vh"}}>
       <Grid 
           container 
           spacing={1} 
@@ -139,16 +154,49 @@ function HorseRiddlePage() {
           direction = "row" 
           sx={{
             display: "flex",
-            width: "40%"
+            width: "100%"
           }}
         >
       {[...Array(NUM_HORSES)].map((_, idx) => (
         <HorseGridElement key={idx} horseNumber={idx + 1} onClick={() => addRemoveHorseToRace(idx)}/>))}
         </Grid>
+        </Box> 
+        
+      <Box sx={{display: "flex", flexDirection: "row", width: "30vw", position: "relative", mb:"1vh"}}>
+      <Grid
+        container 
+          spacing={0} 
+          columns={6} 
+          direction = "row"
+        sx={{
+          display: "flex",
+          borderTop: '2px solid',
+          borderLeft: '2px solid',
+          borderColor: 'divider',
+          '& > div': {
+            borderRight: '2px solid',
+            borderBottom: '2px solid',
+           
+            borderColor: 'divider',
+          },
+        }}
+      >
+        <Grid size={1} style={{overflow: "clip"}}></Grid>
+        <Grid size={1} style={{overflow: "clip"}}>1st</Grid>
+        <Grid size={1} style={{overflow: "clip"}}>2nd</Grid>
+        <Grid size={1} style={{overflow: "clip"}}>3rd</Grid>
+        <Grid size={1} style={{overflow: "clip"}}>4th</Grid>
+        <Grid size={1} style={{overflow: "clip"}}>5th</Grid>
+      {[...Array(90)].map((_, idx) => (
+        <Grid size={1} key={idx} style={{overflow: "clip"}}>{ idx % 6 == 0 ? "Race #" + (1+idx/6)  : (finishedRaces.length > idx ? finishedRaces[idx] : " ")}</Grid>))}
+      </Grid>
+      </Box>
       </Box>
       <Button onClick={() => submitRace()}>Button!</Button>
-    </Box> 
+      </Box>
   )
-}
+      }
+    
+
 
 export default HorseRiddlePage

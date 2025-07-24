@@ -56,10 +56,11 @@ class HorseRiddle {
         }
     
         // TODO: comment out once done
-        uint32_t submitRace(std::vector<uint32_t> inputHorses) {
+        std::vector<uint32_t> submitRace(std::vector<uint32_t> inputHorses) {
             std::vector<uint32_t> orderedHorses = getOrder(inputHorses);
             updateOrderGraph(orderedHorses);
-            return orderedHorses[0];
+
+            return orderedHorses;
         }
 
         std::vector<uint32_t> checkAnswer(std::vector<uint32_t> inputPositions) {
@@ -152,8 +153,13 @@ uint32_t submitRace(uint32_t input) {
         horsesToRace.push_back(input & fiveBitMask);
         input >>= 5; 
     }
-    horseRiddle.submitRace(horsesToRace);
-    return input;
+    std::vector<uint32_t> raceResults = horseRiddle.submitRace(horsesToRace);
+    uint32_t intRes = 0;
+    for(uint32_t horseNum : raceResults) {
+        intRes <<= 5;
+        intRes |= horseNum;  
+    }
+    return intRes;
 }
 
 [[clang::export_name("checkAnswer")]]
@@ -174,24 +180,24 @@ uint32_t checkAnswer(uint32_t input) {
     return answerIntForm;
 }    
 
-// [[clang::export_name("doEverything")]]
-// uint32_t doEverything() {
+[[clang::export_name("doEverything")]]
+uint32_t doEverything() {
     
-//     submitRace(34916);
-//     submitRace(5446921);
-//     submitRace(10858926);
-//     submitRace(16270931);
-//     submitRace(21682936);
-//     submitRace(209462);
-//     submitRace(18038548);
-//     return checkAnswer(21270);
-// }
+    uint32_t mynum1 = submitRace(34916);
+    submitRace(5446921);
+    submitRace(10858926);
+    submitRace(16270931);
+    submitRace(21682936);
+    submitRace(209462);
+    submitRace(18038548);
+    return checkAnswer(21270);
+}
 
 int main() {
 
-    // uint32_t res = doEverything();
-    // return static_cast<int>(res);
-    // checkAnswer(21270);
+    uint32_t res = doEverything();
+    return static_cast<int>(res);
+    checkAnswer(21270);
     // // HorseRiddle horseRiddle;
     // std::vector<uint32_t> myRace1 {0,1,2,3,4};
     // std::vector<uint32_t> myRace2 {5,6,7,8,9};
