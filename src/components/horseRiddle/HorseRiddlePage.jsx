@@ -18,6 +18,7 @@ import HorseRaceResults from './HorseRaceResults.jsx';
 
 const NUM_HORSES = 25;
 const RACE_LENGTH = 5;
+const MAX_NUM_RACES = 15;
 
 function HorseRiddlePage() {
 
@@ -130,11 +131,11 @@ function HorseRiddlePage() {
     </Box>
 
       <Box sx={{display: "flex", alignItems: "center", flexDirection: "column", width: "75vw", position: "relative", mb:"2vh", minHeight:"15vh"}}>
-        <p>Current Race:</p>
+        <Button onClick={() => submitRace()}>Race Horses!</Button>
         <Grid 
           container 
           spacing={1} 
-          columns={5} 
+          columns={6} 
           direction = "row" 
           sx={{
             display: "flex",
@@ -144,9 +145,11 @@ function HorseRiddlePage() {
       {currentRace.map((horseIdx, idx) => (
         <HorseGridElement key={idx} horseNumber={horseIdx + 1} onClick={() => removeHorseFromRace(horseIdx)}/>))}
       </Grid> 
+        
         </Box>
       <Box sx={{display: "flex", justifyContent: "space-between", flexDirection: "row", width: "75vw", position: "relative", mb:"1vh"}}>
       <Box sx={{display: "flex", flexDirection: "column", width: "30vw", position: "relative", mb:"1vh"}}>
+        Select 5 horses to race!
       <Grid 
           container 
           spacing={1} 
@@ -162,7 +165,10 @@ function HorseRiddlePage() {
         </Grid>
         </Box> 
         
-      <Box sx={{display: "flex", flexDirection: "row", width: "30vw", position: "relative", mb:"1vh"}}>
+      <Box sx={{display: "flex", flexDirection: "column", width: "30vw", position: "relative", mb:"1vh"}}>
+        <Box sx={{mb:"1vh"}}>
+        Previous Races:  
+        </Box>
       <Grid
         container 
           spacing={0} 
@@ -176,7 +182,6 @@ function HorseRiddlePage() {
           '& > div': {
             borderRight: '2px solid',
             borderBottom: '2px solid',
-           
             borderColor: 'divider',
           },
         }}
@@ -187,12 +192,12 @@ function HorseRiddlePage() {
         <Grid size={1} style={{overflow: "clip"}}>3rd</Grid>
         <Grid size={1} style={{overflow: "clip"}}>4th</Grid>
         <Grid size={1} style={{overflow: "clip"}}>5th</Grid>
-      {[...Array(90)].map((_, idx) => (
-        <Grid size={1} key={idx} style={{overflow: "clip"}}>{ idx % 6 == 0 ? "Race #" + (1+idx/6)  : (finishedRaces.length > idx ? finishedRaces[idx] : " ")}</Grid>))}
+      {[...Array(MAX_NUM_RACES * 6)].map((_, idx) => (
+        <Grid size={1} key={idx} style={{overflow: "clip"}}>{ idx % 6 == 0 ? "Race #" + (1+idx/6)  : (finishedRaces.length > idx  - 1 - Math.floor(idx / 6) ? finishedRaces[idx - 1 - Math.floor(idx / 6)] + 1 : "")}</Grid>))}
       </Grid>
       </Box>
       </Box>
-      <Button onClick={() => submitRace()}>Button!</Button>
+      
       </Box>
   )
       }
