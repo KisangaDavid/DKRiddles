@@ -4,9 +4,9 @@ import { useTheme } from '@mui/material/styles';
 import init from '/src/wasm/horseRiddle.wasm?init'
 
 import Grid from '@mui/material/Grid';
-import Confetti from 'react-confetti'
-import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import horseImg from "/src/assets/horseClipArt.jpg";
 import Fade from '@mui/material/Fade';
@@ -20,12 +20,18 @@ const NUM_HORSES = 25;
 const RACE_LENGTH = 5;
 const MAX_NUM_RACES = 15;
 
+const INVALID_HORSE_MSG = "Enter an integer between 1 and 25 for each position!"
+const NO_DUP_HORSES_MSG = "You cannot enter the same horse in two different positions!"
+
 function HorseRiddlePage() {
 
   const [wasmModule, setWasmModule] = useState(null);
   const [currentRace, setCurrentRace] = useState([]);
   const [finishedRaces, setFinishedRaces] = useState([]);
-  const {width, height} = useWindowSize();
+  // const [errorMessage, setErrorMessage] = useState("");
+  const [fastestHorse, setFastestHorse] = useState(-1)
+  const [secondFastestHorse, setSecondFastestHorse] = useState(-1)
+  const [thirdFastestHorse, setThirdFastestHorse] = useState(-1)
   const theme = useTheme();
 
   // let prevRacesFlattened = finishedRaces.flat();
@@ -38,6 +44,25 @@ function HorseRiddlePage() {
       "fd_seek": () => {}
     }
   } // TODO: consolidate all the wasm stuff
+  let trifectaBetFilled = fastestHorse != -1 && secondFastestHorse != -1 && thirdFastestHorse != -1;
+
+    const validateTriectaBet = () => {
+      console.log("validating trifecta bet!")
+    if (trifectaBetFilled) {
+      if (fastestHorse > 25 || secondFastestHorse > 25 || thirdFastestHorse > 25) {
+        return INVALID_HORSE_MSG;
+      }
+      if (fastestHorse == secondFastestHorse || fastestHorse == thirdFastestHorse || secondFastestHorse == thirdFastestHorse) {
+        return NO_DUP_HORSES_MSG;
+      }
+    }
+    return "";
+  }
+
+  let trifectaStatusMessage = validateTriectaBet();
+
+
+  console.log("SUM SUM");
 
   useEffect(() => {
     init(imports).then((instance) => {
@@ -73,6 +98,12 @@ function HorseRiddlePage() {
   const removeHorseFromRace = (horseIdx) => {
     setCurrentRace(currentRace => currentRace.filter(idx => idx != horseIdx));
   }
+
+  const handleTrifectaChange = (e, settingFunc) => {
+    const intsOnly = e.target.value.replace(/[^0-9]/g, '');
+    e.target.value = intsOnly;
+    intsOnly.length < 1 ? settingFunc(-1) : settingFunc(intsOnly)
+}
 
   const submitRace = () => {
     console.log(currentRace) // use currentRace mayhaps
@@ -118,37 +149,24 @@ function HorseRiddlePage() {
       overflow: "auto",
       backgroundImage:'radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))',
     }}>
-    <TopBar text="Envelope #2: Horse" isHomePage={false} />
-    <Box sx={{display: "flex", flexDirection: 'column', alignItems: "center", width: "80vw", position: "relative", mb:"1vh"}}>
+    <TopBar text="Envelope #2: Hasty Horses" isHomePage={false} />
+    <Box sx={{display: "flex", flexDirection: 'column', alignItems: "center", width: "80vw", position: "relative", mb:"2vh"}}>
           <p>
-        Filler text this is just filler text with a bunch of random words cuz I want to see how this filler text will 
-        look like at the top of the page. Nothing here but boring filler text. Bananas are actually a berry! 
-        The banana tree is not actually a tree, it is considered the world's largest shrub!  That should be enough filler text, if we double it!
-        Filler text this is just filler text with a bunch of random words cuz I want to see how this filler text will 
-        look like at the top of the page. Nothing here but boring filler text. Bananas are actually a berry! 
-        The banana tree is not actually a tree, it is considered the world's largest shrub!  That should be enough filler text, if we double it!
+        You tear open the second envelop and find a small purple flask alongside a note. The note reads:<br />
+        <i>A Riddle Man must be bold and resourceful. 
+          Prove you are both by attaining $1 million dollars by sundown tomorrow. 
+          You may use the included potion of somnolence to aide you in this task.</i> <br /> <br />
+        After quickly Googling somnolence, you come up with a brilliant plan: first, you'll sneak into the local racetrack with the help of the Riddeman's sleeping potion.
+         Once inside, you'll race each horse and time them to determine the fastest three. The next day you'll place a winning trifecta bet (fastest 3 horses), which if you put your entire life savings into should result in a $1 million dollar payout!
+         <br /> <br />
+         You successfully sneak into the racetrack and are about to start timing horses when you discover you've forgotten your stopwatch at home! 
+         After some thinking, you realize you can still determine the fastest three horses by racing five horses at a time and marking down the order in which they finish.
+         However, each additional race you set up increases the risk that the sleeping security guards will wake up. 
+         How can you determine the fastest three horses in the least amount of races?
       </p>
     </Box>
-
-      <Box sx={{display: "flex", alignItems: "center", flexDirection: "column", width: "75vw", position: "relative", mb:"2vh", minHeight:"15vh"}}>
-        <Button onClick={() => submitRace()}>Race Horses!</Button>
-        <Grid 
-          container 
-          spacing={1} 
-          columns={6} 
-          direction = "row" 
-          sx={{
-            display: "flex",
-            width: "50%"
-          }}
-        >
-      {currentRace.map((horseIdx, idx) => (
-        <HorseGridElement key={idx} horseNumber={horseIdx + 1} onClick={() => removeHorseFromRace(horseIdx)}/>))}
-      </Grid> 
-        
-        </Box>
       <Box sx={{display: "flex", justifyContent: "space-between", flexDirection: "row", width: "75vw", position: "relative", mb:"1vh"}}>
-      <Box sx={{display: "flex", flexDirection: "column", width: "30vw", position: "relative", mb:"1vh"}}>
+      <Box sx={{display: "flex", flexDirection: "column", width: "25vw", position: "relative", mb:"1vh"}}>
         Select 5 horses to race!
       <Grid 
           container 
@@ -156,6 +174,7 @@ function HorseRiddlePage() {
           columns={5} 
           direction = "row" 
           sx={{
+            mt: "1vh",
             display: "flex",
             width: "100%"
           }}
@@ -164,8 +183,65 @@ function HorseRiddlePage() {
         <HorseGridElement key={idx} horseNumber={idx + 1} onClick={() => addRemoveHorseToRace(idx)}/>))}
         </Grid>
         </Box> 
-        
-      <Box sx={{display: "flex", flexDirection: "column", width: "30vw", position: "relative", mb:"1vh"}}>
+        <Box sx={{display: "flex", alignItems: "center", flexDirection: "column", width: "25vw", position: "relative", mb:"2vh", minHeight:"15vh"}}>
+          <Box sx={{display: "flex", alignItems: "center", flexDirection: "column", width: "25vw", minHeight: "15vh"}}>
+       
+        Current Race:
+        <Grid 
+          container 
+          spacing={1} 
+          columns={5} 
+          direction = "row" 
+          sx={{
+            display: "flex",
+            width: "80%",
+            mt: "1vh"
+          }}
+        >     
+      {currentRace.map((horseIdx, idx) => (
+        <HorseGridElement key={idx} horseNumber={horseIdx + 1} onClick={() => removeHorseFromRace(horseIdx)}/>))}
+      </Grid> 
+      </Box>
+        <Button variant="contained" onClick={() => submitRace()} disabled={currentRace.length != 5}>Race Horses!</Button>
+
+        <Box sx={{display: "flex", flexDirection: "column", width: "22vw", justifyContent: "center", alignItems: "center", position: "absolute", bottom: "10%"}}>
+                              <Box sx={{display: "flex", width: "100%", justifyContent: "center", position: "relative", mb:"2vh"}}>
+          <p>{trifectaStatusMessage}</p>
+          </Box>
+                    <Stack 
+            direction="row"
+            justifyContent="center" 
+            divider={<Divider orientation="vertical" flexItem />}
+            spacing={2}
+            sx={{mb: "2vh"}}
+          >
+
+                      <TextField
+                        id="fastestHorse"
+                        variant="standard" 
+                        label="Fastest Horse"
+                        onChange={(e) => handleTrifectaChange(e, setFastestHorse)}
+                      />
+                    <TextField
+                      id="secondFastestHorse"
+                      variant="standard" 
+                      label="2nd Fastest Horse"
+                      onChange={(e) => handleTrifectaChange(e, setSecondFastestHorse)}
+                    />
+                    <TextField
+                      id="thirdFastestHorse"
+                      variant="standard" 
+                      label="3rd Fastest Horse"
+                      onChange={(e) => handleTrifectaChange(e, setThirdFastestHorse)}
+                    />
+                    </Stack>
+                    
+
+    <Button onClick={() => submitRace()}>Place Trifecta Bet</Button>
+                    </Box>
+        </Box>
+      {/* </Box> */}
+      <Box sx={{display: "flex", flexDirection: "column", width: "25vw", position: "relative", mb:"1vh"}}>
         <Box sx={{mb:"1vh"}}>
         Previous Races:  
         </Box>
@@ -197,11 +273,8 @@ function HorseRiddlePage() {
       </Grid>
       </Box>
       </Box>
-      
       </Box>
   )
       }
     
-
-
 export default HorseRiddlePage
