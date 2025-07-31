@@ -214,7 +214,6 @@ function RatRiddlePage() {
     </Box>
     </Fade>
     </Box>
-    
   )
 }
 

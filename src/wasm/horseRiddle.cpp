@@ -4,14 +4,13 @@
 const uint32_t NUM_HORSES = 25;
 const uint32_t NUM_HORSES_PER_RACE = 5;
 const uint32_t HORSE_ORDER_CORRECT_CODE = 0;
-const uint32_t POTENTIALLY_FASTER_HORSE_CODE = 1;
+const uint32_t POTENTIAL_FASTER_HORSE_CODE = 1;
 const uint32_t DEFINITE_FASTER_HORSE_CODE = 2;
 
 class Horse {
     public:
         uint32_t absolutePosition {};
         bool isDeleted {false};
-        
 
         Horse() : absolutePosition {positionGenerator++} {}
 
@@ -59,7 +58,6 @@ class HorseRiddle {
         std::vector<uint32_t> submitRace(std::vector<uint32_t> inputHorses) {
             std::vector<uint32_t> orderedHorses = getOrder(inputHorses);
             updateOrderGraph(orderedHorses);
-
             return orderedHorses;
         }
 
@@ -69,16 +67,22 @@ class HorseRiddle {
                 if (sources.size() != 1) {
                     for (uint32_t source : sources) {
                         if (source != inputPosition) {
-                            return std::vector<uint32_t> {POTENTIALLY_FASTER_HORSE_CODE, source, inputPosition};
+                            return std::vector<uint32_t> {POTENTIAL_FASTER_HORSE_CODE, source + 1, inputPosition + 1};
                         }
                     }
                 }
                 if (sources[0] != inputPosition) {
-                    return std::vector<uint32_t> {DEFINITE_FASTER_HORSE_CODE, sources[0], inputPosition};
+                    return std::vector<uint32_t> {DEFINITE_FASTER_HORSE_CODE, sources[0] + 1, inputPosition + 1};
                 }
                 horses[sources[0]]->isDeleted = true;
             }
             return std::vector<uint32_t> {HORSE_ORDER_CORRECT_CODE, 0, 0};
+        }
+
+        void resetDeletedHorses() {
+            for (Horse* horse : horses) {
+                horse->isDeleted = false;
+            }
         }
 
     private:
@@ -168,10 +172,11 @@ uint32_t checkAnswer(uint32_t input) {
     std::vector<uint32_t> submittedHorses {};
     uint32_t fiveBitMask = 0x1f; // 5 bit mask
     for (uint32_t i {0}; i < 3; i++) {
-        submittedHorses.push_back(input & fiveBitMask);
+        submittedHorses.push_back((input & fiveBitMask) - 1);
         input >>= 5; 
     }
     std::vector<uint32_t> answer = horseRiddle.checkAnswer(submittedHorses);
+    horseRiddle.resetDeletedHorses();
     uint32_t answerIntForm = 0;
     for(uint32_t i : answer) {
         answerIntForm <<= 5;
@@ -183,7 +188,7 @@ uint32_t checkAnswer(uint32_t input) {
 [[clang::export_name("doEverything")]]
 uint32_t doEverything() {
     
-    uint32_t mynum1 = submitRace(34916);
+    submitRace(34916);
     submitRace(5446921);
     submitRace(10858926);
     submitRace(16270931);
