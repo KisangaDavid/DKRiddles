@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import horseImg from "/src/assets/horseClipArt.jpg";
 import Fade from "@mui/material/Fade";
 import HorseRiddleResults from "./HorseRiddleResults.jsx";
+import Confetti from 'react-confetti'
 import Box from "@mui/material/Box";
 import TopBar from "../common/TopBar.jsx";
 import HorseGridElement from "./HorseGridElement.jsx";
@@ -35,6 +36,7 @@ function HorseRiddlePage() {
   const [wrongReason, setWrongReason] = useState("");
   const [secondFastestHorse, setSecondFastestHorse] = useState(-1);
   const [thirdFastestHorse, setThirdFastestHorse] = useState(-1);
+  const {width, height} = useWindowSize();
   const theme = useTheme();
 
   // unused, but required by wasm binary
@@ -64,29 +66,23 @@ function HorseRiddlePage() {
   // let wrongAnswerReasonMessage = getWrongAnswerReason()
   let trifectaErrorMessage = validateTriectaBet();
 
-
   useEffect(() => {
     init(imports).then((instance) => {
       setWasmModule(instance);
     });
   }, []);
 
-  // const submitAllRacesAndCheck = () => {
-  //   // submitRace([0,1,2,3,4]);
-  //   // submitRace([5,6,7,8,9]);
-  //   // submitRace([10,11,12,13,14]);
-  //   // submitRace([15,16,17,18,19]);
-  //   // submitRace([20,21,22,23,24]);
-  //   // submitRace([0,6,12,17,22]);
-  //   // submitRace([17,6,15,24,20]);
-  //   let horsesToSubmit = [20, 24, 22];
-  //   let horsesToSubmitInt = 0;
-  //   for (const horse of horsesToSubmit) {
-  //     horsesToSubmitInt <<= 5;
-  //     horsesToSubmitInt |= horse;
-  //   }
-  // }
-  console.log("finished races: " + finishedRaces.length);
+  const resetPuzzle = () => {
+    setCurrentRace([]);
+    setFinishedRaces([]);
+    setSubmittedAns(false)
+    setCorrectAns(false)
+    setWrongReason("")
+    setFastestHorse(-1);
+    setSecondFastestHorse(-1);
+    setThirdFastestHorse(-1);
+  }
+
   const addRemoveHorseToRace = (horseIdx) => {
     if (currentRace.includes(horseIdx)) {
       removeHorseFromRace(horseIdx);
@@ -175,7 +171,8 @@ function HorseRiddlePage() {
           "radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))",
       }}
     >
-      <TopBar text="Envelope #2: Hasty Horses" isHomePage={false} />
+      <TopBar text="Envelope #2: Hasty Horses" isHomePage={false} resetFunc={resetPuzzle} />
+      {correctAns && <Confetti width={width} height={height}/>}
       <Box
         sx={{
           display: "flex",
@@ -213,9 +210,10 @@ function HorseRiddlePage() {
           races?
         </p>
       </Box>
+
       {!correctAns && <Fade in={true} mountOnEnter unmountOnExit 
               timeout={theme.transitions.duration.longTextFade}>
-      <Box
+              <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
@@ -396,15 +394,17 @@ function HorseRiddlePage() {
                 {idx % 6 == 0
                   ? "Race #" + (1 + idx / 6)
                   : finishedRaces.length > idx - 1 - Math.floor(idx / 6)
-                  ? finishedRaces[idx - 1 - Math.floor(idx / 6)] + 1
-                  : ""}
+                    ? finishedRaces[idx - 1 - Math.floor(idx / 6)] + 1
+                    : ""}
               </Grid>
             ))}
           </Grid>
         </Box>
-      </Box>
+            </Box>
       </Fade>}
-      {correctAns && <HorseRiddleResults numRaces={finishedRaces.length / 5}/>}
+      <Box sx={{display: "flex", flexGrow: 1, width: "75vw", alignItems: "center"}}> 
+      {correctAns && <HorseRiddleResults numRaces={finishedRaces.length / 5} fastestHorse={fastestHorse} secondFastestHorse={secondFastestHorse} thirdFastestHorse={thirdFastestHorse}/>}
+</Box>
     </Box>
   );
 }

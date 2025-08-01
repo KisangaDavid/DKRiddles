@@ -129,7 +129,7 @@ function RatRiddlePage() {
       overflow: "auto",
       backgroundImage:'radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))',
     }}>
-    <TopBar text="Envelope #1: The Sneaky Rat" isHomePage={false} />
+    <TopBar text="Envelope #1: The Sneaky Rat" isHomePage={false} resetFunc={resetPuzzle}/>
     {confetti && <Confetti width={width} height={height}/>}
     <Box sx={{width: "80vw", position: "relative", mb:"1vh"}}>
       <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.longTextFade}>
@@ -203,14 +203,6 @@ function RatRiddlePage() {
             />
           </Box>
       }
-      <Button 
-        sx={{position: "relative", float: "left", top: submittedTraps && solved ? "-4vh" : 0}}
-        variant="text" color="secondary"
-        startIcon={<RefreshIcon />}
-        onClick={resetPuzzle}
-      >
-        Reset Puzzle
-      </Button>
     </Box>
     </Fade>
     </Box>

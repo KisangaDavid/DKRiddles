@@ -5,11 +5,12 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import MenuDrawerContents from './MenuDrawerContents';
 
-function TopBar({text, isIntroPage}) {
+function TopBar({text, isIntroPage, resetFunc}) {
 
   const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
 
@@ -48,7 +49,7 @@ function TopBar({text, isIntroPage}) {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2, zIndex: 1000 }}
+            sx={{ zIndex: 1000 }}
             onClick={() => setMenuDrawerOpen(true)}
           >
             <MenuIcon />
@@ -56,6 +57,14 @@ function TopBar({text, isIntroPage}) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, position: "absolute", left: 0, right: 0 }}>
             {text}
           </Typography>
+          {!isIntroPage && <IconButton
+            size="large"
+            edge="end"
+            color="inherit"
+            aria-label="menu"
+            sx={{zIndex: 1000}}
+            onClick={() => resetFunc()}
+          ><RefreshIcon /></IconButton>}
         </StyledToolbar>
       </AppBar>
       <Drawer 
