@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react'
-import { useWindowSize } from 'react-use'
+import { useState, useCallback } from 'react';
+import { useWindowSize } from 'react-use';
 import { useTheme } from '@mui/material/styles';
-import init from '/src/wasm/ratRiddle.wasm?init'
 
 import RowOfHouses from './RowOfHouses.jsx';
 import SolvedStack from './SolvedStack.jsx';
@@ -11,13 +10,12 @@ import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import Box from "@mui/material/Box";
 import TopBar from '../common/TopBar.jsx';
 
 const NUM_HOUSES = 8;
 
-function RatRiddlePage() {
+function RatRiddlePage({wasmModule}) {
 
   const [submittedTraps, setSubmittedTraps] = useState(false);
   const [confetti, setConfetti] = useState(false);
@@ -25,7 +23,6 @@ function RatRiddlePage() {
   const [curDay, setCurDay] = useState(0);
   const [prevDay, setPrevDay] = useState(-1);
   const [totalDays, setTotalDays] = useState(0);
-  const [wasmModule, setWasmModule] = useState(null);
   const [allCheckedHouses, setAllCheckedHouses] = useState([]);
   const [curCheckedHouses, setCurCheckedHouses] = useState(new Set());
 
@@ -33,21 +30,6 @@ function RatRiddlePage() {
   const theme = useTheme();
 
   const solved = path.length == 0;
-
-  // unused, but required by wasm binary
-  const imports = {
-    "wasi_snapshot_preview1": {
-      "proc_exit": () => {},
-      "fd_close": () => {},
-      "fd_write": () => {},
-      "fd_seek": () => {}
-    }
-  }
-
-  useEffect(() => {
-    init(imports).then((instance) => {
-      setWasmModule(instance);
-  })}, []);
 
   const trapHouse = (index) => {
     const newSet = new Set(curCheckedHouses);
@@ -98,15 +80,15 @@ function RatRiddlePage() {
     setPath(path);
   }
 
-  const resetPuzzle = () => {
+  const resetPuzzle = useCallback(() => {
     setAllCheckedHouses([]);
     setCurCheckedHouses(new Set());
     setCurDay(0);
     setSubmittedTraps(false);
     setPath([]);
     setPrevDay(-1);
-    setConfetti(false);
-  }
+    setConfetti(false)}, []
+  );
 
   const handleSliderChange = (_, value) => {
     setPrevDay(curDay);
@@ -131,32 +113,25 @@ function RatRiddlePage() {
     }}>
     <TopBar text="Envelope #1: The Sneaky Rat" isHomePage={false} resetFunc={resetPuzzle}/>
     {confetti && <Confetti width={width} height={height}/>}
+    <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
     <Box sx={{width: "80vw", position: "relative", mb:"1vh"}}>
-      <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.longTextFade}>
       <p> 
         You open the first envelope. Inside you find a notecard, along with two rat traps. The notecard reads: <br />
         <i>You will find that the neighborhood adjacent to yours is suffering from a mysterious rat infestation. 
         Solve their rodent problem using only the two provided rat traps and your own logical ability.</i> 
       </p>
-      </Fade>
-      <Fade in={true} mountOnEnter unmountOnExit 
-        timeout={theme.transitions.duration.longTextFade} style={{
-                    transitionDelay: 350
-                  }}>
       <p>After arriving at the rat infested neighborhood 
         and doing some preliminary investigation, you discover that the neighborhood is actually being plagued by just a single rat, 
         which sneaks over to an adjacent house every night. You know that if you trap houses 1 and 2 on the first day, 2 and 3 on the second day,
         3 and 4 on the third day, and so on, you can guarantee that you'll catch the rat in 7 days. However, Mr. Riddle Man will not accept anything but perfection - 
         what strategy can you employ that is guaranteed to catch the rat in the least amount of days?
       </p>
-      </Fade>
-      
     </Box>
+    </Fade>
       <Fade in={true} mountOnEnter unmountOnExit 
         timeout={theme.transitions.duration.longTextFade}
-        style={{
-                    transitionDelay: 800 // add a lil to make it look nicer
-                  }}>
+        style={{transitionDelay: theme.delays.duration.longDelay}}
+      >
     <Box sx={{position: "relative", width: "75vw", height: "50vh"}}>
       <RowOfHouses 
         NUM_HOUSES={NUM_HOUSES}   
@@ -186,7 +161,7 @@ function RatRiddlePage() {
       {submittedTraps && solved &&
          <Box >
           <SolvedStack 
-            checkBonusAnswer={wasmModule != null ? wasmModule.exports.checkBonusAnswer : () =>{}}
+            checkBonusAnswer={wasmModule.exports.checkBonusAnswer}
             setConfetti={setConfetti}      
             totalDays={totalDays} 
           />

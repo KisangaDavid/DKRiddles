@@ -28,7 +28,7 @@ function IntroductionPage() {
         backgroundImage:'radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))',
       }}
     >
-      <TopBar text="Introduction" isIntroPage={true} />
+      <TopBar text="Introduction" isIntroPage={true} func />
       <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
         <Box sx={{width: "75vw", position: "relative", mb:"1vh"}}>
           <p> 
@@ -87,7 +87,7 @@ function IntroductionPage() {
             </Fade>
           </Grid>
           <Grid size={{ sm: 12, lg: 6}} style={{display: "flex", justifyContent: 'center', alignItems: "center"}}>   
-            <Fade in={true}  mountOnEnter unmountOnExit style = {{transitionDelay: 750}} timeout={theme.transitions.duration.longTextFade}>           
+            <Fade in={true}  mountOnEnter unmountOnExit style = {{transitionDelay: theme.delays.duration.longDelay}} timeout={theme.transitions.duration.longTextFade}>           
               <p style={{ textAlign: 'left' }}>
                 The letter reads: <br /> <br />
                 <i>
@@ -121,11 +121,11 @@ function IntroductionPage() {
           <Grid size={{ sm: 6, lg: 4 }}>
             <PuzzleCard 
               puzzleImage = {mysteryLetter} 
-              puzzleName = "Puzzle in Progress!" 
+              puzzleName = "Hasty Horses" 
               puzzleNumber = "2" 
-              puzzleDescription = "Mr. Riddle Man isn't ready to show this puzzle yet, come back later!"
+              puzzleDescription = "Deduce your way into a million dollars at the horse races!"
               puzzlePath = "/horseRiddle" 
-              transitionDelay={350}
+              transitionDelay={theme.delays.duration.standardDelay}
             />
           </Grid>
           <Grid size={{ sm: 6, lg: 4 }}>
@@ -135,7 +135,7 @@ function IntroductionPage() {
               puzzleNumber = "2" 
               puzzleDescription = "Mr. Riddle Man isn't ready to show this puzzle yet, come back later!"
               puzzlePath = "/" 
-              transitionDelay={700}
+              transitionDelay={theme.delays.duration.standardDelay * 2}
             />
           </Grid>
         </Grid>

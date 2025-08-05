@@ -1,20 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { useWindowSize } from "react-use";
 import { useTheme } from "@mui/material/styles";
-import init from "/src/wasm/horseRiddle.wasm?init";
 
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import horseImg from "/src/assets/horseClipArt.jpg";
 import Fade from "@mui/material/Fade";
 import HorseRiddleResults from "./HorseRiddleResults.jsx";
 import Confetti from 'react-confetti'
 import Box from "@mui/material/Box";
 import TopBar from "../common/TopBar.jsx";
 import HorseGridElement from "./HorseGridElement.jsx";
+import Zoom from "@mui/material/Zoom";
 
 const HORSE_ORDER_CORRECT_CODE = 0;
 const POTENTIAL_FASTER_HORSE_CODE = 1;
@@ -26,28 +25,20 @@ const MAX_NUM_RACES = 15;
 const INVALID_HORSE_MSG = "Enter an integer between 1 and 25 for each position!";
 const NO_DUP_HORSES_MSG = "You cannot enter the same horse in two different positions!";
 
-function HorseRiddlePage() {
-  const [wasmModule, setWasmModule] = useState(null);
+function HorseRiddlePage({wasmModule}) {
+  const [hasBeenReset, setHasBeenReset] = useState(false);
+  const [confetti, setConfetti] = useState(false); // maybe don't need state
   const [currentRace, setCurrentRace] = useState([]);
   const [finishedRaces, setFinishedRaces] = useState([]);
-  const [fastestHorse, setFastestHorse] = useState(-1);
   const [submittedAns, setSubmittedAns] = useState(false);
   const [correctAns, setCorrectAns] = useState(false);
   const [wrongReason, setWrongReason] = useState("");
+  const [fastestHorse, setFastestHorse] = useState(-1);
   const [secondFastestHorse, setSecondFastestHorse] = useState(-1);
-  const [thirdFastestHorse, setThirdFastestHorse] = useState(-1);
+  const [thirdFastestHorse, setThirdFastestHorse] = useState(-1); // maybe simplified into size 3 array
   const {width, height} = useWindowSize();
   const theme = useTheme();
 
-  // unused, but required by wasm binary
-  const imports = {
-    wasi_snapshot_preview1: {
-      proc_exit: () => {},
-      fd_close: () => {},
-      fd_write: () => {},
-      fd_seek: () => {},
-    },
-  }; // TODO: consolidate all the wasm stuff
   let trifectaBetFilled = fastestHorse != -1 && secondFastestHorse != -1 && thirdFastestHorse != -1;
 
   const validateTriectaBet = () => {
@@ -63,25 +54,21 @@ function HorseRiddlePage() {
     return "";
   };
 
-  // let wrongAnswerReasonMessage = getWrongAnswerReason()
+  // TODO: use memo on validateTrifectaBet?
   let trifectaErrorMessage = validateTriectaBet();
 
-  useEffect(() => {
-    init(imports).then((instance) => {
-      setWasmModule(instance);
-    });
-  }, []);
-
-  const resetPuzzle = () => {
-    setCurrentRace([]);
+  const resetPuzzle = useCallback(() => {
+    setCurrentRace([]); 
     setFinishedRaces([]);
-    setSubmittedAns(false)
-    setCorrectAns(false)
-    setWrongReason("")
+    setSubmittedAns(false);
+    setCorrectAns(false);
+    setConfetti(false);
+    setWrongReason("");
     setFastestHorse(-1);
     setSecondFastestHorse(-1);
     setThirdFastestHorse(-1);
-  }
+    setHasBeenReset(true);
+  }, []);
 
   const addRemoveHorseToRace = (horseIdx) => {
     if (currentRace.includes(horseIdx)) {
@@ -105,7 +92,7 @@ function HorseRiddlePage() {
   };
 
   const submitRace = () => {
-    console.log(currentRace); // use currentRace mayhaps
+    console.log(currentRace);
     let intRepHorsesToRace = 0;
     for (const horse of currentRace) {
       intRepHorsesToRace <<= 5;
@@ -121,14 +108,14 @@ function HorseRiddlePage() {
     for (let i = 0; i < RACE_LENGTH; i++) {
       horseOrder.push(intRes & 0x1f);
       intRes >>= 5;
-    } // 35970 is what we want
+    }
     console.log("horse order: " + horseOrder);
     setFinishedRaces([...finishedRaces, ...horseOrder.reverse()]);
   };
 
   const checkAnswer = () => {
     setSubmittedAns(true);
-    let horsesToSubmit = [thirdFastestHorse - 1, secondFastestHorse - 1, fastestHorse - 1];
+    let horsesToSubmit = [thirdFastestHorse, secondFastestHorse, fastestHorse];
     let horsesToSubmitInt = 0;
     for (const horse of horsesToSubmit) {
       horsesToSubmitInt <<= 5;
@@ -158,6 +145,8 @@ function HorseRiddlePage() {
     }
   };
 
+  console.log("wasmModule: " + wasmModule);
+
   return (
     <Box
       sx={{
@@ -172,48 +161,52 @@ function HorseRiddlePage() {
       }}
     >
       <TopBar text="Envelope #2: Hasty Horses" isHomePage={false} resetFunc={resetPuzzle} />
-      {correctAns && <Confetti width={width} height={height}/>}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "80vw",
-          position: "relative",
-          mb: "2vh",
-        }}
-      >
-        <p>
-          You tear open the second envelop and find a small purple flask
-          alongside a note. The note reads:
-          <br />
-          <i>
-            A Riddle Man must be bold and resourceful. Prove you are both by
-            attaining $1 million dollars by sundown tomorrow. You may use the
-            included potion of somnolence to aide you in this task.
-          </i>{" "}
-          <br /> <br />
-          After quickly Googling somnolence, you come up with a brilliant plan:
-          first, you'll sneak into the local racetrack with the help of the
-          Riddeman's sleeping potion. Once inside, you'll race each horse and
-          time them to determine the fastest three. The next day you'll place a
-          winning trifecta bet (fastest 3 horses), which if you put your entire
-          life savings into should result in a $1 million dollar payout!
-          <br /> <br />
-          You successfully sneak into the racetrack and are about to start
-          timing horses when you discover you've forgotten your stopwatch at
-          home! After some thinking, you realize you can still determine the
-          fastest three horses by racing five horses at a time and marking down
-          the order in which they finish. However, each additional race you set
-          up increases the risk that the sleeping security guards will wake up.
-          How can you determine the fastest three horses in the least amount of
-          races?
-        </p>
-      </Box>
-
-      {!correctAns && <Fade in={true} mountOnEnter unmountOnExit 
-              timeout={theme.transitions.duration.longTextFade}>
-              <Box
+      {confetti && <Confetti width={width} height={height}/>}
+      <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "80vw",
+            position: "relative",
+            mb: "2vh",
+          }}
+        >
+          <p>
+            You tear open the second envelop and find a small purple flask
+            alongside a note. The note reads:
+            <br />
+            <i>
+              A Riddle Man must be bold and resourceful. Prove you are both by
+              attaining $1 million dollars by sundown tomorrow. You may use the
+              included potion of somnolence to aide you in this task.
+            </i>{" "}
+            <br /> <br />
+            After quickly Googling somnolence, you come up with a brilliant plan:
+            first, you'll sneak into the local racetrack with the help of the
+            Riddeman's sleeping potion. Once inside, you'll race each horse and
+            time them to determine the fastest three. The next day you'll place a
+            winning trifecta bet (fastest 3 horses), which if you put your entire
+            life savings into should result in a $1 million dollar payout!
+            <br /> <br />
+            You successfully sneak into the racetrack and are about to start
+            timing horses when you discover you've forgotten your stopwatch at
+            home! After some thinking, you realize you can still determine the
+            fastest three horses by racing five horses at a time and marking down
+            the order in which they finish. However, each additional race you set
+            up increases the risk that the sleeping security guards will wake up.
+            How can you determine the fastest three horses in the least amount of
+            races?
+          </p>
+        </Box>
+      </Fade>
+      {!correctAns && 
+        <Fade in={true} mountOnEnter unmountOnExit 
+              timeout={theme.transitions.duration.longTextFade}
+              style={{transitionDelay: hasBeenReset ? 0 : theme.delays.duration.longDelay}}
+        >
+          <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
@@ -286,7 +279,7 @@ function HorseRiddlePage() {
                 mt: "1vh",
               }}
             >
-              {currentRace.map((horseIdx, idx) => (
+              {currentRace.map((horseIdx, idx) => (  
                 <HorseGridElement
                   key={idx}
                   horseNumber={horseIdx + 1}
@@ -352,7 +345,7 @@ function HorseRiddlePage() {
               />
             </Stack>
 
-            <Button variant="contained" disabled = {!trifectaBetFilled || trifectaErrorMessage != ""}onClick={() => checkAnswer()}>Place Trifecta Bet</Button>
+            <Button variant="contained" disabled = {!trifectaBetFilled || trifectaErrorMessage != ""} onClick={() => checkAnswer()}>Place Trifecta Bet</Button>
           </Box>
         </Box>
         <Box
@@ -403,7 +396,7 @@ function HorseRiddlePage() {
             </Box>
       </Fade>}
       <Box sx={{display: "flex", flexGrow: 1, width: "75vw", alignItems: "center"}}> 
-      {correctAns && <HorseRiddleResults numRaces={finishedRaces.length / 5} fastestHorse={fastestHorse} secondFastestHorse={secondFastestHorse} thirdFastestHorse={thirdFastestHorse}/>}
+      {correctAns && <HorseRiddleResults numRaces={finishedRaces.length / 5} setConfetti={setConfetti}/>}
 </Box>
     </Box>
   );

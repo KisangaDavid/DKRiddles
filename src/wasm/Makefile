@@ -20,6 +20,7 @@ EXEC = ratRiddle.exe
 # Wasm module name
 WASM_RAT_MODULE_NAME = ratRiddle.wasm
 WASM_HORSE_MODULE_NAME = horseRiddle.wasm
+WASM_ALL_MODULES_NAME = allModules.wasm
 
 # Default target (wasm binary)
 all: wasm
@@ -39,6 +40,8 @@ wasmRat: $(RATSRCS)
 wasmHorse: $(HORSESRCS)
 	$(CPP) $(CPPFLAGS) $(WASMCOMPFLAGS) $^ -o $(WASM_HORSE_MODULE_NAME) 
 
+wasmAll: $(RATSRCS) $(HORSESRCS)
+	$(CPP) $(CPPFLAGS) $(WASMCOMPFLAGS) $^ -o $(WASM_ALL_MODULES_NAME) 
 # Clean build artifacts
 clean:
 	del *.pdb *.ilk *.wasm *.exe *.o

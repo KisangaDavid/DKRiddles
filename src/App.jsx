@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import init from '/src/wasm/allModules.wasm?init'
 import RatRiddlePage from './components/ratRiddle/RatRiddlePage.jsx';
 import HorseRiddlePage from './components/horseRiddle/HorseRiddlePage.jsx';
 import IntroductionPage from './components/intro/IntroductionPage.jsx';
@@ -19,6 +21,12 @@ const theme = createTheme({
               longTextFade: 2000
             }
           },
+          delays: {
+            duration: {
+              standardDelay: 250,
+              longDelay: 500
+            }
+          },
           colorSchemes, 
           typography,
           shadows,
@@ -28,14 +36,35 @@ const theme = createTheme({
           },
         });
 function App() {
+
+  const [wasmModule, setWasmModule] = useState(null);
+  // unused, but required by wasm binary
+  const imports = {
+    "wasi_snapshot_preview1": {
+      "proc_exit": () => {},
+      "fd_close": () => {},
+      "fd_write": () => {},
+      "fd_seek": () => {}
+    }
+  }
+
+    useEffect(() => {
+      init(imports).then((instance) => {
+        setWasmModule(instance);
+    })}, []);
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<IntroductionPage />}/>
-          <Route path="/ratRiddle" element={<RatRiddlePage />}/>
-          <Route path="/horseRiddle" element={<HorseRiddlePage />}/>
-          </Routes>
+          {(wasmModule != null) && (
+            <>
+              <Route path="/" element={<IntroductionPage/>} />
+              <Route path="/ratRiddle" element={<RatRiddlePage wasmModule={wasmModule} />} />
+              <Route path="/horseRiddle" element={<HorseRiddlePage wasmModule={wasmModule} />} />
+            </>
+          )}
+        </Routes>
       </BrowserRouter>
     </ThemeProvider>
   );

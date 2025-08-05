@@ -1,6 +1,9 @@
 const MIN_NUM_RACES = 7;
 
-function HorseRiddleResults({numRaces, fastestHorse, secondFastestHorse, thirdFastestHorse}) {
+function HorseRiddleResults({numRaces, setConfetti}) {
+    if (numRaces == MIN_NUM_RACES) {
+        setConfetti(true);
+    }
   return (
     <>
       {numRaces == MIN_NUM_RACES ?
@@ -20,17 +23,14 @@ function HorseRiddleResults({numRaces, fastestHorse, secondFastestHorse, thirdFa
               Take pride in your success!
             </b>
           </i>
-        </p> // secondary puzzle maybe?
+        </p>
       : 
         <p>
-          After {numRaces} races, you correctly deduce that the fastest three
-          horses are horse {fastestHorse}, horse {secondFastestHorse}, and horse
-          {thirdFastestHorse}. However, as you are attempting to sneak out of
+          After {numRaces} races, you correctly deduce the fastest three horses.
+          However, you've taken too much time - as you are sneaking out of
           the racetrack, you are caught by a slightly drowsy but very much awake
-          security guard! Seems like you've taken too long to determine the
-          fastest three horses and the Riddle Man's sleeping potion has worn
-          off. You are beaten mercilessly and sentenced to 6 months in jail.
-          Reset the puzzle to try again!
+          security guard! You are beaten mercilessly and sentenced to 6 months in jail.<br /> <br />
+          <b>Reset the puzzle to try again!</b>
         </p>
     }
     </>

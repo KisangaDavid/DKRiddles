@@ -56,11 +56,11 @@ function MenuDrawerContents({setMenuDrawerOpen, isIntroPage}) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton sx={{py: "1.5vh"}}>
+          <ListItemButton onClick={() => navigate("/horseRiddle")} sx={{py: "1.5vh"}}>
             <ListItemIcon>
               <ExtensionIcon />
             </ListItemIcon>
-            <ListItemText primary={"Placeholder Puzzle 2"} />
+            <ListItemText primary={"Hasty Horses"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>

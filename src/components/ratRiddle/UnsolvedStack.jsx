@@ -12,7 +12,6 @@ function UnsolvedStack({curDay, totalDays, path, allCheckedHouses, handleSliderC
       <Stack justifyContent="center" alignItems="center" >
         <Slider 
           sx={{ width: '40%'}} 
-          // color="secondary"
           defaultValue={1}  
           valueLabelFormat={(value) => "Day " + value} 
           valueLabelDisplay="auto" 
@@ -24,9 +23,9 @@ function UnsolvedStack({curDay, totalDays, path, allCheckedHouses, handleSliderC
           onChange={handleSliderChange}
         />
         <p> You set the traps ... but fail to catch the rat. After some thinking, you realize that the rat could easily escape this arrangement of traps with the following strategy: <br /> <br />
-          On day {curDay + 1}, the rat {curDay == 0 ? "starts in" : "scurries over to"} house {path[curDay] + 1}. 
-          You trap houses{" "} {allCheckedHouses.length != 0 ? Math.min(...allCheckedHouses[curDay]) + 1 : 0} {" "}
-          and {allCheckedHouses.length != 0 ? Math.max(...allCheckedHouses[curDay]) + 1 : 0}.
+          On day {curDay + 1}, you trap houses{" "} {allCheckedHouses.length != 0 ? Math.min(...allCheckedHouses[curDay]) + 1 : 0} {" "}
+          and {allCheckedHouses.length != 0 ? Math.max(...allCheckedHouses[curDay]) + 1 : 0}. The rat {curDay == 0 ? "starts in" : "scurries over to"} house {path[curDay] + 1}. 
+         
         </p>
       </Stack>
    </Box>

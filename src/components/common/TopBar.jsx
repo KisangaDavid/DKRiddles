@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 
 import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -8,12 +8,15 @@ import IconButton from '@mui/material/IconButton';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
+import Fade from "@mui/material/Fade";
 import MenuDrawerContents from './MenuDrawerContents';
+import { useTheme } from '@mui/material/styles';
 
 function TopBar({text, isIntroPage, resetFunc}) {
-
-  const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
-
+// TODO: fades on text and buttons
+const theme = useTheme();  
+const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
+console.log("Top bar is re-rendered?");
   const StyledToolbar = styled(Toolbar)(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
@@ -57,7 +60,8 @@ function TopBar({text, isIntroPage, resetFunc}) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, position: "absolute", left: 0, right: 0 }}>
             {text}
           </Typography>
-          {!isIntroPage && <IconButton
+          {!isIntroPage && 
+          <IconButton
             size="large"
             edge="end"
             color="inherit"
@@ -84,4 +88,4 @@ function TopBar({text, isIntroPage, resetFunc}) {
   );
 }
 
-export default TopBar;
+export default memo(TopBar);

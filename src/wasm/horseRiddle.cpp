@@ -198,31 +198,31 @@ uint32_t doEverything() {
     return checkAnswer(21270);
 }
 
-int main() {
+// int main() {
 
-    uint32_t res = doEverything();
-    return static_cast<int>(res);
-    checkAnswer(21270);
-    // // HorseRiddle horseRiddle;
-    // std::vector<uint32_t> myRace1 {0,1,2,3,4};
-    // std::vector<uint32_t> myRace2 {5,6,7,8,9};
-    // std::vector<uint32_t> myRace3 {10,11,12,13,14};
-    // std::vector<uint32_t> myRace4 {15,16,17,18,19};
-    // std::vector<uint32_t> myRace5 {20,21,22,23,24};
-    // std::vector<uint32_t> myRace6 {0,6,12,17,22};
-    // std::vector<uint32_t> myRace7 {17,6,15,24,20};
-    // std::vector<uint32_t> positions {22,24,20};
-    // // std::vector<uint32_t> myRace7 {20, 6,  // 22 is a LOCK race 4 is group 2 race 2 is group 3
-    // // std::vector<uint32_t> myRace {1,2,3,4,5};
-    // int race1Winner = horseRiddle.submitRace(myRace1);
-    // int race2Winner = horseRiddle.submitRace(myRace2);
-    // int race3Winner = horseRiddle.submitRace(myRace3);
-    // int race4Winner = horseRiddle.submitRace(myRace4);
-    // int race5Winner = horseRiddle.submitRace(myRace5);
-    // int race6Winner = horseRiddle.submitRace(myRace6);
-    // int race7Winner = horseRiddle.submitRace(myRace7);
-    // // final 3: 22, 24, 20
-    // // race 7: 2 & 3 from race 6 (17,6), 2nd from race 4 (15), 2nd 3rd from dub squad (race 5) (24,20)
-    // std::vector<uint32_t> answer2 = horseRiddle.checkAnswer({1,2,3});
-    // std::vector<uint32_t> answer1 = horseRiddle.checkAnswer(positions);
-}
+//     uint32_t res = doEverything();
+//     return static_cast<int>(res);
+//     checkAnswer(21270);
+//     // // HorseRiddle horseRiddle;
+//     // std::vector<uint32_t> myRace1 {0,1,2,3,4};
+//     // std::vector<uint32_t> myRace2 {5,6,7,8,9};
+//     // std::vector<uint32_t> myRace3 {10,11,12,13,14};
+//     // std::vector<uint32_t> myRace4 {15,16,17,18,19};
+//     // std::vector<uint32_t> myRace5 {20,21,22,23,24};
+//     // std::vector<uint32_t> myRace6 {0,6,12,17,22};
+//     // std::vector<uint32_t> myRace7 {17,6,15,24,20};
+//     // std::vector<uint32_t> positions {22,24,20};
+//     // // std::vector<uint32_t> myRace7 {20, 6,  // 22 is a LOCK race 4 is group 2 race 2 is group 3
+//     // // std::vector<uint32_t> myRace {1,2,3,4,5};
+//     // int race1Winner = horseRiddle.submitRace(myRace1);
+//     // int race2Winner = horseRiddle.submitRace(myRace2);
+//     // int race3Winner = horseRiddle.submitRace(myRace3);
+//     // int race4Winner = horseRiddle.submitRace(myRace4);
+//     // int race5Winner = horseRiddle.submitRace(myRace5);
+//     // int race6Winner = horseRiddle.submitRace(myRace6);
+//     // int race7Winner = horseRiddle.submitRace(myRace7);
+//     // // final 3: 22, 24, 20
+//     // // race 7: 2 & 3 from race 6 (17,6), 2nd from race 4 (15), 2nd 3rd from dub squad (race 5) (24,20)
+//     // std::vector<uint32_t> answer2 = horseRiddle.checkAnswer({1,2,3});
+//     // std::vector<uint32_t> answer1 = horseRiddle.checkAnswer(positions);
+// }

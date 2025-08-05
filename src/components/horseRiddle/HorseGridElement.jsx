@@ -4,6 +4,8 @@ import { useTheme } from '@mui/material/styles';
 import init from '/src/wasm/horseRiddle.wasm?init'
 
 import Grid from '@mui/material/Grid';
+import Zoom from "@mui/material/Zoom";
+
 import Confetti from 'react-confetti'
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
@@ -15,7 +17,7 @@ import Box from "@mui/material/Box";
 import TopBar from '../common/TopBar.jsx';
 
 function HorseGridElement({horseNumber, onClick}) {
-    return <Grid size={1}
+    return <Zoom in={true} mountOnEnter unmountOnExit><Grid size={1}
           display="flex" 
           flexDirection="column"
           justifyContent="center" 
@@ -28,7 +30,9 @@ function HorseGridElement({horseNumber, onClick}) {
             onClick={onClick}
           />
           {horseNumber}
+        
           </Grid>
+          </Zoom>
 }
 
 export default HorseGridElement
