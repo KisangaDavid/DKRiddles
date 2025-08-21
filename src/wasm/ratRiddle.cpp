@@ -1,3 +1,4 @@
+#include "wasmUtils.h"
 #include <vector>
 // #include <cstdint>
 

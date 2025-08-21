@@ -8,8 +8,9 @@ CPPFLAGS = -Wall -Wno-unknown-attributes -Werror -Weffc++ -Wextra -Wconversion -
 WASMCOMPFLAGS = --target=wasm32-wasi -fno-exceptions --sysroot="C:\Coding\wasi-sdk-25.0-x86_64-windows\share\wasi-sysroot" -Xlinker --export-dynamic
 
 # Source files
-RATSRCS = ratRiddle.cpp
-HORSESRCS = horseRiddle.cpp
+SRCS = ratRiddle.cpp horseRiddle.cpp wasmUtils.cpp
+
+HDRS = wasmUtils.h
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)
@@ -40,8 +41,9 @@ wasmRat: $(RATSRCS)
 wasmHorse: $(HORSESRCS)
 	$(CPP) $(CPPFLAGS) $(WASMCOMPFLAGS) $^ -o $(WASM_HORSE_MODULE_NAME) 
 
-wasmAll: $(RATSRCS) $(HORSESRCS)
+wasmAll: $(SRCS)
 	$(CPP) $(CPPFLAGS) $(WASMCOMPFLAGS) $^ -o $(WASM_ALL_MODULES_NAME) 
+	
 # Clean build artifacts
 clean:
 	del *.pdb *.ilk *.wasm *.exe *.o

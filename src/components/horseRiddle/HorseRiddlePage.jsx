@@ -33,18 +33,20 @@ function HorseRiddlePage({wasmModule}) {
   const [submittedAns, setSubmittedAns] = useState(false);
   const [correctAns, setCorrectAns] = useState(false);
   const [wrongReason, setWrongReason] = useState("");
-  const [fastestHorse, setFastestHorse] = useState(-1);
-  const [secondFastestHorse, setSecondFastestHorse] = useState(-1);
-  const [thirdFastestHorse, setThirdFastestHorse] = useState(-1); // maybe simplified into size 3 array
+  const [fastestHorse, setFastestHorse] = useState(null);
+  const [secondFastestHorse, setSecondFastestHorse] = useState(null);
+  const [thirdFastestHorse, setThirdFastestHorse] = useState(null); // maybe simplified into size 3 array
   const {width, height} = useWindowSize();
   const theme = useTheme();
 
-  let trifectaBetFilled = fastestHorse != -1 && secondFastestHorse != -1 && thirdFastestHorse != -1;
+  let trifectaBetFilled = fastestHorse !== null && secondFastestHorse !== null && thirdFastestHorse !== null;
 
   const validateTriectaBet = () => {
     console.log("validating trifecta bet!");
     if (trifectaBetFilled) {
-      if (fastestHorse > 25 || secondFastestHorse > 25 || thirdFastestHorse > 25) {
+      if (fastestHorse > 25 || secondFastestHorse > 25 || thirdFastestHorse > 25
+        || fastestHorse < 1  || secondFastestHorse < 1 || thirdFastestHorse < 1
+      ) {
         return INVALID_HORSE_MSG;
       }
       if (fastestHorse == secondFastestHorse || fastestHorse == thirdFastestHorse || secondFastestHorse == thirdFastestHorse) {
@@ -64,9 +66,9 @@ function HorseRiddlePage({wasmModule}) {
     setCorrectAns(false);
     setConfetti(false);
     setWrongReason("");
-    setFastestHorse(-1);
-    setSecondFastestHorse(-1);
-    setThirdFastestHorse(-1);
+    setFastestHorse(null);
+    setSecondFastestHorse(null);
+    setThirdFastestHorse(null);
     setHasBeenReset(true);
   }, []);
 
@@ -88,9 +90,9 @@ function HorseRiddlePage({wasmModule}) {
   const handleTrifectaChange = (e, settingFunc) => {
     const intsOnly = e.target.value.replace(/[^0-9]/g, "");
     e.target.value = intsOnly;
-    intsOnly.length < 1 ? settingFunc(-1) : settingFunc(intsOnly);
+    intsOnly.length < 1 ? settingFunc(null) : settingFunc(intsOnly);
   };
-
+// Fastest horse gets set to 123 type shiz
   const submitRace = () => {
     console.log(currentRace);
     let intRepHorsesToRace = 0;
@@ -115,7 +117,7 @@ function HorseRiddlePage({wasmModule}) {
 
   const checkAnswer = () => {
     setSubmittedAns(true);
-    let horsesToSubmit = [thirdFastestHorse, secondFastestHorse, fastestHorse];
+    let horsesToSubmit = [thirdFastestHorse - 1, secondFastestHorse - 1, fastestHorse - 1];
     let horsesToSubmitInt = 0;
     for (const horse of horsesToSubmit) {
       horsesToSubmitInt <<= 5;

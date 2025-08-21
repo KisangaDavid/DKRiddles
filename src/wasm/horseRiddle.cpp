@@ -1,3 +1,4 @@
+#include "wasmUtils.h"
 #include <vector>
 #include <cstdint>
 
@@ -172,7 +173,7 @@ uint32_t checkAnswer(uint32_t input) {
     std::vector<uint32_t> submittedHorses {};
     uint32_t fiveBitMask = 0x1f; // 5 bit mask
     for (uint32_t i {0}; i < 3; i++) {
-        submittedHorses.push_back((input & fiveBitMask) - 1);
+        submittedHorses.push_back((input & fiveBitMask));
         input >>= 5; 
     }
     std::vector<uint32_t> answer = horseRiddle.checkAnswer(submittedHorses);

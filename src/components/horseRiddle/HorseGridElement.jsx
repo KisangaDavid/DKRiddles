@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useWindowSize } from 'react-use'
 import { useTheme } from '@mui/material/styles';
-import init from '/src/wasm/horseRiddle.wasm?init'
 
 import Grid from '@mui/material/Grid';
 import Zoom from "@mui/material/Zoom";
