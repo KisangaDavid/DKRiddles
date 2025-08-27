@@ -8,7 +8,7 @@ CPPFLAGS = -Wall -Wno-unknown-attributes -Werror -Weffc++ -Wextra -Wconversion -
 WASMCOMPFLAGS = --target=wasm32-wasi -fno-exceptions --sysroot="C:\Coding\wasi-sdk-25.0-x86_64-windows\share\wasi-sysroot" -Xlinker --export-dynamic
 
 # Source files
-SRCS = ratRiddle.cpp horseRiddle.cpp wasmUtils.cpp
+SRCS = ratRiddle.cpp horseRiddle.cpp puzzleUtils.cpp
 
 HDRS = wasmUtils.h
 

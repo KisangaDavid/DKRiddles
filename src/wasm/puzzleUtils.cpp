@@ -1,7 +1,7 @@
-#include "wasmUtils.h"
+#include "puzzleUtils.h"
 #include <vector>
 
-namespace wasmUtils {
+namespace puzzleUtils {
     std::vector<uint32_t> convertIntToVec(uint32_t input, uint32_t numIntsInInput, uint32_t numBitsPerInt) {
         std::vector<uint32_t> to_return;
         uint32_t bitmask = (1 << numBitsPerInt) - 1; 
