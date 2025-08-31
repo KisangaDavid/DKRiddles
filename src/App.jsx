@@ -44,7 +44,9 @@ function App() {
       "proc_exit": () => {},
       "fd_close": () => {},
       "fd_write": () => {},
-      "fd_seek": () => {}
+      "fd_seek": () => {},
+      "args_get": () => {},
+      "args_sizes_get": () => {}
     }
   }
 

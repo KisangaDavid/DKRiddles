@@ -13,7 +13,7 @@ import MenuDrawerContents from './MenuDrawerContents';
 import { useTheme } from '@mui/material/styles';
 
 function TopBar({text, isIntroPage, resetFunc}) {
-// TODO: fades on text and buttons
+// TODO: fades on text and buttons?
 const theme = useTheme();  
 const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
 console.log("Top bar is re-rendered?");

@@ -1,5 +1,5 @@
 #include <vector>
-
+#include <cstdint>
 #ifndef PUZZLE_UTILS_H
 #define PUZZLE_UTILS_H
 

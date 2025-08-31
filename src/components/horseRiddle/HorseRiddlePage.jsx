@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useWindowSize } from "react-use";
 import { useTheme } from "@mui/material/styles";
 
@@ -13,7 +13,6 @@ import Confetti from 'react-confetti'
 import Box from "@mui/material/Box";
 import TopBar from "../common/TopBar.jsx";
 import HorseGridElement from "./HorseGridElement.jsx";
-import Zoom from "@mui/material/Zoom";
 
 const HORSE_ORDER_CORRECT_CODE = 0;
 const POTENTIAL_FASTER_HORSE_CODE = 1;
@@ -26,51 +25,32 @@ const INVALID_HORSE_MSG = "Enter an integer between 1 and 25 for each position!"
 const NO_DUP_HORSES_MSG = "You cannot enter the same horse in two different positions!";
 
 function HorseRiddlePage({wasmModule}) {
-  const [hasBeenReset, setHasBeenReset] = useState(false);
-  const [confetti, setConfetti] = useState(false); // maybe don't need state
-  const [currentRace, setCurrentRace] = useState([]);
-  const [finishedRaces, setFinishedRaces] = useState([]);
-  const [submittedAns, setSubmittedAns] = useState(false);
-  const [correctAns, setCorrectAns] = useState(false);
-  const [wrongReason, setWrongReason] = useState("");
-  const [fastestHorse, setFastestHorse] = useState(null);
-  const [secondFastestHorse, setSecondFastestHorse] = useState(null);
-  const [thirdFastestHorse, setThirdFastestHorse] = useState(null); // maybe simplified into size 3 array
-  const {width, height} = useWindowSize();
-  const theme = useTheme();
+    const [hasBeenReset, setHasBeenReset] = useState(false);
+    const [confetti, setConfetti] = useState(false); 
+    const [currentRace, setCurrentRace] = useState([]);
+    const [finishedRaces, setFinishedRaces] = useState([]);
+    const [submittedAns, setSubmittedAns] = useState(false);
+    const [correctAns, setCorrectAns] = useState(false);
+    const [wrongReason, setWrongReason] = useState("");
+    const [fastestHorses, setFastestHorses] = useState([null, null, null]);
+    const {width, height} = useWindowSize();
+    const theme = useTheme();
 
-  let trifectaBetFilled = fastestHorse !== null && secondFastestHorse !== null && thirdFastestHorse !== null;
+    useEffect(() => {
+        wasmModule.exports.resetAndRandomizeHorses(Math.floor(Math.random() * 0xffffffff));
+    }, []);
 
-  const validateTriectaBet = () => {
-    console.log("validating trifecta bet!");
-    if (trifectaBetFilled) {
-      if (fastestHorse > 25 || secondFastestHorse > 25 || thirdFastestHorse > 25
-        || fastestHorse < 1  || secondFastestHorse < 1 || thirdFastestHorse < 1
-      ) {
-        return INVALID_HORSE_MSG;
-      }
-      if (fastestHorse == secondFastestHorse || fastestHorse == thirdFastestHorse || secondFastestHorse == thirdFastestHorse) {
-        return NO_DUP_HORSES_MSG;
-      }
-    }
-    return "";
-  };
-
-  // TODO: use memo on validateTrifectaBet?
-  let trifectaErrorMessage = validateTriectaBet();
-
-  const resetPuzzle = useCallback(() => {
-    setCurrentRace([]); 
-    setFinishedRaces([]);
-    setSubmittedAns(false);
-    setCorrectAns(false);
-    setConfetti(false);
-    setWrongReason("");
-    setFastestHorse(null);
-    setSecondFastestHorse(null);
-    setThirdFastestHorse(null);
-    setHasBeenReset(true);
-  }, []);
+    const resetPuzzle = useCallback(() => {
+        setCurrentRace([]); 
+        setFinishedRaces([]);
+        setSubmittedAns(false);
+        setCorrectAns(false);
+        setConfetti(false);
+        setWrongReason("");
+        setFastestHorses([null, null, null]);
+        setHasBeenReset(true);
+        wasmModule.exports.resetAndRandomizeHorses(Math.floor(Math.random() * 0xFFFFFFFF)); // random 32 bit number
+    }, []);
 
   const addRemoveHorseToRace = (horseIdx) => {
     if (currentRace.includes(horseIdx)) {
@@ -87,12 +67,28 @@ function HorseRiddlePage({wasmModule}) {
     );
   };
 
-  const handleTrifectaChange = (e, settingFunc) => {
+    const validateTriectaBet = () => {
+        if (trifectaBetFilled) {
+            if (fastestHorses.some(position => position > 25 || position < 1)) {
+                return INVALID_HORSE_MSG;
+            }
+            if (fastestHorses[0] == fastestHorses[1] || fastestHorses[1] == fastestHorses[2] || fastestHorses[2] == fastestHorses[0]) {
+                return NO_DUP_HORSES_MSG;
+            }
+        }
+        return "";
+    };
+
+    const updateFastestHorses = (horsePos, horseVal) => {
+        setFastestHorses([...fastestHorses.slice(0, horsePos), horseVal, ...fastestHorses.slice(horsePos + 1)]);
+    }
+
+  const handleTrifectaChange = (e, horsePos) => {
     const intsOnly = e.target.value.replace(/[^0-9]/g, "");
     e.target.value = intsOnly;
-    intsOnly.length < 1 ? settingFunc(null) : settingFunc(intsOnly);
+    intsOnly.length < 1 ? updateFastestHorses(horsePos, null) : updateFastestHorses(horsePos, intsOnly);
   };
-// Fastest horse gets set to 123 type shiz
+
   const submitRace = () => {
     console.log(currentRace);
     let intRepHorsesToRace = 0;
@@ -113,11 +109,12 @@ function HorseRiddlePage({wasmModule}) {
     }
     console.log("horse order: " + horseOrder);
     setFinishedRaces([...finishedRaces, ...horseOrder.reverse()]);
+    setWrongReason("");
   };
 
   const checkAnswer = () => {
     setSubmittedAns(true);
-    let horsesToSubmit = [thirdFastestHorse - 1, secondFastestHorse - 1, fastestHorse - 1];
+    let horsesToSubmit = fastestHorses.map(num => num - 1).reverse();
     let horsesToSubmitInt = 0;
     for (const horse of horsesToSubmit) {
       horsesToSubmitInt <<= 5;
@@ -137,18 +134,23 @@ function HorseRiddlePage({wasmModule}) {
         setCorrectAns(true);
         break;
       case POTENTIAL_FASTER_HORSE_CODE:
+        if (fastestHorses.indexOf(wasmAnsVec[1]) != 0 && fastestHorses.indexOf(wasmAnsVec[1]) < fastestHorses.indexOf(wasmAnsVec[2])) {
+            setWrongReason(`With the current setup of races, horse ${wasmAnsVec[2]} could be faster than horse ${wasmAnsVec[1]}!`);
+        } 
         setWrongReason(`With the current setup of races, horse ${wasmAnsVec[1]} could be faster than horse ${wasmAnsVec[2]}!`);
         break;
       case DEFINITE_FASTER_HORSE_CODE:
         setWrongReason(`With the current setup of races, horse ${wasmAnsVec[1]} is for sure faster than horse ${wasmAnsVec[2]}!`);
         break;
       default:
-        setWrongReason("Something's REALLY messed up");
+        setWrongReason("Something has gone terribly wrong. Please refresh the page!");
     }
   };
 
-  console.log("wasmModule: " + wasmModule);
+    let trifectaBetFilled = !fastestHorses.includes(null);
+    let trifectaErrorMessage = validateTriectaBet();
 
+    // TODO: security guard pic on fail
   return (
     <Box
       sx={{
@@ -331,19 +333,19 @@ function HorseRiddlePage({wasmModule}) {
                 id="fastestHorse"
                 variant="standard"
                 label="1st Place Horse"
-                onChange={(e) => handleTrifectaChange(e, setFastestHorse)}
+                onChange={(e) => handleTrifectaChange(e, 0)}
               />
               <TextField
                 id="secondFastestHorse"
                 variant="standard"
                 label="2nd Place Horse"
-                onChange={(e) => handleTrifectaChange(e, setSecondFastestHorse)}
+                onChange={(e) => handleTrifectaChange(e, 1)}
               />
               <TextField
                 id="thirdFastestHorse"
                 variant="standard"
                 label="3rd Place Horse"
-                onChange={(e) => handleTrifectaChange(e, setThirdFastestHorse)}
+                onChange={(e) => handleTrifectaChange(e, 2)}
               />
             </Stack>
 
@@ -384,12 +386,12 @@ function HorseRiddlePage({wasmModule}) {
             <Grid size={1} style={{ overflow: "clip" }}>3rd</Grid>
             <Grid size={1} style={{ overflow: "clip" }}>4th</Grid>
             <Grid size={1} style={{ overflow: "clip" }}>5th</Grid>
-            {[...Array(MAX_NUM_RACES * 6)].map((_, idx) => (
+            {[...Array(MAX_NUM_RACES * (RACE_LENGTH + 1))].map((_, idx) => (
               <Grid size={1} key={idx} style={{ overflow: "clip" }}>
-                {idx % 6 == 0
-                  ? "Race #" + (1 + idx / 6)
-                  : finishedRaces.length > idx - 1 - Math.floor(idx / 6)
-                    ? finishedRaces[idx - 1 - Math.floor(idx / 6)] + 1
+                {idx % (RACE_LENGTH + 1) == 0
+                  ? "Race #" + (1 + idx / (RACE_LENGTH + 1))
+                  : finishedRaces.length > idx - 1 - Math.floor(idx / (RACE_LENGTH + 1))
+                    ? finishedRaces[idx - 1 - Math.floor(idx / (RACE_LENGTH + 1))] + 1
                     : ""}
               </Grid>
             ))}
@@ -398,7 +400,7 @@ function HorseRiddlePage({wasmModule}) {
             </Box>
       </Fade>}
       <Box sx={{display: "flex", flexGrow: 1, width: "75vw", alignItems: "center"}}> 
-      {correctAns && <HorseRiddleResults numRaces={finishedRaces.length / 5} setConfetti={setConfetti}/>}
+      {correctAns && <HorseRiddleResults numRaces={finishedRaces.length / RACE_LENGTH} setConfetti={setConfetti}/>}
 </Box>
     </Box>
   );

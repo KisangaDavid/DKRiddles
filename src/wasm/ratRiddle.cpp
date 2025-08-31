@@ -114,7 +114,7 @@ class HouseRatRiddle {
     }
 };
 
-[[clang::export_name("checkBonusAnswer")]]
+[[clang::export_name("checkRatBonusAnswer")]]
 uint32_t checkAnswer(uint32_t numBonusHouses, uint32_t bonusAnswer) {
   uint32_t daysToEliminateAlternating = numBonusHouses / 3;
   if (numBonusHouses % 3 == 0 && daysToEliminateAlternating % 2 == 0) {
@@ -124,7 +124,7 @@ uint32_t checkAnswer(uint32_t numBonusHouses, uint32_t bonusAnswer) {
 }
 
 
-[[clang::export_name("checkRiddleAnswer")]]
+[[clang::export_name("checkRatRiddleAnswer")]]
 uint32_t checkAnswer(uint64_t num1) {
   int position = 0;
   std::vector<int> deletedNodes {};
@@ -150,7 +150,4 @@ uint32_t checkAnswer(uint64_t num1) {
     toReturn |= mask;
   }
   return toReturn;
-}
-
-int main() {
 }

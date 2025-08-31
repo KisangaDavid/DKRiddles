@@ -63,7 +63,7 @@ function RatRiddlePage({wasmModule}) {
       binaryString += "1";
       counter++;
     });
-    let intPath = wasmModule.exports.checkRiddleAnswer(BigInt(`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`));
+    let intPath = wasmModule.exports.checkRatRiddleAnswer(BigInt(`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`));
     let path = []
     if(intPath != -1) {
       for(let i = 0; i <= curDay; i++) {
@@ -161,7 +161,7 @@ function RatRiddlePage({wasmModule}) {
       {submittedTraps && solved &&
          <Box >
           <SolvedStack 
-            checkBonusAnswer={wasmModule.exports.checkBonusAnswer}
+            checkBonusAnswer={wasmModule.exports.checkRatBonusAnswer}
             setConfetti={setConfetti}      
             totalDays={totalDays} 
           />
