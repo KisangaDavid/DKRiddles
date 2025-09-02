@@ -60,7 +60,7 @@ function MenuDrawerContents({setMenuDrawerOpen, isIntroPage}) {
             <ListItemIcon>
               <ExtensionIcon />
             </ListItemIcon>
-            <ListItemText primary={"Hasty Horses"} />
+            <ListItemText primary={"The Horse Trifecta"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>

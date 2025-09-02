@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useWindowSize } from 'react-use';
 import { useTheme } from '@mui/material/styles';
 
+import RootBackground from "../common/RootBackground.jsx";
 import RowOfHouses from './RowOfHouses.jsx';
 import SolvedStack from './SolvedStack.jsx';
 import UnsolvedStack from './UnsolvedStack.jsx';
@@ -102,15 +103,7 @@ function RatRiddlePage({wasmModule}) {
   }
 
   return (
-    <Box sx={{
-      display:"flex",
-      flexDirection: 'column',
-      alignItems: "center",
-      height: "100vh",
-      width: "100vw",
-      overflow: "auto",
-      backgroundImage:'radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))',
-    }}>
+    <RootBackground>
     <TopBar text="Envelope #1: The Sneaky Rat" isHomePage={false} resetFunc={resetPuzzle}/>
     {confetti && <Confetti width={width} height={height}/>}
     <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
@@ -180,7 +173,7 @@ function RatRiddlePage({wasmModule}) {
       }
     </Box>
     </Fade>
-    </Box>
+    </RootBackground>
   )
 }
 

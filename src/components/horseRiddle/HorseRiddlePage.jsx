@@ -3,12 +3,12 @@ import { useWindowSize } from "react-use";
 import { useTheme } from "@mui/material/styles";
 
 import Grid from "@mui/material/Grid";
-import Divider from "@mui/material/Divider";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Fade from "@mui/material/Fade";
 import HorseRiddleResults from "./HorseRiddleResults.jsx";
+import RootBackground from "../common/RootBackground.jsx";
+import PreviousRaces from "./PreviousRaces.jsx";
+import TrifectaStack from "./TrifectaStack.jsx";
 import Confetti from 'react-confetti'
 import Box from "@mui/material/Box";
 import TopBar from "../common/TopBar.jsx";
@@ -20,6 +20,7 @@ const DEFINITE_FASTER_HORSE_CODE = 2;
 const NUM_HORSES = 25;
 const RACE_LENGTH = 5;
 const MAX_NUM_RACES = 15;
+const MAX_32_BIT_NUM = 0xffffffff
 
 const INVALID_HORSE_MSG = "Enter an integer between 1 and 25 for each position!";
 const NO_DUP_HORSES_MSG = "You cannot enter the same horse in two different positions!";
@@ -29,7 +30,6 @@ function HorseRiddlePage({wasmModule}) {
     const [confetti, setConfetti] = useState(false); 
     const [currentRace, setCurrentRace] = useState([]);
     const [finishedRaces, setFinishedRaces] = useState([]);
-    const [submittedAns, setSubmittedAns] = useState(false);
     const [correctAns, setCorrectAns] = useState(false);
     const [wrongReason, setWrongReason] = useState("");
     const [fastestHorses, setFastestHorses] = useState([null, null, null]);
@@ -37,19 +37,18 @@ function HorseRiddlePage({wasmModule}) {
     const theme = useTheme();
 
     useEffect(() => {
-        wasmModule.exports.resetAndRandomizeHorses(Math.floor(Math.random() * 0xffffffff));
+        wasmModule.exports.resetAndRandomizeHorses(Math.floor(Math.random() * MAX_32_BIT_NUM));
     }, []);
 
     const resetPuzzle = useCallback(() => {
         setCurrentRace([]); 
         setFinishedRaces([]);
-        setSubmittedAns(false);
         setCorrectAns(false);
         setConfetti(false);
         setWrongReason("");
         setFastestHorses([null, null, null]);
         setHasBeenReset(true);
-        wasmModule.exports.resetAndRandomizeHorses(Math.floor(Math.random() * 0xFFFFFFFF)); // random 32 bit number
+        wasmModule.exports.resetAndRandomizeHorses(Math.floor(Math.random() * MAX_32_BIT_NUM)); 
     }, []);
 
   const addRemoveHorseToRace = (horseIdx) => {
@@ -58,7 +57,6 @@ function HorseRiddlePage({wasmModule}) {
     } else if (!currentRace.includes(horseIdx) && currentRace.length < RACE_LENGTH) {
       setCurrentRace((currentRace) => [...currentRace, horseIdx]);
     }
-    console.log("current race is: " + currentRace);
   };
 
   const removeHorseFromRace = (horseIdx) => {
@@ -67,9 +65,9 @@ function HorseRiddlePage({wasmModule}) {
     );
   };
 
-    const validateTriectaBet = () => {
+    const validateTrifectaBet = () => {
         if (trifectaBetFilled) {
-            if (fastestHorses.some(position => position > 25 || position < 1)) {
+            if (fastestHorses.some(position => position > NUM_HORSES || position < 1)) {
                 return INVALID_HORSE_MSG;
             }
             if (fastestHorses[0] == fastestHorses[1] || fastestHorses[1] == fastestHorses[2] || fastestHorses[2] == fastestHorses[0]) {
@@ -89,8 +87,8 @@ function HorseRiddlePage({wasmModule}) {
     intsOnly.length < 1 ? updateFastestHorses(horsePos, null) : updateFastestHorses(horsePos, intsOnly);
   };
 
+  // TODO: extract functions that convert vecs into ints and vice versa
   const submitRace = () => {
-    console.log(currentRace);
     let intRepHorsesToRace = 0;
     for (const horse of currentRace) {
       intRepHorsesToRace <<= 5;
@@ -98,32 +96,25 @@ function HorseRiddlePage({wasmModule}) {
     }
 
     setCurrentRace([]);
-    console.log("finished races: " + finishedRaces);
-    console.log("int rep of horses to race: " + intRepHorsesToRace);
     let intRes = wasmModule.exports.submitRace(intRepHorsesToRace);
-    console.log("intRes of horses to race: " + intRes);
     let horseOrder = [];
     for (let i = 0; i < RACE_LENGTH; i++) {
       horseOrder.push(intRes & 0x1f);
       intRes >>= 5;
     }
-    console.log("horse order: " + horseOrder);
     setFinishedRaces([...finishedRaces, ...horseOrder.reverse()]);
     setWrongReason("");
   };
 
   const checkAnswer = () => {
-    setSubmittedAns(true);
     let horsesToSubmit = fastestHorses.map(num => num - 1).reverse();
     let horsesToSubmitInt = 0;
     for (const horse of horsesToSubmit) {
       horsesToSubmitInt <<= 5;
       horsesToSubmitInt |= horse;
     }
-    console.log("horses to submit int: " + horsesToSubmitInt);
     let wasmAnsInt = wasmModule.exports.checkAnswer(horsesToSubmitInt);
     let wasmAnsVec = [];
-    console.log("answer from wasm: " + wasmAnsInt);
     for (let i = 0; i < 3; i++) {
       wasmAnsVec.unshift((wasmAnsInt & 0x1f));
       wasmAnsInt >>= 5;
@@ -148,23 +139,11 @@ function HorseRiddlePage({wasmModule}) {
   };
 
     let trifectaBetFilled = !fastestHorses.includes(null);
-    let trifectaErrorMessage = validateTriectaBet();
-
+    let trifectaErrorMessage = validateTrifectaBet();
     // TODO: security guard pic on fail
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        height: "100vh",
-        width: "100vw",
-        overflow: "auto",
-        backgroundImage:
-          "radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))",
-      }}
-    >
-      <TopBar text="Envelope #2: Hasty Horses" isHomePage={false} resetFunc={resetPuzzle} />
+    <RootBackground>
+      <TopBar text="Envelope #2: The Horse Trifecta" isHomePage={false} resetFunc={resetPuzzle} />
       {confetti && <Confetti width={width} height={height}/>}
       <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
         <Box
@@ -320,89 +299,30 @@ function HorseRiddlePage({wasmModule}) {
                 mb: "2vh",
               }}
             >
-              <p>{submittedAns ? wrongReason : trifectaErrorMessage}</p>
+              <p>{trifectaErrorMessage.length === 0 ? wrongReason : trifectaErrorMessage}</p>
             </Box>
-            <Stack
-              direction="row"
-              justifyContent="center"
-              divider={<Divider orientation="vertical" flexItem />}
-              spacing={2}
-              sx={{ mb: "2vh" }}
-            >
-              <TextField
-                id="fastestHorse"
-                variant="standard"
-                label="1st Place Horse"
-                onChange={(e) => handleTrifectaChange(e, 0)}
-              />
-              <TextField
-                id="secondFastestHorse"
-                variant="standard"
-                label="2nd Place Horse"
-                onChange={(e) => handleTrifectaChange(e, 1)}
-              />
-              <TextField
-                id="thirdFastestHorse"
-                variant="standard"
-                label="3rd Place Horse"
-                onChange={(e) => handleTrifectaChange(e, 2)}
-              />
-            </Stack>
-
-            <Button variant="contained" disabled = {!trifectaBetFilled || trifectaErrorMessage != ""} onClick={() => checkAnswer()}>Place Trifecta Bet</Button>
+            <TrifectaStack handleTrifectaChange={handleTrifectaChange}/>
+                <Button
+      variant="contained"
+      disabled={!trifectaBetFilled || trifectaErrorMessage !== ""}
+      onClick={checkAnswer}
+    >
+      Place Trifecta Bet
+    </Button>
           </Box>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "25vw",
-            position: "relative",
-            mb: "1vh",
-          }}
-        >
-          <Box sx={{ mb: "1vh" }}>Previous Races:</Box>
-          <Grid
-            container
-            spacing={0}
-            columns={6}
-            direction="row"
-            sx={{
-              flexGrow: 1,
-              display: "flex",
-              borderTop: "2px solid",
-              borderLeft: "2px solid",
-              borderColor: "divider",
-              "& > div": {
-                borderRight: "2px solid",
-                borderBottom: "2px solid",
-                borderColor: "divider",
-              },
-            }}
-          >
-            <Grid size={1} style={{ overflow: "clip" }}></Grid>
-            <Grid size={1} style={{ overflow: "clip" }}>1st</Grid>
-            <Grid size={1} style={{ overflow: "clip" }}>2nd</Grid>
-            <Grid size={1} style={{ overflow: "clip" }}>3rd</Grid>
-            <Grid size={1} style={{ overflow: "clip" }}>4th</Grid>
-            <Grid size={1} style={{ overflow: "clip" }}>5th</Grid>
-            {[...Array(MAX_NUM_RACES * (RACE_LENGTH + 1))].map((_, idx) => (
-              <Grid size={1} key={idx} style={{ overflow: "clip" }}>
-                {idx % (RACE_LENGTH + 1) == 0
-                  ? "Race #" + (1 + idx / (RACE_LENGTH + 1))
-                  : finishedRaces.length > idx - 1 - Math.floor(idx / (RACE_LENGTH + 1))
-                    ? finishedRaces[idx - 1 - Math.floor(idx / (RACE_LENGTH + 1))] + 1
-                    : ""}
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+        <PreviousRaces
+          finishedRaces={finishedRaces}
+          MAX_NUM_RACES={MAX_NUM_RACES}
+          RACE_LENGTH={RACE_LENGTH}
+        />
+
             </Box>
       </Fade>}
       <Box sx={{display: "flex", flexGrow: 1, width: "75vw", alignItems: "center"}}> 
       {correctAns && <HorseRiddleResults numRaces={finishedRaces.length / RACE_LENGTH} setConfetti={setConfetti}/>}
-</Box>
-    </Box>
+      </Box>
+  </RootBackground>
   );
 }
 

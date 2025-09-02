@@ -1,19 +1,7 @@
-import { useState, useEffect } from 'react'
-import { useWindowSize } from 'react-use'
-import { useTheme } from '@mui/material/styles';
-
 import Grid from '@mui/material/Grid';
 import Zoom from "@mui/material/Zoom";
 
-import Confetti from 'react-confetti'
-import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
-import horseImg from "/src/assets/horseClipArt.jpg";
-import Fade from '@mui/material/Fade';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import Box from "@mui/material/Box";
-import TopBar from '../common/TopBar.jsx';
+import horseImg from "/src/assets/horseClipArt.png";
 
 function HorseGridElement({horseNumber, onClick}) {
     return <Zoom in={true} mountOnEnter unmountOnExit><Grid size={1}

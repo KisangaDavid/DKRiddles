@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useTheme } from '@mui/material/styles';
 
+import RootBackground from "../common/RootBackground.jsx";
 import Chip from '@mui/material/Chip';
 import ratRiddleThumbnail from '/src/assets/ratRiddleThumbnail.png'
+import horseRiddleThumbnail from '/src/assets/horseRiddleThumbnail.jpg'
 import mysteryLetter from '/src/assets/mysteryLetter.jpg'
 import PuzzleCard from './PuzzleCard';
 import RiddleManLetter from '/src/assets/riddleManLetter.jpg';
@@ -17,17 +19,7 @@ function IntroductionPage() {
   const [activatedChip, setActivatedChip] = useState(-1);
 
   return (
-    <Box 
-      sx={{
-        display:"flex",
-        flexDirection: 'column',
-        alignItems: "center",
-        height: "100vh",
-        width: "100vw",
-        overflow: "auto",
-        backgroundImage:'radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))',
-      }}
-    >
+    <RootBackground>
       <TopBar text="Introduction" isIntroPage={true} func />
       <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
         <Box sx={{width: "75vw", position: "relative", mb:"1vh"}}>
@@ -120,10 +112,10 @@ function IntroductionPage() {
           </Grid>
           <Grid size={{ sm: 6, lg: 4 }}>
             <PuzzleCard 
-              puzzleImage = {mysteryLetter} 
-              puzzleName = "Hasty Horses" 
+              puzzleImage = {horseRiddleThumbnail} 
+              puzzleName = "The Horse Trifecta" 
               puzzleNumber = "2" 
-              puzzleDescription = "Deduce your way into a million dollars at the horse races!"
+              puzzleDescription = "Utilize your skills of deduction to win big at the horse races!"
               puzzlePath = "/horseRiddle" 
               transitionDelay={theme.delays.duration.standardDelay}
             />
@@ -132,7 +124,7 @@ function IntroductionPage() {
             <PuzzleCard 
               puzzleImage = {mysteryLetter} 
               puzzleName = "Puzzle in Progress!" 
-              puzzleNumber = "2" 
+              puzzleNumber = "3" 
               puzzleDescription = "Mr. Riddle Man isn't ready to show this puzzle yet, come back later!"
               puzzlePath = "/" 
               transitionDelay={theme.delays.duration.standardDelay * 2}
@@ -140,7 +132,7 @@ function IntroductionPage() {
           </Grid>
         </Grid>
       }
-    </Box>
+    </RootBackground>
   );
 }
 
