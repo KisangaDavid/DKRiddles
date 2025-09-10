@@ -1,9 +1,9 @@
 const MIN_NUM_RACES = 7;
 
 function HorseRiddleResults({numRaces, setConfetti}) {
-    if (numRaces == MIN_NUM_RACES) {
-        setConfetti(true);
-    }
+  if (numRaces == MIN_NUM_RACES) {
+    setConfetti(true);
+  }
   return (
     <>
       {numRaces == MIN_NUM_RACES ?

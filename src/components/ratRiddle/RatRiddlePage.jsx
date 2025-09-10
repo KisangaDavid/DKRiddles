@@ -6,6 +6,7 @@ import RootBackground from "../common/RootBackground.jsx";
 import RowOfHouses from './RowOfHouses.jsx';
 import SolvedStack from './SolvedStack.jsx';
 import UnsolvedStack from './UnsolvedStack.jsx';
+import RatRiddleDescription from './RatRiddleDescription.jsx';
 import Confetti from 'react-confetti'
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
@@ -17,164 +18,151 @@ import TopBar from '../common/TopBar.jsx';
 const NUM_HOUSES = 8;
 
 function RatRiddlePage({wasmModule}) {
+    const [submittedTraps, setSubmittedTraps] = useState(false);
+    const [confetti, setConfetti] = useState(false);
+    const [path, setPath] = useState([]);
+    const [curDay, setCurDay] = useState(0);
+    const [prevDay, setPrevDay] = useState(null);
+    const [totalDays, setTotalDays] = useState(0);
+    const [allCheckedHouses, setAllCheckedHouses] = useState([]);
+    const [curCheckedHouses, setCurCheckedHouses] = useState(new Set());
+    const {width, height} = useWindowSize();
+    const theme = useTheme();
 
-  const [submittedTraps, setSubmittedTraps] = useState(false);
-  const [confetti, setConfetti] = useState(false);
-  const [path, setPath] = useState([]);
-  const [curDay, setCurDay] = useState(0);
-  const [prevDay, setPrevDay] = useState(-1);
-  const [totalDays, setTotalDays] = useState(0);
-  const [allCheckedHouses, setAllCheckedHouses] = useState([]);
-  const [curCheckedHouses, setCurCheckedHouses] = useState(new Set());
+    const solved = path.length == 0;
 
-  const {width, height} = useWindowSize();
-  const theme = useTheme();
+    const trapHouse = (index) => {
+        const newSet = new Set(curCheckedHouses);
+        if (newSet.has(index)) {
+            newSet.delete(index);
+        }
+        else {
+            if (newSet.size < 2) {
+                newSet.add(index);
+            }
+        }
+        console.log(newSet);
+        setCurCheckedHouses(newSet);
+    };
 
-  const solved = path.length == 0;
+    const nextDay = () => {
+        setCurDay(curDay + 1)
+        setAllCheckedHouses(allCheckedHouses.concat(curCheckedHouses));
+        setCurCheckedHouses(new Set());
+    };
 
-  const trapHouse = (index) => {
-    const newSet = new Set(curCheckedHouses);
-    if (newSet.has(index)) {
-      newSet.delete(index);
+    const submitRiddleAnswer = () => {
+        let allCheckedPositions = convertToAbsPos(allCheckedHouses.concat(curCheckedHouses));
+        let counter = 0;
+        let binaryString = ""
+        allCheckedPositions.forEach((element) => {
+            while (counter < element) {
+                binaryString += "0";
+                counter++;
+            }
+            binaryString += "1";
+            counter++;
+        });
+        let intPath = wasmModule.exports.checkRatRiddleAnswer(BigInt(`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`));
+        let path = []
+        if (intPath != -1) {
+            for (let i = 0; i <= curDay; i++) {
+                path.push(intPath & 0x07);
+                intPath >>= 3;
+            }
+            path.reverse();
+        }
+        setAllCheckedHouses(allCheckedHouses.concat(curCheckedHouses));
+        setCurCheckedHouses(new Set());
+        setTotalDays(curDay + 1);
+        setCurDay(0);
+        setSubmittedTraps(true);
+        setPath(path);
     }
-    else {
-      if (newSet.size < 2) {
-        newSet.add(index);
-      }
+
+    const resetPuzzle = useCallback(() => {
+        setAllCheckedHouses([]);
+        setCurCheckedHouses(new Set());
+        setCurDay(0);
+        setSubmittedTraps(false);
+        setPath([]);
+        setPrevDay(null);
+        setConfetti(false)}, []
+    );
+
+    const handleSliderChange = (_, value) => {
+        setPrevDay(curDay);
+        setCurDay(value - 1);
     }
-    console.log(newSet);
-    setCurCheckedHouses(newSet);
-  };
 
-  const nextDay = () => {
-    setCurDay(curDay + 1)
-    setAllCheckedHouses(allCheckedHouses.concat(curCheckedHouses));
-    setCurCheckedHouses(new Set());
-  };
-
-  const submitRiddleAnswer = () => {
-    let allCheckedPositions = convertToAbsPos(allCheckedHouses.concat(curCheckedHouses));
-    let counter = 0;
-    let binaryString = ""
-    allCheckedPositions.forEach(element => {
-      while (counter < element) {
-        binaryString += "0";
-        counter++;
-      }
-      binaryString += "1";
-      counter++;
-    });
-    let intPath = wasmModule.exports.checkRatRiddleAnswer(BigInt(`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`));
-    let path = []
-    if(intPath != -1) {
-      for(let i = 0; i <= curDay; i++) {
-        path.push(intPath & 0x07);
-        intPath >>= 3;
-      }
-      path.reverse();
+    const convertToAbsPos = (checkedPositions) => {
+        return checkedPositions.flatMap((set, idx) => {
+            return [...set].map(elem => elem + idx * NUM_HOUSES);
+        });
     }
-    setAllCheckedHouses(allCheckedHouses.concat(curCheckedHouses));
-    setCurCheckedHouses(new Set());
-    setTotalDays(curDay + 1);
-    setCurDay(0);
-    setSubmittedTraps(true);
-    setPath(path);
-  }
 
-  const resetPuzzle = useCallback(() => {
-    setAllCheckedHouses([]);
-    setCurCheckedHouses(new Set());
-    setCurDay(0);
-    setSubmittedTraps(false);
-    setPath([]);
-    setPrevDay(-1);
-    setConfetti(false)}, []
-  );
+    return (
+        <RootBackground>
+            <TopBar text="Envelope #1: The Sneaky Rat" isHomePage={false} resetFunc={resetPuzzle}/>
+            {confetti && <Confetti width={width} height={height} />}
+            <RatRiddleDescription theme={theme} />
+            <Fade in={true} mountOnEnter unmountOnExit
+                timeout={theme.transitions.duration.longTextFade}
+                style={{ transitionDelay: theme.delays.duration.longDelay }}
+            >
+                <Box sx={{ position: "relative", width: "75vw", height: "50vh" }}>
+                    <RowOfHouses
+                        NUM_HOUSES={NUM_HOUSES}
+                        submittedTraps={submittedTraps}
+                        trapHouse={trapHouse}
+                        curCheckedHouses={curCheckedHouses}
+                        allCheckedHouses={allCheckedHouses}
+                        path={path}
+                        curDay={curDay}
+                        prevDay={prevDay}
+                    />
 
-  const handleSliderChange = (_, value) => {
-    setPrevDay(curDay);
-    setCurDay(value - 1);
-  }
-
-  const convertToAbsPos = (checkedPositions) => {
-    return checkedPositions.flatMap((set, idx) => {
-      return [...set].map(elem => elem + idx * NUM_HOUSES);
-    });
-  }
-
-  return (
-    <RootBackground>
-    <TopBar text="Envelope #1: The Sneaky Rat" isHomePage={false} resetFunc={resetPuzzle}/>
-    {confetti && <Confetti width={width} height={height}/>}
-    <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
-    <Box sx={{width: "80vw", position: "relative", mb:"1vh"}}>
-      <p> 
-        You open the first envelope. Inside you find a notecard, along with two rat traps. The notecard reads: <br />
-        <i>You will find that the neighborhood adjacent to yours is suffering from a mysterious rat infestation. 
-        Solve their rodent problem using only the two provided rat traps and your own logical ability.</i> 
-      </p>
-      <p>After arriving at the rat infested neighborhood 
-        and doing some preliminary investigation, you discover that the neighborhood is actually being plagued by just a single rat, 
-        which sneaks over to an adjacent house every night. You know that if you trap houses 1 and 2 on the first day, 2 and 3 on the second day,
-        3 and 4 on the third day, and so on, you can guarantee that you'll catch the rat in 7 days. However, Mr. Riddle Man will not accept anything but perfection - 
-        what strategy can you employ that is guaranteed to catch the rat in the least amount of days?
-      </p>
-    </Box>
-    </Fade>
-      <Fade in={true} mountOnEnter unmountOnExit 
-        timeout={theme.transitions.duration.longTextFade}
-        style={{transitionDelay: theme.delays.duration.longDelay}}
-      >
-    <Box sx={{position: "relative", width: "75vw", height: "50vh"}}>
-      <RowOfHouses 
-        NUM_HOUSES={NUM_HOUSES}   
-        submittedTraps={submittedTraps} 
-        trapHouse={trapHouse} 
-        curCheckedHouses={curCheckedHouses} 
-        allCheckedHouses={allCheckedHouses}
-        path={path} 
-        curDay={curDay} 
-        prevDay={prevDay}
-      />
-      
-      {!submittedTraps && 
-        <Fade in={true} mountOnEnter unmountOnExit 
-        timeout={theme.transitions.duration.standardTextFade}>
-          <Stack 
-            direction="row"
-            justifyContent="center" 
-            divider={<Divider orientation="vertical" flexItem />}
-            spacing={2}
-          >
-            <Button variant="contained"  disabled = {curCheckedHouses.size !== 2 || curDay > 5}  onClick={nextDay}>&nbsp;&nbsp;Next Day&nbsp;&nbsp;</Button>
-            <Button variant="contained" disabled = {curCheckedHouses.size !== 2}  onClick={submitRiddleAnswer}>Submit Answer</Button>
-          </Stack>
-        </Fade>
-      }
-      {submittedTraps && solved &&
-         <Box >
-          <SolvedStack 
-            checkBonusAnswer={wasmModule.exports.checkRatBonusAnswer}
-            setConfetti={setConfetti}      
-            totalDays={totalDays} 
-          />
-         </Box>
-      }
-      {submittedTraps && !solved &&
-          <Box>
-            <UnsolvedStack 
-              curDay={curDay} 
-              totalDays={totalDays} 
-              path={path} 
-              allCheckedHouses={allCheckedHouses} 
-              handleSliderChange={handleSliderChange} 
-            />
-          </Box>
-      }
-    </Box>
-    </Fade>
-    </RootBackground>
-  )
+                    {!submittedTraps && (
+                        <Fade in={true} mountOnEnter unmountOnExit
+                            timeout={theme.transitions.duration.standardTextFade}
+                        >
+                            <Stack
+                                direction="row"
+                                justifyContent="center"
+                                divider={<Divider orientation="vertical" flexItem />}
+                                spacing={2}
+                            >
+                                <Button variant="contained" disabled={curCheckedHouses.size !== 2 || curDay > 5} 
+                                    onClick={nextDay}>&nbsp;&nbsp;Next Day&nbsp;&nbsp;</Button>
+                                <Button variant="contained" disabled={curCheckedHouses.size !== 2} 
+                                    onClick={submitRiddleAnswer}>Submit Answer</Button>
+                            </Stack>
+                        </Fade>
+                    )}
+                    {submittedTraps && solved && (
+                        <Box>
+                            <SolvedStack
+                                checkBonusAnswer={wasmModule.exports.checkRatBonusAnswer}
+                                setConfetti={setConfetti}
+                                totalDays={totalDays}
+                            />
+                        </Box>
+                    )}
+                    {submittedTraps && !solved && (
+                        <Box>
+                            <UnsolvedStack
+                                curDay={curDay}
+                                totalDays={totalDays}
+                                path={path}
+                                allCheckedHouses={allCheckedHouses}
+                                handleSliderChange={handleSliderChange}
+                            />
+                        </Box>
+                    )}
+                </Box>
+            </Fade>
+        </RootBackground>
+    )
 }
 
 export default RatRiddlePage

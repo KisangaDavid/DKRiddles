@@ -8,15 +8,12 @@ import IconButton from '@mui/material/IconButton';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
-import Fade from "@mui/material/Fade";
 import MenuDrawerContents from './MenuDrawerContents';
-import { useTheme } from '@mui/material/styles';
 
 function TopBar({text, isIntroPage, resetFunc}) {
-// TODO: fades on text and buttons?
-const theme = useTheme();  
+
 const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
-console.log("Top bar is re-rendered?");
+
   const StyledToolbar = styled(Toolbar)(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
