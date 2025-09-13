@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import init from '/src/wasm/allModules.wasm?init'
 import RatRiddlePage from './components/ratRiddle/RatRiddlePage.jsx';
 import HorseRiddlePage from './components/horseRiddle/HorseRiddlePage.jsx';
+import RoosterRiddlePage from './components/roosterRiddle/RoosterRiddlePage.jsx';
 import IntroductionPage from './components/intro/IntroductionPage.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Routes, Route } from "react-router";
@@ -17,12 +18,14 @@ const theme = createTheme({
           transitions: {
             duration: {
               standardTextFade: 1000,
+              shortImageFade: 750,
               standardImageFade: 1500,
               longTextFade: 2000
             }
           },
           delays: {
             duration: {
+              shortDelay: 200,
               standardDelay: 250,
               longDelay: 500
             }
@@ -64,6 +67,7 @@ function App() {
               <Route path="/" element={<IntroductionPage/>} />
               <Route path="/ratRiddle" element={<RatRiddlePage wasmModule={wasmModule} />} />
               <Route path="/horseRiddle" element={<HorseRiddlePage wasmModule={wasmModule} />} />
+              <Route path="/roosterRiddle" element={<RoosterRiddlePage wasmModule={wasmModule} />} />
             </>
           )}
         </Routes>

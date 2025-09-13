@@ -1,11 +1,18 @@
+import { useTheme } from '@mui/material/styles';
+import angryGuard from "/src/assets/angryGuard.jpeg";
+import Fade from '@mui/material/Fade';
+import Grid from '@mui/material/Grid';
+import Box from "@mui/material/Box";
+
 const MIN_NUM_RACES = 7;
 
-function HorseRiddleResults({numRaces, setConfetti}) {
+function HorseRiddleResults({numRaces, setConfetti,}) {
+  const theme = useTheme();
   if (numRaces == MIN_NUM_RACES) {
     setConfetti(true);
   }
   return (
-    <>
+    <Box>
       {numRaces == MIN_NUM_RACES ?
         <p>
           After {numRaces} races, you correctly deduce the fastest three horses!
@@ -25,15 +32,36 @@ function HorseRiddleResults({numRaces, setConfetti}) {
           </i>
         </p>
       : 
-        <p>
-          After {numRaces} races, you correctly deduce the fastest three horses.
-          However, you've taken too much time - as you are sneaking out of
-          the racetrack, you are caught by a slightly drowsy but very much awake
-          security guard! You are beaten mercilessly and sentenced to 6 months in jail.<br /> <br />
-          <b>Reset the puzzle to try again!</b>
-        </p>
-    }
-    </>
+        <Grid 
+          container 
+          spacing={4} 
+          columns={12} 
+          direction = "row" 
+          sx={{
+            display: "flex",
+            flexGrow: 1,
+            overflow: "hidden"
+          }}
+        >
+          <Grid size={{ sm: 12, lg: 6 }}>
+            <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardImageFade}>
+              <img src={angryGuard} style={{objectFit: "contain", height: "100%", width: "100%", borderRadius: (theme.vars || theme).shape.borderRadius}}/>
+            </Fade>
+          </Grid>
+          <Grid size={{ sm: 12, lg: 6}} style={{display: "flex", justifyContent: 'center', alignItems: "center"}}>   
+            <Fade in={true}  mountOnEnter unmountOnExit timeout={theme.transitions.duration.longTextFade}>           
+              <p style={{ textAlign: 'center' }}>
+                After {numRaces} races, you correctly deduce the fastest three horses.
+                However, you've taken too much time - as you are sneaking out of
+                the racetrack, you are caught by a slightly drowsy but very much awake
+                security guard! You are beaten mercilessly and sentenced to 6 months in jail.<br /> <br />
+                <b>Reset the puzzle to try again!</b>
+              </p>
+            </Fade>
+          </Grid>
+        </Grid>
+      }
+    </Box>
   );
 }
 

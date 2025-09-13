@@ -130,7 +130,6 @@ function HorseRiddlePage({ wasmModule }) {
   let trifectaBetFilled = !fastestHorses.includes(null);
   let trifectaErrorMessage = validateTrifectaBet();
 
-  // TODO: security guard pic on fail
   return (
     <RootBackground>
       <TopBar
@@ -283,7 +282,9 @@ function HorseRiddlePage({ wasmModule }) {
         sx={{
           display: "flex",
           flexGrow: 1,
+          overflow: "hidden",
           width: "75vw",
+          mb: "2vh",
           alignItems: "center",
         }}
       >

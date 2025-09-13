@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import { useNavigate } from "react-router";
 
 import Fade from '@mui/material/Fade';
@@ -9,6 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 
 function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, puzzlePath, transitionDelay}) {
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const SyledCard = styled(Card)(({ theme }) => ({
@@ -49,7 +50,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
   });
 
   return (
-    <Fade in={true} mountOnEnter unmountOnExit timeout={1000} 
+    <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.shortImageFade} 
       style={{transitionDelay: transitionDelay}}>
     <SyledCard variant="outlined" onClick={() => navigate(puzzlePath)}> 
       <CardMedia

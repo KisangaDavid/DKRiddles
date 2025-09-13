@@ -5,6 +5,7 @@ import RootBackground from "../common/RootBackground.jsx";
 import Chip from '@mui/material/Chip';
 import ratRiddleThumbnail from '/src/assets/ratRiddleThumbnail.png'
 import horseRiddleThumbnail from '/src/assets/horseRiddleThumbnail.jpg'
+import roosterRiddleThumbnail from '/src/assets/roosterRiddleThumbnail.png'
 import mysteryLetter from '/src/assets/mysteryLetter.jpg'
 import PuzzleCard from './PuzzleCard';
 import RiddleManLetter from '/src/assets/riddleManLetter.jpg';
@@ -13,6 +14,7 @@ import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
 import TopBar from '/src/components/common/TopBar.jsx';
 
+// TODO: standardize backgrounds and change horse riddle thumbnail
 function IntroductionPage() {
 
   const theme = useTheme();
@@ -100,7 +102,7 @@ function IntroductionPage() {
       }
       {activatedChip == 1 &&
         <Grid container spacing={2} columns={12} direction = "row" sx={{width: "75vw"}}>
-          <Grid size={{ sm: 6, lg: 4 }}>
+          <Grid size={{ sm: 6, lg: 3 }}>
             <PuzzleCard 
               puzzleImage = {ratRiddleThumbnail} 
               puzzleName = "The Sneaky Rat" 
@@ -110,7 +112,7 @@ function IntroductionPage() {
               transitionDelay={0}
             />
           </Grid>
-          <Grid size={{ sm: 6, lg: 4 }}>
+          <Grid size={{ sm: 6, lg: 3 }}>
             <PuzzleCard 
               puzzleImage = {horseRiddleThumbnail} 
               puzzleName = "The Horse Trifecta" 
@@ -120,14 +122,24 @@ function IntroductionPage() {
               transitionDelay={theme.delays.duration.standardDelay}
             />
           </Grid>
-          <Grid size={{ sm: 6, lg: 4 }}>
+          <Grid size={{ sm: 6, lg: 3 }}>
+            <PuzzleCard 
+              puzzleImage = {roosterRiddleThumbnail} 
+              puzzleName = "The Undefeated Rooster" 
+              puzzleNumber = "3" 
+              puzzleDescription = "Best the undefeated rooster in a battle of intellect!"
+              puzzlePath = "/roosterRiddle" 
+              transitionDelay={theme.delays.duration.standardDelay * 2}
+            />
+          </Grid>
+          <Grid size={{ sm: 6, lg: 3 }}>
             <PuzzleCard 
               puzzleImage = {mysteryLetter} 
               puzzleName = "Puzzle in Progress!" 
-              puzzleNumber = "3" 
+              puzzleNumber = "4" 
               puzzleDescription = "Mr. Riddle Man isn't ready to show this puzzle yet, come back later!"
               puzzlePath = "/" 
-              transitionDelay={theme.delays.duration.standardDelay * 2}
+              transitionDelay={theme.delays.duration.standardDelay * 3}
             />
           </Grid>
         </Grid>
