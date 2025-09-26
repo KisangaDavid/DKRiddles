@@ -20,4 +20,8 @@ namespace puzzleUtils {
         }
         return intForm;
     }
+
+    uint32_t randomizer(uint32_t state) {
+        return (uint64_t)state * 48271 % 0x7fffffff;
+    }
 }

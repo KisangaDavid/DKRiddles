@@ -88,17 +88,13 @@ class HorseRiddle {
         }
 
     private:
-        uint32_t randomizer(uint32_t *state) {
-            return *state = (uint64_t)*state * 48271 % 0x7fffffff;
-        }
-
         void randomizeHorseOrder(uint32_t state, uint32_t num_shuffles) {
             uint32_t idx1 {};
             uint32_t idx2 {};
             for(size_t i {0}; i < num_shuffles; i++) {
-                state = randomizer(&state);
+                state = puzzleUtils::randomizer(state);
                 idx1 = state % 25;
-                state = randomizer(&state);
+                state = puzzleUtils::randomizer(state);
                 idx2 = state % 25;
                 if (idx1 == idx2) {
                     continue;
