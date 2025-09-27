@@ -3,7 +3,7 @@
 
 const uint32_t NUM_PILES = 4;
 const uint32_t NUM_BITS_PER_PILE = 4;
-const uint32_t MIN_STARTING_PILE = 8;
+const uint32_t MIN_STARTING_PILE = 6;
 const uint32_t MAX_STARTING_PILE = 12;
 
 uint32_t getNimsumOfPiles(std::vector<uint32_t> piles) {
@@ -47,14 +47,18 @@ std::vector<uint32_t> getMove(std::vector<uint32_t> piles, uint32_t randSource) 
 }
 
 [[clang::export_name("getInitialPiles")]]
-std::vector<uint32_t> getInitialPiles(uint32_t randSource) {
+uint32_t getInitialPiles(uint32_t randSource) {
     std::vector<uint32_t> initialPiles {};
-    for (std::size_t i = 0; i < NUM_PILES - 1; ++i) {
+    for (std::size_t i = 0; i < NUM_PILES; ++i) {
         randSource = puzzleUtils::randomizer(randSource);
-        initialPiles.push_back(MIN_STARTING_PILE + randSource % (MAX_STARTING_PILE - MIN_STARTING_PILE));
+        initialPiles.push_back(MIN_STARTING_PILE + randSource % (MAX_STARTING_PILE - MIN_STARTING_PILE + 1));
     }
-    // TODO: See if we can generate a final pile s.t. the nimsum of the piles will always be zero
-    return {0,0};
+    uint32_t inProgressNimsum = getNimsumOfPiles(initialPiles);
+    if (inProgressNimsum == 0) {
+        randSource = puzzleUtils::randomizer(randSource);
+        initialPiles[randSource % NUM_PILES] -= 1;
+    }
+    return puzzleUtils::convertVecToInt(initialPiles, NUM_BITS_PER_PILE);
 }
 
 [[clang::export_name("getRoosterRiddleMove")]]
@@ -65,12 +69,10 @@ uint32_t getRoosterRiddleMove(uint32_t inputPiles, uint32_t randSource) {
 }    
 
 int main() {
-    std::vector<uint32_t> piles0 {0,3,4,5};
-    std::vector<uint32_t> piles1 {1,2,3,4};
-    std::vector<uint32_t> piles2 {1,0,3,0};
-    std::vector<uint32_t> piles3 {0,1,2,3};
-    getMove(piles0, 12);
-    getMove(piles1, 12);
-    getMove(piles2, 12);
-    getMove(piles3, 12);
+    getInitialPiles(12);
+    getInitialPiles(13);
+    getInitialPiles(43645);
+    getInitialPiles(43645);
+    getInitialPiles(4362);
+    getInitialPiles(11645);
 }

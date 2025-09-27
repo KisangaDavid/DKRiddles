@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { useWindowSize } from "react-use";
 import { useTheme } from "@mui/material/styles";
-import { convertIterableToInt, convertIntToArray } from "../common/utils.js";
+import { convertIterableToInt, convertIntToArray, MAX_32_BIT_NUM } from "../common/utils.js";
 
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -23,7 +23,6 @@ const NUM_HORSES = 25;
 const RACE_LENGTH = 5;
 const MAX_NUM_RACES = 15;
 const NUM_BITS_PER_HORSE = 5;
-const MAX_32_BIT_NUM = 0xffffffff;
 
 const INVALID_HORSE_MSG = "Enter an integer between 1 and 25 for each position!";
 const NO_DUP_HORSES_MSG = "You cannot enter the same horse in two different positions!";

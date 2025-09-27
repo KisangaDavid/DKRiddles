@@ -1,3 +1,5 @@
+export const MAX_32_BIT_NUM = 0xffffffff;
+
 export function convertIterableToInt(iterable, numBitsPerElement) {
     let intRepresentation = 0;
     for (const element of iterable) {
