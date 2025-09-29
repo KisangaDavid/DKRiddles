@@ -21,6 +21,8 @@ const NUM_PILES = 4;
 function RoosterRiddlePage({wasmModule}) {
   const theme = useTheme();
   const [piles, setPiles] = useState([]);
+  const [selectedKernels, setSelectedKernels] = useState(new Set());
+  const [selectedPile, setSelectedPile] = useState(null);
 
     useEffect(() => {
       generateAndSetPiles();
@@ -34,6 +36,18 @@ function RoosterRiddlePage({wasmModule}) {
     setPiles(piles);
   };
 
+  const handleKernelClick = (idx) => {
+    if (selectedKernels.has(idx)) {
+      const newSet = new Set(selectedKernels);
+      newSet.delete(idx);
+      setSelectedKernels(newSet);
+    }
+    else {
+       setSelectedKernels(prevKernels => new Set([...prevKernels, idx]));
+    }
+    console.log("selected kernels: " + [...selectedKernels]);
+  };
+
   return (
   <RootBackground>
     <TopBar text="Envelope #3: The Undefeated Rooster" isHomePage={false} />
@@ -42,6 +56,7 @@ function RoosterRiddlePage({wasmModule}) {
         sx={{
           display: "flex",
           flexDirection: "column",
+          alignItems: "center",
           width: "75vw",
           position: "relative",
           mb: "1vh",
@@ -52,12 +67,14 @@ function RoosterRiddlePage({wasmModule}) {
           divider={<Divider orientation="vertical" flexItem />}
           spacing={1}
           sx={{
+            display: "flex",
             height: "35vh", 
+            width: "85%"
           }}
         >
           {piles.map((numInPile, idx) => (
             <Box sx = {{display: "flex", position: "relative", overflow: "clip", flex: "1"}}>
-              <PileStack numInPile = {numInPile} pileNum={idx + 1}/>
+              <PileStack numInPile = {numInPile} pileNum={idx + 1} selectedKernels={selectedKernels} setSelectedKernels={setSelectedKernels}/>
             </Box> 
           ))}
         </Stack>
