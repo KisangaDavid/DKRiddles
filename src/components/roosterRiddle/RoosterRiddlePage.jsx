@@ -4,7 +4,9 @@ import { useTheme } from '@mui/material/styles';
 import { convertIterableToInt, convertIntToArray, MAX_32_BIT_NUM } from "../common/utils.js";
 
 import RootBackground from "../common/RootBackground.jsx";
+import Grid from "@mui/material/Grid";
 import RoosterRiddleDescription from './RoosterRiddleDescription.jsx';
+import PileStack from './PileStack.jsx';
 import Confetti from 'react-confetti'
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
@@ -27,8 +29,8 @@ function RoosterRiddlePage({wasmModule}) {
   const generateAndSetPiles = () => {
     let pilesIntForm = wasmModule.exports.getInitialPiles(Math.floor(Math.random() * MAX_32_BIT_NUM));
     let piles = convertIntToArray(pilesIntForm, NUM_BITS_PER_PILE, NUM_PILES);
-    // console.log("piles are: " + piles);
-    // console.log("nimsum of piles: " + (piles[0] ^ piles[1] ^ piles[2] ^ piles[3]));
+    console.log("piles are: " + piles);
+    console.log("nimsum of piles: " + (piles[0] ^ piles[1] ^ piles[2] ^ piles[3]));
     setPiles(piles);
   };
 
@@ -36,7 +38,30 @@ function RoosterRiddlePage({wasmModule}) {
   <RootBackground>
     <TopBar text="Envelope #3: The Undefeated Rooster" isHomePage={false} />
     <RoosterRiddleDescription />
-    
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "75vw",
+          position: "relative",
+          mb: "1vh",
+        }}
+      >
+        <Stack
+          direction="row"
+          divider={<Divider orientation="vertical" flexItem />}
+          spacing={1}
+          sx={{
+            height: "35vh", 
+          }}
+        >
+          {piles.map((numInPile, idx) => (
+            <Box sx = {{display: "flex", position: "relative", overflow: "clip", flex: "1"}}>
+              <PileStack numInPile = {numInPile} pileNum={idx + 1}/>
+            </Box> 
+          ))}
+        </Stack>
+      </Box>
   </RootBackground>
   )
 }
