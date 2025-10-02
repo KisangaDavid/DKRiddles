@@ -23,7 +23,7 @@ std::vector<uint32_t> getRandomPlay(std::vector<uint32_t> piles, uint32_t randSo
     }
     uint32_t pileToPlayIn = pilesToPlayIn[randSource % pilesToPlayIn.size()];
     randSource = puzzleUtils::randomizer(randSource);
-    uint32_t numToTake = pilesToPlayIn.size() == 1 ? 1 : randSource % 2 + 1;
+    uint32_t numToTake = pileToPlayIn == 1 ? 1 : (randSource % 2) + 1;
     return {pileToPlayIn, numToTake};
 }
 
@@ -46,7 +46,7 @@ std::vector<uint32_t> getMove(std::vector<uint32_t> piles, uint32_t randSource) 
     }
 }
 
-[[clang::export_name("getInitialPiles")]]
+// [[clang::export_name("getInitialPiles")]]
 uint32_t getInitialPiles(uint32_t randSource) {
     std::vector<uint32_t> initialPiles {};
     for (std::size_t i = 0; i < NUM_PILES; ++i) {
@@ -61,18 +61,14 @@ uint32_t getInitialPiles(uint32_t randSource) {
     return puzzleUtils::convertVecToInt(initialPiles, NUM_BITS_PER_PILE);
 }
 
-[[clang::export_name("getRoosterRiddleMove")]]
+// [[clang::export_name("getRoosterRiddleMove")]]
 uint32_t getRoosterRiddleMove(uint32_t inputPiles, uint32_t randSource) {
     std::vector<uint32_t> piles = puzzleUtils::convertIntToVec(inputPiles, NUM_PILES, NUM_BITS_PER_PILE);
     std::vector<uint32_t> move = getMove(piles, randSource);
     return puzzleUtils::convertVecToInt(move, NUM_BITS_PER_PILE);
 }    
 
-int main() {
-    getInitialPiles(12);
-    getInitialPiles(13);
-    getInitialPiles(43645);
-    getInitialPiles(43645);
-    getInitialPiles(4362);
-    getInitialPiles(11645);
-}
+// int main() {
+//     uint32_t move_result = getRoosterRiddleMove(34833, 543545004);
+//     getInitialPiles(12123);
+// }

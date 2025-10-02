@@ -1,5 +1,6 @@
 import Stack from "@mui/material/Stack";
 import { useState, useEffect, useCallback } from 'react';
+import { useTheme } from '@mui/material/styles';
 import Divider from "@mui/material/Divider";
 import kernelImg from "/src/assets/kernel.png";
 import Fade from '@mui/material/Fade';
@@ -11,9 +12,11 @@ import TextField from "@mui/material/TextField";
 const NUM_COLUMNS_OF_KERNELS = 3;
 const MAX_NUM_KERNELS = 12;
 
-function PileStack({pileKernels, pileNum, selectedKernels, canBeSelectedFrom, handleKernelClick}) {
+function PileStack({pileKernels, removedByRooster, pileNum, selectedKernels, canBeSelectedFrom, handleKernelClick}) {
   
+  const theme = useTheme();
 
+  console.log("removed by rooster: " + removedByRooster);
   return (
   <Stack
     direction="column"
@@ -33,7 +36,7 @@ function PileStack({pileKernels, pileNum, selectedKernels, canBeSelectedFrom, ha
           alignItems="center"
           style={{display: "flex", overflow: "clip", height: "6vh"  }}
         >  
-        <Fade in={pileKernels.includes(idx)}>
+        <Fade in={pileKernels.includes(idx)} style={{transitionDelay: removedByRooster.includes(idx) ? 5000 : 0 }}>
           <img
             src={kernelImg}
             onClick= {() => handleKernelClick(idx, pileNum)}

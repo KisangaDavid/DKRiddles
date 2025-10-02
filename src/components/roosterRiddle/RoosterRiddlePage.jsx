@@ -23,6 +23,7 @@ function RoosterRiddlePage({wasmModule}) {
   const [piles, setPiles] = useState([]);
   const [selectedKernels, setSelectedKernels] = useState(new Set());
   const [selectedPile, setSelectedPile] = useState(null);
+  const [roosterMove, setRoosterMove] = useState([null, null]);
 
     useEffect(() => {
       generateAndSetPiles();
@@ -57,25 +58,27 @@ function RoosterRiddlePage({wasmModule}) {
 
   const submitMove = () => {
     let pileAfterRemoval = piles[selectedPile].filter(kernel => !selectedKernels.has(kernel));
-    let postPlayerPiles = [...piles.slice(0, selectedPile), pileAfterRemoval, ...piles.slice(selectedPile + 1)]
-    let postPlayerPileSums = postPlayerPiles.map(pile => pile.length);
+    let pilesPostPlayerMove = [...piles.slice(0, selectedPile), pileAfterRemoval, ...piles.slice(selectedPile + 1)]
+    let postPlayerPileSums = pilesPostPlayerMove.map(pile => pile.length);
     let randSource = Math.floor(Math.random() * MAX_32_BIT_NUM);
-    let pilesIntRep = convertIterableToInt(postPlayerPileSums, NUM_BITS_PER_PILE)
+    let pilesIntRep = convertIterableToInt(postPlayerPileSums.reverse(), NUM_BITS_PER_PILE);
+    console.log("pilesIntRep:" + pilesIntRep);
+    console.log("randSource:" + randSource);
     let roosterMove = wasmModule.exports.getRoosterRiddleMove(pilesIntRep, randSource);
     let [numToTake, pileToTakeFrom] = convertIntToArray(roosterMove, NUM_BITS_PER_PILE, 2);
-    console.log("pile to take from" + pileToTakeFrom + "numToTake" + numToTake);
-    let postRoosterPiles = executeRoosterMove(pileToTakeFrom, numToTake, postPlayerPiles);
-    console.log("piles pre update: " + piles);
-    console.log("postRoosterPiles: " + postRoosterPiles);
-    setPiles(postRoosterPiles);
+    console.log("pile to take from: " + pileToTakeFrom + "numToTake: " + numToTake);
+    let pilesPostRoosterMove = executeRoosterMove(pileToTakeFrom, numToTake, pilesPostPlayerMove);
+    setPiles(pilesPostRoosterMove);
     setSelectedKernels(new Set());
     setSelectedPile(null);
     console.log("submitted move!");
   }
 
-  const executeRoosterMove = (pileToTakeFrom, numToTake, postPlayerPiles) => {
-    let pileAfterRemoval = postPlayerPiles[pileToTakeFrom].slice(0, -numToTake);
-    return [...postPlayerPiles.slice(0, selectedPile), pileAfterRemoval, ...postPlayerPiles.slice(selectedPile + 1)]
+  const executeRoosterMove = (pileToTakeFrom, numToTake, pilesPostPlayerMove) => {
+    setRoosterMove([pileToTakeFrom, pilesPostPlayerMove[pileToTakeFrom].slice(-numToTake)]);
+    // console.log("pile to take from: " + pileToTakeFrom + "num to take: " + numToTake + "slice sum" + pilesPostPlayerMove.slice(-numToTake));
+    let pileAfterRoosterRemoval = pilesPostPlayerMove[pileToTakeFrom].slice(0, -numToTake);
+    return [...pilesPostPlayerMove.slice(0, pileToTakeFrom), pileAfterRoosterRemoval, ...pilesPostPlayerMove.slice(pileToTakeFrom + 1)]
   }
   return (
   <RootBackground>
@@ -109,6 +112,7 @@ function RoosterRiddlePage({wasmModule}) {
                 pileNum={idx} 
                 canBeSelectedFrom={selectedPile == null || selectedPile == idx} 
                 handleKernelClick={(selectedPile == null || selectedPile == idx) ? handleKernelClick: ()=>{}} 
+                removedByRooster={roosterMove[0] == idx ? roosterMove[1] : []}
                 selectedKernels={selectedKernels}
                 setSelectedKernels={setSelectedKernels}
               />
