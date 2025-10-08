@@ -18,6 +18,7 @@ const theme = createTheme({
           transitions: {
             duration: {
               standardTextFade: 1000,
+              shortImageZoom: 500,
               shortImageFade: 750,
               standardImageFade: 1500,
               longTextFade: 2000
@@ -27,7 +28,8 @@ const theme = createTheme({
             duration: {
               shortDelay: 200,
               standardDelay: 250,
-              longDelay: 500
+              longDelay: 500,
+              extraLongDelay: 750
             }
           },
           colorSchemes, 

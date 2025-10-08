@@ -21,9 +21,12 @@ std::vector<uint32_t> getRandomPlay(std::vector<uint32_t> piles, uint32_t randSo
             pilesToPlayIn.push_back(i);
         }
     }
+    if (pilesToPlayIn.size() < 1) {
+        return {0,0};
+    }
     uint32_t pileToPlayIn = pilesToPlayIn[randSource % pilesToPlayIn.size()];
     randSource = puzzleUtils::randomizer(randSource);
-    uint32_t numToTake = pileToPlayIn == 1 ? 1 : (randSource % 2) + 1;
+    uint32_t numToTake = (randSource % piles[pileToPlayIn]) + 1;
     return {pileToPlayIn, numToTake};
 }
 
@@ -33,7 +36,7 @@ std::vector<uint32_t> getOptimalPlay(uint32_t nimsumAllPiles, std::vector<uint32
             return {static_cast<uint32_t>(i), piles[i] - (nimsumAllPiles ^ piles[i])};
         }
     }
-    return {0,0};
+    return {10,10};
 }
 
 std::vector<uint32_t> getMove(std::vector<uint32_t> piles, uint32_t randSource) {
@@ -46,7 +49,7 @@ std::vector<uint32_t> getMove(std::vector<uint32_t> piles, uint32_t randSource) 
     }
 }
 
-// [[clang::export_name("getInitialPiles")]]
+[[clang::export_name("getInitialPiles")]]
 uint32_t getInitialPiles(uint32_t randSource) {
     std::vector<uint32_t> initialPiles {};
     for (std::size_t i = 0; i < NUM_PILES; ++i) {
@@ -61,7 +64,7 @@ uint32_t getInitialPiles(uint32_t randSource) {
     return puzzleUtils::convertVecToInt(initialPiles, NUM_BITS_PER_PILE);
 }
 
-// [[clang::export_name("getRoosterRiddleMove")]]
+[[clang::export_name("getRoosterRiddleMove")]]
 uint32_t getRoosterRiddleMove(uint32_t inputPiles, uint32_t randSource) {
     std::vector<uint32_t> piles = puzzleUtils::convertIntToVec(inputPiles, NUM_PILES, NUM_BITS_PER_PILE);
     std::vector<uint32_t> move = getMove(piles, randSource);

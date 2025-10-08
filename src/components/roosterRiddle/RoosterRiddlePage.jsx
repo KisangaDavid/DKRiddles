@@ -6,6 +6,8 @@ import { convertIterableToInt, convertIntToArray, MAX_32_BIT_NUM } from "../comm
 import RootBackground from "../common/RootBackground.jsx";
 import Grid from "@mui/material/Grid";
 import RoosterRiddleDescription from './RoosterRiddleDescription.jsx';
+import RoosterMoveDescription from './RoosterMoveDescription.jsx';
+import RoosterRiddleResults from './RoosterRiddleResults.jsx';
 import PileStack from './PileStack.jsx';
 import Confetti from 'react-confetti'
 import Stack from '@mui/material/Stack';
@@ -20,6 +22,8 @@ const NUM_PILES = 4;
 
 function RoosterRiddlePage({wasmModule}) {
   const theme = useTheme();
+  const [confetti, setConfetti] = useState(false);
+  const [gameIsWon, setGameIsWon] = useState(false);
   const [piles, setPiles] = useState([]);
   const [selectedKernels, setSelectedKernels] = useState(new Set());
   const [selectedPile, setSelectedPile] = useState(null);
@@ -60,6 +64,11 @@ function RoosterRiddlePage({wasmModule}) {
     let pileAfterRemoval = piles[selectedPile].filter(kernel => !selectedKernels.has(kernel));
     let pilesPostPlayerMove = [...piles.slice(0, selectedPile), pileAfterRemoval, ...piles.slice(selectedPile + 1)]
     let postPlayerPileSums = pilesPostPlayerMove.map(pile => pile.length);
+    console.log("after reduce: " + postPlayerPileSums.reduce((a, b) => a + b, 0));
+    if (postPlayerPileSums.reduce((a, b) => a + b, 0) == 0) {
+      setGameIsWon(true);
+    }
+
     let randSource = Math.floor(Math.random() * MAX_32_BIT_NUM);
     let pilesIntRep = convertIterableToInt(postPlayerPileSums.reverse(), NUM_BITS_PER_PILE);
     console.log("pilesIntRep:" + pilesIntRep);
@@ -67,19 +76,22 @@ function RoosterRiddlePage({wasmModule}) {
     let roosterMove = wasmModule.exports.getRoosterRiddleMove(pilesIntRep, randSource);
     let [numToTake, pileToTakeFrom] = convertIntToArray(roosterMove, NUM_BITS_PER_PILE, 2);
     console.log("pile to take from: " + pileToTakeFrom + "numToTake: " + numToTake);
-    let pilesPostRoosterMove = executeRoosterMove(pileToTakeFrom, numToTake, pilesPostPlayerMove);
-    setPiles(pilesPostRoosterMove);
+    setPiles(pilesPostPlayerMove);
     setSelectedKernels(new Set());
     setSelectedPile(null);
+    setTimeout(() => {
+      executeRoosterMove(pileToTakeFrom, numToTake, pilesPostPlayerMove);;
+    }, theme.delays.duration.longDelay);
     console.log("submitted move!");
   }
 
   const executeRoosterMove = (pileToTakeFrom, numToTake, pilesPostPlayerMove) => {
     setRoosterMove([pileToTakeFrom, pilesPostPlayerMove[pileToTakeFrom].slice(-numToTake)]);
-    // console.log("pile to take from: " + pileToTakeFrom + "num to take: " + numToTake + "slice sum" + pilesPostPlayerMove.slice(-numToTake));
     let pileAfterRoosterRemoval = pilesPostPlayerMove[pileToTakeFrom].slice(0, -numToTake);
-    return [...pilesPostPlayerMove.slice(0, pileToTakeFrom), pileAfterRoosterRemoval, ...pilesPostPlayerMove.slice(pileToTakeFrom + 1)]
+    setPiles([...pilesPostPlayerMove.slice(0, pileToTakeFrom), pileAfterRoosterRemoval, ...pilesPostPlayerMove.slice(pileToTakeFrom + 1)]);
   }
+
+  const isGameOver = piles.reduce((a, b) => a + b, 0) == 0;
   return (
   <RootBackground>
     <TopBar text="Envelope #3: The Undefeated Rooster" isHomePage={false} />
@@ -93,34 +105,40 @@ function RoosterRiddlePage({wasmModule}) {
           position: "relative",
           mb: "1vh",
         }}
-      >
-        <Stack
-          direction="row"
-          divider={<Divider orientation="vertical" flexItem />}
-          spacing={1}
-          sx={{
-            display: "flex",
-            height: "35vh", 
-            width: "85%",
-            mb: "5vh"
-          }}
-        >
-          {piles.map((pile, idx) => (
-            <Box sx = {{display: "flex", position: "relative", overflow: "clip", flex: "1"}}>
-              <PileStack 
-                pileKernels = {pile} 
-                pileNum={idx} 
-                canBeSelectedFrom={selectedPile == null || selectedPile == idx} 
-                handleKernelClick={(selectedPile == null || selectedPile == idx) ? handleKernelClick: ()=>{}} 
-                removedByRooster={roosterMove[0] == idx ? roosterMove[1] : []}
-                selectedKernels={selectedKernels}
-                setSelectedKernels={setSelectedKernels}
-              />
-            </Box> 
-          ))}
-        </Stack>
-         <Button variant="contained" disabled={selectedKernels.size < 1} 
-                  onClick={submitMove}>Submit Move</Button>
+      > {isGameOver 
+          ? 
+            <RoosterRiddleResults gameIsWon={gameIsWon} setConfetti={setConfetti} /> 
+          :
+            <>
+              <Stack
+                direction="row"
+                divider={<Divider orientation="vertical" flexItem />}
+                spacing={1}
+                sx={{
+                  display: "flex",
+                  height: "35vh", 
+                  width: "85%",
+                  mb: "5vh"
+                }}
+              >
+                {piles.map((pile, idx) => (
+                  <Box key={idx} sx = {{display: "flex", position: "relative", overflow: "clip", flex: "1"}}>
+                    <PileStack 
+                      pileNum={idx} 
+                      pileKernels = {pile} 
+                      canBeSelectedFrom={selectedPile == null || selectedPile == idx} 
+                      handleKernelClick={(selectedPile == null || selectedPile == idx) ? handleKernelClick: ()=>{}} 
+                      removedByRooster={roosterMove[0] == idx ? roosterMove[1] : []}
+                      selectedKernels={selectedKernels}
+                      setSelectedKernels={setSelectedKernels}
+                    />
+                  </Box> 
+                ))}
+              </Stack>
+              <RoosterMoveDescription roosterMove={roosterMove}/>
+              <Button variant="contained" disabled={selectedKernels.size < 1} 
+                        onClick={submitMove}>Submit Move</Button>
+            </> }
       </Box>
   </RootBackground>
   )
