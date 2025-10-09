@@ -5,11 +5,8 @@ import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
 
 
-function RoosterRiddleResults({gameIsWon, setConfetti}) {
+function RoosterRiddleResults({gameIsWon}) {
   const theme = useTheme();
-  if (gameIsWon) {
-    setConfetti(true);
-  }
   return (
     <Box>
       {gameIsWon ?

@@ -17,7 +17,7 @@ function HorseRiddleDescription() {
         }}
       >
         <p>
-          You tear open the second envelop and find a small purple flask
+          You tear open the second envelop and find a small purple flask,
           alongside a note. The note reads:
           <br />
           <i>

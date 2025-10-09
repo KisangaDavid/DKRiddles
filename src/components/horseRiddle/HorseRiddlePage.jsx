@@ -128,7 +128,7 @@ function HorseRiddlePage({ wasmModule }) {
 
   let trifectaBetFilled = !fastestHorses.includes(null);
   let trifectaErrorMessage = validateTrifectaBet();
-
+ // TODO: get rid of scrollbar while keeping scroll capability
   return (
     <RootBackground>
       <TopBar
@@ -168,12 +168,12 @@ function HorseRiddlePage({ wasmModule }) {
               Select 5 horses to race!
               <Grid
                 container
-                spacing={1}
+                columnSpacing={2}
+                rowSpacing={1}
                 columns={5}
                 direction="row"
                 sx={{
                   mt: "1vh",
-                  minHeight: "50%",
                   display: "flex",
                   width: "100%",
                 }}

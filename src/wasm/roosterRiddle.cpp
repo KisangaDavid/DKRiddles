@@ -3,8 +3,8 @@
 
 const uint32_t NUM_PILES = 4;
 const uint32_t NUM_BITS_PER_PILE = 4;
-const uint32_t MIN_STARTING_PILE = 6;
-const uint32_t MAX_STARTING_PILE = 12;
+const uint32_t MIN_STARTING_PILE = 4;
+const uint32_t MAX_STARTING_PILE = 10;
 
 uint32_t getNimsumOfPiles(std::vector<uint32_t> piles) {
     uint32_t nimsum = 0;
@@ -59,7 +59,7 @@ uint32_t getInitialPiles(uint32_t randSource) {
     uint32_t inProgressNimsum = getNimsumOfPiles(initialPiles);
     if (inProgressNimsum == 0) {
         randSource = puzzleUtils::randomizer(randSource);
-        initialPiles[randSource % NUM_PILES] -= 1;
+        initialPiles[randSource % NUM_PILES] += 1;
     }
     return puzzleUtils::convertVecToInt(initialPiles, NUM_BITS_PER_PILE);
 }

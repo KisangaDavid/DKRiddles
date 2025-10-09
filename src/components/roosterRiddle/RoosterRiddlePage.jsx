@@ -22,22 +22,21 @@ const NUM_PILES = 4;
 
 function RoosterRiddlePage({wasmModule}) {
   const theme = useTheme();
-  const [confetti, setConfetti] = useState(false);
+  const [showResultScreen, setShowResultScreen] = useState(false);
   const [gameIsWon, setGameIsWon] = useState(false);
   const [piles, setPiles] = useState([]);
   const [selectedKernels, setSelectedKernels] = useState(new Set());
   const [selectedPile, setSelectedPile] = useState(null);
   const [roosterMove, setRoosterMove] = useState([null, null]);
+  const {width, height} = useWindowSize();
 
-    useEffect(() => {
-      generateAndSetPiles();
-    }, []);
+  useEffect(() => {
+    generateAndSetPiles();
+  }, []);
 
   const generateAndSetPiles = () => {
     let pilesIntForm = wasmModule.exports.getInitialPiles(Math.floor(Math.random() * MAX_32_BIT_NUM));
     let piles = convertIntToArray(pilesIntForm, NUM_BITS_PER_PILE, NUM_PILES);
-    console.log("piles are: " + piles);
-    console.log("nimsum of piles: " + (piles[0] ^ piles[1] ^ piles[2] ^ piles[3]));
     piles = piles.map(pile => 
       Array.from({ length: pile }, (_, i) => i)
     );
@@ -57,32 +56,27 @@ function RoosterRiddlePage({wasmModule}) {
        setSelectedKernels(prevKernels => new Set([...prevKernels, idx]));
        setSelectedPile(pileNum);
     }
-    console.log("selected kernels: " + [...selectedKernels]);
   };
 
   const submitMove = () => {
     let pileAfterRemoval = piles[selectedPile].filter(kernel => !selectedKernels.has(kernel));
     let pilesPostPlayerMove = [...piles.slice(0, selectedPile), pileAfterRemoval, ...piles.slice(selectedPile + 1)]
     let postPlayerPileSums = pilesPostPlayerMove.map(pile => pile.length);
-    console.log("after reduce: " + postPlayerPileSums.reduce((a, b) => a + b, 0));
     if (postPlayerPileSums.reduce((a, b) => a + b, 0) == 0) {
+      setPiles(pilesPostPlayerMove);
       setGameIsWon(true);
+      return;
     }
-
     let randSource = Math.floor(Math.random() * MAX_32_BIT_NUM);
     let pilesIntRep = convertIterableToInt(postPlayerPileSums.reverse(), NUM_BITS_PER_PILE);
-    console.log("pilesIntRep:" + pilesIntRep);
-    console.log("randSource:" + randSource);
     let roosterMove = wasmModule.exports.getRoosterRiddleMove(pilesIntRep, randSource);
     let [numToTake, pileToTakeFrom] = convertIntToArray(roosterMove, NUM_BITS_PER_PILE, 2);
-    console.log("pile to take from: " + pileToTakeFrom + "numToTake: " + numToTake);
     setPiles(pilesPostPlayerMove);
     setSelectedKernels(new Set());
     setSelectedPile(null);
     setTimeout(() => {
       executeRoosterMove(pileToTakeFrom, numToTake, pilesPostPlayerMove);;
     }, theme.delays.duration.longDelay);
-    console.log("submitted move!");
   }
 
   const executeRoosterMove = (pileToTakeFrom, numToTake, pilesPostPlayerMove) => {
@@ -91,23 +85,41 @@ function RoosterRiddlePage({wasmModule}) {
     setPiles([...pilesPostPlayerMove.slice(0, pileToTakeFrom), pileAfterRoosterRemoval, ...pilesPostPlayerMove.slice(pileToTakeFrom + 1)]);
   }
 
-  const isGameOver = piles.reduce((a, b) => a + b, 0) == 0;
+  const resetPuzzle = () => {
+    generateAndSetPiles()
+    setShowResultScreen(false);
+    setGameIsWon(false);
+    setSelectedKernels(new Set());
+    setSelectedPile(null);
+    setRoosterMove([null, null]);
+  }
+
+  if (piles.length > 0 && piles.reduce((a, b) => a + b.length, 0) == 0) {
+    setTimeout(() => {
+      setShowResultScreen(true);
+    }, theme.delays.duration.longDelay);
+  }
+  // TODO: staggered fade, fade everything
   return (
   <RootBackground>
-    <TopBar text="Envelope #3: The Undefeated Rooster" isHomePage={false} />
+    <TopBar text="Envelope #3: The Undefeated Rooster" isHomePage={false} resetFunc={resetPuzzle} />
+    {gameIsWon && <Confetti width={width} height={height} />}
     <RoosterRiddleDescription />
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          flex: 1,
+          justifyContent: "center",
           width: "75vw",
           position: "relative",
           mb: "1vh",
         }}
-      > {isGameOver 
+      > 
+        {showResultScreen 
           ? 
-            <RoosterRiddleResults gameIsWon={gameIsWon} setConfetti={setConfetti} /> 
+            <RoosterRiddleResults gameIsWon={gameIsWon} /> 
           :
             <>
               <Stack

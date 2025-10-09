@@ -11,12 +11,12 @@ function HorseGridElement({horseNumber, onClick}) {
       flexDirection="column"
       justifyContent="center" 
       alignItems="center"
-      style={{overflow: "clip", height:"10vh"}}
+      style={{overflow: "clip", height:"9vh"}}
+      onClick={onClick}
     >  
       <img
         src={horseImg}
-        style={{objectFit: "contain", height: "85%", width: "100%"}}
-        onClick={onClick}
+        style={{objectFit: "contain", height: "95%", width: "95%"}}
       />
       {horseNumber}
     </Grid>
