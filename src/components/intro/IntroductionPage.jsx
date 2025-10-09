@@ -137,7 +137,7 @@ function IntroductionPage() {
               puzzleImage = {mysteryLetter} 
               puzzleName = "Puzzle in Progress!" 
               puzzleNumber = "4" 
-              puzzleDescription = "Mr. Riddle Man isn't ready to show this puzzle yet, come back later!"
+              puzzleDescription = "Come back later to find a a brand new puzzle from Mr. Riddle Man!"
               puzzlePath = "/" 
               transitionDelay={theme.delays.duration.standardDelay * 3}
             />

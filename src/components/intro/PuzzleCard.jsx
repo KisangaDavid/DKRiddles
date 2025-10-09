@@ -34,7 +34,10 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
     flexDirection: 'column',
     gap: 4,
     padding: 16,
+    paddingTop: 32,
     flexGrow: 1,
+    backgroundImage:
+				"radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))",
     height: "100%",
     '&:last-child': {
         paddingBottom: 16,
@@ -50,7 +53,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
   });
 
   return (
-    <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.shortImageFade} 
+    <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardImageFade} 
       style={{transitionDelay: transitionDelay}}>
     <SyledCard variant="outlined" onClick={() => navigate(puzzlePath)}> 
       <CardMedia
@@ -59,7 +62,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
           sx={{
               borderBottom: '1px solid',
               borderColor: 'divider',
-              height: "100%"
+              height: "100%",
           }}
       />
       <SyledCardContent>

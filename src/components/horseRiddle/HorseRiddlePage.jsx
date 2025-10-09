@@ -103,7 +103,7 @@ function HorseRiddlePage({ wasmModule }) {
   const checkAnswer = () => {
     let horsesToSubmit = fastestHorses.map((num) => num - 1).reverse();
     let horsesToSubmitInt = convertIterableToInt(horsesToSubmit,NUM_BITS_PER_HORSE);
-    let intRes = wasmModule.exports.checkAnswer(horsesToSubmitInt);
+    let intRes = wasmModule.exports.checkHorseRiddleAnswer(horsesToSubmitInt);
     let resVec = convertIntToArray(intRes, NUM_BITS_PER_HORSE, 3);
 
     switch (resVec[0]) {
@@ -128,7 +128,7 @@ function HorseRiddlePage({ wasmModule }) {
 
   let trifectaBetFilled = !fastestHorses.includes(null);
   let trifectaErrorMessage = validateTrifectaBet();
- // TODO: get rid of scrollbar while keeping scroll capability
+  
   return (
     <RootBackground>
       <TopBar
@@ -137,7 +137,7 @@ function HorseRiddlePage({ wasmModule }) {
         resetFunc={resetPuzzle}
       />
       {confetti && <Confetti width={width} height={height} />}
-      <HorseRiddleDescription theme={theme} />
+      <HorseRiddleDescription />
       {!correctAns && (
         <Fade
           in={true}
@@ -283,7 +283,6 @@ function HorseRiddlePage({ wasmModule }) {
           flexGrow: 1,
           overflow: "hidden",
           width: "75vw",
-          mb: "2vh",
           alignItems: "center",
         }}
       >

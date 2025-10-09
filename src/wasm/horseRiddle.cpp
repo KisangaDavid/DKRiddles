@@ -176,7 +176,7 @@ uint32_t submitRace(uint32_t input) {
     return puzzleUtils::convertVecToInt(raceResults, NUM_BITS_PER_HORSE);
 }
 
-[[clang::export_name("checkAnswer")]]
+[[clang::export_name("checkHorseRiddleAnswer")]]
 uint32_t checkAnswer(uint32_t input) {
     HorseRiddle horseRiddle = getHorseRiddle();
     std::vector<uint32_t> submittedHorses = puzzleUtils::convertIntToVec(input, NUM_HORSES_TO_SUBMIT, NUM_BITS_PER_HORSE);

@@ -1,10 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useWindowSize } from 'react-use';
 import { useTheme } from '@mui/material/styles';
 import { convertIterableToInt, convertIntToArray, MAX_32_BIT_NUM } from "../common/utils.js";
 
 import RootBackground from "../common/RootBackground.jsx";
-import Grid from "@mui/material/Grid";
 import RoosterRiddleDescription from './RoosterRiddleDescription.jsx';
 import RoosterMoveDescription from './RoosterMoveDescription.jsx';
 import RoosterRiddleResults from './RoosterRiddleResults.jsx';
@@ -99,12 +98,16 @@ function RoosterRiddlePage({wasmModule}) {
       setShowResultScreen(true);
     }, theme.delays.duration.longDelay);
   }
-  // TODO: staggered fade, fade everything
+
   return (
   <RootBackground>
     <TopBar text="Envelope #3: The Undefeated Rooster" isHomePage={false} resetFunc={resetPuzzle} />
     {gameIsWon && <Confetti width={width} height={height} />}
     <RoosterRiddleDescription />
+    <Fade in={true} mountOnEnter unmountOnExit
+            timeout={theme.transitions.duration.longTextFade}
+            style={{ transitionDelay: theme.delays.duration.longDelay}}
+        >
       <Box
         sx={{
           display: "flex",
@@ -140,7 +143,6 @@ function RoosterRiddlePage({wasmModule}) {
                       pileKernels = {pile} 
                       canBeSelectedFrom={selectedPile == null || selectedPile == idx} 
                       handleKernelClick={(selectedPile == null || selectedPile == idx) ? handleKernelClick: ()=>{}} 
-                      removedByRooster={roosterMove[0] == idx ? roosterMove[1] : []}
                       selectedKernels={selectedKernels}
                       setSelectedKernels={setSelectedKernels}
                     />
@@ -148,10 +150,12 @@ function RoosterRiddlePage({wasmModule}) {
                 ))}
               </Stack>
               <RoosterMoveDescription roosterMove={roosterMove}/>
-              <Button variant="contained" disabled={selectedKernels.size < 1} 
-                        onClick={submitMove}>Submit Move</Button>
+              <Button variant="contained" disabled={selectedKernels.size < 1} onClick={submitMove}>
+                Submit Move
+              </Button>
             </> }
       </Box>
+    </Fade>
   </RootBackground>
   )
 }

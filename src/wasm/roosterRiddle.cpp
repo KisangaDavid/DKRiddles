@@ -70,8 +70,3 @@ uint32_t getRoosterRiddleMove(uint32_t inputPiles, uint32_t randSource) {
     std::vector<uint32_t> move = getMove(piles, randSource);
     return puzzleUtils::convertVecToInt(move, NUM_BITS_PER_PILE);
 }    
-
-// int main() {
-//     uint32_t move_result = getRoosterRiddleMove(34833, 543545004);
-//     getInitialPiles(12123);
-// }

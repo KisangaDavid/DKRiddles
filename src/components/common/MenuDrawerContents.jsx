@@ -34,14 +34,14 @@ function MenuDrawerContents({setMenuDrawerOpen, isIntroPage}) {
             <ListItemText primary={"Introduction"} />
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding>
+        {/* <ListItem disablePadding>
           <ListItemButton sx={{py: "1.5vh"}}>
               <ListItemIcon>
                 <HelpOutlineIcon />
               </ListItemIcon>
               <ListItemText primary={isIntroPage ? "About this site" : "About This Puzzle"} />
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
       </List>
       <Divider />
       <ListItem>
@@ -71,14 +71,14 @@ function MenuDrawerContents({setMenuDrawerOpen, isIntroPage}) {
             <ListItemText primary={"The Undefeated Rooster"} />
           </ListItemButton>
         </ListItem>
-         <ListItem disablePadding>
+         {/* <ListItem disablePadding>
           <ListItemButton sx={{py: "1.5vh"}} >
             <ListItemIcon>
               <ExtensionIcon /> 
             </ListItemIcon>
             <ListItemText primary={"Placeholder Puzzle #4"} />
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
       </List>
     </>
   );

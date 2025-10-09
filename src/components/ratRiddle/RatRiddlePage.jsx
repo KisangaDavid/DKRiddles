@@ -41,7 +41,6 @@ function RatRiddlePage({wasmModule}) {
         newSet.add(index);
       }
     }
-    console.log(newSet);
     setCurCheckedHouses(newSet);
   };
 

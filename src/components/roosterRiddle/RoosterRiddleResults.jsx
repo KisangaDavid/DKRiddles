@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 function RoosterRiddleResults({gameIsWon}) {
   const theme = useTheme();
   return (
+    <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
     <Box>
       {gameIsWon ?
         <p> As you pick up the last kernel, you hear a booming voice from the heavens: <br /> <br />
@@ -15,8 +16,7 @@ function RoosterRiddleResults({gameIsWon}) {
               you have successfully completed envelope #3, and are one step
               closer to becoming my chosen successor, the new Mr. Riddle Man.
               Take pride in your success!
-            </i></b>
-          
+            </i></b>  
         </p>
       : 
         <p> As the rooster smugly picks up the last kernel, you hear a booming voice from the heavens: <br /> <br />
@@ -25,6 +25,7 @@ function RoosterRiddleResults({gameIsWon}) {
         </p>
       }
     </Box>
+    </Fade>
   );
 }
 

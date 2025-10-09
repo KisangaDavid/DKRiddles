@@ -11,7 +11,7 @@ export const styleOverrides = {
       root: ({ theme }) => {
         return {
           padding: 16,
-          gap: 16,
+          gap: 0,
           transition: 'all 100ms ease',
           backgroundColor: gray[600],
           borderRadius: (theme.vars || theme).shape.borderRadius,
