@@ -18,6 +18,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
     padding: 0,
     height: '100%',
     backgroundColor: (theme.vars || theme).palette.background.paper,
+    boxShadow: (theme.vars || theme).shadows[1],
     '&:hover': {
       backgroundColor: 'transparent',
       cursor: 'pointer',
@@ -37,7 +38,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
     paddingTop: 32,
     flexGrow: 1,
     backgroundImage:
-				"radial-gradient(ellipse 80% 50% at 50% -15%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))",
+				"radial-gradient(ellipse 55% 55% at 50% -5%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))",
     height: "100%",
     '&:last-child': {
         paddingBottom: 16,
@@ -63,6 +64,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
               borderBottom: '1px solid',
               borderColor: 'divider',
               height: "100%",
+              backgroundImage: "radial-gradient(ellipse 55% 55% at 50% 50%, hsla(210, 68%, 11%, 1.00), hsla(208, 100.00%, 3.70%, 0.64))"
           }}
       />
       <SyledCardContent>

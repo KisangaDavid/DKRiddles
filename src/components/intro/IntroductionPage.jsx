@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import RootBackground from "../common/RootBackground.jsx";
 import Chip from '@mui/material/Chip';
 import ratRiddleThumbnail from '/src/assets/ratRiddleThumbnail.png'
-import horseRiddleThumbnail from '/src/assets/horseRiddleThumbnail.jpg'
+import horseRiddleThumbnail from '/src/assets/horseRiddleThumbnail.png'
 import roosterRiddleThumbnail from '/src/assets/roosterRiddleThumbnail.png'
 import mysteryLetter from '/src/assets/mysteryLetter.jpg'
 import PuzzleCard from './PuzzleCard';
@@ -14,7 +14,6 @@ import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
 import TopBar from '/src/components/common/TopBar.jsx';
 
-// TODO: standardize backgrounds and change horse riddle thumbnail
 function IntroductionPage() {
 
   const theme = useTheme();
