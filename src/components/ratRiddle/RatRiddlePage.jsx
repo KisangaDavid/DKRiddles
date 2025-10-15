@@ -101,65 +101,65 @@ function RatRiddlePage({wasmModule}) {
   }
 
   return (
-  <RootBackground>
-    <TopBar text="Envelope #1: The Sneaky Rat" isHomePage={false} resetFunc={resetPuzzle}/>
-    {confetti && <Confetti width={width} height={height} />}
-    <RatRiddleDescription theme={theme} />
-    <Fade in={true} mountOnEnter unmountOnExit
-        timeout={theme.transitions.duration.longTextFade}
-        style={{ transitionDelay: theme.delays.duration.longDelay }}
-    >
-      <Box sx={{ position: "relative", width: "75vw", height: "50vh" }}>
-        <RowOfHouses
-            NUM_HOUSES={NUM_HOUSES}
-            submittedTraps={submittedTraps}
-            trapHouse={trapHouse}
-            curCheckedHouses={curCheckedHouses}
-            allCheckedHouses={allCheckedHouses}
-            path={path}
-            curDay={curDay}
-            prevDay={prevDay}
-        />
-        {!submittedTraps && (
-          <Fade in={true} mountOnEnter unmountOnExit
-              timeout={theme.transitions.duration.standardTextFade}
-          >
-            <Stack
-                direction="row"
-                justifyContent="center"
-                divider={<Divider orientation="vertical" flexItem />}
-                spacing={2}
-            >
-              <Button variant="contained" disabled={curCheckedHouses.size !== 2 || curDay > 5} 
-                  onClick={nextDay}>&nbsp;&nbsp;Next Day&nbsp;&nbsp;</Button>
-              <Button variant="contained" disabled={curCheckedHouses.size !== 2} 
-                  onClick={submitRiddleAnswer}>Submit Answer</Button>
-            </Stack>
-          </Fade>
-        )}
-        {submittedTraps && solved && (
-          <Box>
-            <SolvedStack
-              checkBonusAnswer={wasmModule.exports.checkRatBonusAnswer}
-              setConfetti={setConfetti}
-              totalDays={totalDays}
-            />
-          </Box>
-        )}
-        {submittedTraps && !solved && (
-          <Box>
-            <UnsolvedStack
-              curDay={curDay}
-              totalDays={totalDays}
-              path={path}
+    <RootBackground>
+      <TopBar text="Envelope #1: The Sneaky Rat" isHomePage={false} resetFunc={resetPuzzle}/>
+      {confetti && <Confetti width={width} height={height} />}
+      <RatRiddleDescription theme={theme} />
+      <Fade in={true} mountOnEnter unmountOnExit
+          timeout={theme.transitions.duration.longTextFade}
+          style={{ transitionDelay: theme.delays.duration.longDelay }}
+      >
+        <Box sx={{ position: "relative", width: "75vw", height: "50vh" }}>
+          <RowOfHouses
+              NUM_HOUSES={NUM_HOUSES}
+              submittedTraps={submittedTraps}
+              trapHouse={trapHouse}
+              curCheckedHouses={curCheckedHouses}
               allCheckedHouses={allCheckedHouses}
-              handleSliderChange={handleSliderChange}
-            />
-          </Box>
-        )}
-      </Box>
-    </Fade>
-  </RootBackground>
+              path={path}
+              curDay={curDay}
+              prevDay={prevDay}
+          />
+          {!submittedTraps && (
+            <Fade in={true} mountOnEnter unmountOnExit
+                timeout={theme.transitions.duration.standardTextFade}
+            >
+              <Stack
+                  direction="row"
+                  justifyContent="center"
+                  divider={<Divider orientation="vertical" flexItem />}
+                  spacing={2}
+              >
+                <Button variant="contained" disabled={curCheckedHouses.size !== 2 || curDay > 5} 
+                    onClick={nextDay}>&nbsp;&nbsp;Next Day&nbsp;&nbsp;</Button>
+                <Button variant="contained" disabled={curCheckedHouses.size !== 2} 
+                    onClick={submitRiddleAnswer}>Submit Answer</Button>
+              </Stack>
+            </Fade>
+          )}
+          {submittedTraps && solved && (
+            <Box>
+              <SolvedStack
+                checkBonusAnswer={wasmModule.exports.checkRatBonusAnswer}
+                setConfetti={setConfetti}
+                totalDays={totalDays}
+              />
+            </Box>
+          )}
+          {submittedTraps && !solved && (
+            <Box>
+              <UnsolvedStack
+                curDay={curDay}
+                totalDays={totalDays}
+                path={path}
+                allCheckedHouses={allCheckedHouses}
+                handleSliderChange={handleSliderChange}
+              />
+            </Box>
+          )}
+        </Box>
+      </Fade>
+    </RootBackground>
   )
 }
 

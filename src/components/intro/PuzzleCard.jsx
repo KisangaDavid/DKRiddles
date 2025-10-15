@@ -17,10 +17,10 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
     flexDirection: 'column',
     padding: 0,
     height: '100%',
-    backgroundColor: (theme.vars || theme).palette.background.paper,
-    boxShadow: (theme.vars || theme).shadows[1],
+    boxShadow: 'hsla(223, 41%, 3%, 0.70) 0px 0px 20px 0px, hsla(220, 29%, 8%, 0.80) 0px 0px 20px 0px',
     '&:hover': {
       backgroundColor: 'transparent',
+      boxShadow: 'hsla(0, 0%, 36%, 0.70) 0px 0px 16px 0px, hsla(240, 1%, 40%, 0.80) 0px 0px 16px 0px',
       cursor: 'pointer',
     },
     '&:focus-visible': {

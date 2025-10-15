@@ -1,6 +1,5 @@
 #include "puzzleUtils.h"
 #include <vector>
-// #include <cstdint>
 
 struct Position {
   int row;
@@ -135,14 +134,11 @@ uint32_t checkAnswer(uint64_t num1) {
     num1 >>= 1;
     ++position;
   }
-
   HouseRatRiddle houseHatRiddle(static_cast<int>(deletedNodes.size()), 8, 2);
   std::vector<uint32_t> path = houseHatRiddle.solve(deletedNodes); 
-
   if(path.size() == 0) {
     return static_cast<uint32_t>(-1);
   }
-
   uint32_t toReturn {0};
   uint32_t mask {};
   for(std::size_t i=0; i < path.size(); i++) {

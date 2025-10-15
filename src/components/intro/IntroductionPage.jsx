@@ -41,7 +41,7 @@ function IntroductionPage() {
             alignItems: { xs: 'start', md: 'center' },
             gap: 1,
             overflow: 'auto',
-            mb: "2vh"
+            mb: "4vh"
           }}
         >
           <Chip 

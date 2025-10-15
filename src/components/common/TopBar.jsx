@@ -23,10 +23,8 @@ const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
     backdropFilter: 'blur(24px)',
     border: '1px solid',
     borderColor: (theme.vars || theme).palette.divider,
-    backgroundColor: theme.vars
-      ? `rgba(${theme.vars.palette.background.defaultChannel} / 0.45)`
-      : alpha(theme.palette.background.default, 0.4),
-    boxShadow: (theme.vars || theme).shadows[1],
+    backgroundColor: `rgba(5, 7, 10, 0.45)`,
+    boxShadow: 'hsla(220, 30%, 5%, 0.7) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.8) 0px 8px 16px -5px',
     padding: '8px 12px',
   }));
 
@@ -38,6 +36,7 @@ const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
         sx={{
           boxShadow: 0,
           bgcolor: 'transparent',
+          color: 'rgba(255, 255, 255, 1)',
           backgroundImage: 'none',
           my: '1.5vh',
           width: "75vw" 

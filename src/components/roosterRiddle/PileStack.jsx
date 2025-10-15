@@ -29,7 +29,6 @@ function PileStack({pileKernels, pileNum, selectedKernels, canBeSelectedFrom, ha
         direction="row"
       >
         {[...Array(MAX_NUM_KERNELS)].map((_, idx) => (
-          
           <Zoom in={pileKernels.includes(idx)} timeout={theme.transitions.duration.shortImageZoom}>
             <Grid key={idx} size={1}
               flexDirection="column"
@@ -41,6 +40,7 @@ function PileStack({pileKernels, pileNum, selectedKernels, canBeSelectedFrom, ha
                 src={kernelImg}
                 onClick= {() => handleKernelClick(idx, pileNum)}
                 style={{
+                  cursor: (canBeSelectedFrom) ? 'pointer' : 'default',
                   objectFit: "contain", 
                   height: "85%", 
                   width: "85%",

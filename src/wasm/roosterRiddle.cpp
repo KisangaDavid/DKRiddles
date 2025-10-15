@@ -4,7 +4,7 @@
 const uint32_t NUM_PILES = 4;
 const uint32_t NUM_BITS_PER_PILE = 4;
 const uint32_t MIN_STARTING_PILE = 4;
-const uint32_t MAX_STARTING_PILE = 10;
+const uint32_t MAX_STARTING_PILE = 11;
 
 uint32_t getNimsumOfPiles(std::vector<uint32_t> piles) {
     uint32_t nimsum = 0;

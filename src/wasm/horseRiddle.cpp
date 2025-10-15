@@ -1,6 +1,5 @@
 #include "puzzleUtils.h"
 #include <vector>
-// #include <cstdint>
 
 const uint32_t NUM_SHUFFLES = 1000;
 const uint32_t NUM_TOTAL_HORSES = 25;

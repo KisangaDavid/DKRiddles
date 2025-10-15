@@ -182,6 +182,7 @@ function HorseRiddlePage({ wasmModule }) {
                   <HorseGridElement
                     key={idx}
                     horseNumber={idx + 1}
+                    selected={currentRace.includes(idx)}
                     onClick={() => addRemoveHorseToRace(idx)}
                   />
                 ))}

@@ -58,12 +58,13 @@ function RowOfHouses({
               <img
                   src={emptyHouse}
                   onClick={!submittedTraps ? () => trapHouse(index) : undefined}
+                  style={{ cursor: !submittedTraps ? 'pointer' : 'default' }}
               />
               <Box
                   style={{overflow: "clip", height:"7vw"}}
               >
                 <Zoom in={curCheckedHouses.has(index)} mountOnEnter unmountOnExit>
-                  <img src={mouseTrap} style={{objectFit: "contain", height: "100%", width: "100%"}}/>
+                  <img src={mouseTrap} style={{objectFit: "contain", height: "85%", width: "85%"}}/>
                 </Zoom>
                 <Slide
                   direction={getRatAnimationDirection(index)}
@@ -89,7 +90,7 @@ function RowOfHouses({
                 >
                   <img
                       src={mouseTrap}
-                      style={{objectFit: "contain", height: "100%", width: "100%"}}
+                      style={{objectFit: "contain", height: "85%", width: "85%"}}
                   />
                 </Slide>
               </Box>

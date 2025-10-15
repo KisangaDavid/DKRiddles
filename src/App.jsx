@@ -7,42 +7,47 @@ import IntroductionPage from './components/intro/IntroductionPage.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Routes, Route } from "react-router";
 import { styleOverrides } from './components/common/styleOverrides.js';
-import { colorSchemes, typography, shadows, shape } from '/src/components/common/themePrimitives';
+import { typography, shadows, shape } from '/src/components/common/themePrimitives';
 import './App.css';
+import { CssBaseline } from "@mui/material";
 
 const theme = createTheme({
-          cssVariables: {
-            colorSchemeSelector: 'data-mui-color-scheme',
-            cssVarPrefix: 'template',
-          },
-          transitions: {
-            duration: {
-              standardTextFade: 1000,
-              shortImageZoom: 500,
-              shortImageFade: 750,
-              standardImageFade: 1500,
-              longTextFade: 2000
-            }
-          },
-          delays: {
-            duration: {
-              shortDelay: 200,
-              standardDelay: 250,
-              longDelay: 500,
-              extraLongDelay: 750
-            }
-          },
-          colorSchemes, 
-          typography,
-          shadows,
-          shape,
-          components: {
-            ...styleOverrides,
-          },
-        });
+  palette: {
+    mode: "dark"
+  },
+  cssVariables: {
+    colorSchemeSelector: 'data-mui-color-scheme',
+    cssVarPrefix: 'template',
+  },
+  transitions: {
+    duration: {
+      standardTextFade: 1000,
+      shortImageZoom: 500,
+      shortImageFade: 750,
+      standardImageFade: 1500,
+      longTextFade: 2000
+    }
+  },
+  delays: {
+    duration: {
+      shortDelay: 200,
+      standardDelay: 250,
+      longDelay: 500,
+      extraLongDelay: 750
+    }
+  },
+  typography,
+  shadows,
+  shape,
+  components: {
+    ...styleOverrides,
+  },
+});
+
 function App() {
 
   const [wasmModule, setWasmModule] = useState(null);
+
   // unused, but required by wasm binary
   const imports = {
     "wasi_snapshot_preview1": {
@@ -55,13 +60,14 @@ function App() {
     }
   }
 
-    useEffect(() => {
-      init(imports).then((instance) => {
-        setWasmModule(instance);
-    })}, []);
+  useEffect(() => {
+    init(imports).then((instance) => {
+      setWasmModule(instance);
+  })}, []);
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <BrowserRouter>
         <Routes>
           {(wasmModule != null) && (
