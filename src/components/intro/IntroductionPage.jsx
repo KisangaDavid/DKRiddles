@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import RootBackground from "../common/RootBackground.jsx";
 import Chip from '@mui/material/Chip';
 import ratRiddleThumbnail from '/src/assets/ratRiddleThumbnail.png'
-import horseRiddleThumbnail from '/src/assets/horseRiddleThumbnail.png'
+import horseRiddleThumbnail from '/src/assets/horseClipArt.png'
 import roosterRiddleThumbnail from '/src/assets/roosterRiddleThumbnail.png'
 import mysteryLetter from '/src/assets/mysteryLetter.jpg'
 import PuzzleCard from './PuzzleCard';

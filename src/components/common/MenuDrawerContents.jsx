@@ -34,14 +34,14 @@ function MenuDrawerContents({setMenuDrawerOpen, isIntroPage}) {
             <ListItemText primary={"Introduction"} />
           </ListItemButton>
         </ListItem>
-        {/* <ListItem disablePadding>
-          <ListItemButton sx={{py: "1.5vh"}}>
+        <ListItem disablePadding>
+          <ListItemButton sx={{py: "1.5vh"}} onClick={() => {navigate("/about")}}>
               <ListItemIcon>
                 <HelpOutlineIcon />
               </ListItemIcon>
               <ListItemText primary={isIntroPage ? "About this site" : "About This Puzzle"} />
           </ListItemButton>
-        </ListItem> */}
+        </ListItem>
       </List>
       <Divider />
       <ListItem>

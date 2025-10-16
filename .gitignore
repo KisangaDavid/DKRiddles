@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 *.wasm
 *.exe
+
+# Make file
+**/Makefile

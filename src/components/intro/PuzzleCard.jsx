@@ -12,7 +12,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const SyledCard = styled(Card)(({ theme }) => ({
+  const SyledCard = styled(Card)(({}) => ({
     display: 'flex',
     flexDirection: 'column',
     padding: 0,

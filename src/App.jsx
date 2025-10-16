@@ -4,6 +4,7 @@ import RatRiddlePage from './components/ratRiddle/RatRiddlePage.jsx';
 import HorseRiddlePage from './components/horseRiddle/HorseRiddlePage.jsx';
 import RoosterRiddlePage from './components/roosterRiddle/RoosterRiddlePage.jsx';
 import IntroductionPage from './components/intro/IntroductionPage.jsx';
+import AboutSitePage from './components/intro/AboutSitePage.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Routes, Route } from "react-router";
 import { styleOverrides } from './components/common/styleOverrides.js';
@@ -76,6 +77,7 @@ function App() {
               <Route path="/ratRiddle" element={<RatRiddlePage wasmModule={wasmModule} />} />
               <Route path="/horseRiddle" element={<HorseRiddlePage wasmModule={wasmModule} />} />
               <Route path="/roosterRiddle" element={<RoosterRiddlePage wasmModule={wasmModule} />} />
+              <Route path="/about" element={<AboutSitePage/>} />
             </>
           )}
         </Routes>
