@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import init from '/src/wasm/allModules.wasm?init'
 import RatRiddlePage from './components/ratRiddle/RatRiddlePage.jsx';
+import AboutRatRiddlePage from './components/ratRiddle/AboutRatRiddlePage.jsx';
 import HorseRiddlePage from './components/horseRiddle/HorseRiddlePage.jsx';
+import AboutHorseRiddlePage from './components/horseRiddle/AboutHorseRiddlePage.tsx';
 import RoosterRiddlePage from './components/roosterRiddle/RoosterRiddlePage.jsx';
+import AboutRoosterRiddlePage from './components/roosterRiddle/AboutRoosterRiddlePage.tsx';
 import IntroductionPage from './components/intro/IntroductionPage.jsx';
 import AboutSitePage from './components/intro/AboutSitePage.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -75,8 +78,11 @@ function App() {
             <>
               <Route path="/" element={<IntroductionPage/>} />
               <Route path="/ratRiddle" element={<RatRiddlePage wasmModule={wasmModule} />} />
+              <Route path="/ratRiddle/about" element={<AboutRatRiddlePage/>} />
               <Route path="/horseRiddle" element={<HorseRiddlePage wasmModule={wasmModule} />} />
+              <Route path="/horseRiddle/about" element={<AboutHorseRiddlePage/>} />
               <Route path="/roosterRiddle" element={<RoosterRiddlePage wasmModule={wasmModule} />} />
+              <Route path="/roosterRiddle/about" element={<AboutRoosterRiddlePage/>} />
               <Route path="/about" element={<AboutSitePage/>} />
             </>
           )}
