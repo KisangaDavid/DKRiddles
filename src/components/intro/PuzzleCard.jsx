@@ -12,7 +12,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const SyledCard = styled(Card)(({}) => ({
+  const StyledCard = styled(Card)(({}) => ({
     display: 'flex',
     flexDirection: 'column',
     padding: 0,
@@ -30,7 +30,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
     },
   }));
 
-  const SyledCardContent = styled(CardContent)({
+  const StyledCardContent = styled(CardContent)({
     display: 'flex',
     flexDirection: 'column',
     gap: 4,
@@ -56,7 +56,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
   return (
     <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardImageFade} 
       style={{transitionDelay: transitionDelay}}>
-    <SyledCard variant="outlined" onClick={() => navigate(puzzlePath)}> 
+    <StyledCard variant="outlined" onClick={() => navigate(puzzlePath)}> 
       <CardMedia
           component="img"
           image={puzzleImage}
@@ -67,7 +67,7 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
               backgroundImage: "radial-gradient(ellipse 55% 55% at 50% 50%, hsla(210, 68%, 11%, 1.00), hsla(208, 100.00%, 3.70%, 0.64))"
           }}
       />
-      <SyledCardContent>
+      <StyledCardContent>
         <Typography gutterBottom variant="caption" component="div">
           Envelope #{puzzleNumber}
         </Typography>
@@ -77,8 +77,8 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
         <StyledTypography variant="body2" color="text.secondary" gutterBottom>
           {puzzleDescription}
         </StyledTypography>
-      </SyledCardContent>
-    </SyledCard>
+      </StyledCardContent>
+    </StyledCard>
     </Fade>
   );
 }
