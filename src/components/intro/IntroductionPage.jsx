@@ -21,7 +21,7 @@ function IntroductionPage() {
 
   return (
     <RootBackground>
-      <TopBar text="Introduction" isIntroPage={true} func />
+      <TopBar text="Introduction" isPuzzlePage={false} />
       <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
         <Box sx={{width: "75vw", position: "relative", mb:"1vh"}}>
           <p> 

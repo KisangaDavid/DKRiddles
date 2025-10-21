@@ -101,7 +101,7 @@ function RoosterRiddlePage({wasmModule}) {
 
   return (
   <RootBackground>
-    <TopBar text="Envelope #3: The Undefeated Rooster" isHomePage={false} resetFunc={resetPuzzle} />
+    <TopBar text="Envelope #3: The Undefeated Rooster" isPuzzlePage={true} resetFunc={resetPuzzle} />
     {gameIsWon && <Confetti width={width} height={height} />}
     <RoosterRiddleDescription />
     <Fade in={true} mountOnEnter unmountOnExit

@@ -102,7 +102,7 @@ function RatRiddlePage({wasmModule}) {
 
   return (
     <RootBackground>
-      <TopBar text="Envelope #1: The Sneaky Rat" isHomePage={false} resetFunc={resetPuzzle}/>
+      <TopBar text="Envelope #1: The Sneaky Rat" isPuzzlePage={true} resetFunc={resetPuzzle}/>
       {confetti && <Confetti width={width} height={height} />}
       <RatRiddleDescription theme={theme} />
       <Fade in={true} mountOnEnter unmountOnExit

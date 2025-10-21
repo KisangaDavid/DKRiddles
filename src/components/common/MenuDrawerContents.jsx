@@ -11,7 +11,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
 
-function MenuDrawerContents({setMenuDrawerOpen, isIntroPage}) {
+function MenuDrawerContents({setMenuDrawerOpen, isPuzzlePage}) {
 
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ function MenuDrawerContents({setMenuDrawerOpen, isIntroPage}) {
             <ListItemIcon>
               <KeyboardDoubleArrowLeftIcon />
             </ListItemIcon>
-            <ListItemText primary={isIntroPage ? "Back to Introduction" : "Back to Puzzle"} />
+            <ListItemText primary={"Close"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -35,11 +35,11 @@ function MenuDrawerContents({setMenuDrawerOpen, isIntroPage}) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton sx={{py: "1.5vh"}} onClick={() => {isIntroPage ? navigate("/about") : navigate("about")}}>
+          <ListItemButton sx={{py: "1.5vh"}} onClick={() => {isPuzzlePage ? navigate("about") : navigate("/about")}}>
               <ListItemIcon>
                 <HelpOutlineIcon />
               </ListItemIcon>
-              <ListItemText primary={isIntroPage ? "About This Site" : "About This Puzzle"} />
+              <ListItemText primary={isPuzzlePage ? "Puzzle Breakdown" : "About This Site"} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -71,14 +71,6 @@ function MenuDrawerContents({setMenuDrawerOpen, isIntroPage}) {
             <ListItemText primary={"The Undefeated Rooster"} />
           </ListItemButton>
         </ListItem>
-         {/* <ListItem disablePadding>
-          <ListItemButton sx={{py: "1.5vh"}} >
-            <ListItemIcon>
-              <ExtensionIcon /> 
-            </ListItemIcon>
-            <ListItemText primary={"Placeholder Puzzle #4"} />
-          </ListItemButton>
-        </ListItem> */}
       </List>
     </>
   );

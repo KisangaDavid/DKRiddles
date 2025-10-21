@@ -10,7 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import MenuDrawerContents from './MenuDrawerContents';
 
-function TopBar({text, isIntroPage, resetFunc}) {
+function TopBar({text, isPuzzlePage, resetFunc}) {
 
 const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
 
@@ -56,7 +56,7 @@ const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, position: "absolute", left: 0, right: 0 }}>
             {text}
           </Typography>
-          {!isIntroPage && 
+          {isPuzzlePage && 
           <IconButton
             size="large"
             edge="end"
@@ -78,7 +78,7 @@ const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
             }
           }
         }}>
-        <MenuDrawerContents setMenuDrawerOpen={() => setMenuDrawerOpen()} isIntroPage={isIntroPage}/>
+        <MenuDrawerContents setMenuDrawerOpen={() => setMenuDrawerOpen()} isPuzzlePage={isPuzzlePage}/>
       </Drawer>
     </>
   );

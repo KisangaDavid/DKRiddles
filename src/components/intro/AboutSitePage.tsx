@@ -14,11 +14,11 @@ function AboutSitePage() {
 
   return (
     <RootBackground>
-      <TopBar text="About" isIntroPage={true} resetFunc={null} />
+      <TopBar text="About" isPuzzlePage={false} resetFunc={null} />
       <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>      
         <Box sx={{width: "70vw", position: "relative", mb:"8vh"}}>
         <p> Welcome to DKRiddles, an interactive puzzle website. Solve each self-contained puzzle and uncover the secrets of the mysterious Mr. Riddle Man!<br /> <br />
-          After completing a puzzle, check out the corresponding <i>About this Puzzle</i> page in the sidebar. The about page describes the logic behind each puzzle, its implementation,
+          After completing a puzzle, check out the corresponding <i>Puzzle Breakdown</i> page in the sidebar. The breakdown page describes the logic behind each puzzle, its implementation,
           and any other interesting tidbits I came across while creating the puzzle. For more technical details, such as the strange techstack I chose for the site or the many lessons learned while figuring out how to compile C++ to WebAssembly
           without Emscripten, <a href="https://github.com/KisangaDavid/DKRiddles">check out the code on Github</a>! </p>
           </Box>

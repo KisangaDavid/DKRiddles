@@ -133,7 +133,7 @@ function HorseRiddlePage({ wasmModule }) {
     <RootBackground>
       <TopBar
         text="Envelope #2: The Horse Trifecta"
-        isHomePage={false}
+        isPuzzlePage={true}
         resetFunc={resetPuzzle}
       />
       {confetti && <Confetti width={width} height={height} />}
