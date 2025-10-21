@@ -37,8 +37,8 @@ function AboutRatRiddle() {
           <Typography align="left">
             To start, let's assume that the rat begins in an even numbered house, 
             i.e. houses 2, 4, 6, or 8. On the first day, we trap houses 2 and 4. If we don't catch the rat, that means the rat started in house 6 or 8. Now, notice
-            that the only houses adjacent to house 6 and 8 are houses 5 and 7. Since the rat has to move to an adjacent house each day, we can trap houses 5 and 7 on day two, guaranteeing that
-            we will catch the rat if it started in an even numbered house. If we don't find the rat on day two, we can definitively conclude that the rat started in an odd numbered house!
+            that the only houses adjacent to house 6 and 8 are houses 5 and 7. Since the rat has to move to an adjacent house each day, we can trap houses 5 and 7 on the second day, guaranteeing that
+            we will catch the rat if it started in an even numbered house. If we don't find the rat on day 2, we can definitively conclude that the rat started in an odd numbered house!
             <br /> <br />
           </Typography>
           <Card sx={{padding: 0}}>
@@ -51,22 +51,27 @@ function AboutRatRiddle() {
               }}
             />
             <StyledCardContent>
-              <Typography>A rat currently in houses 6 or 8 must move to either house 5 or 7 on the next day</Typography>
+              <Typography>If a rat is currently in house 6 or 8, it must move to either house 5 or 7 on the next day</Typography>
             </StyledCardContent>
           </Card>
           <Typography align="left">
             <br />
-            If the rat started in an odd numbered house, then on day 3 it will also be in an odd numbered house (notice that the parity of the house number the rat is in flips each day). Thus, we can 
-            employ a similar strategy to before: on day three, we check houses 5 and 7. If we don't find the rat, then the rat must have been in houses 1 or 3. Since the only houses adjacent to houses 1 and 3
-            are houses 2 and 4, we check those houses on day four, guaranteeing that we catch the rat in only four days! <br /> <br />
+            If the rat started in an odd numbered house, then on the third day it will also be in an odd numbered house (notice that the parity of the house number the rat is in flips each day). Thus, we can 
+            employ a similar strategy to before: on day 3, we check houses 5 and 7. If we don't find the rat, then the rat must have been in houses 1 or 3. Since the only houses adjacent to houses 1 and 3
+            are houses 2 and 4, we check those houses on the fourth day, guaranteeing that we catch the rat in only four days! <br /> <br />
           </Typography>
           <Typography align="left" variant="h4"sx={{mb: "1vh"}}>Code Logic</Typography>
            <Typography align="left">
-            The first problem to solve is how to verify if a submitted arrangement of traps will successfully catch the rat. 
-            Sure, for this case where there are only 8 houses and a limit of 7 days, it would be completely feasible to enumerate
-            all possible paths the rat can take, and then check if all those paths run into a trap using the submitted arrangement. That's lame and inefficient though! 
-            Let's think of something better. 
+            The first problem to solve is how to programatically verify if a submitted arrangement of traps will successfully catch the rat. 
+            In this case where there are only 8 houses and a maximum of 7 days, it would be completely feasible to enumerate
+            all 316 possible paths the rat can take, then check if all those paths run into a trap using the submitted arrangement. 
+            That's inefficient and lame though! Let's think of something a little more elegant.<br /> <br /> 
+            We can think of a submitted solution as a graph with "layers", where each layer corresponds to a day. Within a day / layer, we represent
+            each house as a node. The edges will represent how the rat can move between days - for example, house 2 in layer 1 will have two outgoing edges -
+            houses 1 and 3 in layer 2. Finally, connect all nodes in the first layer to a starting node, and all nodes in the last layer to an end node.
             <br /> <br />
+            To check if a submitted solution is guaranteed to catch the rat, simply delete the nodes corresponding to trapped houses from the graph. If there still exists a path
+            from the start node to the end node, the submitted solution is invalid!
           </Typography>
         </Box>
       </Fade>
