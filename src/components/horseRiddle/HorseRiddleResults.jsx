@@ -1,19 +1,39 @@
 import { useTheme } from '@mui/material/styles';
+import { useState, useContext, useEffect } from "react";
+import { SolvedPuzzlesContext } from "/src/components/common/utils.js";
 import angryGuard from "/src/assets/angryGuard.jpeg";
 import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
+import BreakdownUnlockedNotification from "../common/BreakdownUnlockedNotification.jsx";
+import { HORSE_PUZZLE_SOLVED } from "/src/components/common/constants.js";
 
 const MIN_NUM_RACES = 7;
 
 function HorseRiddleResults({numRaces, setConfetti,}) {
   const theme = useTheme();
-  if (numRaces == MIN_NUM_RACES) {
-    setConfetti(true);
-  }
+
+  // TODO: check if use state is necessary for notification open stuff
+  const [notificationOpen, setNotificationOpen] = useState(numRaces == 7);
+  const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
+  
+  useEffect(() => {
+    if (numRaces == MIN_NUM_RACES && !solvedPuzzles.has(HORSE_PUZZLE_SOLVED)) {
+      const newSolvedPuzzles = new Set(solvedPuzzles);
+      newSolvedPuzzles.add(HORSE_PUZZLE_SOLVED);
+      console.log("updated horse riddle!");
+      setSolvedPuzzles(newSolvedPuzzles);
+    }
+  }, [numRaces]);
+
+    if (numRaces == MIN_NUM_RACES) {
+      setConfetti(true);
+    }
+
   return (
     <Box>
       {numRaces == MIN_NUM_RACES ?
+      <>
         <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
           <p>
             After {numRaces} races, you correctly deduce the fastest three horses!
@@ -33,6 +53,12 @@ function HorseRiddleResults({numRaces, setConfetti,}) {
             </i>
           </p>
         </Fade>
+          <BreakdownUnlockedNotification
+            open={notificationOpen}
+            onClose={() => setNotificationOpen(false)}
+            text="Horse Riddle Puzzle Breakdown Unlocked!"
+          />
+      </>
       : 
         <Grid 
           container 

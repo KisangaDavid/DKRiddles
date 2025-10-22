@@ -1,3 +1,5 @@
+import { createContext } from 'react';
+
 export const MAX_32_BIT_NUM = 0xffffffff;
 
 export function convertIterableToInt(iterable, numBitsPerElement) {
@@ -18,3 +20,5 @@ export function convertIntToArray(intRepresentation, numBitsPerElement, length) 
     }
     return array
 }
+
+export const SolvedPuzzlesContext = createContext(new Set());

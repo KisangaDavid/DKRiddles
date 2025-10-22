@@ -1,17 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import init from '/src/wasm/allModules.wasm?init'
 import RatRiddlePage from './components/ratRiddle/RatRiddlePage.jsx';
-import AboutRatRiddlePage from './components/ratRiddle/AboutRatRiddlePage.jsx';
+import RatRiddleBreakdownPage from './components/ratRiddle/RatRiddleBreakdownPage.jsx';
 import HorseRiddlePage from './components/horseRiddle/HorseRiddlePage.jsx';
-import AboutHorseRiddlePage from './components/horseRiddle/AboutHorseRiddlePage.tsx';
+import HorseRiddleBreakdownPage from './components/horseRiddle/HorseRiddleBreakdownPage.jsx';
 import RoosterRiddlePage from './components/roosterRiddle/RoosterRiddlePage.jsx';
-import AboutRoosterRiddlePage from './components/roosterRiddle/AboutRoosterRiddlePage.tsx';
+import RoosterRiddleBreakdownPage from './components/roosterRiddle/RoosterRiddleBreakdownPage.tsx';
 import IntroductionPage from './components/intro/IntroductionPage.jsx';
 import AboutSitePage from './components/intro/AboutSitePage.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Routes, Route } from "react-router";
 import { styleOverrides } from './components/common/styleOverrides.js';
 import { typography, shadows, shape } from '/src/components/common/themePrimitives';
+import { SolvedPuzzlesContext } from '/src/components/common/utils.js'
 import './App.css';
 import { CssBaseline } from "@mui/material";
 
@@ -51,7 +52,7 @@ const theme = createTheme({
 function App() {
 
   const [wasmModule, setWasmModule] = useState(null);
-
+  const [solvedPuzzles, setSolvedPuzzles] = useState(new Set());
   // unused, but required by wasm binary
   const imports = {
     "wasi_snapshot_preview1": {
@@ -72,22 +73,24 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <SolvedPuzzlesContext value={{solvedPuzzles, setSolvedPuzzles}}>
       <BrowserRouter>
         <Routes>
           {(wasmModule != null) && (
             <>
               <Route path="/" element={<IntroductionPage/>} />
               <Route path="/ratRiddle" element={<RatRiddlePage wasmModule={wasmModule} />} />
-              <Route path="/ratRiddle/about" element={<AboutRatRiddlePage/>} />
+              <Route path="/ratRiddle/breakdown" element={<RatRiddleBreakdownPage/>} />
               <Route path="/horseRiddle" element={<HorseRiddlePage wasmModule={wasmModule} />} />
-              <Route path="/horseRiddle/about" element={<AboutHorseRiddlePage/>} />
+              <Route path="/horseRiddle/breakdown" element={<HorseRiddleBreakdownPage/>} />
               <Route path="/roosterRiddle" element={<RoosterRiddlePage wasmModule={wasmModule} />} />
-              <Route path="/roosterRiddle/about" element={<AboutRoosterRiddlePage/>} />
+              <Route path="/roosterRiddle/breakdown" element={<RoosterRiddleBreakdownPage/>} />
               <Route path="/about" element={<AboutSitePage/>} />
             </>
           )}
         </Routes>
       </BrowserRouter>
+      </SolvedPuzzlesContext>
     </ThemeProvider>
   );
 }

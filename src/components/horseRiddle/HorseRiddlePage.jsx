@@ -104,7 +104,7 @@ function HorseRiddlePage({ wasmModule }) {
     let horsesToSubmit = fastestHorses.map((num) => num - 1).reverse();
     let horsesToSubmitInt = convertIterableToInt(horsesToSubmit,NUM_BITS_PER_HORSE);
     let intRes = wasmModule.exports.checkHorseRiddleAnswer(horsesToSubmitInt);
-    let resVec = convertIntToArray(intRes, NUM_BITS_PER_HORSE, 3);
+    let resVec = convertIntToArray(intRes, NUM_BITS_PER_HORSE, 3).reverse();
 
     switch (resVec[0]) {
       case HORSE_ORDER_CORRECT_CODE:

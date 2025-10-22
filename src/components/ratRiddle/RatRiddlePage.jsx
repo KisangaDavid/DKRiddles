@@ -104,7 +104,7 @@ function RatRiddlePage({wasmModule}) {
     <RootBackground>
       <TopBar text="Envelope #1: The Sneaky Rat" isPuzzlePage={true} resetFunc={resetPuzzle}/>
       {confetti && <Confetti width={width} height={height} />}
-      <RatRiddleDescription theme={theme} />
+      <RatRiddleDescription />
       <Fade in={true} mountOnEnter unmountOnExit
           timeout={theme.transitions.duration.longTextFade}
           style={{ transitionDelay: theme.delays.duration.longDelay }}

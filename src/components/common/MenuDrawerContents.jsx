@@ -35,7 +35,7 @@ function MenuDrawerContents({setMenuDrawerOpen, isPuzzlePage}) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton sx={{py: "1.5vh"}} onClick={() => {isPuzzlePage ? navigate("about") : navigate("/about")}}>
+          <ListItemButton sx={{py: "1.5vh"}} onClick={() => {isPuzzlePage ? navigate("breakdown") : navigate("/about")}}>
               <ListItemIcon>
                 <HelpOutlineIcon />
               </ListItemIcon>
@@ -45,7 +45,8 @@ function MenuDrawerContents({setMenuDrawerOpen, isPuzzlePage}) {
       </List>
       <Divider />
       <ListItem>
-        <ListItemText primary={"All Puzzles"} /></ListItem>
+        <ListItemText primary={"All Puzzles"} />
+      </ListItem>
       <List>
         <ListItem disablePadding>
           <ListItemButton sx={{py: "1.5vh"}} onClick={() => navigate("/ratRiddle")}>
@@ -71,7 +72,39 @@ function MenuDrawerContents({setMenuDrawerOpen, isPuzzlePage}) {
             <ListItemText primary={"The Undefeated Rooster"} />
           </ListItemButton>
         </ListItem>
-      </List>
+        </List>
+        
+        <Divider />
+        <ListItem>
+          <ListItemText primary={"All Puzzle Breakdowns"} />
+          </ListItem>
+                <List>
+        <ListItem disablePadding>
+          <ListItemButton sx={{py: "1.5vh"}} onClick={() => navigate("/ratRiddle/breakdown")}>
+            <ListItemIcon>
+               <HelpOutlineIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Rat Puzzle Breakdown"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{py: "1.5vh"}} onClick={() => navigate("/horseRiddle/breakdown")} >
+            <ListItemIcon>
+               <HelpOutlineIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Horse Puzzle Breakdown"} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton sx={{py: "1.5vh"}} onClick={() => navigate("/roosterRiddle/breakdown")}>
+            <ListItemIcon>
+               <HelpOutlineIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Rooster Puzzle Breakdown"} />
+          </ListItemButton>
+        </ListItem>
+        </List>
+      
     </>
   );
 }
