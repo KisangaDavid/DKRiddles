@@ -36,7 +36,7 @@ function RatRiddleBreakdownPage() {
   return (
     <RootBackground>
       <TopBar
-        text="Puzzle Breakdown #1: The Rat Riddle"
+        text="Puzzle Breakdown #1: The Sneaky Rat"
         isPuzzlePage={false}
         resetFunc={null}
       />

@@ -35,7 +35,7 @@ function SolvedStack({ totalDays, checkBonusAnswer, setConfetti }) {
           <BreakdownUnlockedNotification
             open={notificationOpen}
             onClose={() => setNotificationOpen(false)}
-            text="Rat Riddle Puzzle Breakdown Unlocked!"
+            text="Rat Puzzle Breakdown Part 1 Unlocked!"
           />
         </>
       : 

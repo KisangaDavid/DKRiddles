@@ -13,7 +13,6 @@ const MIN_NUM_RACES = 7;
 function HorseRiddleResults({numRaces, setConfetti,}) {
   const theme = useTheme();
 
-  // TODO: check if use state is necessary for notification open stuff
   const [notificationOpen, setNotificationOpen] = useState(numRaces == 7);
   const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
   
@@ -56,7 +55,7 @@ function HorseRiddleResults({numRaces, setConfetti,}) {
           <BreakdownUnlockedNotification
             open={notificationOpen}
             onClose={() => setNotificationOpen(false)}
-            text="Horse Riddle Puzzle Breakdown Unlocked!"
+            text="Horse Puzzle Breakdown Unlocked!"
           />
       </>
       : 

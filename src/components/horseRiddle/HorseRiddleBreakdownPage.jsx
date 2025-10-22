@@ -37,7 +37,7 @@ function HorseRiddleBreakdownPage() {
   return (
     <RootBackground>
       <TopBar
-        text="Puzzle Breakdown #2: The Horse Riddle"
+        text="Puzzle Breakdown #2: The Horse Trifecta"
         isPuzzlePage={false}
         resetFunc={null}
       />

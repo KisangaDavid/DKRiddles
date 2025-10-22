@@ -5,7 +5,7 @@ import RatRiddleBreakdownPage from './components/ratRiddle/RatRiddleBreakdownPag
 import HorseRiddlePage from './components/horseRiddle/HorseRiddlePage.jsx';
 import HorseRiddleBreakdownPage from './components/horseRiddle/HorseRiddleBreakdownPage.jsx';
 import RoosterRiddlePage from './components/roosterRiddle/RoosterRiddlePage.jsx';
-import RoosterRiddleBreakdownPage from './components/roosterRiddle/RoosterRiddleBreakdownPage.tsx';
+import RoosterRiddleBreakdownPage from './components/roosterRiddle/RoosterRiddleBreakdownPage.jsx';
 import IntroductionPage from './components/intro/IntroductionPage.jsx';
 import AboutSitePage from './components/intro/AboutSitePage.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
