@@ -40,7 +40,7 @@ function AboutRoosterRiddle() {
           isPuzzlePage={false}
           resetFunc={null}
         />
-        {solvedPuzzles.has(ROOSTER_PUZZLE_SOLVED) ?
+        {!solvedPuzzles.has(ROOSTER_PUZZLE_SOLVED) ?
           <Fade
             in={true}
             mountOnEnter
@@ -58,20 +58,28 @@ function AboutRoosterRiddle() {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h4" sx={{ mb: "1vh" }}>
+              <Typography variant="h3" sx={{ mb: "1vh" }}>
                 Solution
               </Typography>
               <Typography align="left">
-                To start, let's assume that the rat begins in an even numbered
-                house, i.e. houses 2, 4, 6, or 8. On the first day, we trap houses 2
-                and 4. If we don't catch the rat, that means the rat started in
-                house 6 or 8. Now, notice that the only houses adjacent to house 6
-                and 8 are houses 5 and 7. Since the rat has to move to an adjacent
-                house each day, we can trap houses 5 and 7 on the second day,
-                guaranteeing that we will catch the rat if it started in an even
-                numbered house. If we don't find the rat on day 2, we can
-                definitively conclude that the rat started in an odd numbered house!
+                Before we start with a proof of the winning strategy, let's define one term which
+                will be used extensively: nim-sum. The nim-sum of a set of numbers is simply the result of applying bitwise XOR ⊕ over the entire set.
+                For example, the nim-sum of 4, 5, and 6 is equivalent to 4 ⊕ 5 ⊕ 6, which equals 3. <br /> <br />
+                For our proof of the winning strategy, we will first need to prove three intermediary lemmas: <br />
+                1. A player can only win if their move results in a position where the nim-sum is 0 <br />
+                2. If the nim-sum of the remaining piles is not 0, there exists a move that results in a position with a nim-sum of 0 <br />
+                3. If the nim-sum of the remaining piles is 0, then there is no valid move that results in a position with a nim-sum of 0 
                 <br /> <br />
+              </Typography>
+              <Typography variant="h5" align="left" sx={{width: "100%"}}>
+                Lemma #1: A player can only win if their move results in a position where the nim-sum is 0 <br />
+              </Typography>z
+              <Typography align="left">
+                This lemma is trivial. Simply notice that a winning move results in there being 0 kernels left in all piles.
+                The nim-sum of any set made up exclusiely of 0s is 0 <br /> <br />
+              </Typography>
+              <Typography variant="h5" align="left" sx={{width: "100%"}}>
+                Lemma #2: If the nim-sum of the remaining piles is not 0, there exists a move that results in a position with a nim-sum of 0<br />
               </Typography>
               <Card sx={{ padding: 0 }}>
                 <CardMedia

@@ -6,6 +6,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import TipsAndUpdatesOutlinedIcon from '@mui/icons-material/TipsAndUpdatesOutlined';
 import ExtensionIcon from '@mui/icons-material/Extension';
 import HomeIcon from '@mui/icons-material/Home';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
@@ -37,7 +39,7 @@ function MenuDrawerContents({setMenuDrawerOpen, isPuzzlePage}) {
         <ListItem disablePadding>
           <ListItemButton sx={{py: "1.5vh"}} onClick={() => {isPuzzlePage ? navigate("breakdown") : navigate("/about")}}>
               <ListItemIcon>
-                <HelpOutlineIcon />
+                <InfoOutlinedIcon />
               </ListItemIcon>
               <ListItemText primary={isPuzzlePage ? "Puzzle Breakdown" : "About This Site"} />
           </ListItemButton>
@@ -82,7 +84,7 @@ function MenuDrawerContents({setMenuDrawerOpen, isPuzzlePage}) {
         <ListItem disablePadding>
           <ListItemButton sx={{py: "1.5vh"}} onClick={() => navigate("/ratRiddle/breakdown")}>
             <ListItemIcon>
-               <HelpOutlineIcon />
+               <TipsAndUpdatesOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary={"Rat Puzzle Breakdown"} />
           </ListItemButton>
@@ -90,7 +92,7 @@ function MenuDrawerContents({setMenuDrawerOpen, isPuzzlePage}) {
         <ListItem disablePadding>
           <ListItemButton sx={{py: "1.5vh"}} onClick={() => navigate("/horseRiddle/breakdown")} >
             <ListItemIcon>
-               <HelpOutlineIcon />
+               <TipsAndUpdatesOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary={"Horse Puzzle Breakdown"} />
           </ListItemButton>
@@ -98,7 +100,7 @@ function MenuDrawerContents({setMenuDrawerOpen, isPuzzlePage}) {
         <ListItem disablePadding>
           <ListItemButton sx={{py: "1.5vh"}} onClick={() => navigate("/roosterRiddle/breakdown")}>
             <ListItemIcon>
-               <HelpOutlineIcon />
+               <TipsAndUpdatesOutlinedIcon />
             </ListItemIcon>
             <ListItemText primary={"Rooster Puzzle Breakdown"} />
           </ListItemButton>
