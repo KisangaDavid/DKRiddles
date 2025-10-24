@@ -9,7 +9,7 @@ import ValidGraph from "/src/assets/ValidGraph.png";
 import InvalidGraph from "/src/assets/InvalidGraph.png";
 import RatRiddleAboutPic1 from "/src/assets/RatRiddleAboutPic1.jpg";
 import RiddleNotComplete from "../common/RiddleNotComplete.jsx";
-import {Card, CardContent, CardMedia, Stack, Typography} from "@mui/material";
+import {Card, CardContent, CardMedia, Paper, Stack, Typography} from "@mui/material";
 import { SolvedPuzzlesContext } from '/src/components/common/utils.js'
 import { ROOSTER_PUZZLE_SOLVED } from '/src/components/common/constants.js'
 
@@ -66,13 +66,13 @@ function AboutRoosterRiddle() {
                 will be used extensively: nim-sum. The nim-sum of a set of numbers is simply the result of applying bitwise XOR ⊕ over the entire set.
                 For example, the nim-sum of 4, 5, and 6 is equivalent to 4 ⊕ 5 ⊕ 6, which equals 3. <br /> <br />
                 For our proof of the winning strategy, we will need to prove three intermediary lemmas: <br />
-                1. A player can only win if their move results in a position where the nim-sum is 0 <br />
+                1. The winning move always results in a position where the nim-sum is 0 <br />
                 2. If the nim-sum of the remaining piles is not 0, there exists a move that results in a position with a nim-sum of 0 <br />
                 3. If the nim-sum of the remaining piles is 0, then there is no valid move that results in a position with a nim-sum of 0 
                 <br /> <br />
               </Typography>
               <Typography variant="h5" align="left" sx={{width: "100%"}}>
-                Lemma #1: A player can only win if their move results in a position where the nim-sum is 0 <br /><br />
+                Lemma #1: The winning move always results in a position where the nim-sum is 0 <br /><br />
               </Typography>
               <Typography align="left">
                 This lemma is trivial. Simply notice that a winning move results in there being 0 kernels left in all piles.
@@ -88,40 +88,56 @@ function AboutRoosterRiddle() {
                 nim-sum of all of the remaining piles, and <i>i</i> to be the position of the most significant 1
                 bit in <i>N</i>. <br /> <br />
               </Typography>
-              <Card sx={{ padding: 0 }}>
+              <Card  sx={{ padding: 0 }}>
                 <CardMedia
                   sx={{
-                    width: "100%"
+                    alignItems: "center"
                   }}
                 >
-                  <pre>
+                  <Paper sx={{
+                    backgroundColor: "hsla(209, 44%, 11%, 1.00)",
+                    borderBottomLeftRadius: 0,
+                    borderBottomRightRadius: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center"
+                  }}>
+                  <pre style={{marginTop: 10}}>
                     {"  "}Pile  | Num in Pile | Binary <br/>
                         ------------------------------- <br/>
                         Pile A  |      4      |   100  <br/>
                         Pile B  |      5      |   101  <br/>
-                        Pile C  |      6      |   110  <br/><br/>
-
-                    <i>N</i> (nim-sum of all piles): 100 ⊕ 101 ⊕ 110 = 011 = 3<br />
+                        Pile C  |      6      |   110  <br/>
+                  </pre>
+                  {/* <Box sx={{display: "flex", alignItems: "center"}}> */}
+                  <Typography align= "left" sx={{mb: "10px"}} >
+                    <i>N</i> (nim-sum of all piles): 100 ⊕ 101 ⊕ 110 = 011<br />
                     <i>i</i> (position of most significant 1 bit in <i>N</i>): 2<br />
                     <i>A<sub>i</sub></i> (value of bit at position <i>i</i> in pile <i>A</i>): 0<br />
                     <i>B<sub>i</sub></i> (value of bit at position <i>i</i> in pile <i>B</i>): 0<br />
-                    <i>C<sub>i</sub></i> (value of bit at position <i>i</i> in pile <i>C</i>): 1<br />
-                  </pre>
+                    <i>C<sub>i</sub></i> (value of bit at position <i>i</i> in pile <i>C</i>): 1<br /> 
+                    </Typography>
+                    {/* </Box> */}
+                  </Paper>
                 </CardMedia>
                 <StyledCardContent>
                   <Typography align="center">
-                    The terms defined above for a sample position with piles of sizes 4, 5, and 6.
+                    The defined terms for a sample position with piles of sizes 4, 5, and 6.
                   </Typography>
                 </StyledCardContent>
               </Card>
-                
                 <Typography align="left">
                   <br/>
-                Now, there must exist at 
-                least one pile <i>K</i> where <i>K<sub>i</sub></i> = 1. Notice that if all piles had a 0 in their <i>i</i>th position,
-                then <i>N<sub>i</sub></i> would also be 0, contradicting our definition of <i>i</i>!  <br /> <br />
+                Using the above definitions, there must exist at 
+                least one pile <i>K</i> where <i>K<sub>i</sub></i> = 1. 
+                This is due to the fact that if all piles had a 0 in 
+                their <i>i</i>th position, then <i>N<sub>i</sub></i> would also be 0, 
+                contradicting our definition of <i>i</i>! This pile <i>K</i> is where we'll make our move.
+                Since our goal is to end up with a nim-sum of 0 across all the piles, we will take
+                kernels from pile <i>K</i> until the number of kernels left is <i>K</i> with the bit in any position <i>j</i> where <i>N<sub>j</sub></i> = 1 is flipped.
+                In other words, we take kernels from pile <i>K</i> until the pile contains <i>K</i> ⊕ <i>N</i> kernels. last thing guarantee always possible<br /> <br />
+                
                 </Typography>
-{/* We'll denote the value of the <i>i</i>th bit of <i>N</i> as <i>N<sub>i</sub></i>.  */}
              
 
               <Typography align="center" variant="h4" sx={{ mb: "1vh" }}>
