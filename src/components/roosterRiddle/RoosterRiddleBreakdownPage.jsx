@@ -65,49 +65,65 @@ function AboutRoosterRiddle() {
                 Before we start with a proof of the winning strategy, let's define one term which
                 will be used extensively: nim-sum. The nim-sum of a set of numbers is simply the result of applying bitwise XOR ⊕ over the entire set.
                 For example, the nim-sum of 4, 5, and 6 is equivalent to 4 ⊕ 5 ⊕ 6, which equals 3. <br /> <br />
-                For our proof of the winning strategy, we will first need to prove three intermediary lemmas: <br />
+                For our proof of the winning strategy, we will need to prove three intermediary lemmas: <br />
                 1. A player can only win if their move results in a position where the nim-sum is 0 <br />
                 2. If the nim-sum of the remaining piles is not 0, there exists a move that results in a position with a nim-sum of 0 <br />
                 3. If the nim-sum of the remaining piles is 0, then there is no valid move that results in a position with a nim-sum of 0 
                 <br /> <br />
               </Typography>
               <Typography variant="h5" align="left" sx={{width: "100%"}}>
-                Lemma #1: A player can only win if their move results in a position where the nim-sum is 0 <br />
-              </Typography>z
+                Lemma #1: A player can only win if their move results in a position where the nim-sum is 0 <br /><br />
+              </Typography>
               <Typography align="left">
                 This lemma is trivial. Simply notice that a winning move results in there being 0 kernels left in all piles.
-                The nim-sum of any set made up exclusiely of 0s is 0 <br /> <br />
+                The nim-sum of any set made up entirely of 0s is 0. <br /> <br /> <br />
               </Typography>
               <Typography variant="h5" align="left" sx={{width: "100%"}}>
-                Lemma #2: If the nim-sum of the remaining piles is not 0, there exists a move that results in a position with a nim-sum of 0<br />
+                Lemma #2: If the nim-sum of the remaining piles is not 0, there exists a move that results in a position with a nim-sum of 0<br /><br />
+              </Typography>
+              <Typography align="left">
+                This lemma is a little more involved. 
+                First, let's define the shorthand <i>X<sub>y</sub></i>. This is the value of the bit in  
+                position <i>y</i> of <i>X's</i> binary representation. We'll additionally define <i>N</i> to be the 
+                nim-sum of all of the remaining piles, and <i>i</i> to be the position of the most significant 1
+                bit in <i>N</i>. <br /> <br />
               </Typography>
               <Card sx={{ padding: 0 }}>
                 <CardMedia
-                  component="img"
-                  image={RatRiddleAboutPic1}
                   sx={{
-                    width: "100%",
-                    objectFit: "contain",
+                    width: "100%"
                   }}
-                />
+                >
+                  <pre>
+                    {"  "}Pile  | Num in Pile | Binary <br/>
+                        ------------------------------- <br/>
+                        Pile A  |      4      |   100  <br/>
+                        Pile B  |      5      |   101  <br/>
+                        Pile C  |      6      |   110  <br/><br/>
+
+                    <i>N</i> (nim-sum of all piles): 100 ⊕ 101 ⊕ 110 = 011 = 3<br />
+                    <i>i</i> (position of most significant 1 bit in <i>N</i>): 2<br />
+                    <i>A<sub>i</sub></i> (value of bit at position <i>i</i> in pile <i>A</i>): 0<br />
+                    <i>B<sub>i</sub></i> (value of bit at position <i>i</i> in pile <i>B</i>): 0<br />
+                    <i>C<sub>i</sub></i> (value of bit at position <i>i</i> in pile <i>C</i>): 1<br />
+                  </pre>
+                </CardMedia>
                 <StyledCardContent>
                   <Typography align="center">
-                    If a rat is currently in house 6 or 8, it must move to either
-                    house 5 or 7 on the next day.
+                    The terms defined above for a sample position with piles of sizes 4, 5, and 6.
                   </Typography>
                 </StyledCardContent>
               </Card>
-              <Typography align="left">
-                <br />
-                If the rat started in an odd numbered house, then on the third day
-                it will also be in an odd numbered house (notice that the parity of
-                the house number the rat is in flips each day). Thus, we can employ
-                a similar strategy to before: on day 3, we check houses 5 and 7. If
-                we don't find the rat, then the rat must have been in houses 1 or 3.
-                Since the only houses adjacent to houses 1 and 3 are houses 2 and 4,
-                we check those houses on the fourth day, guaranteeing that we catch
-                the rat in only four days! <br /> <br /> <br />
-              </Typography>
+                
+                <Typography align="left">
+                  <br/>
+                Now, there must exist at 
+                least one pile <i>K</i> where <i>K<sub>i</sub></i> = 1. Notice that if all piles had a 0 in their <i>i</i>th position,
+                then <i>N<sub>i</sub></i> would also be 0, contradicting our definition of <i>i</i>!  <br /> <br />
+                </Typography>
+{/* We'll denote the value of the <i>i</i>th bit of <i>N</i> as <i>N<sub>i</sub></i>.  */}
+             
+
               <Typography align="center" variant="h4" sx={{ mb: "1vh" }}>
                 Implementation
               </Typography>
@@ -195,3 +211,5 @@ function AboutRoosterRiddle() {
   }
 
 export default AboutRoosterRiddle;
+
+
