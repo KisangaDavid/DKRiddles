@@ -13,7 +13,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
 
-function MenuDrawerContents({setMenuDrawerOpen, isPuzzlePage}) {
+function MenuDrawerContents({setMenuDrawerOpen}) {
 
   const navigate = useNavigate();
 
@@ -37,11 +37,11 @@ function MenuDrawerContents({setMenuDrawerOpen, isPuzzlePage}) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
-          <ListItemButton sx={{py: "1.5vh"}} onClick={() => {isPuzzlePage ? navigate("breakdown") : navigate("/about")}}>
+          <ListItemButton sx={{py: "1.5vh"}} onClick={() => {navigate("/about")}}>
               <ListItemIcon>
                 <InfoOutlinedIcon />
               </ListItemIcon>
-              <ListItemText primary={isPuzzlePage ? "Puzzle Breakdown" : "About This Site"} />
+              <ListItemText primary={"About This Site"} />
           </ListItemButton>
         </ListItem>
       </List>

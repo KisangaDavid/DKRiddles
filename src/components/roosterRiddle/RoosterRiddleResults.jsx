@@ -3,7 +3,7 @@ import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import { useState, useContext, useEffect } from "react";
 import { SolvedPuzzlesContext } from "/src/components/common/utils.js";
-import { ROOSTER_PUZZLE_SOLVED } from "/src/components/common/constants.js";
+import { ROOSTER_PUZZLE_SOLVED } from "/src/components/common/utils.js";
 import BreakdownUnlockedNotification from "../common/BreakdownUnlockedNotification.jsx";
 
 function RoosterRiddleResults({ gameIsWon }) {
@@ -36,7 +36,7 @@ function RoosterRiddleResults({ gameIsWon }) {
               heavens: <br /> <br />
               <b>
                 <i>
-                  Impressive work, besting my avian friend is no simple task!{" "}
+                  Impressive work, besting my avian friend is no simple task!
                   <br /> With this victory you have successfully completed
                   envelope #3, and are one step closer to becoming my chosen
                   successor, the new Mr. Riddle Man. Take pride in your success!

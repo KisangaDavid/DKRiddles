@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import init from '/src/wasm/allModules.wasm?init'
 import RatRiddlePage from './components/ratRiddle/RatRiddlePage.jsx';
-import RatRiddleBreakdownPage from './components/ratRiddle/RatRiddleBreakdownPage.jsx';
+import RatRiddleBreakdownPage from './components/breakdown/RatRiddleBreakdownPage.jsx';
 import HorseRiddlePage from './components/horseRiddle/HorseRiddlePage.jsx';
-import HorseRiddleBreakdownPage from './components/horseRiddle/HorseRiddleBreakdownPage.jsx';
+import HorseRiddleBreakdownPage from './components/breakdown/HorseRiddleBreakdownPage.jsx';
 import RoosterRiddlePage from './components/roosterRiddle/RoosterRiddlePage.jsx';
-import RoosterRiddleBreakdownPage from './components/roosterRiddle/RoosterRiddleBreakdownPage.jsx';
+import RoosterRiddleBreakdownPage from './components/breakdown/RoosterRiddleBreakdownPage.jsx';
 import IntroductionPage from './components/intro/IntroductionPage.jsx';
 import AboutSitePage from './components/intro/AboutSitePage.jsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';

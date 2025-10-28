@@ -20,7 +20,7 @@ function AboutSitePage() {
         <p> Welcome to DKRiddles, an interactive puzzle website. Solve each self-contained puzzle and uncover the secrets of the mysterious Mr. Riddle Man!<br /> <br />
           After completing a puzzle, check out the corresponding <i>Puzzle Breakdown</i> page in the sidebar. The breakdown page describes the logic behind each puzzle, its implementation,
           and any other interesting tidbits I came across while creating the puzzle. For more technical details, such as the strange techstack I chose for the site or the many lessons learned while figuring out how to compile C++ to WebAssembly
-          without Emscripten, <a href="https://github.com/KisangaDavid/DKRiddles">check out the code on Github</a>! </p>
+          without Emscripten, <a target="_blank" rel="noopener noreferrer" href="https://github.com/KisangaDavid/DKRiddles">check out the code on Github</a>! </p>
           </Box>
       </Fade>
       <Box>
@@ -44,7 +44,7 @@ function AboutSitePage() {
                   <ListItemText  
                     primary={
                       <Typography variant="h5">
-                        Puzzle About Pages
+                        Puzzle Breakdown Pages
                       </Typography>
                     } 
                   />
@@ -75,25 +75,25 @@ function AboutSitePage() {
                   <ListItemText  
                     primary={
                       <Typography variant="h5">
-                        Transition to Typescript
-                      </Typography>
-                    } 
-                  />
-                </ListItem>
-                    <ListItem>
-                  <ListItemText  
-                    primary={
-                      <Typography variant="h5">
-                        Custom C++ vector implementation
-                      </Typography>
-                    } 
-                  />
-                </ListItem>
-                    <ListItem>
-                  <ListItemText  
-                    primary={
-                      <Typography variant="h5">
                         Mobile Friendly Layouts
+                      </Typography>
+                    } 
+                  />
+                </ListItem>
+                    <ListItem>
+                  <ListItemText  
+                    primary={
+                      <Typography variant="h5">
+                        More Puzzles!
+                      </Typography>
+                    } 
+                  />
+                </ListItem>
+                    <ListItem>
+                  <ListItemText  
+                    primary={
+                      <Typography variant="h5">
+                        Typescript Rewrite
                       </Typography>
                     } 
                   />
@@ -102,7 +102,7 @@ function AboutSitePage() {
                   <ListItemText  
                     primary={
                       <Typography variant="h5">
-                        More Puzzles!
+                        Custom C++ vector implementation
                       </Typography>
                     } 
                   />

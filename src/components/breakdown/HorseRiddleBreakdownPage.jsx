@@ -1,4 +1,4 @@
-import { styled, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import { useContext } from 'react';
 import RootBackground from "../common/RootBackground.jsx";
 import Fade from "@mui/material/Fade";
@@ -8,39 +8,28 @@ import FourDayGraph from "/src/assets/FourDayGraph.png";
 import ValidGraph from "/src/assets/ValidGraph.png";
 import InvalidGraph from "/src/assets/InvalidGraph.png";
 import RatRiddleAboutPic1 from "/src/assets/RatRiddleAboutPic1.jpg";
-import RiddleNotComplete from "../common/RiddleNotComplete.jsx";
-import {Card, CardContent, CardMedia, Stack, Typography} from "@mui/material";
+import RiddleNotComplete from "./RiddleNotComplete.jsx";
+import StyledBreakdownCardContent from "./StyledBreakdownCardContent.jsx";
+import {Card, CardMedia, Stack, Typography} from "@mui/material";
 import { SolvedPuzzlesContext } from '/src/components/common/utils.js'
-import { RAT_PUZZLE_BASE_SOLVED, RAT_PUZZLE_BONUS_SOLVED } from '/src/components/common/constants.js'
+import { HORSE_PUZZLE_SOLVED } from '/src/components/common/utils.js'
 
 // TODO: Consistent typography everywhere,
 // breakdown pages for rest of puzzles, consistent usage of Puzzle / Riddle
-function RatRiddleBreakdownPage() {
-  const StyledCardContent = styled(CardContent)({
-    display: "flex",
-    flexDirection: "column",
-    padding: 8,
-    paddingTop: 8,
-    flexGrow: 1,
-    backgroundImage:
-      "radial-gradient(ellipse 55% 55% at 50% -5%, hsl(210, 100%, 16%), hsla(208, 100.00%, 3.70%, 0.64))",
-    height: "100%",
-    "&:last-child": {
-      paddingBottom: 8,
-    },
-  });
+function HorseRiddleBreakdownPage() {
 
   const theme = useTheme();
   const {solvedPuzzles, _} = useContext(SolvedPuzzlesContext);
 
+  // PLACEHOLDER
   return (
     <RootBackground>
       <TopBar
-        text="Puzzle Breakdown #1: The Sneaky Rat"
+        text="Puzzle Breakdown #2: The Horse Trifecta"
         isPuzzlePage={false}
         resetFunc={null}
       />
-      {solvedPuzzles.has(RAT_PUZZLE_BASE_SOLVED) ?
+      {!solvedPuzzles.has(HORSE_PUZZLE_SOLVED) ?
         <Fade
           in={true}
           mountOnEnter
@@ -82,12 +71,12 @@ function RatRiddleBreakdownPage() {
                   objectFit: "contain",
                 }}
               />
-              <StyledCardContent>
+              <StyledBreakdownCardContent>
                 <Typography align="center">
                   If a rat is currently in house 6 or 8, it must move to either
                   house 5 or 7 on the next day.
                 </Typography>
-              </StyledCardContent>
+              </StyledBreakdownCardContent>
             </Card>
             <Typography align="left">
               <br />
@@ -129,11 +118,11 @@ function RatRiddleBreakdownPage() {
                   objectFit: "contain",
                 }}
               />
-              <StyledCardContent>
+              <StyledBreakdownCardContent>
                 <Typography align="center">
                   The graph built for a 4 day solution. Each row represents a day.
                 </Typography>
-              </StyledCardContent>
+              </StyledBreakdownCardContent>
             </Card>
             <Typography align="left">
               <br />
@@ -154,12 +143,12 @@ function RatRiddleBreakdownPage() {
                     objectFit: "contain",
                   }}
                 />
-                <StyledCardContent>
-                  <Typography align="center">
-                    An invalid solution to the puzzle. There are still many paths
-                    from the start node to the end node.
-                  </Typography>
-                </StyledCardContent>
+              <StyledBreakdownCardContent>
+                <Typography align="center">
+                  An invalid solution to the puzzle. There are still many paths
+                  from the start node to the end node.
+                </Typography>
+              </StyledBreakdownCardContent>
               </Card>
               <Card sx={{ padding: 0, width: "100%" }}>
                 <CardMedia
@@ -170,20 +159,20 @@ function RatRiddleBreakdownPage() {
                     objectFit: "contain",
                   }}
                 />
-                <StyledCardContent>
-                  <Typography align="center">
-                    A valid (and optimal!) solution to the puzzle. There is no
-                    longer a path from the start node to the end node.
-                  </Typography>
-                </StyledCardContent>
+              <StyledBreakdownCardContent>
+                <Typography align="center">
+                  A valid (and optimal!) solution to the puzzle. There is no
+                  longer a path from the start node to the end node.
+                </Typography>
+              </StyledBreakdownCardContent>
               </Card>
             </Stack>
           </Box>
         </Fade>
       :
-      <RiddleNotComplete puzzleNumber={1} puzzleTitle={"The Sneaky Rat"} />}
+      <RiddleNotComplete puzzleNumber={2} puzzleTitle={"The Horse Trifecta"} />}
     </RootBackground>
   );
 }
 
-export default RatRiddleBreakdownPage;
+export default HorseRiddleBreakdownPage;

@@ -4,7 +4,7 @@ import BonusChallenge from "./BonusChallenge.jsx";
 import { useTheme } from "@mui/material/styles";
 import { useState, useContext, useEffect } from "react";
 import { SolvedPuzzlesContext } from "/src/components/common/utils.js";
-import {RAT_PUZZLE_BASE_SOLVED, RAT_PUZZLE_BONUS_SOLVED} from "/src/components/common/constants.js";
+import {RAT_PUZZLE_BASE_SOLVED, RAT_PUZZLE_BONUS_SOLVED} from "/src/components/common/utils.js";
 import BreakdownUnlockedNotification from "../common/BreakdownUnlockedNotification.jsx";
 
 function SolvedStack({ totalDays, checkBonusAnswer, setConfetti }) {

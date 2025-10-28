@@ -78,7 +78,7 @@ const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
             }
           }
         }}>
-        <MenuDrawerContents setMenuDrawerOpen={() => setMenuDrawerOpen()} isPuzzlePage={isPuzzlePage}/>
+        <MenuDrawerContents setMenuDrawerOpen={() => setMenuDrawerOpen()}/>
       </Drawer>
     </>
   );

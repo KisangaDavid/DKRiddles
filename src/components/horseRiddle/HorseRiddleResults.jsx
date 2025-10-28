@@ -6,7 +6,7 @@ import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
 import BreakdownUnlockedNotification from "../common/BreakdownUnlockedNotification.jsx";
-import { HORSE_PUZZLE_SOLVED } from "/src/components/common/constants.js";
+import { HORSE_PUZZLE_SOLVED } from "/src/components/common/utils.js";
 
 const MIN_NUM_RACES = 7;
 
