@@ -10,7 +10,7 @@ import InvalidGraph from "/src/assets/InvalidGraph.png";
 import RatRiddleAboutPic1 from "/src/assets/RatRiddleAboutPic1.jpg";
 import RiddleNotComplete from "./RiddleNotComplete.jsx";
 import StyledBreakdownCardContent from "./StyledBreakdownCardContent.jsx";
-import {Card, CardMedia, Stack, Typography} from "@mui/material";
+import { Card, CardMedia, List, ListItem, Paper, Typography} from "@mui/material";
 import { SolvedPuzzlesContext } from '/src/components/common/utils.js'
 import { HORSE_PUZZLE_SOLVED } from '/src/components/common/utils.js'
 
@@ -51,17 +51,41 @@ function HorseRiddleBreakdownPage() {
               Solution
             </Typography>
             <Typography align="left">
-              To start, let's assume that the rat begins in an even numbered
-              house, i.e. houses 2, 4, 6, or 8. On the first day, we trap houses 2
-              and 4. If we don't catch the rat, that means the rat started in
-              house 6 or 8. Now, notice that the only houses adjacent to house 6
-              and 8 are houses 5 and 7. Since the rat has to move to an adjacent
-              house each day, we can trap houses 5 and 7 on the second day,
-              guaranteeing that we will catch the rat if it started in an even
-              numbered house. If we don't find the rat on day 2, we can
-              definitively conclude that the rat started in an odd numbered house!
+              The solution to this puzzle is remeniscent of a multi-way merge sort. 
+              To start, 5 ordered lists of horses are attained by conducting 5 races in which every horse is raced exactly once.
+              A 6th race is conducted with the winners of the previous 5 races. The winner of this race is guaranteed to be the overall fastest horse.
+              A 7th race is conducted, replacing the winner of the 6th race with the horse that came directly behind it in one of the first 5 races. The winner of this 
+              race is guaranteed to be the second overall fastest  horse. An 8th race is constructed in the same fashion - the winner of the 7th race is replaced with the horse that came directly behind it in one of the first 5 races. The winner of this
+              race is guaranteed to be the third overall fastest horse. Thus, we have found the fastest 3 horses in only 8 races!
+
               <br /> <br />
-            </Typography>
+              But wait, we can optimize this solution and do slightly better! First, let's define group 1 as the 5 horses the winner of race 6 was initially grouped with, group 2 as
+              the 5 horses the runner-up of race 6 was initially grouped with, and so on. Notice that ALL horses from groups 4 and 5 already have at least
+              3 horses that are faster than them. Therefore, we should exclude them from any future races, as these horses cannot be the 2nd or 3rd overall fastest. In fact,
+              after the 6th race, there are only a couple horses that have the potential to be the 2nd or 3rd fastest:
+              <List sx={{display: "flex", alignItems: "center", listStyleType:"disc"}}>
+                <ListItem sx={{ display: 'list-item', width: "90%"}}>
+                  <b>If all three fastest horses were placed into the same initial group:</b><br/> 
+                The 2nd and 3rd fastest horses must be the 2nd and 3rd place finishers of group 1.
+                   </ListItem>
+                    <ListItem  sx={{ display: 'list-item', width: "90%" }}><b>If the two fastest horses were placed into the same initial group:</b><br />
+                    The 2nd and 3rd fastest horses must be the 2nd place finisher of group 1 and the 1st place finisher of group 2.
+                   </ListItem>
+                    <ListItem  sx={{ display: 'list-item', width: "90%" }}><b>If the second and third fastest horses were placed into the same initial group:</b><br /> 
+                    The 2nd and 3rd fastest horses must be the 1st and 2nd place finishers of group 2.
+                   </ListItem>
+                    <ListItem  sx={{ display: 'list-item', width: "90%" }}><b>If the fastest and third fastest horses were placed into the same initial group:</b> < br />
+                       The 2nd and 3rd fastest horses must be the first place finisher of group 2 and the 2nd place finisher of group 1.
+                   </ListItem>
+                        <ListItem  sx={{ display: 'list-item', width: "90%" }}><b>If none of the fastest three horses were placed into the same initial group:</b> <br />
+                        The 2nd and 3rd fastest horses must be the winners of groups 2 and 3. 
+                   </ListItem>
+                </List>
+
+                Notice that there are only 5 distinct horses vying for the remaining two spots in the trifecta - 
+                the 2nd and 3rd place finishers from group 1, the 1st and 2nd place finishers from group 2, 
+                and the 1st place finisher from group 3. Thus, for our 7th race, we can simply race these 5 horses and declare the fastest two our overall second and third fastest horses! We've now found the fastest 3 horses in just 7 races, the optimal solution! <br /> <br />
+              </Typography>
             <Card sx={{ padding: 0 }}>
               <CardMedia
                 component="img"
@@ -133,40 +157,7 @@ function HorseRiddleBreakdownPage() {
               a path no longer exists, the submitted solution is guaranteed to
               catch the rat! <br /> <br />
             </Typography>
-            <Stack direction="row" gap="0.5vw">
-              <Card sx={{ padding: 0, width: "100%" }}>
-                <CardMedia
-                  component="img"
-                  image={InvalidGraph}
-                  sx={{
-                    width: "100%",
-                    objectFit: "contain",
-                  }}
-                />
-              <StyledBreakdownCardContent>
-                <Typography align="center">
-                  An invalid solution to the puzzle. There are still many paths
-                  from the start node to the end node.
-                </Typography>
-              </StyledBreakdownCardContent>
-              </Card>
-              <Card sx={{ padding: 0, width: "100%" }}>
-                <CardMedia
-                  component="img"
-                  image={ValidGraph}
-                  sx={{
-                    width: "100%",
-                    objectFit: "contain",
-                  }}
-                />
-              <StyledBreakdownCardContent>
-                <Typography align="center">
-                  A valid (and optimal!) solution to the puzzle. There is no
-                  longer a path from the start node to the end node.
-                </Typography>
-              </StyledBreakdownCardContent>
-              </Card>
-            </Stack>
+           
           </Box>
         </Fade>
       :
