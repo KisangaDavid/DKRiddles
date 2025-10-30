@@ -34,7 +34,7 @@ function AboutRoosterRiddle() {
               flexDirection: "column",
               width: "50vw",
               position: "relative",
-              mb: "8vh",
+              mb: "20vh",
               mt: "2vh",
               alignItems: "center",
             }}
@@ -64,25 +64,26 @@ function AboutRoosterRiddle() {
                   3. If the nim-sum of a position is not 0, there exists a move
                   that results in a position with a nim-sum of 0
                 </ListItem>
-                <br />
               </List>
             </Typography>
+            <br />
             <Typography variant="h5" align="left" sx={{ width: "100%" }}>
               Lemma #1: The winning move always results in a position where the
-              nim-sum is 0 <br />
-              <br />
+              nim-sum is 0 
             </Typography>
+            <br />
             <Typography align="left" sx={{ width: "85%" }}>
               This lemma is trivial. Simply notice that a winning move results
               in there being 0 kernels left in all piles. The nim-sum of any set
-              made up entirely of 0s is 0. <br /> <br /> <br />
+              made up entirely of 0s is 0. 
             </Typography>
+            <br />
             <Typography variant="h5" align="left" sx={{ width: "100%" }}>
               Lemma #2: If the nim-sum of a position is already 0, then there is
-              no valid move that results in a position with a nim-sum of 0<br />
+              no valid move that results in a position with a nim-sum of 0
             </Typography>
+            <br />
             <Typography align="left" sx={{ width: "85%" }}>
-              <br />
               To prove this lemma, let's first assume that there exists a valid
               move from a position with a nim-sum of 0 to a position with a
               nim-sum of 0. Let <i>N<sub>-p</sub></i> be the nim-sum of all piles 
@@ -100,21 +101,22 @@ function AboutRoosterRiddle() {
               This is true if and ONLY if <i>k'</i> = <i>k</i>. Taking 0 kernels
               from a pile is not a valid move, so the lemma
               is proven.
-              <br /> <br /> <br />
             </Typography>
+            <br /> 
             <Typography variant="h5" align="left" sx={{ width: "100%" }}>
               Lemma #3: If the nim-sum of a position is not 0, there exists a
-              move that results in a position with a nim-sum of 0<br />
-              <br />
+              move that results in a position with a nim-sum of 0
             </Typography>
+            <br />
             <Typography align="left" sx={{ width: "85%" }}>
               This lemma is a little more involved. First, let's define the
               shorthand <i>X<sub>y</sub></i>. This is the value of the bit in 
               position <i>y</i> of <i>X's</i> binary representation. We'll 
               additionally define <i>N</i> to be the nim-sum of all of the 
               remaining piles, and <i>i</i> to be the position of the most 
-              significant 1 bit in <i>N</i>. <br /> <br />
+              significant 1 bit in <i>N</i>. 
             </Typography>
+            <br />
             <Card sx={{ padding: 0 }}>
               <CardMedia
                 sx={{
@@ -154,8 +156,8 @@ function AboutRoosterRiddle() {
                 </Typography>
               </StyledBreakdownCardContent>
             </Card>
+            <br />
             <Typography align="left" sx={{ width: "85%" }}>
-              <br />
               Using the above definitions, there must exist at least one 
               pile <i>P</i> where <i>P<sub>i</sub></i> = 1. This is due to the 
               fact that if all piles had a 0 in their<i>i</i>th position, 
@@ -174,14 +176,13 @@ function AboutRoosterRiddle() {
               in a position where the nim-sum is not already 0, we can always 
               play a move that results in a nim-sum of 0 by by reducing the 
               number of kernels in pile <i>P</i> from <i>k</i> to <i>k'</i>.
-              <br /> <br /> <br />
             </Typography>
+            <br /> 
             <Typography variant="h5" align="left" sx={{ width: "100%" }}>
               Putting it all together
-              <br />
             </Typography>
+            <br />
             <Typography align="left" sx={{ width: "85%" }}>
-              <br />
               Combining all three lemmas reveals the winning strategy: on each
               of your turns, play a move which results in a position with a
               nim-sum of 0. This is is guaranteed to exist if the position does
@@ -200,12 +201,12 @@ function AboutRoosterRiddle() {
               >
                 Wikipedia page on Nim!
               </a>
-              <br /> <br /> <br />
             </Typography>
-            <Typography align="center" variant="h4" sx={{ mb: "1vh" }}>
+            <br /> <br />
+            <Typography align="center" variant="h3" sx={{ mb: "2vh" }}>
               Implementation
             </Typography>
-            <Typography align="left" sx={{ mb: "20vh" }}>
+            <Typography align="left">
               This puzzle's implementation is quite straightforward - on each of
               the rooster's turns, the nim-sum of the position is calculated. If
               the nim-sum is non-zero, a move derived from the strategy defined
