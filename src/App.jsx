@@ -12,7 +12,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Routes, Route } from "react-router";
 import { SolvedPuzzlesContext } from './components/common/utils.js'
 import { transitionDurations, delayDurations, shape, typography } from './components/common/styles.jsx'
-import './App.css';
 import CssBaseline from '@mui/material/CssBaseline';
 
 const theme = createTheme({
