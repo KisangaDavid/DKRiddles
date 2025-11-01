@@ -9,6 +9,7 @@ const RootBackground = ({ children }) => (
 			height: "100vh",
 			width: "100vw",
 			overflow: "auto",
+      textAlign: "center",
 			backgroundImage:
 				"radial-gradient(ellipse 80% 50% at 50% -5%, hsla(210, 98%, 19%, 1.00), hsla(213, 38%, 6%, 1.00))",
 		}}

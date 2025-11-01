@@ -19,7 +19,7 @@ import TopBar from '../common/TopBar.jsx';
 const NUM_BITS_PER_PILE = 4;
 const NUM_PILES = 4;
 
-function RoosterRiddlePage({wasmModule}) {
+function RoosterRiddlePage({wasmExports}) {
   const theme = useTheme();
   const [showResultScreen, setShowResultScreen] = useState(false);
   const [gameIsWon, setGameIsWon] = useState(false);
@@ -34,7 +34,7 @@ function RoosterRiddlePage({wasmModule}) {
   }, []);
 
   const generateAndSetPiles = () => {
-    let pilesIntForm = wasmModule.exports.getInitialPiles(Math.floor(Math.random() * MAX_32_BIT_NUM));
+    let pilesIntForm = wasmExports.getInitialPiles(Math.floor(Math.random() * MAX_32_BIT_NUM));
     let piles = convertIntToArray(pilesIntForm, NUM_BITS_PER_PILE, NUM_PILES);
     piles = piles.map(pile => 
       Array.from({ length: pile }, (_, i) => i)
@@ -68,7 +68,7 @@ function RoosterRiddlePage({wasmModule}) {
     }
     let randSource = Math.floor(Math.random() * MAX_32_BIT_NUM);
     let pilesIntRep = convertIterableToInt(postPlayerPileSums.reverse(), NUM_BITS_PER_PILE);
-    let roosterMove = wasmModule.exports.getRoosterRiddleMove(pilesIntRep, randSource);
+    let roosterMove = wasmExports.getRoosterRiddleMove(pilesIntRep, randSource);
     let [numToTake, pileToTakeFrom] = convertIntToArray(roosterMove, NUM_BITS_PER_PILE, 2);
     setPiles(pilesPostPlayerMove);
     setSelectedKernels(new Set());

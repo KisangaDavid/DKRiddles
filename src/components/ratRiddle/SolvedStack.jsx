@@ -3,21 +3,18 @@ import Fade from "@mui/material/Fade";
 import BonusChallenge from "./BonusChallenge.jsx";
 import { useTheme } from "@mui/material/styles";
 import { useState, useContext, useEffect } from "react";
-import { SolvedPuzzlesContext } from "/src/components/common/utils.js";
-import {RAT_PUZZLE_BASE_SOLVED, RAT_PUZZLE_BONUS_SOLVED} from "/src/components/common/utils.js";
+import { SolvedPuzzlesContext, RAT_PUZZLE_P1 } from "../common/utils.js";
 import BreakdownUnlockedNotification from "../common/BreakdownUnlockedNotification.jsx";
 
 function SolvedStack({ totalDays, checkBonusAnswer, setConfetti }) {
   const theme = useTheme();
   const [notificationOpen, setNotificationOpen] = useState(totalDays == 4);
-
   const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
 
   useEffect(() => {
-    if (totalDays == 4 && !solvedPuzzles.has(RAT_PUZZLE_BASE_SOLVED)) {
+    if (totalDays == 4 && !solvedPuzzles.has(RAT_PUZZLE_P1)) {
       const newSolvedPuzzles = new Set(solvedPuzzles);
-      newSolvedPuzzles.add(RAT_PUZZLE_BASE_SOLVED);
-      console.log("use effect fired!");
+      newSolvedPuzzles.add(RAT_PUZZLE_P1);
       setSolvedPuzzles(newSolvedPuzzles);
     }
   }, [totalDays]);
@@ -27,7 +24,6 @@ function SolvedStack({ totalDays, checkBonusAnswer, setConfetti }) {
       {totalDays == 4 ? 
         <>
           <BonusChallenge
-            numBonusHouses={Math.floor(Math.random() * 10 + 20)}
             totalDays={totalDays}
             checkBonusAnswer={checkBonusAnswer}
             setConfetti={setConfetti}

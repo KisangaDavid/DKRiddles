@@ -2,11 +2,10 @@ import { createContext } from 'react';
 
 export const MAX_32_BIT_NUM = 0xffffffff;
 
-// Puzzle completion status constants
-export const RAT_PUZZLE_BASE_SOLVED = "Rat puzzle base solved";
-export const RAT_PUZZLE_BONUS_SOLVED = "Rat puzzle bonus solved";
-export const HORSE_PUZZLE_SOLVED = "Horse puzzle solved";
-export const ROOSTER_PUZZLE_SOLVED = "Rooster puzzle solved";
+export const RAT_PUZZLE_P1 = "RAT_P1";
+export const RAT_PUZZLE_P2 = "RAT_P2";
+export const HORSE_PUZZLE = "HORSE";
+export const ROOSTER_PUZZLE = "ROOSTER";
 
 export function convertIterableToInt(iterable, numBitsPerElement) {
     let intRepresentation = 0;

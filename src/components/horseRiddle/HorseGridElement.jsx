@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 import Zoom from "@mui/material/Zoom";
-
 import horseImg from "/src/assets/horseClipArt.png";
+
 
 function HorseGridElement({horseNumber, onClick, selected}) {
   return (

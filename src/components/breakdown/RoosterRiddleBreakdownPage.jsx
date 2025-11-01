@@ -5,10 +5,16 @@ import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import TopBar from "../common/TopBar.jsx";
 import RiddleNotComplete from "./RiddleNotComplete.jsx";
-import { Card, CardMedia, List, ListItem, Paper, Typography} from "@mui/material";
-import { SolvedPuzzlesContext } from "/src/components/common/utils.js";
-import { ROOSTER_PUZZLE_SOLVED } from "/src/components/common/utils.js";
-import StyledBreakdownCardContent from "./StyledBreakdownCardContent.jsx";
+import { SolvedPuzzlesContext, ROOSTER_PUZZLE } from "../common/utils.js";
+import { breakdownCardContentStyle, breakdownCardStyle } from "../common/styles.jsx";
+
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 
 function AboutRoosterRiddle() {
   const theme = useTheme();
@@ -21,7 +27,7 @@ function AboutRoosterRiddle() {
         isPuzzlePage={false}
         resetFunc={null}
       />
-      {solvedPuzzles.has(ROOSTER_PUZZLE_SOLVED) ? (
+      {solvedPuzzles.has(ROOSTER_PUZZLE) ? (
         <Fade
           in={true}
           mountOnEnter
@@ -34,12 +40,12 @@ function AboutRoosterRiddle() {
               flexDirection: "column",
               width: "50vw",
               position: "relative",
-              mb: "20vh",
+              mb: "25vh",
               mt: "2vh",
               alignItems: "center",
             }}
           >
-            <Typography variant="h3" sx={{ mb: "2vh" }}>
+            <Typography variant="h4" sx={{ mb: "2vh" }}>
               Proof of Winning Strategy
             </Typography>
             <Typography align="left">
@@ -67,7 +73,7 @@ function AboutRoosterRiddle() {
               </List>
             </Typography>
             <br />
-            <Typography variant="h5" align="left" sx={{ width: "100%" }}>
+            <Typography variant="h6" align="left" sx={{ width: "100%" }}>
               Lemma #1: The winning move always results in a position where the
               nim-sum is 0 
             </Typography>
@@ -78,7 +84,7 @@ function AboutRoosterRiddle() {
               made up entirely of 0s is 0. 
             </Typography>
             <br />
-            <Typography variant="h5" align="left" sx={{ width: "100%" }}>
+            <Typography variant="h6" align="left" sx={{ width: "100%" }}>
               Lemma #2: If the nim-sum of a position is already 0, then there is
               no valid move that results in a position with a nim-sum of 0
             </Typography>
@@ -103,7 +109,7 @@ function AboutRoosterRiddle() {
               is proven.
             </Typography>
             <br /> 
-            <Typography variant="h5" align="left" sx={{ width: "100%" }}>
+            <Typography variant="h6" align="left" sx={{ width: "100%" }}>
               Lemma #3: If the nim-sum of a position is not 0, there exists a
               move that results in a position with a nim-sum of 0
             </Typography>
@@ -117,7 +123,7 @@ function AboutRoosterRiddle() {
               significant 1 bit in <i>N</i>. 
             </Typography>
             <br />
-            <Card sx={{ padding: 0 }}>
+            <Card sx={breakdownCardStyle}>
               <CardMedia
                 sx={{
                   alignItems: "center",
@@ -149,12 +155,12 @@ function AboutRoosterRiddle() {
                   </Typography>
                 </Paper>
               </CardMedia>
-              <StyledBreakdownCardContent>
+              <CardContent sx={breakdownCardContentStyle}>
                 <Typography align="center">
                   The defined terms for a sample position with piles of sizes 4,
                   5, and 6.
                 </Typography>
-              </StyledBreakdownCardContent>
+              </CardContent>
             </Card>
             <br />
             <Typography align="left" sx={{ width: "85%" }}>
@@ -178,7 +184,7 @@ function AboutRoosterRiddle() {
               number of kernels in pile <i>P</i> from <i>k</i> to <i>k'</i>.
             </Typography>
             <br /> 
-            <Typography variant="h5" align="left" sx={{ width: "100%" }}>
+            <Typography variant="h6" align="left" sx={{ width: "100%" }}>
               Putting it all together
             </Typography>
             <br />
@@ -203,7 +209,7 @@ function AboutRoosterRiddle() {
               </a>
             </Typography>
             <br /> <br />
-            <Typography align="center" variant="h3" sx={{ mb: "2vh" }}>
+            <Typography align="center" variant="h4" sx={{ mb: "2vh" }}>
               Implementation
             </Typography>
             <Typography align="left">

@@ -2,8 +2,7 @@ import { useTheme } from "@mui/material/styles";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import { useState, useContext, useEffect } from "react";
-import { SolvedPuzzlesContext } from "/src/components/common/utils.js";
-import { ROOSTER_PUZZLE_SOLVED } from "/src/components/common/utils.js";
+import { SolvedPuzzlesContext, ROOSTER_PUZZLE } from "../common/utils.js";
 import BreakdownUnlockedNotification from "../common/BreakdownUnlockedNotification.jsx";
 
 function RoosterRiddleResults({ gameIsWon }) {
@@ -13,10 +12,9 @@ function RoosterRiddleResults({ gameIsWon }) {
   const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
 
   useEffect(() => {
-    if (gameIsWon && !solvedPuzzles.has(ROOSTER_PUZZLE_SOLVED)) {
+    if (gameIsWon && !solvedPuzzles.has(ROOSTER_PUZZLE)) {
       const newSolvedPuzzles = new Set(solvedPuzzles);
-      newSolvedPuzzles.add(ROOSTER_PUZZLE_SOLVED);
-      console.log("use effect fired!");
+      newSolvedPuzzles.add(ROOSTER_PUZZLE);
       setSolvedPuzzles(newSolvedPuzzles);
     }
   }, [gameIsWon]);
@@ -48,6 +46,7 @@ function RoosterRiddleResults({ gameIsWon }) {
             open={notificationOpen}
             onClose={() => setNotificationOpen(false)}
             text="Rooster Puzzle Breakdown Unlocked!"
+            color={theme.palette.success.light}
           />
         </>
       ) : (

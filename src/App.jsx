@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from "react";
-import init from '/src/wasm/allModules.wasm?init'
+import { useState, useEffect } from "react";
+import init from './wasm/allModules.wasm?init'
 import RatRiddlePage from './components/ratRiddle/RatRiddlePage.jsx';
 import RatRiddleBreakdownPage from './components/breakdown/RatRiddleBreakdownPage.jsx';
 import HorseRiddlePage from './components/horseRiddle/HorseRiddlePage.jsx';
@@ -7,51 +7,31 @@ import HorseRiddleBreakdownPage from './components/breakdown/HorseRiddleBreakdow
 import RoosterRiddlePage from './components/roosterRiddle/RoosterRiddlePage.jsx';
 import RoosterRiddleBreakdownPage from './components/breakdown/RoosterRiddleBreakdownPage.jsx';
 import IntroductionPage from './components/intro/IntroductionPage.jsx';
-import AboutSitePage from './components/intro/AboutSitePage.jsx';
+import AboutSitePage from './components/intro/AboutSitePage.tsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Routes, Route } from "react-router";
-import { styleOverrides } from './components/common/styleOverrides.js';
-import { typography, shadows, shape } from '/src/components/common/themePrimitives';
-import { SolvedPuzzlesContext } from '/src/components/common/utils.js'
+import { SolvedPuzzlesContext } from './components/common/utils.js'
+import { transitionDurations, delayDurations, shape, typography } from './components/common/styles.jsx'
 import './App.css';
-import { CssBaseline } from "@mui/material";
+import CssBaseline from '@mui/material/CssBaseline';
 
 const theme = createTheme({
   palette: {
     mode: "dark"
   },
-  cssVariables: {
-    colorSchemeSelector: 'data-mui-color-scheme',
-    cssVarPrefix: 'template',
-  },
   transitions: {
-    duration: {
-      standardTextFade: 1000,
-      shortImageZoom: 500,
-      shortImageFade: 750,
-      standardImageFade: 1500,
-      longTextFade: 2000
-    }
+    duration: transitionDurations
   },
   delays: {
-    duration: {
-      shortDelay: 200,
-      standardDelay: 250,
-      longDelay: 500,
-      extraLongDelay: 750
-    }
+    duration: delayDurations
   },
   typography,
-  shadows,
   shape,
-  components: {
-    ...styleOverrides,
-  },
 });
 
 function App() {
 
-  const [wasmModule, setWasmModule] = useState(null);
+  const [wasmExports, setWasmExports] = useState(null);
   const [solvedPuzzles, setSolvedPuzzles] = useState(new Set());
   // unused, but required by wasm binary
   const imports = {
@@ -67,7 +47,7 @@ function App() {
 
   useEffect(() => {
     init(imports).then((instance) => {
-      setWasmModule(instance);
+      setWasmExports(instance.exports);
   })}, []);
 
   return (
@@ -75,20 +55,20 @@ function App() {
       <CssBaseline />
       <SolvedPuzzlesContext value={{solvedPuzzles, setSolvedPuzzles}}>
       <BrowserRouter>
-        <Routes>
-          {(wasmModule != null) && (
-            <>
-              <Route path="/" element={<IntroductionPage/>} />
-              <Route path="/ratRiddle" element={<RatRiddlePage wasmModule={wasmModule} />} />
-              <Route path="/ratRiddle/breakdown" element={<RatRiddleBreakdownPage/>} />
-              <Route path="/horseRiddle" element={<HorseRiddlePage wasmModule={wasmModule} />} />
-              <Route path="/horseRiddle/breakdown" element={<HorseRiddleBreakdownPage/>} />
-              <Route path="/roosterRiddle" element={<RoosterRiddlePage wasmModule={wasmModule} />} />
-              <Route path="/roosterRiddle/breakdown" element={<RoosterRiddleBreakdownPage/>} />
-              <Route path="/about" element={<AboutSitePage/>} />
-            </>
-          )}
-        </Routes>
+            <Routes>
+              {(wasmExports != null) && (
+                <>
+                  <Route path="/" element={<IntroductionPage/>} />
+                  <Route path="/ratRiddle" element={<RatRiddlePage wasmExports={wasmExports} />} />
+                  <Route path="/ratRiddle/breakdown" element={<RatRiddleBreakdownPage/>} />
+                  <Route path="/horseRiddle" element={<HorseRiddlePage wasmExports={wasmExports} />} />
+                  <Route path="/horseRiddle/breakdown" element={<HorseRiddleBreakdownPage/>} />
+                  <Route path="/roosterRiddle" element={<RoosterRiddlePage wasmExports={wasmExports} />} />
+                  <Route path="/roosterRiddle/breakdown" element={<RoosterRiddleBreakdownPage/>} />
+                  <Route path="/about" element={<AboutSitePage/>} />
+                </>
+              )}
+            </Routes>
       </BrowserRouter>
       </SolvedPuzzlesContext>
     </ThemeProvider>

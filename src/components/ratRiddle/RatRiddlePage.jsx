@@ -17,7 +17,7 @@ import TopBar from '../common/TopBar.jsx';
 
 const NUM_HOUSES = 8;
 
-function RatRiddlePage({wasmModule}) {
+function RatRiddlePage({wasmExports}) {
   const [submittedTraps, setSubmittedTraps] = useState(false);
   const [confetti, setConfetti] = useState(false);
   const [path, setPath] = useState([]);
@@ -62,7 +62,7 @@ function RatRiddlePage({wasmModule}) {
       binaryString += "1";
       counter++;
     });
-    let intPath = wasmModule.exports.checkRatRiddleAnswer(BigInt(`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`));
+    let intPath = wasmExports.checkRatRiddleAnswer(BigInt(`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`));
     let path = []
     if (intPath != -1) {
       for (let i = 0; i <= curDay; i++) {
@@ -130,7 +130,8 @@ function RatRiddlePage({wasmModule}) {
                   divider={<Divider orientation="vertical" flexItem />}
                   spacing={2}
               >
-                <Button variant="contained" disabled={curCheckedHouses.size !== 2 || curDay > 5} 
+                <Button
+                variant="contained" disabled={curCheckedHouses.size !== 2 || curDay > 5} 
                     onClick={nextDay}>&nbsp;&nbsp;Next Day&nbsp;&nbsp;</Button>
                 <Button variant="contained" disabled={curCheckedHouses.size !== 2} 
                     onClick={submitRiddleAnswer}>Submit Answer</Button>
@@ -140,7 +141,7 @@ function RatRiddlePage({wasmModule}) {
           {submittedTraps && solved && (
             <Box>
               <SolvedStack
-                checkBonusAnswer={wasmModule.exports.checkRatBonusAnswer}
+                checkBonusAnswer={wasmExports.checkRatBonusAnswer}
                 setConfetti={setConfetti}
                 totalDays={totalDays}
               />

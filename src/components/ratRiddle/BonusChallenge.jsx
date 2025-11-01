@@ -1,22 +1,31 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
+
 import TextField from "@mui/material/TextField";
 import Fade from "@mui/material/Fade";
 import Zoom from "@mui/material/Zoom";
 import Fab from "@mui/material/Fab";
 import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
+import BreakdownUnlockedNotification from "../common/BreakdownUnlockedNotification.jsx";
+import { SolvedPuzzlesContext, RAT_PUZZLE_P2 } from "../common/utils.js";
 import { useTheme } from "@mui/material/styles";
 
-function BonusChallenge({numBonusHouses, checkBonusAnswer, setConfetti, totalDays}) {
+function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
   const theme = useTheme();
   const inputRef = useRef(null);
+  const [numBonusHouses, setNumBonusHouses] = useState(null);
   const [answerToBonus, setAnswerToBonus] = useState(-1);
   const [bonusSubmitted, setBonusSubmitted] = useState(false);
   const [bonusCorrect, setBonusCorrect] = useState(false);
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
 
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.select();
+    }
+    if (numBonusHouses === null) {
+      setNumBonusHouses(Math.floor(Math.random() * 10 + 20));
     }
   }, []);
 
@@ -24,6 +33,11 @@ function BonusChallenge({numBonusHouses, checkBonusAnswer, setConfetti, totalDay
     if (checkBonusAnswer(numBonusHouses, answerToBonus)) {
       setConfetti(true);
       setBonusCorrect(true);
+      setNotificationOpen(true);
+      const newSolvedPuzzles = new Set(solvedPuzzles);
+      newSolvedPuzzles.add(RAT_PUZZLE_P2);
+      setSolvedPuzzles(newSolvedPuzzles);
+      console.log("set puzzles!")
     }
     setBonusSubmitted(true);
   };
@@ -36,6 +50,11 @@ function BonusChallenge({numBonusHouses, checkBonusAnswer, setConfetti, totalDay
 
   return (
     <>
+      <BreakdownUnlockedNotification
+        open={notificationOpen}
+        onClose={() => setNotificationOpen(false)}
+        text="Rat Puzzle Breakdown Part 2 Unlocked!"
+      />
       <Fade
         in={bonusSubmitted && bonusCorrect}
         mountOnEnter
@@ -100,7 +119,9 @@ function BonusChallenge({numBonusHouses, checkBonusAnswer, setConfetti, totalDay
                 <TextField
                   sx={{}}
                   id="bonusAnswer"
-                  variant="standard"
+                  variant="outlined"
+                  size="small"
+                  autoComplete="off"
                   label="Number of days"
                   onChange={handleBonusAnwerChange}
                   slotProps={{ htmlInput: { ref: inputRef } }}

@@ -2,7 +2,7 @@ import { useTheme } from "@mui/material/styles";
 
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import Typography from '@mui/material/Typography';
 
 function RiddleNotComplete({ puzzleNumber, puzzleTitle }) {
   const theme = useTheme();
@@ -27,7 +27,7 @@ function RiddleNotComplete({ puzzleNumber, puzzleTitle }) {
       >
         <Typography>
           A Riddle Man does not reveal his secrets to one who has not solved his
-          riddle! Solve puzzle #{puzzleNumber}, <i>{puzzleTitle}</i>, to gain
+          riddles! Solve puzzle #{puzzleNumber}, <i>{puzzleTitle}</i>, to gain
           access to this page.
         </Typography>
       </Box>

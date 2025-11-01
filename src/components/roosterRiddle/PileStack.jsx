@@ -5,7 +5,6 @@ import kernelImg from "/src/assets/kernel.png";
 import Zoom from '@mui/material/Zoom';
 import Grid from "@mui/material/Grid";
 
-
 const NUM_COLUMNS_OF_KERNELS = 3;
 const MAX_NUM_KERNELS = 12;
 

@@ -11,24 +11,21 @@ import HorseBreakdown3rdPlaceGraph from "/src/assets/horseBreakdown3rdPlaceGraph
 import HorseBreakdown4thPlaceGraph from "/src/assets/horseBreakdown4thPlaceGraph.png";
 import HorseBreakdown5thPlaceGraph from "/src/assets/horseBreakdown5thPlaceGraph.png";
 import RiddleNotComplete from "./RiddleNotComplete.jsx";
-import StyledBreakdownCardContent from "./StyledBreakdownCardContent.jsx";
-import {
-  Card,
-  CardMedia,
-  List,
-  ListItem,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { SolvedPuzzlesContext } from "/src/components/common/utils.js";
-import { HORSE_PUZZLE_SOLVED } from "/src/components/common/utils.js";
+import { breakdownCardStyle, breakdownCardContentStyle } from "../common/styles.jsx";
+import { SolvedPuzzlesContext, HORSE_PUZZLE } from "../common/utils.js";
 
-// TODO: lazy loading
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+
 function HorseRiddleBreakdownPage() {
   const theme = useTheme();
   const { solvedPuzzles, _ } = useContext(SolvedPuzzlesContext);
 
-  // PLACEHOLDER
   return (
     <RootBackground>
       <TopBar
@@ -36,7 +33,7 @@ function HorseRiddleBreakdownPage() {
         isPuzzlePage={false}
         resetFunc={null}
       />
-      {!solvedPuzzles.has(HORSE_PUZZLE_SOLVED) ? (
+      {solvedPuzzles.has(HORSE_PUZZLE) ? (
         <Fade
           in={true}
           mountOnEnter
@@ -49,12 +46,12 @@ function HorseRiddleBreakdownPage() {
               flexDirection: "column",
               width: "50vw",
               position: "relative",
-              mb: "20vh",
+              mb: "25vh",
               mt: "2vh",
               alignItems: "center",
             }}
           >
-            <Typography variant="h3" sx={{ mb: "2vh" }}>
+            <Typography variant="h4" sx={{ mb: "2vh" }}>
               Intuition
             </Typography>
             <Typography align="left">
@@ -62,14 +59,14 @@ function HorseRiddleBreakdownPage() {
               sort. To start, 5 ordered lists of horses are attained by
               conducting 5 races in which every horse is raced exactly once. A
               6th race is conducted with the winners of the previous 5 races.
-              The winner of this race is guaranteed to be the overall fastest
+              The winner of this race is guaranteed to be the fastest
               horse. A 7th race is conducted, replacing the winner of the 6th
               race with the horse that came directly behind it in one of the
               first 5 races. The winner of this race is guaranteed to be the
-              second overall fastest horse. An 8th race is constructed in the
+              second fastest horse. An 8th race is constructed in the
               same fashion - the winner of the 7th race is replaced with the
               horse that came directly behind it in one of the first 5 races.
-              The winner of this race is guaranteed to be the third overall
+              The winner of this race is guaranteed to be the third
               fastest horse. Thus, we have found the fastest 3 horses in only 8
               races!
               <br /> <br />
@@ -79,12 +76,13 @@ function HorseRiddleBreakdownPage() {
               of race 6 was initially grouped with, and so on. Notice that ALL
               horses from groups 4 and 5 already have at least 3 horses that are
               faster than them. Therefore, we should exclude them from any
-              future races, as these horses cannot be the 2nd or 3rd overall
+              future races, as these horses cannot be the 2nd or 3rd
               fastest. In fact, after the 6th race, there are only a couple
               horses that have the potential to be the 2nd or 3rd fastest:
               <List
                 sx={{
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
                   listStyleType: "disc",
                 }}
@@ -140,11 +138,11 @@ function HorseRiddleBreakdownPage() {
               finishers from group 1, the 1st and 2nd place finishers from group
               2, and the 1st place finisher from group 3. Thus, for our 7th
               race, we can simply race these 5 horses and declare the fastest
-              two our overall second and third fastest horses! We've now found
+              two the second and third fastest horses! We've now found
               the fastest 3 horses in just 7 races, the optimal solution! 
             </Typography>
             <br />
-            <Card sx={{ padding: 0 }}>
+            <Card sx={[breakdownCardStyle, {width: "75%"}]}>
               <CardMedia
                 component="img"
                 image={RacesBreakdown}
@@ -153,15 +151,15 @@ function HorseRiddleBreakdownPage() {
                   objectFit: "contain",
                 }}
               />
-              <StyledBreakdownCardContent>
+              <CardContent sx={breakdownCardContentStyle}>
                 <Typography align="center">
                   An example of the optimal racing strategy. In this
                   arrangement, the fastest 3 horses are horses 21, 25, and 16.
                 </Typography>
-              </StyledBreakdownCardContent>
+              </CardContent>
             </Card>
             <br /> <br /> <br />
-            <Typography align="center" variant="h3" sx={{ mb: "2vh" }}>
+            <Typography align="center" variant="h4" sx={{ mb: "2vh" }}>
               Implementation
             </Typography>
             <Typography align="left">
@@ -176,7 +174,7 @@ function HorseRiddleBreakdownPage() {
               the graph.
             </Typography>
             <br />
-            <Card sx={{ padding: 0, width: "50%" }}>
+            <Card sx={[breakdownCardStyle, {width: "50%"}]}>
               <CardMedia
                 component="img"
                 image={HorseBreakdownCompleteGraph}
@@ -185,13 +183,13 @@ function HorseRiddleBreakdownPage() {
                   objectFit: "contain",
                 }}
               />
-              <StyledBreakdownCardContent>
+              <CardContent sx={breakdownCardContentStyle}>
                 <Typography align="center">
                   The graph built for the example series of races given above.
                   Since node 21 is the only source, horse 21 must be the fastest
                   horse.
                 </Typography>
-              </StyledBreakdownCardContent>
+              </CardContent>
             </Card>
             <br /> <br />
             <Typography align="left">  
@@ -202,7 +200,7 @@ function HorseRiddleBreakdownPage() {
             </Typography>
             <br />
             <Stack direction="row" gap="0.5vw">
-              <Card sx={{ padding: 0, width: "100%" }}>
+              <Card sx={[breakdownCardStyle, {width: "100%"}]}>
                 <CardMedia
                   component="img"
                   image={HorseBreakdown2ndPlaceGraph}
@@ -211,14 +209,14 @@ function HorseRiddleBreakdownPage() {
                     objectFit: "contain",
                   }}
                 />
-                <StyledBreakdownCardContent>
+                <CardContent sx={breakdownCardContentStyle}>
                   <Typography align="center">
                     After removing horse 21 from the graph, horse 25 becomes the
                     only source node.
                   </Typography>
-                </StyledBreakdownCardContent>
+                </CardContent>
               </Card>
-              <Card sx={{ padding: 0, width: "100%" }}>
+              <Card sx={[breakdownCardStyle, {width: "100%"}]}>
                 <CardMedia
                   component="img"
                   image={HorseBreakdown3rdPlaceGraph}
@@ -227,14 +225,14 @@ function HorseRiddleBreakdownPage() {
                     objectFit: "contain",
                   }}
                 />
-                <StyledBreakdownCardContent>
+                <CardContent sx={breakdownCardContentStyle}>
                   <Typography align="center">
                     After removing horse 25 from the graph, horse 16 becomes the
                     only source node.
                   </Typography>
-                </StyledBreakdownCardContent>
+                </CardContent>
               </Card>
-              <Card sx={{ padding: 0, width: "100%" }}>
+              <Card sx={[breakdownCardStyle, {width: "100%"}]}>
                 <CardMedia
                   component="img"
                   image={HorseBreakdown4thPlaceGraph}
@@ -243,12 +241,12 @@ function HorseRiddleBreakdownPage() {
                     objectFit: "contain",
                   }}
                 />
-                <StyledBreakdownCardContent>
+                <CardContent sx={breakdownCardContentStyle}>
                   <Typography align="center">
                     After removing horse 25 from the graph, horse 16 becomes the
                     only source node.
                   </Typography>
-                </StyledBreakdownCardContent>
+                </CardContent>
               </Card>
             </Stack>
              <br /> <br />
@@ -260,7 +258,7 @@ function HorseRiddleBreakdownPage() {
               horses is ambiguous. An exmaple is shown below:
             </Typography>
             <br />
-            <Card sx={{ padding: 0, width: "50%" }}>
+            <Card sx={[breakdownCardStyle, {width: "50%"}]}>
               <CardMedia
                 component="img"
                 image={HorseBreakdown5thPlaceGraph}
@@ -269,13 +267,13 @@ function HorseRiddleBreakdownPage() {
                   objectFit: "contain",
                 }}
               />
-              <StyledBreakdownCardContent>
+              <CardContent sx={breakdownCardContentStyle}>
                 <Typography align="center" justifyContent={"center"}>
                   After removing horse 18 from the graph, there are now two
                   source nodes. Thus, it is unknown which horse is the 5th
                   fastest!
                 </Typography>
-              </StyledBreakdownCardContent>
+              </CardContent>
             </Card>
             <br /> <br />
             <Typography sx={{ width: "100%" }} align="left">

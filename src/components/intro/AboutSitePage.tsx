@@ -6,7 +6,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Box from "@mui/material/Box";
 import TopBar from '../common/TopBar.jsx';
-import { ListItemText,Stack, Typography } from '@mui/material';
+import ListItemText from '@mui/material/ListItemText';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 function AboutSitePage() {
 
@@ -16,15 +18,38 @@ function AboutSitePage() {
     <RootBackground>
       <TopBar text="About" isPuzzlePage={false} resetFunc={null} />
       <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>      
-        <Box sx={{width: "70vw", position: "relative", mb:"8vh"}}>
-        <p> Welcome to DKRiddles, an interactive puzzle website. Solve each self-contained puzzle and uncover the secrets of the mysterious Mr. Riddle Man!<br /> <br />
-          After completing a puzzle, check out the corresponding <i>Puzzle Breakdown</i> page in the sidebar. The breakdown page describes the logic behind each puzzle, its implementation,
-          and any other interesting tidbits I came across while creating the puzzle. For more technical details, such as the strange techstack I chose for the site or the many lessons learned while figuring out how to compile C++ to WebAssembly
-          without Emscripten, <a target="_blank" rel="noopener noreferrer" href="https://github.com/KisangaDavid/DKRiddles">check out the code on Github</a>! </p>
-          </Box>
+        <Box sx={{ width: "70vw", position: "relative", mb: "8vh", mt: "2vh" }}>
+          <Typography align="center">
+            Welcome to DKRiddles, an interactive puzzle website. Solve each
+            self-contained puzzle and uncover the secrets of the mysterious Mr. Riddle
+            Man!
+            </Typography>
+            <br /> <br />
+            <Typography align="left">
+            After completing a puzzle, check out the corresponding <i>Puzzle Breakdown</i> page 
+            in the sidebar. The breakdown page describes the logic behind each puzzle, 
+            its implementation, and any other interesting tidbits I came across while 
+            creating the puzzle. For more technical details, such as my ... <i>interesting</i> design 
+            desisions or or the many lessons learned while figuring out how to 
+            compile C++ to WebAssembly without Emscripten,{" "}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/KisangaDavid/DKRiddles"
+            >
+              check out the code on Github!
+            </a>
+          </Typography>
+        </Box>
       </Fade>
       <Box>
-        <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}style={{transitionDelay: theme.delays.duration.longDelay}}>
+        <Fade 
+          in={true} 
+          mountOnEnter 
+          unmountOnExit 
+          timeout={theme.transitions.duration.standardTextFade}
+          style={{transitionDelay: theme.delays.duration.longDelay}}
+        >
           <Stack 
             direction="row"
             spacing={10}>

@@ -27,7 +27,7 @@ const NUM_BITS_PER_HORSE = 5;
 const INVALID_HORSE_MSG = "Enter an integer between 1 and 25 for each position!";
 const NO_DUP_HORSES_MSG = "You cannot enter the same horse in two different positions!";
 
-function HorseRiddlePage({ wasmModule }) {
+function HorseRiddlePage({wasmExports}) {
   const [hasBeenReset, setHasBeenReset] = useState(false);
   const [confetti, setConfetti] = useState(false);
   const [currentRace, setCurrentRace] = useState([]);
@@ -39,7 +39,7 @@ function HorseRiddlePage({ wasmModule }) {
   const theme = useTheme();
 
   useEffect(() => {
-    wasmModule.exports.resetAndRandomizeHorses(Math.floor(Math.random() * MAX_32_BIT_NUM));
+    wasmExports.resetAndRandomizeHorses(Math.floor(Math.random() * MAX_32_BIT_NUM));
   }, []);
 
   const resetPuzzle = useCallback(() => {
@@ -50,7 +50,7 @@ function HorseRiddlePage({ wasmModule }) {
     setWrongReason("");
     setFastestHorses([null, null, null]);
     setHasBeenReset(true);
-    wasmModule.exports.resetAndRandomizeHorses(Math.floor(Math.random() * MAX_32_BIT_NUM));
+    wasmExports.resetAndRandomizeHorses(Math.floor(Math.random() * MAX_32_BIT_NUM));
   }, []);
 
   const addRemoveHorseToRace = (horseIdx) => {
@@ -93,7 +93,7 @@ function HorseRiddlePage({ wasmModule }) {
 
   const submitRace = () => {
     let intRepHorsesToRace = convertIterableToInt(currentRace, NUM_BITS_PER_HORSE);
-    let intRes = wasmModule.exports.submitRace(intRepHorsesToRace);
+    let intRes = wasmExports.submitRace(intRepHorsesToRace);
     let horseOrder = convertIntToArray(intRes, NUM_BITS_PER_HORSE, RACE_LENGTH);
     setCurrentRace([]);
     setFinishedRaces([...finishedRaces, ...horseOrder.reverse()]);
@@ -103,7 +103,7 @@ function HorseRiddlePage({ wasmModule }) {
   const checkAnswer = () => {
     let horsesToSubmit = fastestHorses.map((num) => num - 1).reverse();
     let horsesToSubmitInt = convertIterableToInt(horsesToSubmit,NUM_BITS_PER_HORSE);
-    let intRes = wasmModule.exports.checkHorseRiddleAnswer(horsesToSubmitInt);
+    let intRes = wasmExports.checkHorseRiddleAnswer(horsesToSubmitInt);
     let resVec = convertIntToArray(intRes, NUM_BITS_PER_HORSE, 3).reverse();
 
     switch (resVec[0]) {
@@ -278,22 +278,12 @@ function HorseRiddlePage({ wasmModule }) {
           </Box>
         </Fade>
       )}
-      <Box
-        sx={{
-          display: "flex",
-          flexGrow: 1,
-          overflow: "hidden",
-          width: "75vw",
-          alignItems: "center",
-        }}
-      >
         {correctAns && (
           <HorseRiddleResults
             numRaces={finishedRaces.length / RACE_LENGTH}
             setConfetti={setConfetti}
           />
         )}
-      </Box>
     </RootBackground>
   );
 }

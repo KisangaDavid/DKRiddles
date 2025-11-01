@@ -12,20 +12,26 @@ const TrifectaStack = ({ handleTrifectaChange}) => (
   >
     <TextField
       id="fastestHorse"
-      variant="standard"
-      label="1st Place Horse"
+      variant="outlined"
+      size="small"
+      autoComplete="off"
+      label="1st Place"
       onChange={(e) => handleTrifectaChange(e, 0)}
     />
     <TextField
       id="secondFastestHorse"
-      variant="standard"
-      label="2nd Place Horse"
+      variant="outlined"
+      size="small"
+      autoComplete="off"
+      label="2nd Place"
       onChange={(e) => handleTrifectaChange(e, 1)}
     />
     <TextField
       id="thirdFastestHorse"
-      variant="standard"
-      label="3rd Place Horse"
+      variant="outlined"
+      size="small"
+      autoComplete="off"
+      label="3rd Place"
       onChange={(e) => handleTrifectaChange(e, 2)}
     />
   </Stack>

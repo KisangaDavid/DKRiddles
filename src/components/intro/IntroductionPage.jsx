@@ -12,7 +12,7 @@ import RiddleManLetter from '/src/assets/riddleManLetter.jpg';
 import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
-import TopBar from '/src/components/common/TopBar.jsx';
+import TopBar from '../common/TopBar.jsx';
 
 function IntroductionPage() {
 
@@ -24,23 +24,26 @@ function IntroductionPage() {
       <TopBar text="Introduction" isPuzzlePage={false} />
       <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
         <Box sx={{width: "75vw", position: "relative", mb:"1vh"}}>
-          <p> 
-            Mr. Riddle Man - a name shrouded in mystery. Renowed by many to be the world's foremost puzzle expert, he is often called upon
-            to solve the world's toughest conundrums - and none have stumped him yet. Despite his world-famous status, no one knows his true identity. 
-            That's all you know about the man - at least all you <i>did</i> know, until a ... <i>puzzling</i> set of envelopes arrived at 
-            your doorstep this morning. You notice a letter lying atop the envelopes. <br />  
+          <p>
+            Mr. Riddle Man - a name shrouded in mystery. Renowed by many to be the world's
+            foremost puzzle expert, he is often called upon to solve the world's toughest
+            conundrums - and none have stumped him yet. Despite his world-famous status,
+            no one knows his true identity. That's all you know about the man - at least
+            all you <i>did</i> know, until a ... <i>puzzling</i> set of envelopes arrived
+            at your doorstep this morning. You notice a letter lying atop the envelopes.
           </p>
         </Box>
       </Fade>
+      <br />
       <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
         <Box
           sx={{
             display: 'flex',
-            flexDirection: { xs: 'column', sm: 'row' },
+            flexDirection: "row",
             width: '75%',
-            alignItems: { xs: 'start', md: 'center' },
+            alignItems: "start",
             gap: 1,
-            overflow: 'auto',
+            overflow: 'clip',
             mb: "4vh"
           }}
         >
@@ -49,6 +52,7 @@ function IntroductionPage() {
             onClick={() => setActivatedChip(0)} 
             label= "Letter"
             sx={{
+              fontWeight: 600,
               backgroundColor: activatedChip == 0 ? 'hsla(222, 21.30%, 12.00%, 0.51)' : 'hsla(208, 100.00%, 3.70%, 0.64)',
               border: activatedChip === 0 ? 1 : 'none'
             }} 
@@ -57,6 +61,7 @@ function IntroductionPage() {
             size="medium"
             label="All Envelopes"
             sx={{
+              fontWeight: 600,
               backgroundColor: activatedChip == 1 ? 'hsla(222, 21.30%, 12.00%, 0.51)' : 'hsla(208, 100.00%, 3.70%, 0.64)',
               border: activatedChip === 1 ? 1 : 'none'
             }}
@@ -74,27 +79,47 @@ function IntroductionPage() {
             width: "70vw"
           }}
         >
-          <Grid size={{ sm: 12, lg: 6 }}>
+          <Grid size={6}>
             <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardImageFade}>
-              <img src={RiddleManLetter} style={{objectFit: "contain", height: "100%", width: "100%", borderRadius: (theme.vars || theme).shape.borderRadius}}/>
+              <Box>
+              <img 
+                src={RiddleManLetter} 
+                style={{
+                  objectFit: "contain", 
+                  height: "100%", 
+                  width: "100%", 
+                  borderRadius: theme.shape.borderRadius,
+                  border: `1px solid hsla(0, 0%, 23%, 0.60)`,
+                }}
+              />
+              </Box>
             </Fade>
           </Grid>
           <Grid size={{ sm: 12, lg: 6}} style={{display: "flex", justifyContent: 'center', alignItems: "center"}}>   
-            <Fade in={true}  mountOnEnter unmountOnExit style = {{transitionDelay: theme.delays.duration.longDelay}} timeout={theme.transitions.duration.longTextFade}>           
-              <p style={{ textAlign: 'left' }}>
-                The letter reads: <br /> <br />
-                <i>
-                  I am Mr. Riddle Man. I grow weary of my power and status, and so wish to pass the title of Mr. Riddle Man to another.
-                  Attatched to this letter you shall find a set of envelopes. Each envelope contains a puzzle - solve them all in their entirety, 
-                  and I shall name you as my successor. Should you choose to accept, I advise secrecy of the highest order - 
-                  the identity of a Riddle Man must always be hidden, as there are those in this world who stand much to gain from our demise. 
-                  Prove your commitment to the cause by solving my riddles, and in time I will reveal to you the secrets of the Riddle Men, 
-                  as well as my true identity.
-                  <br />  <br />
-                  I will be watching, <br />
-                  Mr. Riddle Man 
-                </i>
-              </p>
+            <Fade 
+              in={true}  
+              mountOnEnter 
+              unmountOnExit 
+              style = {{transitionDelay: theme.delays.duration.longDelay}} 
+              timeout={theme.transitions.duration.longTextFade}
+            >     
+            <p style={{ textAlign: "left" }}>      
+              The letter reads: <br /> <br />
+              <i>
+                I am Mr. Riddle Man. I grow weary of my power and status, and so wish to
+                pass the title of Mr. Riddle Man to another. Attatched to this letter you
+                shall find a set of envelopes. Each envelope contains a puzzle - solve them
+                all in their entirety, and I shall name you as my successor. Should you
+                choose to accept, I advise secrecy of the highest order - the identity of a
+                Riddle Man must always be hidden, as there are those in this world who stand
+                much to gain from our demise. Prove your commitment to the cause by solving
+                my riddles, and in time I will reveal to you the secrets of the Riddle Men,
+                as well as my true identity.
+                <br /> <br />
+                I will be watching, <br />
+                Mr. Riddle Man
+              </i>
+            </p>
             </Fade>
           </Grid>
         </Grid>
