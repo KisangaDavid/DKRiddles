@@ -23,14 +23,14 @@ function AboutSitePage() {
             Welcome to DKRiddles, an interactive puzzle website. Solve each
             self-contained puzzle and uncover the secrets of the mysterious Mr. Riddle
             Man!
-            </Typography>
-            <br /> <br />
-            <Typography align="left">
+          </Typography>
+          <br /> <br />
+          <Typography align="left">
             After completing a puzzle, check out the corresponding <i>Puzzle Breakdown</i> page 
             in the sidebar. The breakdown page describes the logic behind each puzzle, 
             its implementation, and any other interesting tidbits I came across while 
             creating the puzzle. For more technical details, such as my ... <i>interesting</i> design 
-            desisions or or the many lessons learned while figuring out how to 
+            desisions, or the many lessons learned while figuring out how to 
             compile C++ to WebAssembly without Emscripten,{" "}
             <a
               target="_blank"
@@ -50,90 +50,46 @@ function AboutSitePage() {
           timeout={theme.transitions.duration.standardTextFade}
           style={{transitionDelay: theme.delays.duration.longDelay}}
         >
-          <Stack 
-            direction="row"
-            spacing={10}>
-              <List subheader={<Typography variant="h4" sx={{mb: "1vh"}}>
-                        Completed Features
-                      </Typography>}>
-                <ListItem>
-                  <ListItemText  
-                    primary={
-                      <Typography variant="h5">
-                        Navigation Sidebar
-                      </Typography>
-                    } 
-                  />
-                </ListItem>
-                    <ListItem>
-                  <ListItemText  
-                    primary={
-                      <Typography variant="h5">
-                        Puzzle Breakdown Pages
-                      </Typography>
-                    } 
-                  />
-                </ListItem>
-                    <ListItem>
-                  <ListItemText  
-                    primary={
-                      <Typography variant="h5">
-                        Basic Animations
-                      </Typography>
-                    } 
-                  />
-                </ListItem>
-                    <ListItem>
-                  <ListItemText  
-                    primary={
-                      <Typography variant="h5">
-                        Rat, Horse, and Rooster Puzzles
-                      </Typography>
-                    } 
-                  />
-                </ListItem>
-              </List>
-              <List subheader={<Typography variant="h4" sx={{mb: "1vh"}}>
-                        Upcoming Features
-                      </Typography>}>
-                <ListItem>
-                  <ListItemText  
-                    primary={
-                      <Typography variant="h5">
-                        Mobile Friendly Layouts
-                      </Typography>
-                    } 
-                  />
-                </ListItem>
-                    <ListItem>
-                  <ListItemText  
-                    primary={
-                      <Typography variant="h5">
-                        More Puzzles!
-                      </Typography>
-                    } 
-                  />
-                </ListItem>
-                    <ListItem>
-                  <ListItemText  
-                    primary={
-                      <Typography variant="h5">
-                        Typescript Rewrite
-                      </Typography>
-                    } 
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemText  
-                    primary={
-                      <Typography variant="h5">
-                        Custom C++ vector implementation
-                      </Typography>
-                    } 
-                  />
-                </ListItem>
-              </List> 
-          </Stack> 
+          <List subheader={<Typography variant="h5" sx={{mb: "1vh"}}>
+                    Coming Soon
+                  </Typography>}>
+            <ListItem>
+              <ListItemText  
+                primary={
+                  <Typography variant="h6">
+                    More Puzzles!
+                  </Typography>
+                } 
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText  
+                  primary={
+                    <Typography variant="h6">
+                      Mobile Friendly Layouts
+                    </Typography>
+                  } 
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText  
+                primary={
+                  <Typography variant="h6">
+                    Typescript Rewrite
+                  </Typography>
+                } 
+              />
+            </ListItem>
+            <ListItem>
+              <ListItemText  
+                primary={
+                  <Typography variant="h6">
+                    Custom C++ vector implementation
+                  </Typography>
+                } 
+              />
+            </ListItem>
+          </List> 
         </Fade>
       </Box>
     </RootBackground>

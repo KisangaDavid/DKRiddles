@@ -27,7 +27,7 @@ function BreakdownUnlockedNotification({ open, onClose, text, color }) {
         onClose={handleClose}
         color="success"
         variant="standard"
-        sx={{ width: "100%", backgroundColor: "hsla(137, 77%, 36%, 0.26)" }}
+        sx={{ width: "100%", backgroundColor: "hsla(137, 75%, 39%, 0.33)" }}
       >
         {text}
       </Alert>
