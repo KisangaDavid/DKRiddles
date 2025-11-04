@@ -54,20 +54,20 @@ function App() {
       <CssBaseline />
       <SolvedPuzzlesContext value={{solvedPuzzles, setSolvedPuzzles}}>
       <BrowserRouter>
-            <Routes>
-              {(wasmExports != null) && (
-                <>
-                  <Route path="/" element={<IntroductionPage/>} />
-                  <Route path="/ratRiddle" element={<RatRiddlePage wasmExports={wasmExports} />} />
-                  <Route path="/ratRiddle/breakdown" element={<RatRiddleBreakdownPage/>} />
-                  <Route path="/horseRiddle" element={<HorseRiddlePage wasmExports={wasmExports} />} />
-                  <Route path="/horseRiddle/breakdown" element={<HorseRiddleBreakdownPage/>} />
-                  <Route path="/roosterRiddle" element={<RoosterRiddlePage wasmExports={wasmExports} />} />
-                  <Route path="/roosterRiddle/breakdown" element={<RoosterRiddleBreakdownPage/>} />
-                  <Route path="/about" element={<AboutSitePage/>} />
-                </>
-              )}
-            </Routes>
+        <Routes>
+          {(wasmExports != null) && (
+            <>
+              <Route path="/" element={<IntroductionPage/>} />
+              <Route path="/ratRiddle" element={<RatRiddlePage wasmExports={wasmExports} />} />
+              <Route path="/ratRiddle/breakdown" element={<RatRiddleBreakdownPage/>} />
+              <Route path="/horseRiddle" element={<HorseRiddlePage wasmExports={wasmExports} />} />
+              <Route path="/horseRiddle/breakdown" element={<HorseRiddleBreakdownPage/>} />
+              <Route path="/roosterRiddle" element={<RoosterRiddlePage wasmExports={wasmExports} />} />
+              <Route path="/roosterRiddle/breakdown" element={<RoosterRiddleBreakdownPage/>} />
+              <Route path="/about" element={<AboutSitePage/>} />
+            </>
+          )}
+        </Routes>
       </BrowserRouter>
       </SolvedPuzzlesContext>
     </ThemeProvider>

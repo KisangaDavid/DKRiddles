@@ -2,7 +2,6 @@ import { useState, useCallback } from 'react';
 import { useWindowSize } from 'react-use';
 import { useTheme } from '@mui/material/styles';
 
-import RootBackground from "../common/RootBackground.jsx";
 import RowOfHouses from './RowOfHouses.jsx';
 import SolvedStack from './SolvedStack.jsx';
 import UnsolvedStack from './UnsolvedStack.jsx';
@@ -14,6 +13,7 @@ import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
 import Box from "@mui/material/Box";
 import TopBar from '../common/TopBar.jsx';
+import PageWrapper from '../common/PageWrapper.jsx';
 
 const NUM_HOUSES = 8;
 
@@ -101,7 +101,7 @@ function RatRiddlePage({wasmExports}) {
   }
 
   return (
-    <RootBackground>
+    <PageWrapper>
       <TopBar text="Envelope #1: The Sneaky Rat" isPuzzlePage={true} resetFunc={resetPuzzle}/>
       {confetti && <Confetti width={width} height={height} />}
       <RatRiddleDescription />
@@ -160,7 +160,7 @@ function RatRiddlePage({wasmExports}) {
           )}
         </Box>
       </Fade>
-    </RootBackground>
+    </PageWrapper>
   )
 }
 

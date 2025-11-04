@@ -1,21 +1,20 @@
 import { useTheme } from '@mui/material/styles';
 
-import RootBackground from "../common/RootBackground.jsx";
 import Fade from '@mui/material/Fade';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Box from "@mui/material/Box";
 import TopBar from '../common/TopBar.jsx';
 import ListItemText from '@mui/material/ListItemText';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import PageWrapper from '../common/PageWrapper.jsx';
 
 function AboutSitePage() {
 
   const theme = useTheme();
 
   return (
-    <RootBackground>
+    <PageWrapper>
       <TopBar text="About" isPuzzlePage={false} resetFunc={null} />
       <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>      
         <Box sx={{ width: "70vw", position: "relative", mb: "8vh", mt: "2vh" }}>
@@ -92,7 +91,7 @@ function AboutSitePage() {
           </List> 
         </Fade>
       </Box>
-    </RootBackground>
+    </PageWrapper>
   );
 }
 

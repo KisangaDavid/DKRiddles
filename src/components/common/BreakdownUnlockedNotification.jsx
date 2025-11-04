@@ -1,12 +1,19 @@
 import Snackbar from "@mui/material/Snackbar";
 import { useNavigate } from "react-router";
-import { Box } from "@mui/material";
 import Alert from "@mui/material/Alert";
 
-function BreakdownUnlockedNotification({ open, onClose, text, color }) {
+function BreakdownUnlockedNotification({ open, onClose, text}) {
 
   const navigate = useNavigate();
-  const handleClose = (event, reason) => {
+
+  const handleSnackbarClose = (_, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    onClose();
+  };
+
+  const handleAlertClose = (event, reason) => {
     event.stopPropagation();
     if (reason === "clickaway") {
       return;
@@ -19,15 +26,15 @@ function BreakdownUnlockedNotification({ open, onClose, text, color }) {
       open={open}
       autoHideDuration={5000}
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      onClose={handleClose}
+      onClose={handleSnackbarClose}
       onClick={() => {navigate("breakdown")}}
       sx={{cursor: "pointer"}}
     >
       <Alert
-        onClose={handleClose}
+        onClose={handleAlertClose}
         color="success"
         variant="standard"
-        sx={{ width: "100%", backgroundColor: "hsla(137, 75%, 39%, 0.33)" }}
+        sx={{ width: "100%", backgroundColor: "hsl(144, 63%, 16%)"}}
       >
         {text}
       </Alert>

@@ -1,6 +1,5 @@
 import { useTheme } from "@mui/material/styles";
 import { useContext } from "react";
-import RootBackground from "../common/RootBackground.jsx";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import TopBar from "../common/TopBar.jsx";
@@ -15,13 +14,14 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import PageWrapper from "../common/PageWrapper.jsx";
 
 function AboutRoosterRiddle() {
   const theme = useTheme();
   const { solvedPuzzles, _ } = useContext(SolvedPuzzlesContext);
 
   return (
-    <RootBackground>
+    <PageWrapper>
       <TopBar
         text="Puzzle Breakdown #3: The Undefeated Rooster"
         isPuzzlePage={false}
@@ -230,7 +230,7 @@ function AboutRoosterRiddle() {
           puzzleTitle={"The Undefeated Rooster"}
         />
       )}
-    </RootBackground>
+    </PageWrapper>
   );
 }
 

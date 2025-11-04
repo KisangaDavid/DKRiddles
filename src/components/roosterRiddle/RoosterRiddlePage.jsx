@@ -3,7 +3,6 @@ import { useWindowSize } from 'react-use';
 import { useTheme } from '@mui/material/styles';
 import { convertIterableToInt, convertIntToArray, MAX_32_BIT_NUM } from "../common/utils.js";
 
-import RootBackground from "../common/RootBackground.jsx";
 import RoosterRiddleDescription from './RoosterRiddleDescription.jsx';
 import RoosterMoveDescription from './RoosterMoveDescription.jsx';
 import RoosterRiddleResults from './RoosterRiddleResults.jsx';
@@ -15,6 +14,7 @@ import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
 import Box from "@mui/material/Box";
 import TopBar from '../common/TopBar.jsx';
+import PageWrapper from '../common/PageWrapper.jsx';
 
 const NUM_BITS_PER_PILE = 4;
 const NUM_PILES = 4;
@@ -100,7 +100,7 @@ function RoosterRiddlePage({wasmExports}) {
   }
 
   return (
-  <RootBackground>
+  <PageWrapper>
     <TopBar text="Envelope #3: The Undefeated Rooster" isPuzzlePage={true} resetFunc={resetPuzzle} />
     {gameIsWon && <Confetti width={width} height={height} />}
     <RoosterRiddleDescription />
@@ -156,7 +156,7 @@ function RoosterRiddlePage({wasmExports}) {
             </> }
       </Box>
     </Fade>
-  </RootBackground>
+  </PageWrapper>
   )
 }
 

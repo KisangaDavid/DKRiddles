@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useTheme } from '@mui/material/styles';
 
-import RootBackground from "../common/RootBackground.jsx";
 import Chip from '@mui/material/Chip';
 import ratRiddleThumbnail from '/src/assets/ratRiddleThumbnail.png'
 import horseRiddleThumbnail from '/src/assets/horseClipArt.png'
@@ -13,6 +12,7 @@ import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
 import TopBar from '../common/TopBar.jsx';
+import PageWrapper from '../common/PageWrapper.jsx';
 
 function IntroductionPage() {
 
@@ -20,7 +20,7 @@ function IntroductionPage() {
   const [activatedChip, setActivatedChip] = useState(-1);
 
   return (
-    <RootBackground>
+    <PageWrapper>
       <TopBar text="Introduction" isPuzzlePage={false} />
       <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
         <Box sx={{width: "75vw", position: "relative", mb:"1vh"}}>
@@ -168,7 +168,7 @@ function IntroductionPage() {
           </Grid>
         </Grid>
       }
-    </RootBackground>
+    </PageWrapper>
   );
 }
 

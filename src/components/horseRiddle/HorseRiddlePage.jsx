@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Fade from "@mui/material/Fade";
 import HorseRiddleResults from "./HorseRiddleResults.jsx";
-import RootBackground from "../common/RootBackground.jsx";
+import PageWrapper from "../common/PageWrapper.jsx";
 import PreviousRaces from "./PreviousRaces.jsx";
 import TrifectaStack from "./TrifectaStack.jsx";
 import HorseRiddleDescription from "./HorseRiddleDescription.jsx";
@@ -130,7 +130,7 @@ function HorseRiddlePage({wasmExports}) {
   let trifectaErrorMessage = validateTrifectaBet();
   
   return (
-    <RootBackground>
+    <PageWrapper>
       <TopBar
         text="Envelope #2: The Horse Trifecta"
         isPuzzlePage={true}
@@ -284,7 +284,7 @@ function HorseRiddlePage({wasmExports}) {
             setConfetti={setConfetti}
           />
         )}
-    </RootBackground>
+    </PageWrapper>
   );
 }
 

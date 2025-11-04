@@ -1,6 +1,6 @@
 import { useTheme } from "@mui/material/styles";
 import { useContext } from 'react';
-import RootBackground from "../common/RootBackground.jsx";
+import PageWrapper from "../common/PageWrapper.jsx";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import TopBar from "../common/TopBar.jsx";
@@ -27,7 +27,7 @@ function RatRiddleBreakdownPage() {
   const {solvedPuzzles, _} = useContext(SolvedPuzzlesContext);
 
   return (
-    <RootBackground>
+    <PageWrapper>
       <TopBar
         text="Puzzle Breakdown #1: The Sneaky Rat"
         isPuzzlePage={false}
@@ -272,7 +272,7 @@ function RatRiddleBreakdownPage() {
         </Fade>
       :
       <RiddleNotComplete puzzleNumber={1} puzzleTitle={"The Sneaky Rat"} />}
-    </RootBackground>
+    </PageWrapper>
   );
 }
 

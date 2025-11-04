@@ -1,6 +1,5 @@
 import { useTheme } from "@mui/material/styles";
 import { useContext } from "react";
-import RootBackground from "../common/RootBackground.jsx";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import TopBar from "../common/TopBar.jsx";
@@ -21,13 +20,14 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import PageWrapper from "../common/PageWrapper.jsx";
 
 function HorseRiddleBreakdownPage() {
   const theme = useTheme();
   const { solvedPuzzles, _ } = useContext(SolvedPuzzlesContext);
 
   return (
-    <RootBackground>
+    <PageWrapper>
       <TopBar
         text="Puzzle Breakdown #2: The Horse Trifecta"
         isPuzzlePage={false}
@@ -289,7 +289,7 @@ function HorseRiddleBreakdownPage() {
           puzzleTitle={"The Horse Trifecta"}
         />
       )}
-    </RootBackground>
+    </PageWrapper>
   );
 }
 
