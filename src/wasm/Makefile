@@ -8,7 +8,7 @@ CPP_FLAGS = -Wall -Wno-unknown-attributes -Werror -Weffc++ -Wextra -Wconversion 
 CPP_OPT_FLAGS = -Wall -Wno-unknown-attributes -Werror -Weffc++ -Wextra -Wconversion -Wsign-conversion -std=c++23 -Oz
 
 # WASM specific compile flags
-WASMCOMPFLAGS = --target=wasm32-wasi -fno-exceptions --sysroot=PATH_TO_WASI_SYS_ROOT -Xlinker --export-dynamic
+WASMCOMPFLAGS = --target=wasm32-wasi -fno-exceptions --sysroot=PATH_TO_WASI_SYSROOT -Xlinker --export-dynamic
 
 # Source files
 SRCS = ratRiddle.cpp horseRiddle.cpp roosterRiddle.cpp puzzleUtils.cpp
@@ -18,11 +18,8 @@ HDRS = wasmUtils.h
 # Object files
 OBJS = $(SRCS:.cpp=.o)
 
-# Executable name
-EXEC = ratRiddle.exe
-
 # Wasm module name
-WASM_ALL_MODULES_NAME = allModules.wasm
+WASM_ALL_MODULES_NAME = "../../public/allModules.wasm
 
 # Default target (wasm binary)
 all: wasm
@@ -30,10 +27,6 @@ all: wasm
 # Compile cpp source into object files
 %.o: %.cpp $(HDRS)
 	$(CPP) $(CPP_FLAGS) -c $< -o $@
-
-# Link object files to create a non-wasm executable
-exe: $(OBJS)
-	$(CPP) $(CPP_FLAGS) $^ -o $(EXEC)
 
 # Create the wasm module file from the cpp source
 wasmAll: $(SRCS)

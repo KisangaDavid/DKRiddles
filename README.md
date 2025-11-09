@@ -1,1 +1,1 @@
-🚧🚧🚧README under construction🚧🚧🚧. In the meantime, [check out the website here!](www.theriddleman.com)
+🚧🚧🚧 README currently under construction 🚧🚧🚧. In the meantime, [check out the website here!](www.theriddleman.com)

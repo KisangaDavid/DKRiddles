@@ -1,0 +1,60 @@
+'use client'
+
+import "./globals.css";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { useState, useEffect } from "react";
+ import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './_common/theme';
+import PageWrapper from "./_common/PageWrapper";
+import { SolvedPuzzlesContext, WasmContext } from "./_common/utils";
+
+export default function RootLayout({ children }) {
+  const [wasmExports, setWasmExports] = useState(null);
+  const [solvedPuzzles, setSolvedPuzzles] = useState(new Set());
+
+  // Not used but required by the WASM binary
+  const wasmImports = {
+    "wasi_snapshot_preview1": {
+      "proc_exit": () => {},
+      "fd_close": () => {},
+      "fd_write": () => {},
+      "fd_seek": () => {},
+      "args_get": () => {},
+      "args_sizes_get": () => {}
+    }
+  }
+
+  useEffect(() => {
+    fetch("/allModules.wasm")
+      .then((response) => response.arrayBuffer())
+      .then((bytes) => WebAssembly.instantiate(bytes, wasmImports))
+      .then((module) => {
+          setWasmExports(module.instance.exports);
+        });
+  }, []); 
+
+  return (
+    <html lang="en">
+      <head>
+        <title>The Riddle Man</title>
+      </head>
+      <body>
+        <AppRouterCacheProvider>
+          <SolvedPuzzlesContext value={{solvedPuzzles, setSolvedPuzzles}}>
+            <WasmContext value={{wasmExports, setWasmExports}}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <div id="root">
+                <PageWrapper>
+                  {children}
+                </PageWrapper>
+              </div>
+            </ThemeProvider>
+            </WasmContext>
+          </SolvedPuzzlesContext>
+        </AppRouterCacheProvider>
+      </body>
+    </html>
+  )
+}
