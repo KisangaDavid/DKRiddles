@@ -3,7 +3,7 @@ import Fade from "@mui/material/Fade";
 import BonusChallenge from "./BonusChallenge.jsx";
 import { useTheme } from "@mui/material/styles";
 import { useState, useContext, useEffect } from "react";
-import { SolvedPuzzlesContext, RAT_PUZZLE_P1 } from "../_common/utils.js";
+import { SolvedPuzzlesContext, RAT_PUZZLE_P1, SOLVED } from "../_common/utils.js";
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.jsx";
 
 function SolvedStack({ totalDays, checkBonusAnswer, setConfetti }) {
@@ -13,6 +13,7 @@ function SolvedStack({ totalDays, checkBonusAnswer, setConfetti }) {
 
   useEffect(() => {
     if (totalDays == 4 && !solvedPuzzles.has(RAT_PUZZLE_P1)) {
+      localStorage.setItem(RAT_PUZZLE_P1, SOLVED);
       const newSolvedPuzzles = new Set(solvedPuzzles);
       newSolvedPuzzles.add(RAT_PUZZLE_P1);
       setSolvedPuzzles(newSolvedPuzzles);

@@ -2,11 +2,13 @@
 
 import { createContext } from 'react';
 
+export const SOLVED = "S"
 export const MAX_32_BIT_NUM = 0xffffffff;
 export const RAT_PUZZLE_P1 = "RAT_P1";
 export const RAT_PUZZLE_P2 = "RAT_P2";
 export const HORSE_PUZZLE = "HORSE";
 export const ROOSTER_PUZZLE = "ROOSTER";
+export const ALL_PUZZLES = [RAT_PUZZLE_P1, RAT_PUZZLE_P2, HORSE_PUZZLE, ROOSTER_PUZZLE]
 
 export function convertIterableToInt(iterable, numBitsPerElement) {
     let intRepresentation = 0;

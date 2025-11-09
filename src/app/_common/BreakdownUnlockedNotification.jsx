@@ -1,10 +1,11 @@
 'use client'
+
 import Snackbar from "@mui/material/Snackbar";
 import { usePathname } from 'next/navigation'
 import Link from "next/link";
 import Alert from "@mui/material/Alert";
 
-function BreakdownUnlockedNotification({ open, onClose, text, href}) {
+function BreakdownUnlockedNotification({ open, onClose, text}) {
   const pathname = usePathname();
   const handleSnackbarClose = (_, reason) => {
     if (reason === "clickaway") {

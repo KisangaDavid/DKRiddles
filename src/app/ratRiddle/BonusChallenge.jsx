@@ -7,7 +7,7 @@ import Fab from "@mui/material/Fab";
 import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.jsx";
-import { SolvedPuzzlesContext, RAT_PUZZLE_P2 } from "../_common/utils.js";
+import { SolvedPuzzlesContext, RAT_PUZZLE_P2, SOLVED } from "../_common/utils.js";
 import { useTheme } from "@mui/material/styles";
 
 function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
@@ -34,10 +34,10 @@ function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
       setConfetti(true);
       setBonusCorrect(true);
       setNotificationOpen(true);
+      localStorage.setItem(RAT_PUZZLE_P2, SOLVED);
       const newSolvedPuzzles = new Set(solvedPuzzles);
       newSolvedPuzzles.add(RAT_PUZZLE_P2);
       setSolvedPuzzles(newSolvedPuzzles);
-      console.log("set puzzles!")
     }
     setBonusSubmitted(true);
   };

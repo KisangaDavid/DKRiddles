@@ -22,12 +22,9 @@ function IntroductionPage() {
   const [activatedChip, setActivatedChip] = useState(-1);
   const [shouldPreloadImgs, setShouldPreloadImgs] = useState(false)
 
-  useEffect(() => {
-    console.log("set should preload")
-    setShouldPreloadImgs(true)
-  }, []);
+  useEffect(() => setShouldPreloadImgs(true), []);
   
- return (
+  return (
     <>
       <TopBar text="Introduction" isPuzzlePage={false} />
       <Fade in={true} timeout={theme.transitions.duration.standardTextFade}>

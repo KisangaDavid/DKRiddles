@@ -8,7 +8,7 @@ import Fade from '@mui/material/Fade';
 import Box from "@mui/material/Box";
 import { Stack } from '@mui/material';
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.jsx";
-import { SolvedPuzzlesContext, HORSE_PUZZLE } from "../_common/utils.js";
+import { SolvedPuzzlesContext, HORSE_PUZZLE, SOLVED } from "../_common/utils.js";
 
 const MIN_NUM_RACES = 7;
 
@@ -19,17 +19,16 @@ function HorseRiddleResults({numRaces, setConfetti}) {
   const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
   
   useEffect(() => {
-    if (numRaces == MIN_NUM_RACES && !solvedPuzzles.has(HORSE_PUZZLE)) {
-      const newSolvedPuzzles = new Set(solvedPuzzles);
-      newSolvedPuzzles.add(HORSE_PUZZLE);
-      console.log("updated horse riddle!");
-      setSolvedPuzzles(newSolvedPuzzles);
-    }
-  }, [numRaces]);
-
     if (numRaces == MIN_NUM_RACES) {
       setConfetti(true);
+      if(!solvedPuzzles.has(HORSE_PUZZLE)) {
+        localStorage.setItem(HORSE_PUZZLE, SOLVED);
+        const newSolvedPuzzles = new Set(solvedPuzzles);
+        newSolvedPuzzles.add(HORSE_PUZZLE);
+        setSolvedPuzzles(newSolvedPuzzles);
+      }
     }
+  }, [numRaces]);
 
   return (
     <Box sx={{display: "flex", width: "75vw", alignItems: "center", flexGrow: 1}}>

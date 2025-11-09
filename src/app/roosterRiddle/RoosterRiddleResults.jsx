@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import { useState, useContext, useEffect } from "react";
-import { SolvedPuzzlesContext, ROOSTER_PUZZLE } from "../_common/utils.js";
+import { SolvedPuzzlesContext, ROOSTER_PUZZLE, SOLVED } from "../_common/utils.js";
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.jsx";
 
 function RoosterRiddleResults({ gameIsWon }) {
@@ -15,6 +15,7 @@ function RoosterRiddleResults({ gameIsWon }) {
 
   useEffect(() => {
     if (gameIsWon && !solvedPuzzles.has(ROOSTER_PUZZLE)) {
+      localStorage.setItem(ROOSTER_PUZZLE, SOLVED);
       const newSolvedPuzzles = new Set(solvedPuzzles);
       newSolvedPuzzles.add(ROOSTER_PUZZLE);
       setSolvedPuzzles(newSolvedPuzzles);

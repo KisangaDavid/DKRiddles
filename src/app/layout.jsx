@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './_common/theme';
 import PageWrapper from "./_common/PageWrapper";
-import { SolvedPuzzlesContext, WasmContext } from "./_common/utils";
+import { SolvedPuzzlesContext, WasmContext, ALL_PUZZLES } from "./_common/utils";
 
 export default function RootLayout({ children }) {
   const [wasmExports, setWasmExports] = useState(null);
@@ -26,6 +26,14 @@ export default function RootLayout({ children }) {
   }
 
   useEffect(() => {
+    const newSolvedPuzzles = new Set();
+    ALL_PUZZLES.forEach((element) => {
+      if(localStorage.getItem(element) != null) {
+        console.log("Element added from local storage: " + element);
+        newSolvedPuzzles.add(element)
+      }
+    });
+    setSolvedPuzzles(newSolvedPuzzles);
     fetch("/allModules.wasm")
       .then((response) => response.arrayBuffer())
       .then((bytes) => WebAssembly.instantiate(bytes, wasmImports))
