@@ -1,7 +1,7 @@
 import Link from "next/link.js";
 import { useTheme } from "@mui/material/styles";
 import { useContext } from "react";
-import { listItemIconStyle, listItemButtonStyle, listItemTextStyle } from './styles.jsx';
+import { styled } from '@mui/material/styles';
 import { SolvedPuzzlesContext, HORSE_PUZZLE, ROOSTER_PUZZLE, RAT_PUZZLE_P1, RAT_PUZZLE_P2 } from './utils.js'
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -16,13 +16,49 @@ import HomeIcon from '@mui/icons-material/Home';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
+const StyledListItemButton = styled(ListItemButton)({
+  paddingTop: "1.5vh",
+  paddingBottom: "1.5vh",
+  borderRadius: "8px"
+});
+
+const StyledListItemText = styled(ListItemText)({
+  '& .MuiListItemText-primary': {
+    color: "white",
+    fontSize: "14px",
+    fontWeight: 500,
+  },
+  '& .MuiListItemText-secondary': {
+    color: "white",
+    fontWeight: 400,
+    fontSize: "14px",
+  },
+});
+
+const StyledListItemIcon = ({PassedIcon, complete = false, inProgress = false}) => {
+  const theme = useTheme();
+  return (
+  <ListItemIcon>
+    <PassedIcon
+      sx={{
+        minWidth: '0rem',
+        width: '2rem',
+        height: '2rem',
+        color: 
+          complete ? 
+            theme.palette.success.main : 
+            inProgress ? 
+              theme.palette.warning.light :
+              "rgba(255, 255, 255, 0.7)"
+      }}
+    />
+  </ListItemIcon>
+  );
+};
 
 function MenuDrawerContents({setMenuDrawerOpen}) {
 
-  const theme = useTheme();
   const { solvedPuzzles, _ } = useContext(SolvedPuzzlesContext);
-  const successGreen = theme.palette.success.main;
-  const inProgressYellow = theme.palette.warning.light;
 
   return (
     <>
@@ -34,37 +70,31 @@ function MenuDrawerContents({setMenuDrawerOpen}) {
         }}
       >
         <ListItem disablePadding>
-          <ListItemButton sx={listItemButtonStyle} onClick={() => (setMenuDrawerOpen(false))}>
-            <ListItemIcon>
-              <KeyboardDoubleArrowLeftIcon sx={listItemIconStyle} />
-            </ListItemIcon>
-            <ListItemText sx={listItemTextStyle} primary={"Close"} />
-          </ListItemButton>
+          <StyledListItemButton onClick={() => (setMenuDrawerOpen(false))}>
+            <StyledListItemIcon PassedIcon={KeyboardDoubleArrowLeftIcon} />
+            <StyledListItemText primary={"Close"} />
+          </StyledListItemButton>
         </ListItem>
         <Link href="/">
           <ListItem disablePadding>    
-            <ListItemButton sx={listItemButtonStyle} >
-              <ListItemIcon>
-                <HomeIcon sx={listItemIconStyle} />
-              </ListItemIcon>
-              <ListItemText sx={listItemTextStyle} primary={"Introduction"} />
-            </ListItemButton>
+            <StyledListItemButton>
+              <StyledListItemIcon PassedIcon={HomeIcon} />
+              <StyledListItemText primary={"Introduction"} />
+            </StyledListItemButton>
           </ListItem>
         </Link>
         <Link href="/about/">
           <ListItem disablePadding>
-            <ListItemButton sx={listItemButtonStyle}>
-                <ListItemIcon>
-                  <InfoOutlinedIcon sx={listItemIconStyle} />
-                </ListItemIcon>
-                <ListItemText sx={listItemTextStyle} primary={"About This Site"} />
-            </ListItemButton>
+            <StyledListItemButton>
+              <StyledListItemIcon PassedIcon={InfoOutlinedIcon} />
+              <StyledListItemText primary={"About This Site"} />
+            </StyledListItemButton>
           </ListItem>
         </Link>
       </List>
       <Divider />
       <ListItem>
-        <ListItemText sx={listItemTextStyle}primary={"All Puzzles"} />
+        <StyledListItemText primary={"All Puzzles"} />
       </ListItem>
         <List sx={{
         padding: '8px',
@@ -75,57 +105,42 @@ function MenuDrawerContents({setMenuDrawerOpen}) {
       >
         <Link href="/ratRiddle/">
           <ListItem disablePadding>      
-            <ListItemButton sx={listItemButtonStyle}>
-              <ListItemIcon>
-                {solvedPuzzles.has(RAT_PUZZLE_P2) ? 
-                  <CheckRoundedIcon sx={[listItemIconStyle, { color: successGreen }]} />
-                : 
-                  solvedPuzzles.has(RAT_PUZZLE_P1) ?
-                    <CheckRoundedIcon sx={[listItemIconStyle, { color: inProgressYellow }]} />
-                  :
-                    <ExtensionIcon sx={listItemIconStyle} />
-                }
-              </ListItemIcon>
-              <ListItemText sx={listItemTextStyle} secondary={"The Sneaky Rat"} />
-                    <ListItemIcon>
-              </ListItemIcon>
-            </ListItemButton>
+            <StyledListItemButton>
+              <StyledListItemIcon 
+                PassedIcon={solvedPuzzles.has(RAT_PUZZLE_P1) ? CheckRoundedIcon : ExtensionIcon}
+                complete={solvedPuzzles.has(RAT_PUZZLE_P2)}
+                inProgress={solvedPuzzles.has(RAT_PUZZLE_P1)}
+              />
+              <StyledListItemText secondary={"The Sneaky Rat"} />
+            </StyledListItemButton>
           </ListItem> 
         </Link>     
         <Link href="/horseRiddle/">
           <ListItem disablePadding>
-            <ListItemButton sx={listItemButtonStyle}>
-              <ListItemIcon>
-                <ListItemIcon>
-                {solvedPuzzles.has(HORSE_PUZZLE) ? 
-                  <CheckRoundedIcon sx={[listItemIconStyle, { color: successGreen }]} />
-                : 
-                  <ExtensionIcon sx={listItemIconStyle} />
-                }
-              </ListItemIcon>
-              </ListItemIcon>
-              <ListItemText sx={listItemTextStyle} secondary={"The Horse Trifecta"} />
-            </ListItemButton>
+            <StyledListItemButton>
+              <StyledListItemIcon 
+                PassedIcon={solvedPuzzles.has(HORSE_PUZZLE) ? CheckRoundedIcon : ExtensionIcon}
+                complete={solvedPuzzles.has(HORSE_PUZZLE)}
+              />
+              <StyledListItemText secondary={"The Horse Trifecta"} />
+            </StyledListItemButton>
           </ListItem>
         </Link>
         <Link href="/roosterRiddle/">
           <ListItem disablePadding>
-            <ListItemButton sx={listItemButtonStyle}>
-              <ListItemIcon>
-                {solvedPuzzles.has(ROOSTER_PUZZLE) ? 
-                  <CheckRoundedIcon sx={[listItemIconStyle, { color: successGreen }]} />
-                : 
-                  <ExtensionIcon sx={listItemIconStyle} />
-                }
-              </ListItemIcon>
-              <ListItemText sx={listItemTextStyle} secondary={"The Undefeated Rooster"} />
-            </ListItemButton>
+            <StyledListItemButton>
+              <StyledListItemIcon 
+                PassedIcon={solvedPuzzles.has(ROOSTER_PUZZLE) ? CheckRoundedIcon : ExtensionIcon}
+                complete={solvedPuzzles.has(ROOSTER_PUZZLE)}
+              />
+              <StyledListItemText secondary={"The Undefeated Rooster"} />
+            </StyledListItemButton>
           </ListItem> 
         </Link>
       </List>
       <Divider />
       <ListItem>
-        <ListItemText sx={listItemTextStyle} primary={"All Puzzle Breakdowns"} />
+        <StyledListItemText primary={"All Puzzle Breakdowns"} />
       </ListItem>
       <List sx={{
         padding: '8px',
@@ -136,53 +151,36 @@ function MenuDrawerContents({setMenuDrawerOpen}) {
       >
         <Link href="/ratRiddle/breakdown/">
           <ListItem disablePadding>
-            <ListItemButton sx={listItemButtonStyle}>
-              <ListItemIcon>
-                <TipsAndUpdatesOutlinedIcon
-                  sx={[
-                    listItemIconStyle,
-                    solvedPuzzles.has(RAT_PUZZLE_P2)  ?
-                      {color: successGreen}
-                    : 
-                      solvedPuzzles.has(RAT_PUZZLE_P1) ? 
-                        {color: inProgressYellow}
-                      :
-                        {}
-                  ]}
-                />
-              </ListItemIcon>
-              <ListItemText sx={listItemTextStyle} secondary={"Rat Puzzle Breakdown"} />
-            </ListItemButton>
+            <StyledListItemButton>
+              <StyledListItemIcon 
+                PassedIcon={TipsAndUpdatesOutlinedIcon} 
+                complete={solvedPuzzles.has(RAT_PUZZLE_P2)} 
+                inProgress={solvedPuzzles.has(RAT_PUZZLE_P1)}
+              />
+              <StyledListItemText secondary={"Rat Puzzle Breakdown"} />
+            </StyledListItemButton>
           </ListItem>
         </Link>
         <Link href="/horseRiddle/breakdown/">
           <ListItem disablePadding>
-            <ListItemButton sx={listItemButtonStyle}>
-              <ListItemIcon>
-                <TipsAndUpdatesOutlinedIcon       
-                  sx={[
-                    listItemIconStyle,
-                    solvedPuzzles.has(HORSE_PUZZLE) && { color: successGreen },
-                  ]} 
-                />
-              </ListItemIcon>
-              <ListItemText sx={listItemTextStyle} secondary={"Horse Puzzle Breakdown"} />
-            </ListItemButton>
+            <StyledListItemButton>
+              <StyledListItemIcon 
+                PassedIcon={TipsAndUpdatesOutlinedIcon} 
+                complete={solvedPuzzles.has(HORSE_PUZZLE)}
+              />
+              <StyledListItemText secondary={"Horse Puzzle Breakdown"} />
+            </StyledListItemButton>
           </ListItem>
         </Link>
         <Link href="/roosterRiddle/breakdown/">
           <ListItem disablePadding>
-            <ListItemButton sx={listItemButtonStyle}>
-              <ListItemIcon>
-                <TipsAndUpdatesOutlinedIcon                    
-                  sx={[
-                    listItemIconStyle,
-                    solvedPuzzles.has(ROOSTER_PUZZLE) && { color: successGreen }
-                  ]} 
-                />
-              </ListItemIcon>
-              <ListItemText sx={listItemTextStyle} secondary={"Rooster Puzzle Breakdown"} />
-            </ListItemButton>
+            <StyledListItemButton>
+              <StyledListItemIcon 
+                PassedIcon={TipsAndUpdatesOutlinedIcon} 
+                complete={solvedPuzzles.has(ROOSTER_PUZZLE)}
+              />
+              <StyledListItemText secondary={"Rooster Puzzle Breakdown"} />
+            </StyledListItemButton>
           </ListItem>
         </Link>
       </List> 

@@ -1,5 +1,16 @@
 'use client'
 
+import { useContext } from 'react';
+import { useTheme } from "@mui/material/styles";
+import Fade from "@mui/material/Fade";
+import Box from "@mui/material/Box";
+import CardMedia from '@mui/material/CardMedia';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import TopBar from "../../_common/TopBar.jsx";
+import RiddleNotComplete from "../../_common/RiddleNotComplete.jsx";
+import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
+import { SolvedPuzzlesContext, RAT_PUZZLE_P1, RAT_PUZZLE_P2 } from '../../_common/utils.js'
 import FourDayGraphImg from '../../../assets/FourDayGraph.png';
 import ValidGraphImg from '../../../assets/ValidGraph.png';
 import InvalidGraphImg from '../../../assets/InvalidGraph.png';
@@ -7,19 +18,6 @@ import RatRiddleAboutPic1Img from '../../../assets/RatRiddleAboutPic1.jpg';
 import RatRiddleBreakdownPart2FullImg from '../../../assets/RatRiddleBreakdownPart2Full.png';
 import RatRiddleAlternatingImg from '../../../assets/RatRiddleAlternating.png';
 import RatRiddleBreakdown12HousesImg from '../../../assets/RatRiddleBreakdown12Houses.png';
-import { useTheme } from "@mui/material/styles";
-import { useContext } from 'react';
-import Fade from "@mui/material/Fade";
-import Box from "@mui/material/Box";
-import TopBar from "../../_common/TopBar.jsx";
-import RiddleNotComplete from "../../_common/RiddleNotComplete.jsx";
-import { breakdownCardStyle, breakdownCardContentStyle } from "../../_common/styles.jsx";
-import { SolvedPuzzlesContext, RAT_PUZZLE_P1, RAT_PUZZLE_P2 } from '../../_common/utils.js'
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 
 function RatRiddleBreakdownPage() {
 
@@ -66,7 +64,7 @@ function RatRiddleBreakdownPage() {
               definitively conclude that the rat started in an odd numbered house!
             </Typography>
             <br />
-            <Card sx={breakdownCardStyle}>
+            <StyledBreakdownCard>
               <CardMedia
                 component="img"
                 image={RatRiddleAboutPic1Img.src}
@@ -75,13 +73,13 @@ function RatRiddleBreakdownPage() {
                   objectFit: "contain",
                 }}
               />
-              <CardContent sx={breakdownCardContentStyle}>
+              <StyledBreakdownCardContent>
                 <Typography align="center">
                   If a rat is currently in house 6 or 8, it must move to either
                   house 5 or 7 on the next day.
                 </Typography>
-              </CardContent>
-            </Card>
+              </StyledBreakdownCardContent>
+            </StyledBreakdownCard>
             <br /> <br />
             <Typography align="left">
               If the rat started in an odd numbered house, then on the third day
@@ -117,7 +115,7 @@ function RatRiddleBreakdownPage() {
               layer to an end node. 
             </Typography>
             <br />
-            <Card sx={[breakdownCardStyle, {width: "65%"}]}>
+            <StyledBreakdownCard sx={{width: "65%"}}>
               <CardMedia
                 component="img"
                 image={FourDayGraphImg.src}
@@ -126,12 +124,12 @@ function RatRiddleBreakdownPage() {
                   objectFit: "contain",
                 }}
               />
-              <CardContent sx={breakdownCardContentStyle}>
+              <StyledBreakdownCardContent>
                 <Typography align="center">
                   The graph built for a 4 day solution. Each row represents a day.
                 </Typography>
-              </CardContent>
-            </Card>
+              </StyledBreakdownCardContent>
+            </StyledBreakdownCard>
             <br /> <br />
             <Typography align="left">
               To check if a submitted solution is guaranteed to catch the rat,
@@ -143,7 +141,7 @@ function RatRiddleBreakdownPage() {
             </Typography>
             <br />
             <Stack direction="row" gap="0.5vw">
-              <Card sx={breakdownCardStyle}>
+              <StyledBreakdownCard>
                 <CardMedia
                   component="img"
                   image={InvalidGraphImg.src}
@@ -152,14 +150,14 @@ function RatRiddleBreakdownPage() {
                     objectFit: "contain",
                   }}
                 />
-                <CardContent sx={breakdownCardContentStyle}>
+                <StyledBreakdownCardContent>
                   <Typography align="center">
                     An invalid solution to the puzzle. There are still many paths
                     from the start node to the end node.
                   </Typography>
-                </CardContent>
-              </Card>
-              <Card sx={breakdownCardStyle}>
+                </StyledBreakdownCardContent>
+              </StyledBreakdownCard>
+              <StyledBreakdownCard>
                 <CardMedia
                   component="img"
                   image={ValidGraphImg.src}
@@ -168,13 +166,13 @@ function RatRiddleBreakdownPage() {
                     objectFit: "contain",
                   }}
                 />
-                <CardContent sx={breakdownCardContentStyle}>
+                <StyledBreakdownCardContent>
                   <Typography align="center">
                     A valid (and optimal!) solution to the puzzle. There is no
                     longer a path from the start node to the end node.
                   </Typography>
-                </CardContent>
-              </Card>
+                </StyledBreakdownCardContent>
+              </StyledBreakdownCard>
             </Stack>
             <br /> <br /> <br />
             <Typography variant="h4" sx={{ mb: "2vh" }}>
@@ -193,7 +191,7 @@ function RatRiddleBreakdownPage() {
                 </Typography>
                 <br />
                 <Stack direction="row" gap="0.5vw">
-                  <Card sx={breakdownCardStyle}>
+                  <StyledBreakdownCard>
                     <CardMedia
                       component="img"
                       image={RatRiddleAlternatingImg.src}
@@ -202,13 +200,13 @@ function RatRiddleBreakdownPage() {
                         objectFit: "contain",
                       }}
                     />
-                    <CardContent sx={breakdownCardContentStyle}>
+                    <StyledBreakdownCardContent>
                       <Typography align="center">
                         Half the houses can be eliminated in 3 days
                       </Typography>
-                    </CardContent>
-                  </Card>
-                  <Card sx={breakdownCardStyle}>
+                    </StyledBreakdownCardContent>
+                  </StyledBreakdownCard>
+                  <StyledBreakdownCard>
                     <CardMedia
                       component="img"
                       image={RatRiddleBreakdownPart2FullImg.src}
@@ -217,12 +215,12 @@ function RatRiddleBreakdownPage() {
                         objectFit: "contain",
                       }}
                     />
-                    <CardContent sx={breakdownCardContentStyle}>
+                    <StyledBreakdownCardContent>
                       <Typography align="center">
                         The rat is guaranteed to be caught in 6 days
                       </Typography>
-                    </CardContent>
-                  </Card>
+                    </StyledBreakdownCardContent>
+                  </StyledBreakdownCard>
                 </Stack>
                 <br /> <br />
                 <Typography align="left">
@@ -238,7 +236,7 @@ function RatRiddleBreakdownPage() {
                   <sub>1/2</sub> is even.
                 </Typography>
                 <br />
-                <Card sx={[breakdownCardStyle, {width: "65%"}]}>
+                <StyledBreakdownCard sx={{width: "65%"}}>
                   <CardMedia
                     component="img"
                     image={RatRiddleBreakdown12HousesImg.src}
@@ -247,12 +245,12 @@ function RatRiddleBreakdownPage() {
                       objectFit: "contain",
                     }}
                   />
-                  <CardContent sx={[breakdownCardContentStyle]}>
+                  <StyledBreakdownCardContent>
                     <Typography align="center">
                       With 12 houses, the rat can be caught in 7 days. The above mentioned "headstart" is visible on day 4. 
                     </Typography>
-                  </CardContent>
-                </Card>
+                  </StyledBreakdownCardContent>
+                </StyledBreakdownCard>
                 <br /> <br />
                 <Typography align="left">
                   Thus, the number of days needed to catch the rat for any number of 

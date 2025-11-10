@@ -1,20 +1,18 @@
 'use client'
+
 import { useTheme } from "@mui/material/styles";
 import { useContext } from "react";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
-import TopBar from "../../_common/TopBar.jsx";
-import RiddleNotComplete from "../../_common/RiddleNotComplete.jsx";
-import { SolvedPuzzlesContext, ROOSTER_PUZZLE } from "../../_common/utils.js";
-import { breakdownCardContentStyle, breakdownCardStyle } from "../../_common/styles.jsx";
-
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import TopBar from "../../_common/TopBar.jsx";
+import RiddleNotComplete from "../../_common/RiddleNotComplete.jsx";
+import { SolvedPuzzlesContext, ROOSTER_PUZZLE } from "../../_common/utils.js";
+import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
 
 function AboutRoosterRiddle() {
   const theme = useTheme();
@@ -123,7 +121,7 @@ function AboutRoosterRiddle() {
               significant 1 bit in <i>N</i>. 
             </Typography>
             <br />
-            <Card sx={breakdownCardStyle}>
+            <StyledBreakdownCard>
               <CardMedia
                 sx={{
                   alignItems: "center",
@@ -155,13 +153,13 @@ function AboutRoosterRiddle() {
                   </Typography>
                 </Paper>
               </CardMedia>
-              <CardContent sx={breakdownCardContentStyle}>
+              <StyledBreakdownCardContent>
                 <Typography align="center">
                   The defined terms for a sample position with piles of sizes 4,
                   5, and 6.
                 </Typography>
-              </CardContent>
-            </Card>
+              </StyledBreakdownCardContent>
+            </StyledBreakdownCard>
             <br />
             <Typography align="left" sx={{ width: "85%" }}>
               Using the above definitions, there must exist at least one 
