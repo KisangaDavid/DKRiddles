@@ -173,38 +173,44 @@ function IntroductionPage() {
         </Grid>
       }
       {shouldPreloadImgs && 
-        <div display="none">
+        <Box sx={{display: "none"}}>
+          hello
           <Image
             src={ratRiddleThumbnail}
             alt=""
             width={1}
             height={1}
+            loading="eager"
           />
-            <Image
+          <Image
             src={horseRiddleThumbnail}
             alt=""
             width={1}
             height={1}
+            loading="eager"
           />
-            <Image
+          <Image
             src={riddleManLetter}
             alt=""
             width={1}
             height={1}
+            loading="eager"
           />
-              <Image
+          <Image
             src={roosterRiddleThumbnail}
             alt=""
             width={1}
             height={1}
+            loading="eager"
           />
-            <Image
+          <Image
             src={mysteryLetter}
             alt=""
             width={1}
             height={1}
+            loading="eager"
           />
-        </div>
+        </Box>
       }
     </>
   );
