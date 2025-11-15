@@ -10,6 +10,10 @@ export const HORSE_PUZZLE = "HORSE";
 export const ROOSTER_PUZZLE = "ROOSTER";
 export const ALL_PUZZLES = [RAT_PUZZLE_P1, RAT_PUZZLE_P2, HORSE_PUZZLE, ROOSTER_PUZZLE]
 
+export const ratBlogLink = "https://blog.dkisanga.com/ratRiddle/"
+export const horseBlogLink = "https://blog.dkisanga.com/horseRiddle/"
+export const roosterBlogLink = "https://blog.dkisanga.com/roosterRiddle/"
+
 export function convertIterableToInt(iterable, numBitsPerElement) {
     let intRepresentation = 0;
     for (const element of iterable) {

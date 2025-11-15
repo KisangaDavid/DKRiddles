@@ -27,6 +27,7 @@ const NUM_BITS_PER_HORSE = 5;
 
 const INVALID_HORSE_MSG = "Enter an integer between 1 and 25 for each position!";
 const NO_DUP_HORSES_MSG = "You cannot enter the same horse in two different positions!";
+const MAX_RACES_EXCEEDED_MSG = "You cannot race anymore horses! Please submit a trifecta bet or refresh the puzzle"
 
 function HorseRiddlePage() {
   const [hasBeenReset, setHasBeenReset] = useState(false);
@@ -63,6 +64,9 @@ function HorseRiddlePage() {
       removeHorseFromRace(horseIdx);
     } else if (!currentRace.includes(horseIdx) && currentRace.length < RACE_LENGTH) {
       setCurrentRace((currentRace) => [...currentRace, horseIdx]);
+      if ((currentRace.length == RACE_LENGTH - 1) && (finishedRaces.length >= MAX_NUM_RACES * RACE_LENGTH)) { 
+        setWrongReason(MAX_RACES_EXCEEDED_MSG);
+      }
     }
   };
 
@@ -237,7 +241,7 @@ function HorseRiddlePage() {
               <Button
                 variant="contained"
                 onClick={() => submitRace()}
-                disabled={currentRace.length != 5}
+                disabled={currentRace.length != 5 || (finishedRaces.length >= MAX_NUM_RACES * RACE_LENGTH)}
               >
                 Race Horses!
               </Button>

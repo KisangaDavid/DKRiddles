@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar.jsx";
 import RiddleNotComplete from "../../_common/RiddleNotComplete.jsx";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
-import { SolvedPuzzlesContext, HORSE_PUZZLE } from "../../_common/utils.js";
+import { SolvedPuzzlesContext, HORSE_PUZZLE, horseBlogLink } from "../../_common/utils.js";
 import HorseBreakdownCompleteGraph from "../../../assets/horseBreakdownCompleteGraph.png";
 import HorseBreakdown2ndPlaceGraph from "../../../assets/horseBreakdown2ndPlaceGraph.png";
 import HorseBreakdown3rdPlaceGraph from "../../../assets/horseBreakdown3rdPlaceGraph.png";
@@ -243,7 +243,7 @@ function HorseRiddleBreakdownPage() {
                 />
                 <StyledBreakdownCardContent>
                   <Typography align="center">
-                    After removing horse 25 from the graph, horse 16 becomes the
+                    After removing horse 16 from the graph, horse 18 becomes the
                     only source node.
                   </Typography>
                 </StyledBreakdownCardContent>
@@ -287,6 +287,7 @@ function HorseRiddleBreakdownPage() {
         <RiddleNotComplete
           puzzleNumber={2}
           puzzleTitle={"The Horse Trifecta"}
+          blogLink={horseBlogLink}
         />
       )}
     </>

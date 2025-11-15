@@ -23,7 +23,7 @@ function BreakdownUnlockedNotification({ open, onClose, text}) {
   };
 
   return (
-    <Link href={pathname + "/breakdown/"}>
+    <Link href={pathname + "breakdown"}>
       <Snackbar
         open={open}
         autoHideDuration={5000}

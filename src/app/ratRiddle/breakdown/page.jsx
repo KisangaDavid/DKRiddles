@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar.jsx";
 import RiddleNotComplete from "../../_common/RiddleNotComplete.jsx";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
-import { SolvedPuzzlesContext, RAT_PUZZLE_P1, RAT_PUZZLE_P2 } from '../../_common/utils.js'
+import { SolvedPuzzlesContext, RAT_PUZZLE_P1, RAT_PUZZLE_P2, ratBlogLink } from '../../_common/utils.js'
 import FourDayGraphImg from '../../../assets/FourDayGraph.png';
 import ValidGraphImg from '../../../assets/ValidGraph.png';
 import InvalidGraphImg from '../../../assets/InvalidGraph.png';
@@ -135,7 +135,7 @@ function RatRiddleBreakdownPage() {
               To check if a submitted solution is guaranteed to catch the rat,
               simply remove the nodes corresponding to trapped houses from the
               graph. Check if there still exists a route from the start node to
-              the end node using a simple path finding algorithm such as DFS. If such
+              the end node using a simple path finding algorithm. If such
               a path no longer exists, the submitted solution is guaranteed to
               catch the rat! 
             </Typography>
@@ -263,13 +263,14 @@ function RatRiddleBreakdownPage() {
             :
               <Typography align="left">
                 Complete part 2 of <i>The Sneaky Rat</i> to unlock the 
-                rest of the puzzle breakdown!
+                rest of the puzzle breakdown! If you're truly stumped on part 
+                2, <a target="_blank" href={ratBlogLink}>check out this blog post!</a>
               </Typography>
             }     
           </Box>
         </Fade>
       :
-      <RiddleNotComplete puzzleNumber={1} puzzleTitle={"The Sneaky Rat"} />}
+      <RiddleNotComplete puzzleNumber={1} puzzleTitle={"The Sneaky Rat"} blogLink={ratBlogLink}/>}
     </>
   );
 }
