@@ -40,7 +40,7 @@ function AboutSitePage() {
             >
               check out my blog site!
             </a>{" "}
-            If you would prefer taking a look at the nitty-gritty details yourself, the full code is also {" "}
+            If you prefer diving into the nitty-gritty details yourself, the full code is also {" "}
             <a
               target="_blank"
               rel="noopener"
