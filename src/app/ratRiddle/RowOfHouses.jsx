@@ -45,7 +45,7 @@ function RowOfHouses({
       }
       <Grid
           container
-          columnSpacing="1vw"
+          columnSpacing="1em"
           columns={NUM_HOUSES}
           style={{ width: "100%", height: "auto"}}
       >
@@ -67,6 +67,7 @@ function RowOfHouses({
                     width: "100%"
                   }}
               />
+              {/* TODO: figure out a nicer solution here */}
               <Box
                   style={{overflow: "clip", height:"7vw"}}
               >
@@ -79,12 +80,12 @@ function RowOfHouses({
                   unmountOnExit
                   in={submittedTraps && path[curDay] == index}
                 >
-                  <Image src={rat} alt="rat" style={{objectFit: "contain", height: "100%", width: "100%"}} />
+                  <img src={rat.src} alt="rat" style={{objectFit: "contain", height: "100%", width: "100%"}} />
                 </Slide>
                 <Slide
                   direction="up"
                   mountOnEnter
-                  unnmountOnExit
+                  unmountOnExit
                   style = {{
                       transitionDelay:
                       submittedTraps && allCheckedHouses[curDay].has(index) ? 100 : 0

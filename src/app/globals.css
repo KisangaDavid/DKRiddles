@@ -12,6 +12,9 @@ body {
   background-attachment: fixed;
 }
 
+:root {
+    --pageWidthPercent: 98%;
+  }
 a {
   font-weight: 500;
   color: #646cff;

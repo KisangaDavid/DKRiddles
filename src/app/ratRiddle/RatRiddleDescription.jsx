@@ -7,7 +7,7 @@ function RatRiddleDescription() {
 
   return (
     <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
-      <Box sx={{ width: "75vw", position: "relative", mb: "1vh" }}>
+      <Box sx={{ width: 'var(--pageWidthPercent)', position: "relative", mb: "1vh" }}>
         <p>
           You open the first envelope. Inside you find a notecard, along with two rat
           traps. The notecard reads: <br />

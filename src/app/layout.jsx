@@ -3,7 +3,7 @@
 import "./globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { useState, useEffect } from "react";
- import CssBaseline from '@mui/material/CssBaseline';
+import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './_common/theme';
 import PageWrapper from "./_common/PageWrapper";

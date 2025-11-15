@@ -34,7 +34,7 @@ function PileStack({pileKernels, pileNum, selectedKernels, canBeSelectedFrom, ha
               flexDirection="column"
               justifyContent="center" 
               alignItems="center"
-              style={{display: "flex", overflow: "clip", height: "6vh"}}
+              style={{display: "flex", overflow: "clip" }}
             >  
               <Image
                 src={kernelImg}

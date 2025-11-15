@@ -28,7 +28,7 @@ function TopBar({text, isPuzzlePage, resetFunc}) {
           color: 'rgba(255, 255, 255, 1)',
           backgroundImage: 'none',
           my: '1.5vh',
-          width: "75vw" 
+          width: "98.5%" 
         }}
       >
         <Toolbar variant="dense"

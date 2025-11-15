@@ -12,7 +12,7 @@ function HorseGridElement({horseNumber, onClick, selected}) {
       flexDirection="column"
       justifyContent="center" 
       alignItems="center"
-      style={{overflow: "clip", height:"9vh"}}
+      style={{overflow: "clip"}}
      
     >  
       <Image

@@ -42,10 +42,10 @@ function RatRiddleBreakdownPage() {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "50vw",
+              width: '65%',
               position: "relative",
-              mb: "25vh",
               mt: "2vh",
+              pb: "10em",
               alignItems: "center",
             }}
           >
@@ -115,7 +115,7 @@ function RatRiddleBreakdownPage() {
               layer to an end node. 
             </Typography>
             <br />
-            <StyledBreakdownCard sx={{width: "65%"}}>
+            <StyledBreakdownCard sx={{width: "60%"}}>
               <CardMedia
                 component="img"
                 image={FourDayGraphImg.src}
@@ -140,7 +140,7 @@ function RatRiddleBreakdownPage() {
               catch the rat! 
             </Typography>
             <br />
-            <Stack direction="row" gap="0.5vw">
+            <Stack direction="row" gap="0.5em">
               <StyledBreakdownCard>
                 <CardMedia
                   component="img"
@@ -190,7 +190,7 @@ function RatRiddleBreakdownPage() {
                   houses in which the rat is guaranteed to run into a rattrap in the future.
                 </Typography>
                 <br />
-                <Stack direction="row" gap="0.5vw">
+                <Stack direction="row" gap="0.5em">
                   <StyledBreakdownCard>
                     <CardMedia
                       component="img"
@@ -266,7 +266,8 @@ function RatRiddleBreakdownPage() {
                 rest of the puzzle breakdown! If you're truly stumped on part 
                 2, <a target="_blank" href={ratBlogLink}>check out this blog post!</a>
               </Typography>
-            }     
+            } 
+
           </Box>
         </Fade>
       :

@@ -7,9 +7,9 @@ const PageWrapper = ({ children }) => (
 			flexDirection: "column",
 			alignItems: "center",
 			height: "100vh",
-			width: "100vw",
+			width: "90em",
+			maxWidth: "90vw",
 			pb: "2vh",
-			overflow: "auto",
       		textAlign: "center",
 		}}
 	>

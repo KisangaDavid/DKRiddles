@@ -28,7 +28,7 @@ function IntroductionPage() {
     <>
       <TopBar text="Introduction" isPuzzlePage={false} />
       <Fade in={true} timeout={theme.transitions.duration.standardTextFade}>
-        <Box sx={{width: "75vw", position: "relative", mb:"1vh"}}>
+        <Box sx={{width: 'var(--pageWidthPercent)', position: "relative", mb:"1vh"}}>
           <p>
             Mr. Riddle Man - a name shrouded in mystery. Renowed by many to be the world's
             foremost puzzle expert, he is often called upon to solve the world's toughest
@@ -45,11 +45,13 @@ function IntroductionPage() {
           sx={{
             display: 'flex',
             flexDirection: "row",
-            width: '75%',
+            width: 'var(--pageWidthPercent)',
             alignItems: "start",
             gap: 1,
             overflow: 'clip',
-            mb: "4vh"
+            mb: "4vh", 
+            marginLeft: "0 auto",
+            float: "left"
           }}
         >
           <Chip 
@@ -81,7 +83,7 @@ function IntroductionPage() {
           direction = "row" 
           sx={{
             display: "flex",
-            width: "70vw"
+            width: 'var(--pageWidthPercent)'
           }}
         >
           <Grid size={6}>
@@ -129,7 +131,7 @@ function IntroductionPage() {
         </Grid>
       }
       {activatedChip == 1 &&
-        <Grid container spacing={2} columns={12} direction = "row" sx={{width: "75vw"}}>
+        <Grid container spacing={2} columns={12} direction = "row" sx={{width: 'var(--pageWidthPercent)'}}>
           <Grid size={{ sm: 6, lg: 3 }}>
             <PuzzleCard 
               puzzleImage = {ratRiddleThumbnail} 

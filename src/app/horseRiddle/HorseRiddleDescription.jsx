@@ -11,7 +11,7 @@ function HorseRiddleDescription() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          width: "75vw",
+          width: 'var(--pageWidthPercent)',
           position: "relative",
           mb: "2vh",
         }}

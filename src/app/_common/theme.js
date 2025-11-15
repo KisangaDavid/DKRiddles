@@ -4,6 +4,7 @@ import { createTheme } from '@mui/material/styles';
 
 const typography = {
   fontFamily: 'Segoe UI, Avenir, Inter, sans-serif',
+  fontSize: 15,
   h1: {
     fontWeight: 600,
     lineHeight: 1.2,
@@ -25,7 +26,8 @@ const typography = {
     fontWeight: 600,
   },
   h6: {
-    fontWeight: 600,
+    fontWeight: 400,
+    lineHeight: 1.8,
   },
   subtitle2: {
     fontWeight: 500,

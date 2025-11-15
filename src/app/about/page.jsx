@@ -2,6 +2,7 @@
 
 import { useTheme } from '@mui/material/styles';
 
+import { blogLink, githubLink } from '../_common/utils.js';
 import Fade from '@mui/material/Fade';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import List from '@mui/material/List';
@@ -20,25 +21,32 @@ function AboutSitePage() {
     <>
       <TopBar text="About" isPuzzlePage={false} resetFunc={null} />
       <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>      
-        <Box sx={{ width: "70vw", position: "relative", mb: "8vh", mt: "2vh" }}>
+        <Box sx={{ width: 'var(--pageWidthPercent)', position: "relative", mb: "8vh", mt: "2vh" }}>
           <Typography align="center">
             Welcome to DKRiddles, an interactive puzzle website. Solve each
             self-contained puzzle and uncover the secrets of the mysterious Mr. Riddle
             Man!
           </Typography>
-          <br /> <br />
+          <br /> 
           <Typography align="left">
             After completing a puzzle, check out the corresponding <i>Puzzle Breakdown</i> page 
             in the sidebar. The breakdown page describes the logic behind each puzzle, 
             its implementation, and any other interesting tidbits I came across while 
-            creating the puzzle. If you're looking for more technical details on how the site was made,
-            such as how WebAssembly is compiled and integrated without the use of Emscripten, {" "}
+            creating the puzzle. If you're truly stumped on a puzzle, or are looking for more information on how the page was made, {" "}
             <a
               target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/KisangaDavid/DKRiddles"
+              rel="noopener"
+              href={blogLink}
             >
-              check out the code on Github!
+              check out my blog site!
+            </a>{" "}
+            If you would prefer taking a look at the nitty-gritty details yourself, the full code is also {" "}
+            <a
+              target="_blank"
+              rel="noopener"
+              href={githubLink}
+            >
+              available on Github!
             </a>
           </Typography>
         </Box>

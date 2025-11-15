@@ -6,7 +6,7 @@ const PreviousRaces = ({ finishedRaces, MAX_NUM_RACES, RACE_LENGTH }) => (
     sx={{
       display: "flex",
       flexDirection: "column",
-      width: "25vw",
+      width: "33.33%",
       position: "relative",
       mb: "1vh",
     }}

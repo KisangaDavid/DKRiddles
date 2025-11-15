@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar.jsx";
 import RiddleNotComplete from "../../_common/RiddleNotComplete.jsx";
-import { SolvedPuzzlesContext, ROOSTER_PUZZLE, roosterBlogLink } from "../../_common/utils.js";
+import { SolvedPuzzlesContext, ROOSTER_PUZZLE } from "../../_common/utils.js";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
 
 function AboutRoosterRiddle() {
@@ -36,9 +36,9 @@ function AboutRoosterRiddle() {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "50vw",
+              width: "65%",
               position: "relative",
-              mb: "25vh",
+              pb: "10em",
               mt: "2vh",
               alignItems: "center",
             }}
@@ -226,7 +226,6 @@ function AboutRoosterRiddle() {
         <RiddleNotComplete
           puzzleNumber={3}
           puzzleTitle={"The Undefeated Rooster"}
-          blogLink={roosterBlogLink}
         />
       )}
     </>

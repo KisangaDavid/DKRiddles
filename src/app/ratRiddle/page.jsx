@@ -113,7 +113,7 @@ function RatRiddlePage() {
           timeout={theme.transitions.duration.longTextFade}
           style={{ transitionDelay: theme.delays.duration.longDelay }}
       >
-        <Box sx={{ position: "relative", width: "75vw", height: "50vh" }}>
+        <Box sx={{ position: "relative", width: 'var(--pageWidthPercent)'}}>
           <RowOfHouses
               NUM_HOUSES={NUM_HOUSES}
               submittedTraps={submittedTraps}
@@ -133,6 +133,7 @@ function RatRiddlePage() {
                   justifyContent="center"
                   divider={<Divider orientation="vertical" flexItem />}
                   spacing={2}
+                  sx={{mb: "1em"}}
               >
                 <Button
                 variant="contained" disabled={curCheckedHouses.size !== 2 || curDay > 5} 

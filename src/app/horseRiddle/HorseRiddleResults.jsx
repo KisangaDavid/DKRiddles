@@ -31,7 +31,7 @@ function HorseRiddleResults({numRaces, setConfetti}) {
   }, [numRaces]);
 
   return (
-    <Box sx={{display: "flex", width: "75vw", alignItems: "center", flexGrow: 1}}>
+    <Box sx={{display: "flex", width: 'var(--pageWidthPercent)', alignItems: "center", mt: "10em"}}>
       {numRaces == MIN_NUM_RACES ?
         <>
           <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
@@ -66,7 +66,6 @@ function HorseRiddleResults({numRaces, setConfetti}) {
           spacing={0}
           sx={{
             display: "flex",
-            flexGrow: 1,
             alignItems: "center",
             flexDirection: {
               sm: "column",
@@ -79,9 +78,9 @@ function HorseRiddleResults({numRaces, setConfetti}) {
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                 border: `1px solid hsla(0, 0%, 23%, 0.60)`,
-                 borderRadius: theme.shape.borderRadius,
-                 overflow:"hidden",
+                border: `1px solid hsla(0, 0%, 23%, 0.60)`,
+                borderRadius: theme.shape.borderRadius,
+                overflow:"hidden",
                 mb:"1vh",
                 mx: "1vw",
                 width: "100%",
@@ -92,7 +91,7 @@ function HorseRiddleResults({numRaces, setConfetti}) {
                 alt="guard"
                 style={{
                   objectFit: 'cover',
-                  maxHeight: "55vh",
+                  maxHeight: "55vh", 
                   width: "100%",
                   borderRadius: theme.shape.borderRadius,
                 }}
@@ -103,7 +102,6 @@ function HorseRiddleResults({numRaces, setConfetti}) {
           <Box 
             sx={{
               display: "flex",
-              flexGrow: 1,
               width: "100%",
               mx: "1vw"
             }}

@@ -117,11 +117,11 @@ function RoosterRiddlePage() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          flex: 1,
+          // flex: 1,
           justifyContent: "center",
-          width: "75vw",
+          width: 'var(--pageWidthPercent)',
           position: "relative",
-          mb: "1vh",
+          // mb: "20em",
         }}
       > 
         {showResultScreen 
@@ -135,9 +135,9 @@ function RoosterRiddlePage() {
                 spacing={1}
                 sx={{
                   display: "flex",
-                  height: "35vh", 
+                  height: "20em", 
                   width: "85%",
-                  mb: "5vh"
+                  mb: "4em"
                 }}
               >
                 {piles.map((pile, idx) => (
@@ -154,7 +154,7 @@ function RoosterRiddlePage() {
                 ))}
               </Stack>
               <RoosterMoveDescription roosterMove={roosterMove}/>
-              <Button variant="contained" disabled={selectedKernels.size < 1} onClick={submitMove}>
+              <Button sx={{mb: "1em"}} variant="contained" disabled={selectedKernels.size < 1} onClick={submitMove}>
                 Submit Move
               </Button>
             </> }

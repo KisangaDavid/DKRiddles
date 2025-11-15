@@ -42,9 +42,9 @@ function HorseRiddleBreakdownPage() {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "50vw",
+              width: '65%',
               position: "relative",
-              mb: "25vh",
+              pb: "10em",
               mt: "2vh",
               alignItems: "center",
             }}
@@ -199,7 +199,7 @@ function HorseRiddleBreakdownPage() {
               repeated any number of times. 
             </Typography>
             <br />
-            <Stack direction="row" gap="0.5vw">
+            <Stack direction="row" gap="0.3em">
               <StyledBreakdownCard  sx={{width: "100%"}}>
                 <CardMedia
                   component="img"

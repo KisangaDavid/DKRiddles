@@ -160,7 +160,7 @@ function HorseRiddlePage() {
               display: "flex",
               justifyContent: "space-between",
               flexDirection: "row",
-              width: "75vw",
+              width: 'var(--pageWidthPercent)',
               position: "relative",
               mb: "1vh"
             }}
@@ -169,7 +169,7 @@ function HorseRiddlePage() {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                width: "25vw",
+                width: "33.33%",
                 position: "relative",
                 mb: "1vh",
               }}
@@ -202,7 +202,7 @@ function HorseRiddlePage() {
                 display: "flex",
                 alignItems: "center",
                 flexDirection: "column",
-                width: "25vw",
+                width: "33.33%",
                 position: "relative",
                 mb: "2vh",
                 minHeight: "15vh",
@@ -213,8 +213,8 @@ function HorseRiddlePage() {
                   display: "flex",
                   alignItems: "center",
                   flexDirection: "column",
-                  width: "25vw",
-                  minHeight: "15vh",
+                  width: "100%",
+                  minHeight: "8em", // TODO: come back to this!
                 }}
               >
                 Current Race:
@@ -249,7 +249,7 @@ function HorseRiddlePage() {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  width: "22vw",
+                  width: "90%",
                   justifyContent: "center",
                   alignItems: "center",
                   position: "absolute",
