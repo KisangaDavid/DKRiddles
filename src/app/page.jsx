@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import Image from 'next/image.js';
 import Chip from '@mui/material/Chip';
 import ratRiddleThumbnail from '../assets/ratRiddleThumbnail.png'
-import horseRiddleThumbnail from '../assets/horseClipArt.png'
+import horseRiddleThumbnail from '../assets/horseTrifecta.png'
 import roosterRiddleThumbnail from '../assets/roosterRiddleThumbnail.png'
 import mysteryLetter from '../assets/mysteryLetter.jpg'
 import PuzzleCard from './_common/PuzzleCard.jsx'
