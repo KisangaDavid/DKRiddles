@@ -12,7 +12,6 @@ import { useTheme } from "@mui/material/styles";
 
 function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
   const theme = useTheme();
-  const inputRef = useRef(null);
   const [numBonusHouses, setNumBonusHouses] = useState(null);
   const [answerToBonus, setAnswerToBonus] = useState(-1);
   const [bonusSubmitted, setBonusSubmitted] = useState(false);
@@ -21,9 +20,6 @@ function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
   const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.select();
-    }
     if (numBonusHouses === null) {
       setNumBonusHouses(Math.floor(Math.random() * 10 + 20));
     }
@@ -125,7 +121,6 @@ function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
                   autoComplete="off"
                   label="Number of days"
                   onChange={handleBonusAnwerChange}
-                  slotProps={{ htmlInput: { ref: inputRef } }}
                 />
                 <Box
                   style={{
