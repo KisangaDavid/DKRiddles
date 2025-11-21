@@ -6,6 +6,7 @@ import { useTheme } from "@mui/material/styles";
 import { convertIterableToInt, convertIntToArray, MAX_32_BIT_NUM, WasmContext } from "../_common/utils.js";
 
 import Grid from "@mui/material/Grid";
+import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import Fade from "@mui/material/Fade";
 import HorseRiddleResults from "./HorseRiddleResults.jsx";
@@ -165,125 +166,135 @@ function HorseRiddlePage() {
               mb: "1vh"
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "33.33%",
-                position: "relative",
-                mb: "1vh",
-              }}
-            >
-              Select 5 horses to race!
-              <Grid
-                container
-                columnSpacing={2}
-                rowSpacing={1}
-                columns={5}
-                direction="row"
-                sx={{
-                  mt: "1vh",
-                  display: "flex",
-                  width: "100%",
-                }}
-              >
-                {[...Array(NUM_HORSES)].map((_, idx) => (
-                  <HorseGridElement
-                    key={idx}
-                    horseNumber={idx + 1}
-                    selected={currentRace.includes(idx)}
-                    onClick={() => addRemoveHorseToRace(idx)}
-                  />
-                ))}
-              </Grid>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                flexDirection: "column",
-                width: "33.33%",
-                position: "relative",
-                mb: "2vh",
-                minHeight: "15vh",
-              }}
-            >
+            <Stack direction={{sm: "column", md: "row"}}>
               <Box
                 sx={{
                   display: "flex",
-                  alignItems: "center",
                   flexDirection: "column",
                   width: "100%",
-                  minHeight: "8em", // TODO: come back to this!
+                  position: "relative",
+                  mb: "1vh",
                 }}
               >
-                Current Race:
+                Select 5 horses to race!
                 <Grid
                   container
-                  spacing={1}
+                  columnSpacing={2}
+                  rowSpacing={1}
                   columns={5}
                   direction="row"
                   sx={{
-                    display: "flex",
-                    width: "80%",
                     mt: "1vh",
+                    display: "flex",
+                    width: "100%",
                   }}
                 >
-                  {currentRace.map((horseIdx, idx) => (
+                  {[...Array(NUM_HORSES)].map((_, idx) => (
                     <HorseGridElement
                       key={idx}
-                      horseNumber={horseIdx + 1}
-                      onClick={() => removeHorseFromRace(horseIdx)}
+                      horseNumber={idx + 1}
+                      selected={currentRace.includes(idx)}
+                      onClick={() => addRemoveHorseToRace(idx)}
                     />
                   ))}
                 </Grid>
               </Box>
-              <Button
-                variant="contained"
-                onClick={() => submitRace()}
-                disabled={currentRace.length != 5 || (finishedRaces.length >= MAX_NUM_RACES * RACE_LENGTH)}
-              >
-                Race Horses!
-              </Button>
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "column",
-                  width: "90%",
-                  justifyContent: "center",
                   alignItems: "center",
-                  position: "absolute",
-                  bottom: "0",
+                  flexDirection: "column",
+                  flexGrow: 1,
+                  width: "100%",
+                  position: "relative",
+                  mb: "2vh",
+                  minHeight: {
+                    sm: "35em",
+                    md: "0em"
+                  }
                 }}
               >
                 <Box
                   sx={{
+                    mt: {
+                      sm: "2em",
+                      md: "0em"
+                    },
                     display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
                     width: "100%",
-                    justifyContent: "center",
-                    position: "relative",
-                    mb: "2vh",
+                    minHeight: "8.5em", // TODO: come back to this!
                   }}
                 >
-                  <p>
-                    {trifectaErrorMessage.length === 0? wrongReason : trifectaErrorMessage}
-                  </p>
+                  Current Race:
+                  <Grid
+                    container
+                    spacing={1}
+                    columns={5}
+                    direction="row"
+                    sx={{
+                      display: "flex",
+                      width: "80%",
+                      mt: "1vh",
+                    }}
+                  >
+                    {currentRace.map((horseIdx, idx) => (
+                      <HorseGridElement
+                        key={idx}
+                        horseNumber={horseIdx + 1}
+                        onClick={() => removeHorseFromRace(horseIdx)}
+                      />
+                    ))}
+                  </Grid>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "90%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "absolute",
+                    bottom: "0",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "center",
+                      position: "relative",
+                      mb: "2vh",
+                    }}
+                  >
+                    <p>
+                      {trifectaErrorMessage.length === 0? wrongReason : trifectaErrorMessage}
+                    </p>
+                  </Box>
+                  <TrifectaStack handleTrifectaChange={handleTrifectaChange} />
+                  <Button
+                    variant="contained"
+                    disabled={!trifectaBetFilled || trifectaErrorMessage !== ""}
+                    onClick={checkAnswer}
+                  >
+                    Place Trifecta Bet
+                  </Button>
                 </Box>
-                <TrifectaStack handleTrifectaChange={handleTrifectaChange} />
+              </Box>
                 <Button
                   variant="contained"
-                  disabled={!trifectaBetFilled || trifectaErrorMessage !== ""}
-                  onClick={checkAnswer}
+                  onClick={() => submitRace()}
+                  disabled={currentRace.length != 5 || (finishedRaces.length >= MAX_NUM_RACES * RACE_LENGTH)}
                 >
-                  Place Trifecta Bet
+                  Race Horses!
                 </Button>
               </Box>
-            </Box>
-            <PreviousRaces
-              finishedRaces={finishedRaces}
-              MAX_NUM_RACES={MAX_NUM_RACES}
-              RACE_LENGTH={RACE_LENGTH}
-            />
+              <PreviousRaces
+                finishedRaces={finishedRaces}
+                MAX_NUM_RACES={MAX_NUM_RACES}
+                RACE_LENGTH={RACE_LENGTH}
+              />
+            </Stack>
           </Box>
         </Fade>
       )}

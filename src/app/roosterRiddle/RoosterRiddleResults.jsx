@@ -23,7 +23,7 @@ function RoosterRiddleResults({ gameIsWon }) {
   }, [gameIsWon]);
 
   return (
-    <Box>
+    <Box sx={{justifyContent: "center"}}>
       {gameIsWon ? (
         <>
           <Fade

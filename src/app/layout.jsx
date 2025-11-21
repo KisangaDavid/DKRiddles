@@ -29,7 +29,6 @@ export default function RootLayout({ children }) {
     const newSolvedPuzzles = new Set();
     ALL_PUZZLES.forEach((element) => {
       if(localStorage.getItem(element) != null) {
-        console.log("Element added from local storage: " + element);
         newSolvedPuzzles.add(element)
       }
     });

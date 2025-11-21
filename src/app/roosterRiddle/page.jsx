@@ -117,11 +117,10 @@ function RoosterRiddlePage() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          // flex: 1,
+          flexGrow: 1,
           justifyContent: "center",
           width: 'var(--pageWidthPercent)',
           position: "relative",
-          // mb: "20em",
         }}
       > 
         {showResultScreen 
@@ -137,11 +136,12 @@ function RoosterRiddlePage() {
                   display: "flex",
                   height: "20em", 
                   width: "85%",
-                  mb: "4em"
+                  mb: "4em",
+                  flexWrap: 'wrap'
                 }}
               >
                 {piles.map((pile, idx) => (
-                  <Box key={idx} sx = {{display: "flex", position: "relative", overflow: "clip", flex: "1"}}>
+                  <Box key={idx} sx = {{display: "flex", position: "relative", width: "500px", overflow: "clip", flex: "1"}}>
                     <PileStack 
                       pileNum={idx} 
                       pileKernels = {pile} 
