@@ -7,7 +7,7 @@ function RoosterMoveDesription({ roosterMove }) {
 
   return (
     <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
-      <Box sx={{width: "75vw", position: "relative", mb:"3vh"}}>
+      <Box sx={{width: "100%", position: "relative", mb:"2vh"}}>
         {roosterMove[0] == null 
           ? 
             <p>

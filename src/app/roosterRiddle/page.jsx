@@ -130,18 +130,18 @@ function RoosterRiddlePage() {
             <>
               <Stack
                 direction="row"
-                divider={<Divider orientation="vertical" flexItem />}
-                spacing={1}
                 sx={{
                   display: "flex",
-                  height: "20em", 
-                  width: "85%",
-                  mb: "4em",
+                  justifyContent: "center",
+                  width: "90%",
+                  mb: "2em",
                   flexWrap: 'wrap'
                 }}
               >
                 {piles.map((pile, idx) => (
-                  <Box key={idx} sx = {{display: "flex", position: "relative", width: "500px", overflow: "clip", flex: "1"}}>
+                  <Box key={idx} sx = {{display: "flex", position: "relative", width: {sm: "49%", lg: "25%"}}}>
+                    {/* A diabolical way to do this, change later */}
+                    <Divider orientation="vertical"/>
                     <PileStack 
                       pileNum={idx} 
                       pileKernels = {pile} 
@@ -150,6 +150,7 @@ function RoosterRiddlePage() {
                       selectedKernels={selectedKernels}
                       setSelectedKernels={setSelectedKernels}
                     />
+                    <Divider orientation="vertical"/>
                   </Box> 
                 ))}
               </Stack>
