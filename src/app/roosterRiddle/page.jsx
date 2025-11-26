@@ -133,7 +133,7 @@ function RoosterRiddlePage() {
                 sx={{
                   display: "flex",
                   justifyContent: "center",
-                  width: "90%",
+                  width: "85%",
                   mb: "2em",
                   flexWrap: 'wrap'
                 }}

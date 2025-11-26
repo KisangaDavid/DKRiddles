@@ -6,7 +6,7 @@ function RoosterRiddleDescription() {
   const theme = useTheme();
   return (
     <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
-      <Box sx={{ width: 'var(--pageWidthPercent)', position: "relative", mb: "3vh" }}>
+      <Box sx={{ width: 'var(--pageWidthPercent)', position: "relative", mb: "1vh" }}>
         <p>
           You tear open the third envelope. Inside you find a note, which reads:
           <br />

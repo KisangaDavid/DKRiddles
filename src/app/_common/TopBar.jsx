@@ -56,7 +56,7 @@ function TopBar({text, isPuzzlePage, resetFunc}) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, position: "absolute", left: 0, right: 0 }}>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, left: 0, right: 0 }}>
             {text}
           </Typography>
           {isPuzzlePage && 

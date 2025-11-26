@@ -36,7 +36,7 @@ function AboutRoosterRiddle() {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "65%",
+              width: {lg: "65%", sm: "var(--pageWidthPercent)"},
               position: "relative",
               pb: "10em",
               mt: "2vh",

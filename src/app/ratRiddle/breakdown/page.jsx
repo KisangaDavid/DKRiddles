@@ -42,7 +42,7 @@ function RatRiddleBreakdownPage() {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: '65%',
+              width: {lg: "65%", sm: "var(--pageWidthPercent)"},
               position: "relative",
               mt: "2vh",
               pb: "10em",

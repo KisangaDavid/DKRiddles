@@ -51,7 +51,6 @@ function IntroductionPage() {
             overflow: 'clip',
             mb: "4vh", 
             marginLeft: "0 auto",
-            float: "left"
           }}
         >
           <Chip 
@@ -86,7 +85,7 @@ function IntroductionPage() {
             width: 'var(--pageWidthPercent)'
           }}
         >
-          <Grid size={6}>
+          <Grid size={{ sm: 12, md: 6}}>
             <Fade in={true} timeout={theme.transitions.duration.standardImageFade}>
               <Box>
               <Image 
@@ -94,7 +93,7 @@ function IntroductionPage() {
                 alt="letter"
                 style={{
                   objectFit: "contain", 
-                  height: "100%", 
+                  height: "auto", 
                   width: "100%", 
                   borderRadius: theme.shape.borderRadius,
                   border: `1px solid hsla(0, 0%, 23%, 0.60)`,
@@ -103,7 +102,7 @@ function IntroductionPage() {
               </Box>
             </Fade>
           </Grid>
-          <Grid size={{ sm: 12, lg: 6}} style={{display: "flex", justifyContent: 'center', alignItems: "center"}}>   
+          <Grid size={{ sm: 12, md: 6}} style={{display: "flex", justifyContent: 'center', alignItems: "center"}}>   
             <Fade 
               in={true}  
               style = {{transitionDelay: theme.delays.duration.longDelay}} 
