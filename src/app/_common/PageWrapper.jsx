@@ -6,10 +6,10 @@ const PageWrapper = ({ children }) => (
 			display: "flex",
 			flexDirection: "column",
 			alignItems: "center",
-			height: "100vh",
 			width: "90em",
 			maxWidth: "90vw",
 			pb: "2vh",
+			mb: {xs: "10em", sm: "0em"},
       		textAlign: "center",
 		}}
 	>

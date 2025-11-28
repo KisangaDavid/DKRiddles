@@ -20,9 +20,9 @@ function PileStack({pileKernels, pileNum, selectedKernels, canBeSelectedFrom, ha
     <Stack
       direction="column"
       spacing={1}
-      sx={{mb: "1em"}}
+      sx={{mb: "1em",}}
     >
-      <p>There {pileKernels.length == 1 ? "is" : "are"} {pileKernels.length} kernel{pileKernels.length == 1 ? "" : "s"} in pile {pileNum + 1}</p>
+      <p style={{padding: "5px"}}>There {pileKernels.length == 1 ? "is" : "are"} {pileKernels.length} kernel{pileKernels.length == 1 ? "" : "s"} in pile {pileNum + 1}</p>
       <Grid
         container
         rowSpacing={1} columnSpacing={0}

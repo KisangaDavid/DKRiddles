@@ -139,7 +139,7 @@ function RoosterRiddlePage() {
                 }}
               >
                 {piles.map((pile, idx) => (
-                  <Box key={idx} sx = {{display: "flex", position: "relative", width: {sm: "49%", lg: "25%"}}}>
+                  <Box key={idx} sx = {{display: "flex", position: "relative", width: {xs: "50%", md: "25%"}}}>
                     {/* A diabolical way to do this, change later */}
                     <Divider orientation="vertical"/>
                     <PileStack 

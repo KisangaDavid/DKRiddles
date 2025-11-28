@@ -12,6 +12,16 @@ body {
   background-attachment: fixed;
 }
 
+html {
+  font-size: 17;
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 15;
+  }
+}
+
 :root {
     --pageWidthPercent: 98%;
   }

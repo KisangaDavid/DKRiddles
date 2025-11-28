@@ -207,9 +207,12 @@ function HorseRiddlePage() {
                   flexGrow: 1,
                   width: "100%",
                   position: "relative",
-                  mb: "2vh",
+                  mb: {
+                    xs: "3em", 
+                    md: "1em"
+                  },
                   minHeight: {
-                    sm: "35em",
+                    xs: "30em",
                     md: "0em"
                   }
                 }}

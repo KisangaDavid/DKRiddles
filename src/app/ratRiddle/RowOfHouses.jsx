@@ -45,7 +45,7 @@ function RowOfHouses({
       }
       <Grid
           container
-          columnSpacing="1em"
+          columnSpacing={{xs: "0.25em", md: "1em"}}
           columns={NUM_HOUSES}
           style={{ width: "100%", height: "auto"}}
       >
@@ -69,7 +69,7 @@ function RowOfHouses({
               />
               {/* TODO: figure out a nicer solution here */}
               <Box
-                  style={{overflow: "clip", height:"7vw"}}
+                  sx={{overflow: "clip", height: {xs: "12vw", sm: "7vw"}}}
               >
                 <Zoom in={curCheckedHouses.has(index)} mountOnEnter unmountOnExit>
                   <Image src={ratTrap} alt="trap" style={{objectFit: "contain", height: "85%", width: "85%"}}/>
