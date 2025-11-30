@@ -18,7 +18,7 @@ function RiddleNotComplete({ puzzleNumber, puzzleTitle, blogLink }) {
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: "50vw",
+          width: {xs: "var(--pageWidthPercent)", sm: "65%"},
           position: "relative",
           mb: "8vh",
           mt: "2vh",

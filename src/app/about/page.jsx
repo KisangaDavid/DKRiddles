@@ -74,15 +74,6 @@ function AboutSitePage() {
             </ListItem>
             <ListItem>
               <ListItemText  
-                  primary={
-                    <Typography align="center" variant="h6">
-                      Mobile Friendly Layouts
-                    </Typography>
-                  } 
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText  
                 primary={
                   <Typography align="center" variant="h6">
                     Typescript Rewrite
@@ -92,14 +83,26 @@ function AboutSitePage() {
             </ListItem>
             <ListItem>
               <ListItemText  
+                  primary={
+                    <Typography align="center" variant="h6">
+                      Mobile Friendly Layouts
+                    </Typography>
+                  } 
+              />
+                <ListItemIcon sx={{display: "flex", position: "absolute", right: "-45px"}}>
+                  <CheckRoundedIcon fontSize = "large" sx={{color: theme.palette.success.main }} />
+                </ListItemIcon>
+            </ListItem>
+            <ListItem>
+              <ListItemText  
                 primary={
                   <Typography align="center" variant="h6">
                     Migrate to Nextjs 
                   </Typography>
                 } 
               />
-              <ListItemIcon sx={{display: "flex", position: "absolute", right: "-10px"}}>
-                <CheckRoundedIcon fontSize = "large" sx={{ ml: "10px", color: theme.palette.success.main }} />
+              <ListItemIcon sx={{display: "flex", position: "absolute", right: "-15px"}}>
+                <CheckRoundedIcon fontSize = "large" sx={{color: theme.palette.success.main }} />
               </ListItemIcon>
             </ListItem>
           </List> 

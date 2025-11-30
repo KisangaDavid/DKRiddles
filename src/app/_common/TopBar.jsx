@@ -7,6 +7,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
@@ -40,7 +41,7 @@ function TopBar({text, isPuzzlePage, resetFunc}) {
             borderRadius: `calc(${theme.shape.borderRadius}px + 8px)`,
             backdropFilter: 'blur(24px)',
             border: '1px solid',
-            borderColor: (theme.vars || theme).palette.divider,
+            borderColor: theme.palette.divider,
             backgroundColor: `rgba(5, 7, 10, 0.45)`,
             boxShadow: 'hsla(220, 30%, 5%, 0.7) 0px 4px 16px 0px, hsla(220, 25%, 10%, 0.8) 0px 8px 16px -5px',
             padding: '8px 12px',
@@ -59,15 +60,16 @@ function TopBar({text, isPuzzlePage, resetFunc}) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, left: 0, right: 0 }}>
             {text}
           </Typography>
-          {isPuzzlePage && 
           <IconButton
             size="large"
             edge="end"
             color="inherit"
             aria-label="menu"
-            sx={{zIndex: 1000}}
+             sx={{zIndex: 1000, visibility: isPuzzlePage ? "visible" : "hidden"}}
             onClick={() => resetFunc()}
-          ><RefreshIcon /></IconButton>}
+          >
+            <RefreshIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer 

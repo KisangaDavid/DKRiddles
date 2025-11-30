@@ -1,10 +1,9 @@
 'use client'
 
 import { useState, useCallback } from 'react';
-import { useWindowSize } from 'react-use';
 import { useTheme } from '@mui/material/styles';
 import { useContext } from "react";
-import { WasmContext } from "../_common/utils.js";
+import { WasmContext, useConfettiSize } from "../_common/utils.js";
 
 import RowOfHouses from './RowOfHouses.jsx';
 import SolvedStack from './SolvedStack.jsx';
@@ -29,7 +28,8 @@ function RatRiddlePage() {
   const [totalDays, setTotalDays] = useState(0);
   const [allCheckedHouses, setAllCheckedHouses] = useState([]);
   const [curCheckedHouses, setCurCheckedHouses] = useState(new Set());
-  const {width, height} = useWindowSize();
+  const [confettiWidth, confettiHeight] = useConfettiSize();
+
   
   const theme = useTheme();
   const {wasmExports, _} = useContext(WasmContext);
@@ -98,6 +98,8 @@ function RatRiddlePage() {
     setCurDay(value - 1);
   }
 
+
+
   const convertToAbsPos = (checkedPositions) => {
     return checkedPositions.flatMap((set, idx) => {
       return [...set].map(elem => elem + idx * NUM_HOUSES);
@@ -107,7 +109,7 @@ function RatRiddlePage() {
   return (
     <>
       <TopBar text="Envelope #1: The Sneaky Rat" isPuzzlePage={true} resetFunc={resetPuzzle}/>
-      {confetti && <Confetti width={width} height={height} />}
+      {confetti && <Confetti width={confettiWidth} height={confettiHeight} />}
       <RatRiddleDescription />
       <Fade in={true} mountOnEnter unmountOnExit
           timeout={theme.transitions.duration.longTextFade}

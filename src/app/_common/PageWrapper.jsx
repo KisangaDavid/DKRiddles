@@ -4,12 +4,12 @@ const PageWrapper = ({ children }) => (
 	<Box
 		sx={{
 			display: "flex",
+			minHeight: "100vh",
 			flexDirection: "column",
 			alignItems: "center",
 			width: "90em",
 			maxWidth: "90vw",
-			pb: "2vh",
-			mb: {xs: "10em", sm: "0em"},
+			pb: {xs: "10em", sm: "2em"},
       		textAlign: "center",
 		}}
 	>

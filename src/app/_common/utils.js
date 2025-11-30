@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext } from 'react';
+import { createContext, useState, useLayoutEffect } from 'react';
 
 export const SOLVED = "S"
 export const MAX_32_BIT_NUM = 0xffffffff;
@@ -35,6 +35,29 @@ export function convertIntToArray(intRepresentation, numBitsPerElement, length) 
     }
     return array
 }
+
+export function getConfettiHeight() {
+    const rootElement = document.getElementById('root');
+    return rootElement ? rootElement.clientHeight : 0;
+}
+
+export function getConfettiWidth() {
+    return document.body ? document.body.clientWidth : 0;
+}
+
+export function useConfettiSize() {
+  const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([getConfettiWidth(), getConfettiHeight()]);
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+  return size;
+}
+
 
 export const SolvedPuzzlesContext = createContext(new Set());
 

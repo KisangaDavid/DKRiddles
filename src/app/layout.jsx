@@ -45,6 +45,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <title>The Riddle Man</title>
+        <meta name="theme-color" content="#090f15" />
       </head>
       <body>
         <AppRouterCacheProvider>

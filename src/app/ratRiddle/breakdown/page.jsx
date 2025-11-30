@@ -42,7 +42,7 @@ function RatRiddleBreakdownPage() {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: {lg: "65%", sm: "var(--pageWidthPercent)"},
+              width: {lg: "65%", xs: "var(--pageWidthPercent)"},
               position: "relative",
               mt: "2vh",
               pb: "10em",
@@ -115,7 +115,7 @@ function RatRiddleBreakdownPage() {
               layer to an end node. 
             </Typography>
             <br />
-            <StyledBreakdownCard sx={{width: "60%"}}>
+            <StyledBreakdownCard sx={{width: {xs: "75%", sm: "50%"}}}>
               <CardMedia
                 component="img"
                 image={FourDayGraphImg.src}
@@ -236,7 +236,7 @@ function RatRiddleBreakdownPage() {
                   <sub>1/2</sub> is even.
                 </Typography>
                 <br />
-                <StyledBreakdownCard sx={{width: "65%"}}>
+                <StyledBreakdownCard sx={{width: {xs: "var(--pageWidthPercent)", sm: "50%"}}}>
                   <CardMedia
                     component="img"
                     image={RatRiddleBreakdown12HousesImg.src}

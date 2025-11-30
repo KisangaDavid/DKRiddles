@@ -42,9 +42,9 @@ function HorseRiddleBreakdownPage() {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: {lg: "65%", sm: "var(--pageWidthPercent)"},
+              width: {lg: "65%", xs: "var(--pageWidthPercent)"},
               position: "relative",
-              pb: "10em",
+              pb: {xs: "0em", sm: "10em"},
               mt: "2vh",
               alignItems: "center",
             }}
@@ -142,7 +142,7 @@ function HorseRiddleBreakdownPage() {
               the fastest 3 horses in just 7 races, the optimal solution! 
             </Typography>
             <br />
-            <StyledBreakdownCard sx={{width: "75%"}}>
+            <StyledBreakdownCard sx={{width: {xs: "95%", sm: "75%"}}}>
               <CardMedia
                 component="img"
                 image={RacesBreakdown.src}
@@ -174,7 +174,7 @@ function HorseRiddleBreakdownPage() {
               the graph.
             </Typography>
             <br />
-            <StyledBreakdownCard sx={{width: "50%"}}>
+            <StyledBreakdownCard sx={{width: {xs: "75%", sm: "50%"}}}>
               <CardMedia
                 component="img"
                 image={HorseBreakdownCompleteGraph.src}
@@ -258,7 +258,7 @@ function HorseRiddleBreakdownPage() {
               horses is ambiguous. An exmaple is shown below:
             </Typography>
             <br />
-            <StyledBreakdownCard sx={{width: "50%"}}>
+            <StyledBreakdownCard sx={{width: {xs: "75%", sm: "50%"}}}>
               <CardMedia
                 component="img"
                 image={HorseBreakdown5thPlaceGraph.src}

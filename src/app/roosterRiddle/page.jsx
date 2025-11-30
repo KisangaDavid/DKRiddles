@@ -1,10 +1,14 @@
 'use client'
 
 import { useState, useEffect, useContext } from 'react';
-import { useWindowSize } from 'react-use';
 import { useTheme } from '@mui/material/styles';
-import { convertIterableToInt, convertIntToArray, MAX_32_BIT_NUM, WasmContext } from "../_common/utils.js";
-
+import { 
+  convertIterableToInt, 
+  convertIntToArray,
+  MAX_32_BIT_NUM, 
+  useConfettiSize, 
+  WasmContext 
+} from "../_common/utils.js";
 import RoosterRiddleDescription from './RoosterRiddleDescription.jsx';
 import RoosterMoveDescription from './RoosterMoveDescription.jsx';
 import RoosterRiddleResults from './RoosterRiddleResults.jsx';
@@ -28,7 +32,7 @@ function RoosterRiddlePage() {
   const [selectedKernels, setSelectedKernels] = useState(new Set());
   const [selectedPile, setSelectedPile] = useState(null);
   const [roosterMove, setRoosterMove] = useState([null, null]);
-  const {width, height} = useWindowSize();
+  const [confettiWidth, confettiHeight] = useConfettiSize();
   const {wasmExports, _} = useContext(WasmContext);
 
   useEffect(() => {
@@ -106,7 +110,7 @@ function RoosterRiddlePage() {
   return (
   <>
     <TopBar text="Envelope #3: The Undefeated Rooster" isPuzzlePage={true} resetFunc={resetPuzzle} />
-    {gameIsWon && <Confetti width={width} height={height} />}
+    {gameIsWon && <Confetti width={confettiWidth} height={confettiHeight} />}
     <RoosterRiddleDescription />
     <Fade in={true} mountOnEnter unmountOnExit
             timeout={theme.transitions.duration.longTextFade}

@@ -1,10 +1,13 @@
 'use client'
 
 import { useState, useCallback, useEffect, useContext } from "react";
-import { useWindowSize } from "react-use";
 import { useTheme } from "@mui/material/styles";
-import { convertIterableToInt, convertIntToArray, MAX_32_BIT_NUM, WasmContext } from "../_common/utils.js";
-
+import { convertIterableToInt, 
+  convertIntToArray, 
+  MAX_32_BIT_NUM, 
+  useConfettiSize, 
+  WasmContext 
+} from "../_common/utils.js";
 import Grid from "@mui/material/Grid";
 import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -38,7 +41,7 @@ function HorseRiddlePage() {
   const [correctAns, setCorrectAns] = useState(false);
   const [wrongReason, setWrongReason] = useState("");
   const [fastestHorses, setFastestHorses] = useState([null, null, null]);
-  const { width, height } = useWindowSize();
+  const [confettiWidth, confettiHeight] = useConfettiSize();
   const theme = useTheme();
   const {wasmExports, _} = useContext(WasmContext);
 
@@ -146,7 +149,7 @@ function HorseRiddlePage() {
         isPuzzlePage={true}
         resetFunc={resetPuzzle}
       />
-      {confetti && <Confetti width={width} height={height} />}
+      {confetti && <Confetti width={confettiWidth} height={confettiHeight} />}
       <HorseRiddleDescription />
       {!correctAns && (
         <Fade
