@@ -5,6 +5,7 @@ import Image from 'next/image';
 import kernelImg from "../../assets/kernel.png";
 import Zoom from '@mui/material/Zoom';
 import Grid from "@mui/material/Grid";
+import { shortImageZoom } from '../_common/utils';
 
 const NUM_COLUMNS_OF_KERNELS = 3;
 const MAX_NUM_KERNELS = 12;
@@ -30,7 +31,7 @@ function PileStack({pileKernels, pileNum, selectedKernels, canBeSelectedFrom, ha
         direction="row"
       >
         {[...Array(MAX_NUM_KERNELS)].map((_, idx) => (
-          <Zoom key={idx} in={pileKernels.includes(idx)} timeout={theme.transitions.duration.shortImageZoom}>
+          <Zoom key={idx} in={pileKernels.includes(idx)} timeout={shortImageZoom}>
             <Grid size={1}
               flexDirection="column"
               justifyContent="center" 

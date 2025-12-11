@@ -9,9 +9,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import TopBar from "../../_common/TopBar.jsx";
-import RiddleNotComplete from "../../_common/RiddleNotComplete.jsx";
-import { SolvedPuzzlesContext, ROOSTER_PUZZLE } from "../../_common/utils.js";
+import TopBar from "../../_common/TopBar.tsx";
+import RiddleNotComplete from "../../_common/RiddleNotComplete.tsx";
+import { SolvedPuzzlesContext, ROOSTER_PUZZLE, standardTextFade } from "../../_common/utils.ts";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
 
 function AboutRoosterRiddle() {
@@ -30,7 +30,7 @@ function AboutRoosterRiddle() {
           in={true}
           mountOnEnter
           unmountOnExit
-          timeout={theme.transitions.duration.standardTextFade}
+          timeout={standardTextFade}
         >
           <Box
             sx={{

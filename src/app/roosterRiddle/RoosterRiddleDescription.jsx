@@ -1,11 +1,12 @@
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 import { useTheme } from '@mui/material/styles';
+import { standardTextFade } from "../_common/utils";
 
 function RoosterRiddleDescription() {
   const theme = useTheme();
   return (
-    <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
+    <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>
       <Box sx={{ width: 'var(--pageWidthPercent)', position: "relative", mb: "1vh" }}>
         <p>
           You tear open the third envelope. Inside you find a note, which reads:

@@ -1,11 +1,12 @@
 import { useTheme } from '@mui/material/styles';
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
+import { standardTextFade } from '../_common/utils';
 
 function HorseRiddleDescription() {
   const theme = useTheme();
   return (
-    <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
+    <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>
       <Box
         sx={{
           display: "flex",
@@ -28,16 +29,15 @@ function HorseRiddleDescription() {
           <br /> <br />
           After quickly Googling somnolence, you come up with a brilliant plan:
           first, you'll sneak into the local racetrack with the help of the
-          Riddeman's sleeping potion. Once inside, you'll race each horse and
-          time them to determine the fastest three. The next day you'll place a
-          winning trifecta bet, which if you put your entire
-          life savings into should result in a $1 million dollar payout!
+          Riddeman's sleeping potion. Once inside, you'll race all the horses to 
+          determine the fastest three. The next day you'll place a winning trifecta 
+          bet, which if you put your entire life savings into should result in 
+          a $1 million dollar payout!
           <br /> <br />
-          You successfully sneak into the racetrack and are about to start
-          timing horses when you discover you've forgotten your stopwatch at
-          home! After some thinking, you realize you can still determine the
-          fastest three horses by racing five horses at a time and marking down
-          the order in which they finish. However, each additional race you set
+          You successfully sneak into the racetrack, but are horrified to discover that the 
+          practice track is only wide enough to race 5 horses at a time! After some thinking, 
+          you realize you can still determine the fastest three horses by racing five horses 
+          at a time and marking down the order in which they finish. However, each additional race you set
           up increases the risk that the sleeping security guards will wake up.
           How can you determine the fastest three horses in the least amount of
           races?

@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
+import { PropsWithChildren } from "react";
 
-const PageWrapper = ({ children }) => (
+const PageWrapper = ({ children } : PropsWithChildren) => (
 	<Box
 		sx={{
 			display: "flex",

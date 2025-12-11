@@ -7,10 +7,10 @@ import Box from "@mui/material/Box";
 import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import TopBar from "../../_common/TopBar.jsx";
-import RiddleNotComplete from "../../_common/RiddleNotComplete.jsx";
+import TopBar from "../../_common/TopBar.tsx";
+import RiddleNotComplete from "../../_common/RiddleNotComplete.tsx";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
-import { SolvedPuzzlesContext, RAT_PUZZLE_P1, RAT_PUZZLE_P2, ratBlogLink } from '../../_common/utils.js'
+import { SolvedPuzzlesContext, RAT_PUZZLE_P1, RAT_PUZZLE_P2, ratBlogLink, standardTextFade } from '../../_common/utils.ts'
 import FourDayGraphImg from '../../../assets/FourDayGraph.png';
 import ValidGraphImg from '../../../assets/ValidGraph.png';
 import InvalidGraphImg from '../../../assets/InvalidGraph.png';
@@ -36,7 +36,7 @@ function RatRiddleBreakdownPage() {
           in={true}
           mountOnEnter
           unmountOnExit
-          timeout={theme.transitions.duration.standardTextFade}
+          timeout={standardTextFade}
         >
           <Box
             sx={{

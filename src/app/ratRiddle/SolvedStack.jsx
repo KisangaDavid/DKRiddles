@@ -3,8 +3,8 @@ import Fade from "@mui/material/Fade";
 import BonusChallenge from "./BonusChallenge.jsx";
 import { useTheme } from "@mui/material/styles";
 import { useState, useContext, useEffect } from "react";
-import { SolvedPuzzlesContext, RAT_PUZZLE_P1, SOLVED } from "../_common/utils.js";
-import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.jsx";
+import { SolvedPuzzlesContext, RAT_PUZZLE_P1, SOLVED, standardTextFade } from "../_common/utils.ts";
+import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.tsx";
 
 function SolvedStack({ totalDays, checkBonusAnswer, setConfetti }) {
   const theme = useTheme();
@@ -41,7 +41,7 @@ function SolvedStack({ totalDays, checkBonusAnswer, setConfetti }) {
           in={true}
           mountOnEnter
           unmountOnExit
-          timeout={theme.transitions.duration.standardTextFade}
+          timeout={standardTextFade}
         >
           <Box>
             <p>

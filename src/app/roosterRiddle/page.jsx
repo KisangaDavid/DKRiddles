@@ -7,8 +7,9 @@ import {
   convertIntToArray,
   MAX_32_BIT_NUM, 
   useConfettiSize, 
+  longTextFade,
   WasmContext 
-} from "../_common/utils.js";
+} from "../_common/utils.ts";
 import RoosterRiddleDescription from './RoosterRiddleDescription.jsx';
 import RoosterMoveDescription from './RoosterMoveDescription.jsx';
 import RoosterRiddleResults from './RoosterRiddleResults.jsx';
@@ -19,7 +20,7 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
 import Box from "@mui/material/Box";
-import TopBar from '../_common/TopBar.jsx';
+import TopBar from '../_common/TopBar.tsx';
 
 const NUM_BITS_PER_PILE = 4;
 const NUM_PILES = 4;
@@ -113,7 +114,7 @@ function RoosterRiddlePage() {
     {gameIsWon && <Confetti width={confettiWidth} height={confettiHeight} />}
     <RoosterRiddleDescription />
     <Fade in={true} mountOnEnter unmountOnExit
-            timeout={theme.transitions.duration.longTextFade}
+            timeout={longTextFade}
             style={{ transitionDelay: theme.delays.duration.longDelay}}
         >
       <Box

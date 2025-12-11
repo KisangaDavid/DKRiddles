@@ -3,8 +3,14 @@ import { useTheme } from "@mui/material/styles";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import Typography from '@mui/material/Typography';
+import { standardTextFade } from "./utils";
 
-function RiddleNotComplete({ puzzleNumber, puzzleTitle, blogLink }) {
+interface props {
+  puzzleNumber: number;
+  puzzleTitle: string;
+  blogLink: string;
+}
+function RiddleNotComplete({ puzzleNumber, puzzleTitle, blogLink } : props) {
   const theme = useTheme();
 
   return (
@@ -12,7 +18,7 @@ function RiddleNotComplete({ puzzleNumber, puzzleTitle, blogLink }) {
       in={true}
       mountOnEnter
       unmountOnExit
-      timeout={theme.transitions.duration.standardTextFade}
+      timeout={standardTextFade}
     >
       <Box
         sx={{

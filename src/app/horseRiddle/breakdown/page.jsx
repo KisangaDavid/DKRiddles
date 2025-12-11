@@ -9,10 +9,10 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import TopBar from "../../_common/TopBar.jsx";
-import RiddleNotComplete from "../../_common/RiddleNotComplete.jsx";
+import TopBar from "../../_common/TopBar.tsx";
+import RiddleNotComplete from "../../_common/RiddleNotComplete.tsx";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
-import { SolvedPuzzlesContext, HORSE_PUZZLE, horseBlogLink } from "../../_common/utils.js";
+import { SolvedPuzzlesContext, HORSE_PUZZLE, horseBlogLink, standardTextFade } from "../../_common/utils.ts";
 import HorseBreakdownCompleteGraph from "../../../assets/horseBreakdownCompleteGraph.png";
 import HorseBreakdown2ndPlaceGraph from "../../../assets/horseBreakdown2ndPlaceGraph.png";
 import HorseBreakdown3rdPlaceGraph from "../../../assets/horseBreakdown3rdPlaceGraph.png";
@@ -36,7 +36,7 @@ function HorseRiddleBreakdownPage() {
           in={true}
           mountOnEnter
           unmountOnExit
-          timeout={theme.transitions.duration.standardTextFade}
+          timeout={standardTextFade}
         >
           <Box
             sx={{

@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles';
+import {styled } from '@mui/material/styles';
 import { Card, CardContent } from '@mui/material';
 
 export const StyledBreakdownCard = styled(Card)({
@@ -6,7 +6,7 @@ export const StyledBreakdownCard = styled(Card)({
   gap: 0,
   backgroundColor: 'hsl(220, 20%, 88%)',
   border: `1px solid hsla(0, 0%, 61%, 0.70)`,
-  boxShadow: 10
+  boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.4)'
 });
 
 export const StyledBreakdownCardContent = styled(CardContent)({

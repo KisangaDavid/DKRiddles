@@ -6,8 +6,8 @@ import Zoom from "@mui/material/Zoom";
 import Fab from "@mui/material/Fab";
 import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
-import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.jsx";
-import { SolvedPuzzlesContext, RAT_PUZZLE_P2, SOLVED } from "../_common/utils.js";
+import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.tsx";
+import { SolvedPuzzlesContext, RAT_PUZZLE_P2, SOLVED, standardTextFade } from "../_common/utils.ts";
 import { useTheme } from "@mui/material/styles";
 
 function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
@@ -56,7 +56,7 @@ function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
         in={bonusSubmitted && bonusCorrect}
         mountOnEnter
         unmountOnExit
-        timeout={theme.transitions.duration.standardTextFade}
+        timeout={standardTextFade}
       >
         <p>
           Just as you finish writing in your answer, you hear a booming voice
@@ -74,7 +74,7 @@ function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
         in={bonusSubmitted && !bonusCorrect}
         mountOnEnter
         unmountOnExit
-        timeout={theme.transitions.duration.standardTextFade}
+        timeout={standardTextFade}
       >
         <p>
           As you finish writing in your answer, you hear a booming voice from
@@ -94,7 +94,7 @@ function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
           in={!bonusSubmitted}
           mountOnEnter
           unmountOnExit
-          timeout={theme.transitions.duration.standardTextFade}
+          timeout={standardTextFade}
         >
           <Box>
             <p>

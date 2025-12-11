@@ -4,8 +4,8 @@ import { useTheme } from "@mui/material/styles";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import { useState, useContext, useEffect } from "react";
-import { SolvedPuzzlesContext, ROOSTER_PUZZLE, SOLVED } from "../_common/utils.js";
-import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.jsx";
+import { standardTextFade, SolvedPuzzlesContext, ROOSTER_PUZZLE, SOLVED } from "../_common/utils.ts";
+import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.tsx";
 
 function RoosterRiddleResults({ gameIsWon }) {
   const theme = useTheme();
@@ -30,7 +30,7 @@ function RoosterRiddleResults({ gameIsWon }) {
             in={true}
             mountOnEnter
             unmountOnExit
-            timeout={theme.transitions.duration.standardTextFade}
+            timeout={standardTextFade}
           >
             <p>
               As you pick up the last kernel, you hear a booming voice from the
@@ -57,7 +57,7 @@ function RoosterRiddleResults({ gameIsWon }) {
           in={true}
           mountOnEnter
           unmountOnExit
-          timeout={theme.transitions.duration.standardTextFade}
+          timeout={standardTextFade}
         >
           <p>
             As the rooster smugly picks up the last kernel, you hear a booming

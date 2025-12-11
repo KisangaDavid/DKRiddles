@@ -1,24 +1,29 @@
 'use client'
 
-import Snackbar from "@mui/material/Snackbar";
+import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 import { usePathname } from 'next/navigation'
 import Link from "next/link";
 import Alert from "@mui/material/Alert";
+import { SyntheticEvent } from "react";
 
-function BreakdownUnlockedNotification({ open, onClose, text}) {
+interface props {
+  open: boolean;
+  onClose: () => void;
+  text: string;
+}
+
+function BreakdownUnlockedNotification({ open, onClose, text} : props) {
   const pathname = usePathname();
-  const handleSnackbarClose = (_, reason) => {
+
+  const handleSnackbarClose = (_: Event | SyntheticEvent, reason: SnackbarCloseReason) => {
     if (reason === "clickaway") {
       return;
     }
     onClose();
   };
 
-  const handleAlertClose = (event, reason) => {
+  const handleAlertClose = (event: SyntheticEvent) => {
     event.preventDefault();
-    if (reason === "clickaway") {
-      return;
-    }
     onClose();
   };
 

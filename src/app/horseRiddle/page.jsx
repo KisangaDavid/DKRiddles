@@ -6,8 +6,9 @@ import { convertIterableToInt,
   convertIntToArray, 
   MAX_32_BIT_NUM, 
   useConfettiSize, 
-  WasmContext 
-} from "../_common/utils.js";
+  WasmContext,
+  longTextFade 
+} from "../_common/utils.ts";
 import Grid from "@mui/material/Grid";
 import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -18,7 +19,7 @@ import TrifectaStack from "./TrifectaStack.jsx";
 import HorseRiddleDescription from "./HorseRiddleDescription.jsx";
 import Confetti from "react-confetti";
 import Box from "@mui/material/Box";
-import TopBar from "../_common/TopBar.jsx";
+import TopBar from "../_common/TopBar.tsx";
 import HorseGridElement from "./HorseGridElement.jsx";
 
 const HORSE_ORDER_CORRECT_CODE = 0;
@@ -156,7 +157,7 @@ function HorseRiddlePage() {
           in={true}
           mountOnEnter
           unmountOnExit
-          timeout={theme.transitions.duration.longTextFade}
+          timeout={longTextFade}
           style={{transitionDelay: hasBeenReset ? 0 : theme.delays.duration.longDelay}}
         >
           <Box

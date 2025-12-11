@@ -9,6 +9,7 @@ import Zoom from "@mui/material/Zoom";
 import Box from "@mui/material/Box";
 import Image from 'next/image'
 import { useTheme } from '@mui/material/styles';
+import { standardTextFade } from "../_common/utils";
 
 function RowOfHouses({
     NUM_HOUSES,
@@ -37,7 +38,7 @@ function RowOfHouses({
     <Box>
       {(!submittedTraps || path.length != 0) 
         ?
-          <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
+          <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>
             <p> Day: {curDay + 1} </p>
           </Fade>
         :

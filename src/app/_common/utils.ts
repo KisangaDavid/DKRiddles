@@ -8,16 +8,21 @@ export const RAT_PUZZLE_P1 = "RAT_P1";
 export const RAT_PUZZLE_P2 = "RAT_P2";
 export const HORSE_PUZZLE = "HORSE";
 export const ROOSTER_PUZZLE = "ROOSTER";
-export const ALL_PUZZLES = [RAT_PUZZLE_P1, RAT_PUZZLE_P2, HORSE_PUZZLE, ROOSTER_PUZZLE]
+export const ALL_PUZZLES = [RAT_PUZZLE_P1, RAT_PUZZLE_P2, HORSE_PUZZLE, ROOSTER_PUZZLE];
 
-export const githubLink = "https://github.com/KisangaDavid/DKRiddles"
-export const blogLink = "https://blog.dkisanga.com"
-export const ratBlogLink = "https://blog.dkisanga.com/ratRiddle/"
-export const horseBlogLink = "https://blog.dkisanga.com/horseRiddle/"
-export const roosterBlogLink = "https://blog.dkisanga.com/roosterRiddle/"
+export const blogLink = "https://blog.dkisanga.com";
+export const ratBlogLink = "https://blog.dkisanga.com/ratRiddle/";
+export const horseBlogLink = "https://blog.dkisanga.com/horseRiddle/";
+export const roosterBlogLink = "https://blog.dkisanga.com/roosterRiddle/";
+
+export const shortImageZoom = 500;
+export const shortImageFade = 750;
+export const standardTextFade = 1000;
+export const longTextFade = 2000;
+export const standardImageFade = 1500;
 
 
-export function convertIterableToInt(iterable, numBitsPerElement) {
+export function convertIterableToInt(iterable: Iterable<number>, numBitsPerElement: number) {
     let intRepresentation = 0;
     for (const element of iterable) {
       intRepresentation <<= numBitsPerElement;
@@ -26,7 +31,7 @@ export function convertIterableToInt(iterable, numBitsPerElement) {
     return intRepresentation;
 }
 
-export function convertIntToArray(intRepresentation, numBitsPerElement, length) {
+export function convertIntToArray(intRepresentation: number, numBitsPerElement: number, length: number) {
     let array = [];
     let bitmask = (1 << numBitsPerElement) - 1;
     for (let i = 0; i < length; i++) {
@@ -58,7 +63,14 @@ export function useConfettiSize() {
   return size;
 }
 
+interface solvedPuzzlesContext {
+  solvedPuzzles: Set<string>;
+  setSolvedPuzzles: (puzzles: Set<string>) => void;
+} 
 
-export const SolvedPuzzlesContext = createContext(new Set());
+export const SolvedPuzzlesContext = createContext<solvedPuzzlesContext>({
+  solvedPuzzles: new Set<string>(),
+  setSolvedPuzzles: () => {}
+});
 
 export const WasmContext = createContext(null);

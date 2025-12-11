@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { useContext } from "react";
-import { WasmContext, useConfettiSize } from "../_common/utils.js";
+import { WasmContext, useConfettiSize, longTextFade, standardTextFade } from "../_common/utils.ts";
 
 import RowOfHouses from './RowOfHouses.jsx';
 import SolvedStack from './SolvedStack.jsx';
@@ -15,7 +15,7 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
 import Box from "@mui/material/Box";
-import TopBar from '../_common/TopBar.jsx';
+import TopBar from '../_common/TopBar.tsx';
 
 const NUM_HOUSES = 8;
 
@@ -112,7 +112,7 @@ function RatRiddlePage() {
       {confetti && <Confetti width={confettiWidth} height={confettiHeight} />}
       <RatRiddleDescription />
       <Fade in={true} mountOnEnter unmountOnExit
-          timeout={theme.transitions.duration.longTextFade}
+          timeout={longTextFade}
           style={{ transitionDelay: theme.delays.duration.longDelay }}
       >
         <Box sx={{ position: "relative", width: 'var(--pageWidthPercent)'}}>
@@ -128,7 +128,7 @@ function RatRiddlePage() {
           />
           {!submittedTraps && (
             <Fade in={true} mountOnEnter unmountOnExit
-                timeout={theme.transitions.duration.standardTextFade}
+                timeout={standardTextFade}
             >
               <Stack
                   direction="row"

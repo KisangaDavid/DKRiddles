@@ -39,14 +39,6 @@ const typography = {
   },
 };
 
-const transitionDurations = {
-  standardTextFade: 1000,
-  shortImageZoom: 500,
-  shortImageFade: 750,
-  standardImageFade: 1500,
-  longTextFade: 2000
-}
-
 const delayDurations = {
   shortDelay: 200,
   standardDelay: 250,
@@ -62,11 +54,8 @@ const theme = createTheme({
   palette: {
     mode: "dark"
   },
-  transitions: {
-    duration: transitionDurations
-  },
   delays: {
-    duration: delayDurations
+    duration: delayDurations // TODO: remove these when making file typescript
   },
   typography,
   shape,

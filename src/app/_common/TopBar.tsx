@@ -7,13 +7,17 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import Box from '@mui/material/Box';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import MenuDrawerContents from './MenuDrawerContents';
 
-function TopBar({text, isPuzzlePage, resetFunc}) {
+interface props {
+  text: string;
+  isPuzzlePage: boolean;
+  resetFunc: () => void;
+}
+function TopBar({text, isPuzzlePage, resetFunc} : props) {
 
   const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
   const theme = useTheme();
@@ -83,7 +87,7 @@ function TopBar({text, isPuzzlePage, resetFunc}) {
             }
           }
         }}>
-        <MenuDrawerContents setMenuDrawerOpen={() => setMenuDrawerOpen()}/>
+        <MenuDrawerContents setMenuDrawerOpen={setMenuDrawerOpen}/>
       </Drawer>
     </>
   );

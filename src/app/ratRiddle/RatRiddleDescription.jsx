@@ -1,12 +1,13 @@
 import { useTheme } from '@mui/material/styles';
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
+import { standardTextFade } from '../_common/utils';
 
 function RatRiddleDescription() {
   const theme = useTheme();
 
   return (
-    <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
+    <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>
       <Box sx={{ width: 'var(--pageWidthPercent)', position: "relative", mb: "1vh" }}>
         <p>
           You open the first envelope. Inside you find a notecard, along with two rat

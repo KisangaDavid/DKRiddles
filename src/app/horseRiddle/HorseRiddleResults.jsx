@@ -7,8 +7,8 @@ import angryGuard from "../../assets/angryGuard.jpeg";
 import Fade from '@mui/material/Fade';
 import Box from "@mui/material/Box";
 import { Stack } from '@mui/material';
-import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.jsx";
-import { SolvedPuzzlesContext, HORSE_PUZZLE, SOLVED } from "../_common/utils.js";
+import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.tsx";
+import { SolvedPuzzlesContext, HORSE_PUZZLE, SOLVED, standardTextFade, standardImageFade, longTextFade } from "../_common/utils.ts";
 
 const MIN_NUM_RACES = 7;
 
@@ -34,7 +34,7 @@ function HorseRiddleResults({numRaces, setConfetti}) {
     <Box sx={{display: "flex", width: 'var(--pageWidthPercent)', alignItems: "center", mt: "10em"}}>
       {numRaces == MIN_NUM_RACES ?
         <>
-          <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardTextFade}>
+          <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>
             <p>
               After {numRaces} races, you correctly deduce the fastest three horses!
               You tiptoe back out of the racetrack, successfully sneaking by the
@@ -73,7 +73,7 @@ function HorseRiddleResults({numRaces, setConfetti}) {
             }
           }}
         >
-          <Fade in={true} mountOnEnter unmountOnExit timeout={theme.transitions.duration.standardImageFade}>
+          <Fade in={true} mountOnEnter unmountOnExit timeout={standardImageFade}>
             <Box
               sx={{
                 display: "flex",
@@ -98,7 +98,7 @@ function HorseRiddleResults({numRaces, setConfetti}) {
               />
             </Box>
           </Fade>
-          <Fade in={true}  mountOnEnter unmountOnExit timeout={theme.transitions.duration.longTextFade}>           
+          <Fade in={true}  mountOnEnter unmountOnExit timeout={longTextFade}>           
           <Box 
             sx={{
               display: "flex",

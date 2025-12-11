@@ -1,8 +1,8 @@
 import Link from "next/link.js";
 import { useTheme } from "@mui/material/styles";
-import { useContext } from "react";
+import { useContext, FC } from "react";
 import { styled } from '@mui/material/styles';
-import { SolvedPuzzlesContext, HORSE_PUZZLE, ROOSTER_PUZZLE, RAT_PUZZLE_P1, RAT_PUZZLE_P2 } from './utils.js'
+import { SolvedPuzzlesContext, HORSE_PUZZLE, ROOSTER_PUZZLE, RAT_PUZZLE_P1, RAT_PUZZLE_P2 } from './utils'
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -15,6 +15,7 @@ import ExtensionIcon from '@mui/icons-material/Extension';
 import HomeIcon from '@mui/icons-material/Home';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import { SvgIconProps } from "@mui/material/SvgIcon";
 
 const StyledListItemButton = styled(ListItemButton)({
   paddingTop: "1.5vh",
@@ -35,31 +36,39 @@ const StyledListItemText = styled(ListItemText)({
   },
 });
 
-const StyledListItemIcon = ({PassedIcon, complete = false, inProgress = false}) => {
+interface StyledListItemIconProps {
+  PassedIcon: FC<SvgIconProps>;
+  complete?: boolean;
+  inProgress?: boolean;
+}
+
+function StyledListItemIcon({PassedIcon, complete = false, inProgress=false}: StyledListItemIconProps) { 
   const theme = useTheme();
   return (
-  <ListItemIcon>
-    <PassedIcon
-      sx={{
-        minWidth: '0rem',
-        width: '2rem',
-        height: '2rem',
-        color: 
-          complete ? 
-            theme.palette.success.main : 
-            inProgress ? 
-              theme.palette.warning.light :
-              "rgba(255, 255, 255, 0.7)"
-      }}
-    />
-  </ListItemIcon>
+    <ListItemIcon>
+      <PassedIcon
+        sx={{
+          minWidth: '0rem',
+          width: '2rem',
+          height: '2rem',
+          color: 
+            complete ? 
+              theme.palette.success.main : 
+              inProgress ? 
+                theme.palette.warning.light :
+                "rgba(255, 255, 255, 0.7)"
+        }}
+      />
+    </ListItemIcon>
   );
 };
 
-function MenuDrawerContents({setMenuDrawerOpen}) {
+interface props {
+  setMenuDrawerOpen: (open: boolean) => void;
+}
 
-  const { solvedPuzzles, _ } = useContext(SolvedPuzzlesContext);
-
+function MenuDrawerContents({setMenuDrawerOpen}: props) {
+  let {solvedPuzzles} = useContext(SolvedPuzzlesContext);
   return (
     <>
       <List sx={{

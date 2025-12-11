@@ -3,6 +3,7 @@ import Slider from '@mui/material/Slider';
 import Fade from '@mui/material/Fade';
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
+import { standardTextFade } from "../_common/utils";
 
 function UnsolvedStack({curDay, totalDays, path, allCheckedHouses, handleSliderChange}) {
   const theme = useTheme();
@@ -11,7 +12,7 @@ function UnsolvedStack({curDay, totalDays, path, allCheckedHouses, handleSliderC
       in={true} 
       mountOnEnter 
       unmountOnExit 
-      timeout={theme.transitions.duration.standardTextFade}
+      timeout={standardTextFade}
     >
       <Box>
         <Stack justifyContent="center" alignItems="center" >

@@ -9,15 +9,17 @@ import ratRiddleThumbnail from '../assets/ratRiddleThumbnail.png'
 import horseRiddleThumbnail from '../assets/horseTrifecta.png'
 import roosterRiddleThumbnail from '../assets/roosterRiddleThumbnail.png'
 import mysteryLetter from '../assets/mysteryLetter.jpg'
-import PuzzleCard from './_common/PuzzleCard.jsx'
+import PuzzleCard from './_common/PuzzleCard.tsx'
 import riddleManLetter from '../assets/riddleManLetter.jpg'
 import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
-import TopBar from './_common/TopBar.jsx';
+import TopBar from './_common/TopBar.tsx';
+import { standardTextFade, standardImageFade, longTextFade } from './_common/utils';
 
 function IntroductionPage() {
 
+  const shortDelay = 200;
   const theme = useTheme();
   const [activatedChip, setActivatedChip] = useState(-1);
   const [shouldPreloadImgs, setShouldPreloadImgs] = useState(false)
@@ -27,7 +29,7 @@ function IntroductionPage() {
   return (
     <>
       <TopBar text="Introduction" isPuzzlePage={false} />
-      <Fade in={true} timeout={theme.transitions.duration.standardTextFade}>
+      <Fade in={true} timeout={1000}>
         <Box sx={{width: 'var(--pageWidthPercent)', position: "relative", mb:"1vh"}}>
           <p>
             Mr. Riddle Man - a name shrouded in mystery. Renowed by many to be the world's
@@ -40,7 +42,7 @@ function IntroductionPage() {
         </Box>
       </Fade>
       <br />
-      <Fade in={true} timeout={theme.transitions.duration.standardTextFade}>
+      <Fade in={true} timeout={standardTextFade}>
         <Box
           sx={{
             display: 'flex',
@@ -86,7 +88,7 @@ function IntroductionPage() {
           }}
         >
           <Grid size={{ sm: 12, md: 6}}>
-            <Fade in={true} timeout={theme.transitions.duration.standardImageFade}>
+            <Fade in={true} timeout={standardImageFade}>
               <Box>
               <Image 
                 src={riddleManLetter} 
@@ -106,7 +108,7 @@ function IntroductionPage() {
             <Fade 
               in={true}  
               style = {{transitionDelay: theme.delays.duration.longDelay}} 
-              timeout={theme.transitions.duration.longTextFade}
+              timeout={longTextFade}
             >     
               <p style={{ textAlign: "left" }}>      
                 The letter reads: <br /> <br />
@@ -148,7 +150,7 @@ function IntroductionPage() {
               puzzleNumber = "2" 
               puzzleDescription = "Utilize your skills of deduction to win big at the horse races!"
               puzzlePath = "/horseRiddle" 
-              transitionDelay={theme.delays.duration.standardDelay}
+              transitionDelay={shortDelay}
             />
           </Grid>
           <Grid size={{ sm: 6, lg: 3 }}>
@@ -158,7 +160,7 @@ function IntroductionPage() {
               puzzleNumber = "3" 
               puzzleDescription = "Best the undefeated rooster in a battle of intellect!"
               puzzlePath = "/roosterRiddle" 
-              transitionDelay={theme.delays.duration.standardDelay * 2}
+              transitionDelay={shortDelay * 2}
             />
           </Grid>
           <Grid size={{ sm: 6, lg: 3 }}>
@@ -168,7 +170,7 @@ function IntroductionPage() {
               puzzleNumber = "4" 
               puzzleDescription = "Come back later to find a a brand new puzzle from Mr. Riddle Man!"
               puzzlePath = "/" 
-              transitionDelay={theme.delays.duration.standardDelay * 3}
+              transitionDelay={shortDelay * 3}
             />
           </Grid>
         </Grid>
