@@ -2,14 +2,14 @@
 
 import { useTheme } from '@mui/material/styles';
 
-import { blogLink, standardTextFade } from '../_common/utils.ts';
+import { blogLink, longDelay, standardTextFade } from '../_common/utils';
 import Fade from '@mui/material/Fade';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Box from "@mui/material/Box";
-import TopBar from '../_common/TopBar.tsx';
+import TopBar from '../_common/TopBar';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 
@@ -19,7 +19,7 @@ function AboutSitePage() {
 
   return (
     <>
-      <TopBar text="About" isPuzzlePage={false} resetFunc={null} />
+      <TopBar text="About" isPuzzlePage={false} resetFunc={undefined} />
       <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>      
         <Box sx={{ width: 'var(--pageWidthPercent)', position: "relative", mb: "8vh", mt: "2vh" }}>
           <Typography align="center">
@@ -49,7 +49,7 @@ function AboutSitePage() {
           mountOnEnter 
           unmountOnExit 
           timeout={standardTextFade}
-          style={{transitionDelay: theme.delays.duration.longDelay}}
+          style={{transitionDelay: longDelay + "ms"}}
         >
           <List subheader={
             <Typography variant="h5" sx={{mb: "1vh"}}>

@@ -15,7 +15,7 @@ import MenuDrawerContents from './MenuDrawerContents';
 interface props {
   text: string;
   isPuzzlePage: boolean;
-  resetFunc: () => void;
+  resetFunc: (() => void) | undefined;
 }
 function TopBar({text, isPuzzlePage, resetFunc} : props) {
 
@@ -70,7 +70,7 @@ function TopBar({text, isPuzzlePage, resetFunc} : props) {
             color="inherit"
             aria-label="menu"
              sx={{zIndex: 1000, visibility: isPuzzlePage ? "visible" : "hidden"}}
-            onClick={() => resetFunc()}
+            onClick={resetFunc}
           >
             <RefreshIcon />
           </IconButton>

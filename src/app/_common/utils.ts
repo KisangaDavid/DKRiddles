@@ -21,6 +21,11 @@ export const standardTextFade = 1000;
 export const longTextFade = 2000;
 export const standardImageFade = 1500;
 
+export const shortDelay = 200;
+export const standardDelay = 250;
+export const longDelay = 500;
+export const extraLongDelay = 750;
+
 
 export function convertIterableToInt(iterable: Iterable<number>, numBitsPerElement: number) {
     let intRepresentation = 0;

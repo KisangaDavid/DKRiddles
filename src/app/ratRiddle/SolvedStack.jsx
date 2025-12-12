@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-import BonusChallenge from "./BonusChallenge.jsx";
+import BonusChallenge from "./BonusChallenge";
 import { useTheme } from "@mui/material/styles";
 import { useState, useContext, useEffect } from "react";
-import { SolvedPuzzlesContext, RAT_PUZZLE_P1, SOLVED, standardTextFade } from "../_common/utils.ts";
-import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.tsx";
+import { SolvedPuzzlesContext, RAT_PUZZLE_P1, SOLVED, standardTextFade } from "../_common/utils";
+import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
 
 function SolvedStack({ totalDays, checkBonusAnswer, setConfetti }) {
   const theme = useTheme();
@@ -33,7 +33,6 @@ function SolvedStack({ totalDays, checkBonusAnswer, setConfetti }) {
             open={notificationOpen}
             onClose={() => setNotificationOpen(false)}
             text="Rat Puzzle Breakdown Part 1 Unlocked!"
-            href={"ratRiddle/breakdown"}
           />
         </>
       : 

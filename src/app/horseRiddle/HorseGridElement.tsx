@@ -3,8 +3,12 @@ import Grid from '@mui/material/Grid';
 import Zoom from "@mui/material/Zoom";
 import horseImg from "../../assets/horseClipArt.png";
 
-
-function HorseGridElement({horseNumber, onClick, selected}) {
+interface props {
+  horseNumber: number;
+  onClick: (index: number) => void;
+  selected: boolean;
+}
+function HorseGridElement({horseNumber, onClick, selected} : props) {
   return (
   <Zoom in={true} mountOnEnter unmountOnExit>
     <Grid size={1}
@@ -18,7 +22,7 @@ function HorseGridElement({horseNumber, onClick, selected}) {
       <Image
         src={horseImg}
         alt="horse"
-        onClick={onClick}
+        onClick={() => onClick(horseNumber)}
         style={{
           objectFit: "contain", 
           height: "95%",

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, ChangeEventHandler, ChangeEvent } from "react";
 
 import TextField from "@mui/material/TextField";
 import Fade from "@mui/material/Fade";
@@ -6,13 +6,17 @@ import Zoom from "@mui/material/Zoom";
 import Fab from "@mui/material/Fab";
 import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
-import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.tsx";
-import { SolvedPuzzlesContext, RAT_PUZZLE_P2, SOLVED, standardTextFade } from "../_common/utils.ts";
-import { useTheme } from "@mui/material/styles";
+import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
+import { SolvedPuzzlesContext, RAT_PUZZLE_P2, SOLVED, standardTextFade } from "../_common/utils";
 
-function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
-  const theme = useTheme();
-  const [numBonusHouses, setNumBonusHouses] = useState(null);
+interface props {
+  checkBonusAnswer: (numBonus: number, ans: number) => boolean;
+  setConfetti: (bool: boolean) => void;
+  totalDays: number;
+}
+
+function BonusChallenge({checkBonusAnswer, setConfetti, totalDays} : props) {
+  const [numBonusHouses, setNumBonusHouses] = useState(-1);
   const [answerToBonus, setAnswerToBonus] = useState(-1);
   const [bonusSubmitted, setBonusSubmitted] = useState(false);
   const [bonusCorrect, setBonusCorrect] = useState(false);
@@ -20,7 +24,7 @@ function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
   const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
 
   useEffect(() => {
-    if (numBonusHouses === null) {
+    if (numBonusHouses === -1 ) {
       setNumBonusHouses(Math.floor(Math.random() * 10 + 20));
     }
   }, []);
@@ -38,10 +42,10 @@ function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
     setBonusSubmitted(true);
   };
 
-  const handleBonusAnwerChange = (e) => {
+  const handleBonusAnwerChange = (e: ChangeEvent<HTMLInputElement>) => {
     const intsOnly = e.target.value.replace(/[^0-9]/g, "");
     e.target.value = intsOnly;
-    intsOnly.length < 1 ? setAnswerToBonus(-1) : setAnswerToBonus(intsOnly);
+    intsOnly.length < 1 ? setAnswerToBonus(-1) : setAnswerToBonus(+intsOnly);
   };
 
   return (
@@ -50,7 +54,6 @@ function BonusChallenge({checkBonusAnswer, setConfetti, totalDays}) {
         open={notificationOpen}
         onClose={() => setNotificationOpen(false)}
         text="Rat Puzzle Breakdown Part 2 Unlocked!"
-        href="ratRiddle/breakdown"
       />
       <Fade
         in={bonusSubmitted && bonusCorrect}

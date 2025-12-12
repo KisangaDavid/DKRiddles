@@ -1,6 +1,5 @@
 'use client'
 
-import { useTheme } from "@mui/material/styles";
 import { useContext } from "react";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
@@ -9,10 +8,10 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import TopBar from "../../_common/TopBar.tsx";
-import RiddleNotComplete from "../../_common/RiddleNotComplete.tsx";
+import TopBar from "../../_common/TopBar";
+import RiddleNotComplete from "../../_common/RiddleNotComplete";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
-import { SolvedPuzzlesContext, HORSE_PUZZLE, horseBlogLink, standardTextFade } from "../../_common/utils.ts";
+import { SolvedPuzzlesContext, HORSE_PUZZLE, horseBlogLink, standardTextFade } from "../../_common/utils";
 import HorseBreakdownCompleteGraph from "../../../assets/horseBreakdownCompleteGraph.png";
 import HorseBreakdown2ndPlaceGraph from "../../../assets/horseBreakdown2ndPlaceGraph.png";
 import HorseBreakdown3rdPlaceGraph from "../../../assets/horseBreakdown3rdPlaceGraph.png";
@@ -21,15 +20,14 @@ import HorseBreakdown5thPlaceGraph from "../../../assets/horseBreakdown5thPlaceG
 import RacesBreakdown from "../../../assets/racesBreakdown.jpg";
 
 function HorseRiddleBreakdownPage() {
-  const theme = useTheme();
-  const { solvedPuzzles, _ } = useContext(SolvedPuzzlesContext);
+  const { solvedPuzzles } = useContext(SolvedPuzzlesContext);
 
   return (
     <>
       <TopBar
         text="Puzzle Breakdown #2: The Horse Trifecta"
         isPuzzlePage={false}
-        resetFunc={null}
+        resetFunc={undefined}
       />
       {solvedPuzzles.has(HORSE_PUZZLE) ? (
         <Fade

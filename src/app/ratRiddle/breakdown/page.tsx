@@ -1,16 +1,15 @@
 'use client'
 
 import { useContext } from 'react';
-import { useTheme } from "@mui/material/styles";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import TopBar from "../../_common/TopBar.tsx";
-import RiddleNotComplete from "../../_common/RiddleNotComplete.tsx";
+import TopBar from "../../_common/TopBar";
+import RiddleNotComplete from "../../_common/RiddleNotComplete";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
-import { SolvedPuzzlesContext, RAT_PUZZLE_P1, RAT_PUZZLE_P2, ratBlogLink, standardTextFade } from '../../_common/utils.ts'
+import { SolvedPuzzlesContext, RAT_PUZZLE_P1, RAT_PUZZLE_P2, ratBlogLink, standardTextFade } from '../../_common/utils'
 import FourDayGraphImg from '../../../assets/FourDayGraph.png';
 import ValidGraphImg from '../../../assets/ValidGraph.png';
 import InvalidGraphImg from '../../../assets/InvalidGraph.png';
@@ -21,15 +20,14 @@ import RatRiddleBreakdown12HousesImg from '../../../assets/RatRiddleBreakdown12H
 
 function RatRiddleBreakdownPage() {
 
-  const theme = useTheme();
-  const {solvedPuzzles, _} = useContext(SolvedPuzzlesContext);
+  const {solvedPuzzles} = useContext(SolvedPuzzlesContext);
 
   return (
     <>
       <TopBar
         text="Puzzle Breakdown #1: The Sneaky Rat"
         isPuzzlePage={false}
-        resetFunc={null}
+        resetFunc={undefined}
       />
       {solvedPuzzles.has(RAT_PUZZLE_P1) ?
         <Fade

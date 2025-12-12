@@ -7,12 +7,16 @@ import angryGuard from "../../assets/angryGuard.jpeg";
 import Fade from '@mui/material/Fade';
 import Box from "@mui/material/Box";
 import { Stack } from '@mui/material';
-import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.tsx";
-import { SolvedPuzzlesContext, HORSE_PUZZLE, SOLVED, standardTextFade, standardImageFade, longTextFade } from "../_common/utils.ts";
+import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
+import { SolvedPuzzlesContext, HORSE_PUZZLE, SOLVED, standardTextFade, standardImageFade, longTextFade } from "../_common/utils";
 
 const MIN_NUM_RACES = 7;
 
-function HorseRiddleResults({numRaces, setConfetti}) {
+interface props {
+  numRaces: number;
+  setConfetti: (bool: boolean) => void;
+}
+function HorseRiddleResults({numRaces, setConfetti} : props) {
   const theme = useTheme();
 
   const [notificationOpen, setNotificationOpen] = useState(numRaces == 7);
@@ -57,7 +61,6 @@ function HorseRiddleResults({numRaces, setConfetti}) {
               open={notificationOpen}
               onClose={() => setNotificationOpen(false)}
               text="Horse Puzzle Breakdown Unlocked!"
-              color={theme.palette.success.light}
             />
         </>
       : 

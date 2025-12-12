@@ -1,7 +1,12 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-const PreviousRaces = ({ finishedRaces, MAX_NUM_RACES, RACE_LENGTH }) => (
+interface props {
+  finishedRaces: [number];
+  MAX_NUM_RACES: number;
+  RACE_LENGTH: number;
+}
+const PreviousRaces = ({ finishedRaces, MAX_NUM_RACES, RACE_LENGTH } : props) => (
   <Box
     sx={{
       display: "flex",

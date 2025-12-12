@@ -1,8 +1,12 @@
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
+import { ChangeEvent } from "react";
 
-const TrifectaStack = ({ handleTrifectaChange}) => (
+interface props {
+  handleTrifectaChange: (event: ChangeEvent, num: number) => void
+}
+const TrifectaStack = ({handleTrifectaChange} : props) => (
   <Stack
     direction="row"
     justifyContent="center"

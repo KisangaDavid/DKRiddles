@@ -1,10 +1,8 @@
-import { useTheme } from '@mui/material/styles';
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 import { standardTextFade } from '../_common/utils';
 
 function HorseRiddleDescription() {
-  const theme = useTheme();
   return (
     <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>
       <Box
