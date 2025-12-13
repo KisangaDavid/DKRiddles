@@ -8,22 +8,31 @@ import Fade from '@mui/material/Fade'
 import Zoom from "@mui/material/Zoom";
 import Box from "@mui/material/Box";
 import Image from 'next/image'
-import { useTheme } from '@mui/material/styles';
 import { standardTextFade } from "../_common/utils";
 
-function RowOfHouses({
-    NUM_HOUSES,
-    submittedTraps,
-    trapHouse,
-    curCheckedHouses,
-    allCheckedHouses,
-    path,
-    curDay,
-    prevDay
-}) {
-  const theme = useTheme();
+interface props {
+  NUM_HOUSES: number;
+  submittedTraps: boolean; 
+  trapHouse: (num: number) => void;
+  curCheckedHouses: Set<number>;
+  allCheckedHouses: Array<Set<number>>;
+  path: Array<number>;
+  curDay: number;
+  prevDay: number;
+}
 
-  const getRatAnimationDirection = (index) => {
+function RowOfHouses({
+  NUM_HOUSES,
+  submittedTraps,
+  trapHouse,
+  curCheckedHouses,
+  allCheckedHouses,
+  path,
+  curDay,
+  prevDay,
+}: props) {
+
+  const getRatAnimationDirection = (index: number) => {
     if (prevDay == null) {
         return "up";
     }
@@ -36,7 +45,7 @@ function RowOfHouses({
 
   return ( 
     <Box>
-      {(!submittedTraps || path.length != 0) 
+      {(!submittedTraps || (path.length !=  0)) 
         ?
           <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>
             <p> Day: {curDay + 1} </p>
@@ -79,23 +88,22 @@ function RowOfHouses({
                   direction={getRatAnimationDirection(index)}
                   mountOnEnter
                   unmountOnExit
-                  in={submittedTraps && path[curDay] == index}
+                  in={submittedTraps ? path[curDay] == index: false}
                 >
                   <img src={rat.src} alt="rat" style={{objectFit: "contain", height: "100%", width: "100%"}} />
                 </Slide>
                 <Slide
                   direction="up"
-                  mountOnEnter
-                  unmountOnExit
-                  style = {{
-                      transitionDelay:
-                      submittedTraps && allCheckedHouses[curDay].has(index) ? 100 : 0
-                  }}
                   in={
                       path.length > 0 &&
                       submittedTraps &&
                       allCheckedHouses[curDay].has(index)
                   }
+                  style = {{
+                      transitionDelay:
+                      submittedTraps && allCheckedHouses[curDay].has(index) ? `100ms` : `0ms`
+                  }}
+
                 >
                   <Image
                       src={ratTrap}

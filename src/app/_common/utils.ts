@@ -78,4 +78,8 @@ export const SolvedPuzzlesContext = createContext<solvedPuzzlesContext>({
   setSolvedPuzzles: () => {}
 });
 
-export const WasmContext = createContext(null);
+interface wasmContext {
+  wasmExports: WebAssembly.Exports | null;
+} 
+
+export const WasmContext = createContext<wasmContext>({ wasmExports: null });

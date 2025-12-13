@@ -4,10 +4,14 @@ import { useTheme } from "@mui/material/styles";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import { useState, useContext, useEffect } from "react";
-import { standardTextFade, SolvedPuzzlesContext, ROOSTER_PUZZLE, SOLVED } from "../_common/utils.ts";
-import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification.tsx";
+import { standardTextFade, SolvedPuzzlesContext, ROOSTER_PUZZLE, SOLVED } from "../_common/utils";
+import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
 
-function RoosterRiddleResults({ gameIsWon }) {
+interface props {
+  gameIsWon: boolean;
+}
+
+function RoosterRiddleResults({ gameIsWon } : props) {
   const theme = useTheme();
   const [notificationOpen, setNotificationOpen] = useState(gameIsWon);
 
@@ -49,7 +53,6 @@ function RoosterRiddleResults({ gameIsWon }) {
             open={notificationOpen}
             onClose={() => setNotificationOpen(false)}
             text="Rooster Puzzle Breakdown Unlocked!"
-            color={theme.palette.success.light}
           />
         </>
       ) : (

@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import { ChangeEvent } from "react";
 
 interface props {
-  handleTrifectaChange: (event: ChangeEvent, num: number) => void
+  handleTrifectaChange: (event: ChangeEvent<HTMLInputElement>, num: number) => void
 }
 const TrifectaStack = ({handleTrifectaChange} : props) => (
   <Stack
@@ -20,7 +20,7 @@ const TrifectaStack = ({handleTrifectaChange} : props) => (
       size="small"
       autoComplete="off"
       label="1st Place"
-      onChange={(e) => handleTrifectaChange(e, 0)}
+      onChange={(e: ChangeEvent<HTMLInputElement>) => handleTrifectaChange(e, 0)}
     />
     <TextField
       id="secondFastestHorse"
@@ -28,7 +28,7 @@ const TrifectaStack = ({handleTrifectaChange} : props) => (
       size="small"
       autoComplete="off"
       label="2nd Place"
-      onChange={(e) => handleTrifectaChange(e, 1)}
+      onChange={(e: ChangeEvent<HTMLInputElement>) => handleTrifectaChange(e, 1)}
     />
     <TextField
       id="thirdFastestHorse"
@@ -36,7 +36,7 @@ const TrifectaStack = ({handleTrifectaChange} : props) => (
       size="small"
       autoComplete="off"
       label="3rd Place"
-      onChange={(e) => handleTrifectaChange(e, 2)}
+      onChange={(e: ChangeEvent<HTMLInputElement>) => handleTrifectaChange(e, 2)}
     />
   </Stack>
 );

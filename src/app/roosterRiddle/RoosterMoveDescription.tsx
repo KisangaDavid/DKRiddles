@@ -3,7 +3,10 @@ import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 import { standardTextFade } from '../_common/utils';
 
-function RoosterMoveDesription({ roosterMove }) {
+interface props {
+  roosterMove: [number, number[]];
+}
+function RoosterMoveDesription({ roosterMove } : props) {
   const theme = useTheme();
 
   return (

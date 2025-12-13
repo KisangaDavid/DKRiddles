@@ -1,13 +1,17 @@
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 import BonusChallenge from "./BonusChallenge";
-import { useTheme } from "@mui/material/styles";
 import { useState, useContext, useEffect } from "react";
 import { SolvedPuzzlesContext, RAT_PUZZLE_P1, SOLVED, standardTextFade } from "../_common/utils";
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
 
-function SolvedStack({ totalDays, checkBonusAnswer, setConfetti }) {
-  const theme = useTheme();
+interface props {
+  totalDays: number;
+  checkBonusAnswer: (numBonusHouses: number, ans: number) => boolean;
+  setConfetti: (bool: boolean) => void;
+}
+
+function SolvedStack({ totalDays, checkBonusAnswer, setConfetti } : props) {
   const [notificationOpen, setNotificationOpen] = useState(totalDays == 4);
   const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
 

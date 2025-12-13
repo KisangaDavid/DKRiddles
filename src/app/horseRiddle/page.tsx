@@ -1,14 +1,14 @@
 'use client'
 
-import { useState, useCallback, useEffect, useContext } from "react";
-import { useTheme } from "@mui/material/styles";
+import { useState, useCallback, useEffect, useContext, ChangeEvent } from "react";
 import { convertIterableToInt, 
   convertIntToArray, 
   MAX_32_BIT_NUM, 
   useConfettiSize, 
   WasmContext,
-  longTextFade 
-} from "../_common/utils.ts";
+  longTextFade, 
+  longDelay
+} from "../_common/utils";
 import Grid from "@mui/material/Grid";
 import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -19,7 +19,7 @@ import TrifectaStack from "./TrifectaStack";
 import HorseRiddleDescription from "./HorseRiddleDescription";
 import Confetti from "react-confetti";
 import Box from "@mui/material/Box";
-import TopBar from "../_common/TopBar.tsx";
+import TopBar from "../_common/TopBar";
 import HorseGridElement from "./HorseGridElement";
 
 const HORSE_ORDER_CORRECT_CODE = 0;
@@ -37,20 +37,16 @@ const MAX_RACES_EXCEEDED_MSG = "You cannot race anymore horses! Please submit a 
 function HorseRiddlePage() {
   const [hasBeenReset, setHasBeenReset] = useState(false);
   const [confetti, setConfetti] = useState(false);
-  const [currentRace, setCurrentRace] = useState([]);
-  const [finishedRaces, setFinishedRaces] = useState([]);
+  const [currentRace, setCurrentRace] = useState<number[]>([]);
+  const [finishedRaces, setFinishedRaces] = useState<number[]>([]);
   const [correctAns, setCorrectAns] = useState(false);
   const [wrongReason, setWrongReason] = useState("");
-  const [fastestHorses, setFastestHorses] = useState([null, null, null]);
+  const [fastestHorses, setFastestHorses] = useState([-1, -1, -1]);
   const [confettiWidth, confettiHeight] = useConfettiSize();
-  const theme = useTheme();
-  const {wasmExports, _} = useContext(WasmContext);
+  const {wasmExports} = useContext(WasmContext);
 
   useEffect(() => {
-    if (wasmExports != null) {
-      wasmExports.resetAndRandomizeHorses(Math.floor(Math.random() * MAX_32_BIT_NUM));
-      console.log("reset horses called!")
-    }
+    resetAndRandomizeHorses();
   }, [wasmExports]);
 
   const resetPuzzle = useCallback(() => {
@@ -59,12 +55,12 @@ function HorseRiddlePage() {
     setCorrectAns(false);
     setConfetti(false);
     setWrongReason("");
-    setFastestHorses([null, null, null]);
+    setFastestHorses([-1, -1, -1]);
     setHasBeenReset(true);
-    wasmExports.resetAndRandomizeHorses(Math.floor(Math.random() * MAX_32_BIT_NUM));
+    resetAndRandomizeHorses();
   }, [wasmExports]);
 
-  const addRemoveHorseToRace = (horseIdx) => {
+  const addRemoveHorseToRace = (horseIdx: number) => {
     if (currentRace.includes(horseIdx)) {
       removeHorseFromRace(horseIdx);
     } else if (!currentRace.includes(horseIdx) && currentRace.length < RACE_LENGTH) {
@@ -75,7 +71,7 @@ function HorseRiddlePage() {
     }
   };
 
-  const removeHorseFromRace = (horseIdx) => {
+  const removeHorseFromRace = (horseIdx: number) => {
     setCurrentRace((currentRace) =>
       currentRace.filter((idx) => idx != horseIdx)
     );
@@ -95,19 +91,22 @@ function HorseRiddlePage() {
     return "";
   };
 
-  const updateFastestHorses = (horsePos, horseVal) => {
+  const updateFastestHorses = (horsePos: number, horseVal: number) => {
     setFastestHorses([...fastestHorses.slice(0, horsePos), horseVal, ...fastestHorses.slice(horsePos + 1)]);
   }
 
-  const handleTrifectaChange = (e, horsePos) => {
+  const handleTrifectaChange = (e: ChangeEvent<HTMLInputElement>, horsePos: number) => {
     const intsOnly = e.target.value.replace(/[^0-9]/g, "");
     e.target.value = intsOnly;
-    intsOnly.length < 1 ? updateFastestHorses(horsePos, null) : updateFastestHorses(horsePos, intsOnly);
+    intsOnly.length < 1 ? updateFastestHorses(horsePos, -1) : updateFastestHorses(horsePos, +intsOnly);
   };
 
   const submitRace = () => {
     let intRepHorsesToRace = convertIterableToInt(currentRace, NUM_BITS_PER_HORSE);
-    let intRes = wasmExports.submitRace(intRepHorsesToRace);
+    let intRes = -1;
+    if (wasmExports != null) {
+      intRes = (wasmExports.submitRace as Function)(intRepHorsesToRace);
+    }
     let horseOrder = convertIntToArray(intRes, NUM_BITS_PER_HORSE, RACE_LENGTH);
     setCurrentRace([]);
     setFinishedRaces([...finishedRaces, ...horseOrder.reverse()]);
@@ -117,7 +116,10 @@ function HorseRiddlePage() {
   const checkAnswer = () => {
     let horsesToSubmit = fastestHorses.map((num) => num - 1).reverse();
     let horsesToSubmitInt = convertIterableToInt(horsesToSubmit,NUM_BITS_PER_HORSE);
-    let intRes = wasmExports.checkHorseRiddleAnswer(horsesToSubmitInt);
+    let intRes = null;
+    if (wasmExports != null) {
+      intRes = (wasmExports.checkHorseRiddleAnswer as Function)(horsesToSubmitInt);
+    }
     let resVec = convertIntToArray(intRes, NUM_BITS_PER_HORSE, 3).reverse();
 
     switch (resVec[0]) {
@@ -140,7 +142,14 @@ function HorseRiddlePage() {
     }
   };
 
-  let trifectaBetFilled = !fastestHorses.includes(null);
+  const resetAndRandomizeHorses = () => {
+    if (wasmExports != null) {
+      (wasmExports.resetAndRandomizeHorses as Function)
+        (Math.floor(Math.random() * MAX_32_BIT_NUM));
+    }
+  }
+
+  let trifectaBetFilled = !fastestHorses.includes(-1);
   let trifectaErrorMessage = validateTrifectaBet();
   
   return (
@@ -158,7 +167,7 @@ function HorseRiddlePage() {
           mountOnEnter
           unmountOnExit
           timeout={longTextFade}
-          style={{transitionDelay: hasBeenReset ? 0 : theme.delays.duration.longDelay}}
+          style={{transitionDelay: hasBeenReset ? 0+"ms" : longDelay+"ms"}}
         >
           <Box
             sx={{
@@ -251,6 +260,7 @@ function HorseRiddlePage() {
                         key={idx}
                         horseNumber={horseIdx + 1}
                         onClick={() => removeHorseFromRace(horseIdx)}
+                        selected = {false}
                       />
                     ))}
                   </Grid>

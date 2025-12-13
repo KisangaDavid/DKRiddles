@@ -5,7 +5,14 @@ import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 import { standardTextFade } from "../_common/utils";
 
-function UnsolvedStack({curDay, totalDays, path, allCheckedHouses, handleSliderChange}) {
+interface props {
+  curDay: number;
+  totalDays: number;
+  path: Array<number>;
+  allCheckedHouses: Array<Set<number>>;
+  handleSliderChange: (event: Event, value: number) => void;
+}
+function UnsolvedStack({curDay, totalDays, path, allCheckedHouses, handleSliderChange} : props) {
   const theme = useTheme();
   return (
     <Fade 

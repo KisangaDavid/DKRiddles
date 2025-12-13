@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
 interface props {
-  finishedRaces: [number];
+  finishedRaces: number[];
   MAX_NUM_RACES: number;
   RACE_LENGTH: number;
 }

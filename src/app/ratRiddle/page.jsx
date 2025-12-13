@@ -3,19 +3,19 @@
 import { useState, useCallback } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { useContext } from "react";
-import { WasmContext, useConfettiSize, longTextFade, standardTextFade } from "../_common/utils.ts";
+import { WasmContext, useConfettiSize, longTextFade, standardTextFade, longDelay } from "../_common/utils";
 
-import RowOfHouses from './RowOfHouses.jsx';
-import SolvedStack from './SolvedStack.jsx';
-import UnsolvedStack from './UnsolvedStack.jsx';
-import RatRiddleDescription from './RatRiddleDescription.jsx';
+import RowOfHouses from './RowOfHouses';
+import SolvedStack from './SolvedStack';
+import UnsolvedStack from './UnsolvedStack';
+import RatRiddleDescription from './RatRiddleDescription';
 import Confetti from 'react-confetti'
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
 import Box from "@mui/material/Box";
-import TopBar from '../_common/TopBar.tsx';
+import TopBar from '../_common/TopBar';
 
 const NUM_HOUSES = 8;
 
@@ -113,7 +113,7 @@ function RatRiddlePage() {
       <RatRiddleDescription />
       <Fade in={true} mountOnEnter unmountOnExit
           timeout={longTextFade}
-          style={{ transitionDelay: theme.delays.duration.longDelay }}
+          style={{ transitionDelay: longDelay }}
       >
         <Box sx={{ position: "relative", width: 'var(--pageWidthPercent)'}}>
           <RowOfHouses

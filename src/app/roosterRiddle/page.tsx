@@ -8,33 +8,33 @@ import {
   MAX_32_BIT_NUM, 
   useConfettiSize, 
   longTextFade,
-  WasmContext 
-} from "../_common/utils.ts";
-import RoosterRiddleDescription from './RoosterRiddleDescription.jsx';
-import RoosterMoveDescription from './RoosterMoveDescription.jsx';
-import RoosterRiddleResults from './RoosterRiddleResults.jsx';
-import PileStack from './PileStack.jsx';
+  WasmContext, 
+  longDelay
+} from "../_common/utils";
+import RoosterRiddleDescription from './RoosterRiddleDescription';
+import RoosterMoveDescription from './RoosterMoveDescription';
+import RoosterRiddleResults from './RoosterRiddleResults';
+import PileStack from './PileStack';
 import Confetti from 'react-confetti'
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
 import Box from "@mui/material/Box";
-import TopBar from '../_common/TopBar.tsx';
+import TopBar from '../_common/TopBar';
 
 const NUM_BITS_PER_PILE = 4;
 const NUM_PILES = 4;
 
 function RoosterRiddlePage() {
-  const theme = useTheme();
   const [showResultScreen, setShowResultScreen] = useState(false);
   const [gameIsWon, setGameIsWon] = useState(false);
-  const [piles, setPiles] = useState([]);
-  const [selectedKernels, setSelectedKernels] = useState(new Set());
-  const [selectedPile, setSelectedPile] = useState(null);
-  const [roosterMove, setRoosterMove] = useState([null, null]);
+  const [piles, setPiles] = useState<number[][]>([[]]);
+  const [selectedKernels, setSelectedKernels] = useState(new Set<number>());
+  const [selectedPile, setSelectedPile] = useState(-1);
+  const [roosterMove, setRoosterMove] = useState<[number, number[]]>([-1, [-1]]);
   const [confettiWidth, confettiHeight] = useConfettiSize();
-  const {wasmExports, _} = useContext(WasmContext);
+  const {wasmExports} = useContext(WasmContext);
 
   useEffect(() => {
     if (wasmExports !== null) {
@@ -45,18 +45,18 @@ function RoosterRiddlePage() {
   const generateAndSetPiles = () => {
     let pilesIntForm = wasmExports.getInitialPiles(Math.floor(Math.random() * MAX_32_BIT_NUM));
     let piles = convertIntToArray(pilesIntForm, NUM_BITS_PER_PILE, NUM_PILES);
-    piles = piles.map(pile => 
+    let pilesToSet = piles.map(pile => 
       Array.from({ length: pile }, (_, i) => i)
     );
-    setPiles(piles);
+    setPiles(pilesToSet);
   };
 
-  const handleKernelClick = (idx, pileNum) => {
+  const handleKernelClick = (idx: number, pileNum: number) => {
     if (selectedKernels.has(idx)) {
       const newSet = new Set(selectedKernels);
       newSet.delete(idx);
       if (newSet.size == 0) {
-        setSelectedPile(null);
+        setSelectedPile(-1);
       }
       setSelectedKernels(newSet);
     }
@@ -81,13 +81,13 @@ function RoosterRiddlePage() {
     let [numToTake, pileToTakeFrom] = convertIntToArray(roosterMove, NUM_BITS_PER_PILE, 2);
     setPiles(pilesPostPlayerMove);
     setSelectedKernels(new Set());
-    setSelectedPile(null);
+    setSelectedPile(-1);
     setTimeout(() => {
       executeRoosterMove(pileToTakeFrom, numToTake, pilesPostPlayerMove);;
-    }, theme.delays.duration.longDelay);
+    }, longDelay);
   }
 
-  const executeRoosterMove = (pileToTakeFrom, numToTake, pilesPostPlayerMove) => {
+  const executeRoosterMove = (pileToTakeFrom: number, numToTake: number, pilesPostPlayerMove: Array<Array<number>>) => {
     setRoosterMove([pileToTakeFrom, pilesPostPlayerMove[pileToTakeFrom].slice(-numToTake)]);
     let pileAfterRoosterRemoval = pilesPostPlayerMove[pileToTakeFrom].slice(0, -numToTake);
     setPiles([...pilesPostPlayerMove.slice(0, pileToTakeFrom), pileAfterRoosterRemoval, ...pilesPostPlayerMove.slice(pileToTakeFrom + 1)]);
@@ -98,14 +98,14 @@ function RoosterRiddlePage() {
     setShowResultScreen(false);
     setGameIsWon(false);
     setSelectedKernels(new Set());
-    setSelectedPile(null);
-    setRoosterMove([null, null]);
+    setSelectedPile(-1);
+    setRoosterMove([-1, [-1]]);
   }
 
-  if (piles.length > 0 && piles.reduce((a, b) => a + b.length, 0) == 0) {
+  if (piles.length === NUM_PILES && piles.reduce((a, b) => a + b.length, 0) == 0) {
     setTimeout(() => {
       setShowResultScreen(true);
-    }, theme.delays.duration.longDelay);
+    }, longDelay);
   }
 
   return (
@@ -115,7 +115,7 @@ function RoosterRiddlePage() {
     <RoosterRiddleDescription />
     <Fade in={true} mountOnEnter unmountOnExit
             timeout={longTextFade}
-            style={{ transitionDelay: theme.delays.duration.longDelay}}
+            style={{ transitionDelay: longDelay + 'ms'}}
         >
       <Box
         sx={{
@@ -150,8 +150,8 @@ function RoosterRiddlePage() {
                     <PileStack 
                       pileNum={idx} 
                       pileKernels = {pile} 
-                      canBeSelectedFrom={selectedPile == null || selectedPile == idx} 
-                      handleKernelClick={(selectedPile == null || selectedPile == idx) ? handleKernelClick: ()=>{}} 
+                      canBeSelectedFrom={selectedPile == -1 || selectedPile == idx} 
+                      handleKernelClick={(selectedPile == -1 || selectedPile == idx) ? handleKernelClick: ()=>{}} 
                       selectedKernels={selectedKernels}
                       setSelectedKernels={setSelectedKernels}
                     />

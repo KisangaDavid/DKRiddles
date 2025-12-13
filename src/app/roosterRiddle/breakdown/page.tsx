@@ -1,6 +1,5 @@
 'use client'
 
-import { useTheme } from "@mui/material/styles";
 import { useContext } from "react";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
@@ -9,21 +8,20 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import TopBar from "../../_common/TopBar.tsx";
-import RiddleNotComplete from "../../_common/RiddleNotComplete.tsx";
-import { SolvedPuzzlesContext, ROOSTER_PUZZLE, standardTextFade } from "../../_common/utils.ts";
+import TopBar from "../../_common/TopBar";
+import RiddleNotComplete from "../../_common/RiddleNotComplete";
+import { SolvedPuzzlesContext, ROOSTER_PUZZLE, standardTextFade, roosterBlogLink } from "../../_common/utils";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
 
 function AboutRoosterRiddle() {
-  const theme = useTheme();
-  const { solvedPuzzles, _ } = useContext(SolvedPuzzlesContext);
+  const { solvedPuzzles } = useContext(SolvedPuzzlesContext);
 
   return (
     <>
       <TopBar
         text="Puzzle Breakdown #3: The Undefeated Rooster"
         isPuzzlePage={false}
-        resetFunc={null}
+        resetFunc={undefined}
       />
       {solvedPuzzles.has(ROOSTER_PUZZLE) ? (
         <Fade
@@ -226,6 +224,7 @@ function AboutRoosterRiddle() {
         <RiddleNotComplete
           puzzleNumber={3}
           puzzleTitle={"The Undefeated Rooster"}
+          blogLink={roosterBlogLink}
         />
       )}
     </>

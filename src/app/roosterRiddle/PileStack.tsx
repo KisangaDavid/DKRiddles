@@ -1,6 +1,5 @@
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import Stack from "@mui/material/Stack";
-import { useTheme } from '@mui/material/styles';
 import Image from 'next/image';
 import kernelImg from "../../assets/kernel.png";
 import Zoom from '@mui/material/Zoom';
@@ -10,13 +9,23 @@ import { shortImageZoom } from '../_common/utils';
 const NUM_COLUMNS_OF_KERNELS = 3;
 const MAX_NUM_KERNELS = 12;
 
-function PileStack({pileKernels, pileNum, selectedKernels, canBeSelectedFrom, handleKernelClick}) {
-  
-  const theme = useTheme();
+interface props {
+  pileKernels: Array<number>;
+  pileNum: number;
+  selectedKernels: Set<number>;
+  handleKernelClick: (idx: number, pileNum: number) => void;
+  canBeSelectedFrom: boolean;
+  setSelectedKernels: (selectedKernels: Set<number>) => void;
+   
+}
+function PileStack({pileKernels, pileNum, selectedKernels, canBeSelectedFrom, handleKernelClick} : props) {
 
-  const randomRotations = useMemo(() => 
-    [...Array(MAX_NUM_KERNELS)].map(() => Math.random() * 360)
-  , []);
+  const [randomRotations, setRandomRotations] = useState([...Array(MAX_NUM_KERNELS)]);
+
+  useEffect(() => {
+    setRandomRotations([...Array(MAX_NUM_KERNELS)].map(() => Math.random() * 360))
+  },[])
+
   return (
     <Stack
       direction="column"

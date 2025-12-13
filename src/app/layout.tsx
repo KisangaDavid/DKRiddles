@@ -2,16 +2,16 @@
 
 import "./globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { useState, useEffect } from "react";
+import { useState, useEffect, PropsWithChildren } from "react";
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './_common/theme';
 import PageWrapper from "./_common/PageWrapper";
 import { SolvedPuzzlesContext, WasmContext, ALL_PUZZLES } from "./_common/utils";
 
-export default function RootLayout({ children }) {
-  const [wasmExports, setWasmExports] = useState(null);
-  const [solvedPuzzles, setSolvedPuzzles] = useState(new Set());
+export default function RootLayout({ children } : PropsWithChildren) {
+  const [wasmExports, setWasmExports] = useState<WebAssembly.Exports | null>(null);
+  const [solvedPuzzles, setSolvedPuzzles] = useState<Set<string>>(new Set());
 
   // Not used but required by the WASM binary
   const wasmImports = {
@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
   }
 
   useEffect(() => {
-    const newSolvedPuzzles = new Set();
+    const newSolvedPuzzles = new Set<string>();
     ALL_PUZZLES.forEach((element) => {
       if(localStorage.getItem(element) != null) {
         newSolvedPuzzles.add(element)
@@ -50,7 +50,7 @@ export default function RootLayout({ children }) {
       <body>
         <AppRouterCacheProvider>
           <SolvedPuzzlesContext value={{solvedPuzzles, setSolvedPuzzles}}>
-            <WasmContext value={{wasmExports, setWasmExports}}>
+            <WasmContext value={{wasmExports}}>
             <ThemeProvider theme={theme}>
               <CssBaseline />
               <div id="root">
