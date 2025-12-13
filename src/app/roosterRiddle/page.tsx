@@ -37,14 +37,12 @@ function RoosterRiddlePage() {
   const {wasmExports} = useContext(WasmContext);
 
   useEffect(() => {
-    if (wasmExports !== null) {
       generateAndSetPiles();
-    }
   }, [wasmExports]);
 
   const generateAndSetPiles = () => {
-    let pilesIntForm = wasmExports.getInitialPiles(Math.floor(Math.random() * MAX_32_BIT_NUM));
-    let piles = convertIntToArray(pilesIntForm, NUM_BITS_PER_PILE, NUM_PILES);
+    let pilesIntForm = getPilesIntForm();
+    let piles = convertIntToArray(pilesIntForm, NUM_BITS_PER_PILE, NUM_PILES); // TODO: check null value somewhere
     let pilesToSet = piles.map(pile => 
       Array.from({ length: pile }, (_, i) => i)
     );
@@ -77,7 +75,7 @@ function RoosterRiddlePage() {
     }
     let randSource = Math.floor(Math.random() * MAX_32_BIT_NUM);
     let pilesIntRep = convertIterableToInt(postPlayerPileSums.reverse(), NUM_BITS_PER_PILE);
-    let roosterMove = wasmExports.getRoosterRiddleMove(pilesIntRep, randSource);
+    let roosterMove = getRoosterRiddleMove(pilesIntRep, randSource);
     let [numToTake, pileToTakeFrom] = convertIntToArray(roosterMove, NUM_BITS_PER_PILE, 2);
     setPiles(pilesPostPlayerMove);
     setSelectedKernels(new Set());
@@ -100,6 +98,22 @@ function RoosterRiddlePage() {
     setSelectedKernels(new Set());
     setSelectedPile(-1);
     setRoosterMove([-1, [-1]]);
+  }
+
+  const getPilesIntForm = () => {
+    let piles = null;
+    if (wasmExports != null) {
+      piles = (wasmExports.getInitialPiles as Function)(Math.floor(Math.random() * MAX_32_BIT_NUM));
+    }
+    return piles;
+  }
+
+  const getRoosterRiddleMove = (pilesIntRep: number, randSource: number) => {
+    let roosterMove = null;
+    if (wasmExports != null) {
+      roosterMove = (wasmExports.getRoosterRiddleMove as Function)(pilesIntRep, randSource)
+    }
+    return roosterMove
   }
 
   if (piles.length === NUM_PILES && piles.reduce((a, b) => a + b.length, 0) == 0) {
