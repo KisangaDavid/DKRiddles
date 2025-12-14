@@ -22,20 +22,20 @@ const NUM_HOUSES = 8;
 function RatRiddlePage() {
   const [submittedTraps, setSubmittedTraps] = useState(false);
   const [confetti, setConfetti] = useState(false);
-  const [path, setPath] = useState([]);
+  const [path, setPath] = useState<number[]>([]);
   const [curDay, setCurDay] = useState(0);
-  const [prevDay, setPrevDay] = useState(null);
+  const [prevDay, setPrevDay] = useState(-1);
   const [totalDays, setTotalDays] = useState(0);
-  const [allCheckedHouses, setAllCheckedHouses] = useState([]);
-  const [curCheckedHouses, setCurCheckedHouses] = useState(new Set());
+  const [allCheckedHouses, setAllCheckedHouses] = useState<Set<number>[]>([]);
+  const [curCheckedHouses, setCurCheckedHouses] = useState<Set<number>>(new Set());
   const [confettiWidth, confettiHeight] = useConfettiSize();
 
   
   const theme = useTheme();
-  const {wasmExports, _} = useContext(WasmContext);
+  const {wasmExports} = useContext(WasmContext);
   const solved = path.length == 0;
 
-  const trapHouse = (index) => {
+  const trapHouse = (index: number) => {
     const newSet = new Set(curCheckedHouses);
     if (newSet.has(index)) {
       newSet.delete(index);
@@ -58,7 +58,7 @@ function RatRiddlePage() {
     let allCheckedPositions = convertToAbsPos(allCheckedHouses.concat(curCheckedHouses));
     let counter = 0;
     let binaryString = ""
-    allCheckedPositions.forEach((element) => {
+    allCheckedPositions.forEach((element: number) => {
       while (counter < element) {
         binaryString += "0";
         counter++;
@@ -66,7 +66,7 @@ function RatRiddlePage() {
       binaryString += "1";
       counter++;
     });
-    let intPath = wasmExports.checkRatRiddleAnswer(BigInt(`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`));
+    let intPath = (wasmExports?.checkRatRiddleAnswer as Function)(BigInt(`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`));
     let path = []
     if (intPath != -1) {
       for (let i = 0; i <= curDay; i++) {
@@ -89,18 +89,16 @@ function RatRiddlePage() {
       setCurDay(0);
       setSubmittedTraps(false);
       setPath([]);
-      setPrevDay(null);
+      setPrevDay(-1);
       setConfetti(false)}, []
   );
 
-  const handleSliderChange = (_, value) => {
+  const handleSliderChange = (_: Event, value: number) => {
     setPrevDay(curDay);
     setCurDay(value - 1);
   }
 
-
-
-  const convertToAbsPos = (checkedPositions) => {
+  const convertToAbsPos = (checkedPositions: Set<number>[]) => {
     return checkedPositions.flatMap((set, idx) => {
       return [...set].map(elem => elem + idx * NUM_HOUSES);
     });
@@ -113,7 +111,7 @@ function RatRiddlePage() {
       <RatRiddleDescription />
       <Fade in={true} mountOnEnter unmountOnExit
           timeout={longTextFade}
-          style={{ transitionDelay: longDelay }}
+          style={{ transitionDelay: longDelay + "ms" }}
       >
         <Box sx={{ position: "relative", width: 'var(--pageWidthPercent)'}}>
           <RowOfHouses
@@ -148,7 +146,7 @@ function RatRiddlePage() {
           {submittedTraps && solved && (
             <Box>
               <SolvedStack
-                checkBonusAnswer={wasmExports.checkRatBonusAnswer}
+                checkBonusAnswer={(wasmExports?.checkRatBonusAnswer as (numBonusHouses: number, ans: number) => boolean)}
                 setConfetti={setConfetti}
                 totalDays={totalDays}
               />

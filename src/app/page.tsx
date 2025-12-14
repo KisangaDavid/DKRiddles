@@ -9,13 +9,13 @@ import ratRiddleThumbnail from '../assets/ratRiddleThumbnail.png'
 import horseRiddleThumbnail from '../assets/horseTrifecta.png'
 import roosterRiddleThumbnail from '../assets/roosterRiddleThumbnail.png'
 import mysteryLetter from '../assets/mysteryLetter.jpg'
-import PuzzleCard from './_common/PuzzleCard.tsx'
+import PuzzleCard from './_common/PuzzleCard'
 import riddleManLetter from '../assets/riddleManLetter.jpg'
 import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
-import TopBar from './_common/TopBar.tsx';
-import { standardTextFade, standardImageFade, longTextFade } from './_common/utils';
+import TopBar from './_common/TopBar';
+import { standardTextFade, standardImageFade, longTextFade, longDelay } from './_common/utils';
 
 function IntroductionPage() {
 
@@ -28,7 +28,7 @@ function IntroductionPage() {
   
   return (
     <>
-      <TopBar text="Introduction" isPuzzlePage={false} />
+      <TopBar text="Introduction" isPuzzlePage={false} resetFunc={undefined} />
       <Fade in={true} timeout={1000}>
         <Box sx={{width: 'var(--pageWidthPercent)', position: "relative", mb:"1vh"}}>
           <p>
@@ -107,7 +107,7 @@ function IntroductionPage() {
           <Grid size={{ sm: 12, md: 6}} style={{display: "flex", justifyContent: 'center', alignItems: "center"}}>   
             <Fade 
               in={true}  
-              style = {{transitionDelay: theme.delays.duration.longDelay}} 
+              style = {{transitionDelay: longDelay + "ms"}} 
               timeout={longTextFade}
             >     
               <p style={{ textAlign: "left" }}>      
@@ -137,7 +137,7 @@ function IntroductionPage() {
             <PuzzleCard 
               puzzleImage = {ratRiddleThumbnail} 
               puzzleName = "The Sneaky Rat" 
-              puzzleNumber = "1" 
+              puzzleNumber = {1} 
               puzzleDescription = "Concoct the perfect plan to catch a sneaky rat!"
               puzzlePath = "/ratRiddle" 
               transitionDelay={0}
@@ -147,7 +147,7 @@ function IntroductionPage() {
             <PuzzleCard 
               puzzleImage = {horseRiddleThumbnail} 
               puzzleName = "The Horse Trifecta" 
-              puzzleNumber = "2" 
+              puzzleNumber = {2}
               puzzleDescription = "Utilize your skills of deduction to win big at the horse races!"
               puzzlePath = "/horseRiddle" 
               transitionDelay={shortDelay}
@@ -157,7 +157,7 @@ function IntroductionPage() {
             <PuzzleCard 
               puzzleImage = {roosterRiddleThumbnail} 
               puzzleName = "The Undefeated Rooster" 
-              puzzleNumber = "3" 
+              puzzleNumber = {3}
               puzzleDescription = "Best the undefeated rooster in a battle of intellect!"
               puzzlePath = "/roosterRiddle" 
               transitionDelay={shortDelay * 2}
@@ -167,7 +167,7 @@ function IntroductionPage() {
             <PuzzleCard 
               puzzleImage = {mysteryLetter} 
               puzzleName = "Puzzle in Progress!" 
-              puzzleNumber = "4" 
+              puzzleNumber = {4}
               puzzleDescription = "Come back later to find a a brand new puzzle from Mr. Riddle Man!"
               puzzlePath = "/" 
               transitionDelay={shortDelay * 3}

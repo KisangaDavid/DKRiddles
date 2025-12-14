@@ -39,13 +39,6 @@ const typography = {
   },
 };
 
-// const delayDurations = {
-//   shortDelay: 200,
-//   standardDelay: 250,
-//   longDelay: 500,
-//   extraLongDelay: 750
-// }
-
 const shape = {
   borderRadius: 8
 }
@@ -54,9 +47,6 @@ const theme = createTheme({
   palette: {
     mode: "dark"
   },
-  // delays: {
-  //   duration: delayDurations // TODO: remove these when making file typescript
-  // },
   typography,
   shape,
 });

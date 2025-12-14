@@ -12,7 +12,7 @@ function RoosterMoveDesription({ roosterMove } : props) {
   return (
     <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>
       <Box sx={{width: "100%", position: "relative", mb:"2vh"}}>
-        {roosterMove[0] == null 
+        {roosterMove[0] == -1
           ? 
             <p>
               The rooster shoots you a cocky look, daring you to make the first move.

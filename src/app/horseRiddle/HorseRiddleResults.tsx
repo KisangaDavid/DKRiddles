@@ -35,7 +35,7 @@ function HorseRiddleResults({numRaces, setConfetti} : props) {
   }, [numRaces]);
 
   return (
-    <Box sx={{display: "flex", width: 'var(--pageWidthPercent)', alignItems: "center", mt: "10em"}}>
+    <Box sx={{display: "flex", width: 'var(--pageWidthPercent)', alignItems: "center"}}>
       {numRaces == MIN_NUM_RACES ?
         <>
           <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>
@@ -84,7 +84,6 @@ function HorseRiddleResults({numRaces, setConfetti} : props) {
                 border: `1px solid hsla(0, 0%, 23%, 0.60)`,
                 borderRadius: theme.shape.borderRadius,
                 overflow:"hidden",
-                mb:"1vh",
                 mx: "1vw",
                 width: "100%",
               }}

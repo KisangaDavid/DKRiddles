@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, useContext } from 'react';
-import { useTheme } from '@mui/material/styles';
 import { 
   convertIterableToInt, 
   convertIntToArray,
@@ -42,11 +41,14 @@ function RoosterRiddlePage() {
 
   const generateAndSetPiles = () => {
     let pilesIntForm = getPilesIntForm();
-    let piles = convertIntToArray(pilesIntForm, NUM_BITS_PER_PILE, NUM_PILES); // TODO: check null value somewhere
-    let pilesToSet = piles.map(pile => 
-      Array.from({ length: pile }, (_, i) => i)
-    );
-    setPiles(pilesToSet);
+
+    if (pilesIntForm != null) {
+      let piles = convertIntToArray(pilesIntForm, NUM_BITS_PER_PILE, NUM_PILES); // TODO: check null value somewhere
+      let pilesToSet = piles.map(pile => 
+        Array.from({ length: pile }, (_, i) => i)
+      );
+      setPiles(pilesToSet);
+    }
   };
 
   const handleKernelClick = (idx: number, pileNum: number) => {
@@ -75,7 +77,7 @@ function RoosterRiddlePage() {
     }
     let randSource = Math.floor(Math.random() * MAX_32_BIT_NUM);
     let pilesIntRep = convertIterableToInt(postPlayerPileSums.reverse(), NUM_BITS_PER_PILE);
-    let roosterMove = getRoosterRiddleMove(pilesIntRep, randSource);
+    let roosterMove = (wasmExports?.getRoosterRiddleMove as Function)(pilesIntRep, randSource);
     let [numToTake, pileToTakeFrom] = convertIntToArray(roosterMove, NUM_BITS_PER_PILE, 2);
     setPiles(pilesPostPlayerMove);
     setSelectedKernels(new Set());

@@ -72,6 +72,9 @@ function AboutSitePage() {
                   </Typography>
                 } 
               />
+               <ListItemIcon sx={{display: "flex", position: "absolute", right: "-20px"}}>
+                <CheckRoundedIcon fontSize = "large" sx={{color: theme.palette.success.main }} />
+              </ListItemIcon>
             </ListItem>
             <ListItem>
               <ListItemText  

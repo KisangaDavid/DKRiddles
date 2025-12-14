@@ -103,10 +103,7 @@ function HorseRiddlePage() {
 
   const submitRace = () => {
     let intRepHorsesToRace = convertIterableToInt(currentRace, NUM_BITS_PER_HORSE);
-    let intRes = -1;
-    if (wasmExports != null) {
-      intRes = (wasmExports.submitRace as Function)(intRepHorsesToRace);
-    }
+    let intRes = (wasmExports?.submitRace as Function)(intRepHorsesToRace);
     let horseOrder = convertIntToArray(intRes, NUM_BITS_PER_HORSE, RACE_LENGTH);
     setCurrentRace([]);
     setFinishedRaces([...finishedRaces, ...horseOrder.reverse()]);
@@ -116,10 +113,8 @@ function HorseRiddlePage() {
   const checkAnswer = () => {
     let horsesToSubmit = fastestHorses.map((num) => num - 1).reverse();
     let horsesToSubmitInt = convertIterableToInt(horsesToSubmit,NUM_BITS_PER_HORSE);
-    let intRes = null;
-    if (wasmExports != null) {
-      intRes = (wasmExports.checkHorseRiddleAnswer as Function)(horsesToSubmitInt);
-    }
+    let intRes = (wasmExports?.checkHorseRiddleAnswer as Function)(horsesToSubmitInt);
+
     let resVec = convertIntToArray(intRes, NUM_BITS_PER_HORSE, 3).reverse();
 
     switch (resVec[0]) {
@@ -144,8 +139,7 @@ function HorseRiddlePage() {
 
   const resetAndRandomizeHorses = () => {
     if (wasmExports != null) {
-      (wasmExports.resetAndRandomizeHorses as Function)
-        (Math.floor(Math.random() * MAX_32_BIT_NUM));
+      (wasmExports.resetAndRandomizeHorses as Function)(Math.floor(Math.random() * MAX_32_BIT_NUM));
     }
   }
 
