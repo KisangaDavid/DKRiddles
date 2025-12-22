@@ -30,8 +30,6 @@ function RatRiddlePage() {
   const [curCheckedHouses, setCurCheckedHouses] = useState<Set<number>>(new Set());
   const [confettiWidth, confettiHeight] = useConfettiSize();
 
-  
-  const theme = useTheme();
   const {wasmExports} = useContext(WasmContext);
   const solved = path.length == 0;
 
@@ -84,13 +82,13 @@ function RatRiddlePage() {
   }
 
   const resetPuzzle = useCallback(() => {
-      setAllCheckedHouses([]);
-      setCurCheckedHouses(new Set());
-      setCurDay(0);
-      setSubmittedTraps(false);
-      setPath([]);
-      setPrevDay(-1);
-      setConfetti(false)}, []
+    setAllCheckedHouses([]);
+    setCurCheckedHouses(new Set());
+    setCurDay(0);
+    setSubmittedTraps(false);
+    setPath([]);
+    setPrevDay(-1);
+    setConfetti(false)}, []
   );
 
   const handleSliderChange = (_: Event, value: number) => {
