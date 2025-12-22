@@ -110,14 +110,6 @@ function RoosterRiddlePage() {
     return piles;
   }
 
-  const getRoosterRiddleMove = (pilesIntRep: number, randSource: number) => {
-    let roosterMove = null;
-    if (wasmExports != null) {
-      roosterMove = (wasmExports.getRoosterRiddleMove as Function)(pilesIntRep, randSource)
-    }
-    return roosterMove
-  }
-
   if (piles.length === NUM_PILES && piles.reduce((a, b) => a + b.length, 0) == 0) {
     setTimeout(() => {
       setShowResultScreen(true);

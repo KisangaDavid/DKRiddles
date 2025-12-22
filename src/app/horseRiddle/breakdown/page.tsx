@@ -51,7 +51,7 @@ function HorseRiddleBreakdownPage() {
               Intuition
             </Typography>
             <Typography align="left">
-              The solution to this puzzle is remeniscent of a multi-way merge
+              The solution to this puzzle is reminiscent of a multi-way merge
               sort. To start, 5 ordered lists of horses are attained by
               conducting 5 races in which every horse is raced exactly once. A
               6th race is conducted with the winners of the previous 5 races.
@@ -253,7 +253,7 @@ function HorseRiddleBreakdownPage() {
               fastest 4 horses after just 7 races! This is not always the case -
               this specific configuration was just lucky. If there are multiple
               source horses, it means that the speed relation between said
-              horses is ambiguous. An exmaple is shown below:
+              horses is ambiguous. An example is shown below:
             </Typography>
             <br />
             <StyledBreakdownCard sx={{width: {xs: "75%", sm: "50%"}}}>

@@ -32,7 +32,7 @@ function IntroductionPage() {
       <Fade in={true} timeout={1000}>
         <Box sx={{width: 'var(--pageWidthPercent)', position: "relative", mb:"1vh"}}>
           <p>
-            Mr. Riddle Man - a name shrouded in mystery. Renowed by many to be the world's
+            Mr. Riddle Man - a name shrouded in mystery. Renowned by many to be the world's
             foremost puzzle expert, he is often called upon to solve the world's toughest
             conundrums - and none have stumped him yet. Despite his world-famous status,
             no one knows his true identity. That's all you know about the man - at least
@@ -114,7 +114,7 @@ function IntroductionPage() {
                 The letter reads: <br /> <br />
                 <i>
                   I am Mr. Riddle Man. I grow weary of my power and status, and so wish to
-                  pass the title of Mr. Riddle Man to another. Attatched to this letter you
+                  pass the title of Mr. Riddle Man to another. Attached to this letter you
                   shall find a set of envelopes. Each envelope contains a puzzle - solve them
                   all in their entirety, and I shall name you as my successor. Should you
                   choose to accept, I advise secrecy of the highest order - the identity of a

@@ -10,7 +10,7 @@ function RoosterRiddleDescription() {
           You tear open the third envelope. Inside you find a note, which reads:
           <br />
           <i>
-            This riddle is a challange - you must defeat my prized fighting rooster!
+            This riddle is a challenge - you must defeat my prized fighting rooster!
             Of course, this will be a battle of intelligence, not strength. The rules
             of battle are simple - You and my rooster will each take turns picking up
             kernels of corn. On your turn you must take a positive number of kernels
@@ -21,7 +21,7 @@ function RoosterRiddleDescription() {
           <br />
           <br />
           As soon as you finish reading the note, a majestic rooster struts over and
-          drops a small linnen bag at your feet. The bag, seemingly with a mind of its
+          drops a small linen bag at your feet. The bag, seemingly with a mind of its
           own, tips over and spills the corn kernels inside into four haphazard piles:
         </p>
       </Box>

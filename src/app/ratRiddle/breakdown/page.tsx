@@ -94,7 +94,7 @@ function RatRiddleBreakdownPage() {
               Part 1: Implementation
             </Typography>
             <Typography align="left">
-              The crux here is how to programatically verify if a
+              The crux here is how to programmatically verify if a
               submitted arrangement of traps will successfully catch the rat. In
               this case where there are only 8 houses and a maximum of 7 days, it
               would be completely feasible to enumerate all 316 possible paths the
@@ -184,7 +184,7 @@ function RatRiddleBreakdownPage() {
                   This time we begin from the last day, work backwards to eliminate half of the
                   houses in a row (i.e. all odd or even houses), then continue on in the same
                   manner until all houses in a row are eliminated. In the 11 house example
-                  below, red nodes represent rattrapped houses, and yellow nodes represent
+                  below, red nodes represent rat-trapped houses, and yellow nodes represent
                   houses in which the rat is guaranteed to run into a rattrap in the future.
                 </Typography>
                 <br />
@@ -229,8 +229,8 @@ function RatRiddleBreakdownPage() {
                   case, the number of days needed to eliminate the rest of the houses is X
                   <sub>1/2</sub> - 1. This is because if the number of houses is divisible by 3,
                   then on on day X<sub>1/2</sub> half the houses are eliminated after one trap
-                  is placed, so the other trap is used to get a headstart on eliminating the
-                  rest of the houses. This headstart will only make a difference if X
+                  is placed, so the other trap is used to get a head start on eliminating the
+                  rest of the houses. This head start will only make a difference if X
                   <sub>1/2</sub> is even.
                 </Typography>
                 <br />
@@ -245,7 +245,7 @@ function RatRiddleBreakdownPage() {
                   />
                   <StyledBreakdownCardContent>
                     <Typography align="center">
-                      With 12 houses, the rat can be caught in 7 days. The above mentioned "headstart" is visible on day 4. 
+                      With 12 houses, the rat can be caught in 7 days. The above mentioned "head start" is visible on day 4. 
                     </Typography>
                   </StyledBreakdownCardContent>
                 </StyledBreakdownCard>
@@ -253,7 +253,7 @@ function RatRiddleBreakdownPage() {
                 <Typography align="left">
                   Thus, the number of days needed to catch the rat for any number of 
                   houses <i>N</i> is given by the expression <i>2X<sub>1/2</sub> - 1</i> if 
-                  X<sub>1/2</sub> is even and <i>N</i> is divisibly by 3, and the 
+                  X<sub>1/2</sub> is even and <i>N</i> is divisible by 3, and the 
                   expression <i>2X<sub>1/2</sub></i> otherwise. This is the precise
                   formula used to validate if a submitted answer to part 2 is correct.
                 </Typography>

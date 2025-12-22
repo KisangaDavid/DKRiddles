@@ -1,6 +1,5 @@
 'use client'
 
-import { useTheme } from "@mui/material/styles";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import { useState, useContext, useEffect } from "react";
@@ -12,7 +11,6 @@ interface props {
 }
 
 function RoosterRiddleResults({ gameIsWon } : props) {
-  const theme = useTheme();
   const [notificationOpen, setNotificationOpen] = useState(gameIsWon);
 
   const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
