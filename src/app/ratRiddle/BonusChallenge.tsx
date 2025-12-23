@@ -42,7 +42,7 @@ function BonusChallenge({checkBonusAnswer, setConfetti, totalDays} : props) {
     setBonusSubmitted(true);
   };
 
-  const handleBonusAnwerChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleBonusAnswerChange = (e: ChangeEvent<HTMLInputElement>) => {
     const intsOnly = e.target.value.replace(/[^0-9]/g, "");
     e.target.value = intsOnly;
     intsOnly.length < 1 ? setAnswerToBonus(-1) : setAnswerToBonus(+intsOnly);
@@ -123,7 +123,7 @@ function BonusChallenge({checkBonusAnswer, setConfetti, totalDays} : props) {
                   size="small"
                   autoComplete="off"
                   label="Number of days"
-                  onChange={handleBonusAnwerChange}
+                  onChange={handleBonusAnswerChange}
                 />
                 <Box
                   style={{

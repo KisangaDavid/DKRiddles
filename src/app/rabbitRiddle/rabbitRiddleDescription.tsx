@@ -2,12 +2,12 @@ import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 import { standardTextFade } from "../_common/utils";
 
-function RoosterRiddleDescription() {
+function RabbitRiddleDescription() {
   return (
     <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>
       <Box sx={{ width: 'var(--pageWidthPercent)', position: "relative", mb: "1vh" }}>
         <p>
-          You tear open the third envelope. Inside you find a note, which reads:
+          LOREM IPYou You tear open the third envelope. Inside you find a note, which reads:
           <br />
           <i>
             This riddle is a challenge - you must defeat my prized fighting rooster!
@@ -29,4 +29,4 @@ function RoosterRiddleDescription() {
   );
 }
 
-export default RoosterRiddleDescription;
+export default RabbitRiddleDescription;

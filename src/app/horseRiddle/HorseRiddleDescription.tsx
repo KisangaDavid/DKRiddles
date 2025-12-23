@@ -27,7 +27,7 @@ function HorseRiddleDescription() {
           <br /> <br />
           After quickly Googling somnolence, you come up with a brilliant plan:
           first, you'll sneak into the local racetrack with the help of the
-          Riddeman's sleeping potion. Once inside, you'll race all the horses to 
+          Riddleman's sleeping potion. Once inside, you'll race all the horses to 
           determine the fastest three. The next day you'll place a winning trifecta 
           bet, which if you put your entire life savings into should result in 
           a $1 million dollar payout!

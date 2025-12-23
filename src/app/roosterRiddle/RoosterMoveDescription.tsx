@@ -1,4 +1,3 @@
-import { useTheme } from '@mui/material/styles';
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 import { standardTextFade } from '../_common/utils';
@@ -6,8 +5,7 @@ import { standardTextFade } from '../_common/utils';
 interface props {
   roosterMove: [number, number[]];
 }
-function RoosterMoveDesription({ roosterMove } : props) {
-  const theme = useTheme();
+function RoosterMoveDescription({ roosterMove } : props) {
 
   return (
     <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>
@@ -27,4 +25,4 @@ function RoosterMoveDesription({ roosterMove } : props) {
   );
 }
 
-export default RoosterMoveDesription
+export default RoosterMoveDescription
