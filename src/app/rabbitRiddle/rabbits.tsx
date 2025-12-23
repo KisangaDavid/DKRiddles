@@ -10,8 +10,8 @@ import Box from "@mui/material/Box";
 import WhiteRabbit from "../../assets/whiteRabbit.png"
 import BlackRabbit from "../../assets/whiteRabbit.png"
 import Image from 'next/image'
-import { standardTextFade } from "../_common/utils";
-import { MouseEvent } from "react";
+import { shortImageFade, standardTextFade } from "../_common/utils";
+import { MouseEvent, useState } from "react";
 
 const EMPTY = 0;
 const WHITE_RABBIT = 1;
@@ -25,7 +25,8 @@ interface props {
 }
 
 function Rabbits({rabbitPositions, setRabbitPositions}: props) {
-
+  const [prevMove, setPrevMove] = useState(-1);
+  
   const moveRabbit = (idx: number, rabbitType: number) => {
     let newRabbitPositions = [...rabbitPositions];
     newRabbitPositions[idx] = EMPTY;
@@ -46,42 +47,68 @@ function Rabbits({rabbitPositions, setRabbitPositions}: props) {
       }
     }
     setRabbitPositions(newRabbitPositions);
+    setPrevMove(idx);
   }
 
+  const getSlideDirection = (idx: number, rabbitType: number) => {
+    if (rabbitType == WHITE_RABBIT) {
+      if (idx > 0 && rabbitPositions[idx - 1] == EMPTY) {
+        return "right";
+      }
+    }
+    else {
+      if (idx < rabbitPositions.length && rabbitPositions[idx + 1] == EMPTY) {
+        return "left";
+      }
+    }
+    return "down";
+  }
+//  If space adjacent is empty, move left / right depending on black / white. If
   const drawSpace = (space: number, idx: number) => {
-    if(space == WHITE_RABBIT) {
-      const isMoveAvailable = isMoveAvailableForWhiteRabbit(idx);
-      return (
+
+    const isMoveAvailable = isMoveAvailableForRabbit(idx, space);
+    return (
+      <Slide in={rabbitPositions[idx] != EMPTY} direction={getSlideDirection(idx, space)} timeout={shortImageFade}> 
         <Image 
           // key = {idx}
-          src={WhiteRabbit} 
+          src={space == WHITE_RABBIT ? WhiteRabbit : BlackRabbit} 
           alt="White Rabbit" 
-          onClick = {isMoveAvailable ? () => moveRabbit(idx, WHITE_RABBIT) : undefined}
+          onClick = {isMoveAvailable ? () => moveRabbit(idx, space) : undefined}
           style={{
             objectFit: "contain",
             width: "100%", 
             height: "100%",
             filter: isMoveAvailable ? 'drop-shadow(0px 0px 5px white)' : ''}} />
-      )
-    }
-    else if(space == BLACK_RABBIT) {
-      const isMoveAvailable = isMoveAvailableForBlackRabbit(idx);
-      return (
-        <Image 
-          // key = {idx}
-          src={BlackRabbit} 
-          alt="Black Rabbit" 
-          onClick = {isMoveAvailable ? () => moveRabbit(idx, BLACK_RABBIT) : undefined}
-          style={{
-            objectFit: "contain",
-            width: "100%", 
-            height: "100%",
-            filter: isMoveAvailable ? 'drop-shadow(0px 0px 5px white)' : ''}} />
-      )
-    }
+      </Slide>
+    )
+    // else if(space == BLACK_RABBIT) {
+    //   const isMoveAvailable = isMoveAvailableForBlackRabbit(idx);
+    //   return (
+    //     <Slide in={true}>
+    //       <Image 
+    //       // key = {idx}
+    //       src={BlackRabbit} 
+    //       alt="Black Rabbit" 
+    //       onClick = {isMoveAvailable ? () => moveRabbit(idx, BLACK_RABBIT) : undefined}
+    //       style={{
+    //         objectFit: "contain",
+    //         width: "100%", 
+    //         height: "100%",
+    //         filter: isMoveAvailable ? 'drop-shadow(0px 0px 5px white)' : ''}} />
+    //     </Slide>
+    //   )
+    // }
     return;
   }
 
+  const isMoveAvailableForRabbit = (idx: number, rabbitType: number) => {
+    if (rabbitType == WHITE_RABBIT) {
+      return isMoveAvailableForWhiteRabbit(idx);
+    }
+    else {
+      return isMoveAvailableForBlackRabbit(idx);
+    }
+  }
   const isMoveAvailableForWhiteRabbit = (idx: number) => {
     return (idx < rabbitPositions.length && rabbitPositions[idx + 1] == EMPTY)
             || (idx < rabbitPositions.length && rabbitPositions[idx + 2] == EMPTY);
@@ -102,7 +129,7 @@ function Rabbits({rabbitPositions, setRabbitPositions}: props) {
       >
         {rabbitPositions.map((space, index) => (
           <Grid size={1}
-              sx={{height: "auto", display: "flex", alignItems: "center", justifyContent: "center"}}
+              sx={{height: "auto", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden"}}
               key={index}
           >
             {drawSpace(space, index)}   
