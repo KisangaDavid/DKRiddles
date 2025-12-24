@@ -8,7 +8,7 @@ import Fade from '@mui/material/Fade'
 import Zoom from "@mui/material/Zoom";
 import Box from "@mui/material/Box";
 import WhiteRabbit from "../../assets/whiteRabbit.png"
-import BlackRabbit from "../../assets/whiteRabbit.png"
+import BlackRabbit from "../../assets/emptyHouse.svg"
 import Image from 'next/image'
 import { shortImageFade, standardTextFade } from "../_common/utils";
 import { MouseEvent, useState } from "react";
@@ -21,14 +21,15 @@ const BLACK_RABBIT = 2;
 interface props {
   rabbitPositions: number[];
   setRabbitPositions: (positions: number[]) => void
-
 }
 
 function Rabbits({rabbitPositions, setRabbitPositions}: props) {
-  const [prevMove, setPrevMove] = useState(-1);
+  const [prevMoveRabbit, setPrevMoveRabbit] = useState(WHITE_RABBIT);
+  const [prevMoveJump, setPrevMoveJump] = useState(false);
   
   const moveRabbit = (idx: number, rabbitType: number) => {
     let newRabbitPositions = [...rabbitPositions];
+    let jump = false;
     newRabbitPositions[idx] = EMPTY;
     if (rabbitType == WHITE_RABBIT) {
       if (newRabbitPositions[idx + 1] == EMPTY) {
@@ -36,6 +37,7 @@ function Rabbits({rabbitPositions, setRabbitPositions}: props) {
       }
       else {
         newRabbitPositions[idx + 2] = WHITE_RABBIT;
+        jump = true;
       }
     }
     else {
@@ -44,35 +46,39 @@ function Rabbits({rabbitPositions, setRabbitPositions}: props) {
       }
       else {
         newRabbitPositions[idx - 2] = BLACK_RABBIT;
+        jump = true;
       }
     }
     setRabbitPositions(newRabbitPositions);
-    setPrevMove(idx);
+    setPrevMoveRabbit(rabbitType);
+    setPrevMoveJump(jump);
   }
 
   const getSlideDirection = (idx: number, rabbitType: number) => {
-    if (rabbitType == WHITE_RABBIT) {
-      if (idx > 0 && rabbitPositions[idx - 1] == EMPTY) {
-        return "right";
-      }
+    if (rabbitType == WHITE_RABBIT && (idx > 0 && rabbitPositions[idx - 1] == EMPTY)) {
+      return "right";
     }
-    else {
-      if (idx < rabbitPositions.length && rabbitPositions[idx + 1] == EMPTY) {
+    if (rabbitType == BLACK_RABBIT && (idx < rabbitPositions.length && rabbitPositions[idx + 1] == EMPTY)) {
+      return "left";
+    }
+    if (rabbitType == EMPTY) {
+      if (prevMoveRabbit == WHITE_RABBIT && !prevMoveJump) {
         return "left";
+      }
+      if (prevMoveRabbit == BLACK_RABBIT && !prevMoveJump) {
+        return "right";
       }
     }
     return "down";
   }
-//  If space adjacent is empty, move left / right depending on black / white. If
   const drawSpace = (space: number, idx: number) => {
 
     const isMoveAvailable = isMoveAvailableForRabbit(idx, space);
     return (
       <Slide in={rabbitPositions[idx] != EMPTY} direction={getSlideDirection(idx, space)} timeout={shortImageFade}> 
         <Image 
-          // key = {idx}
-          src={space == WHITE_RABBIT ? WhiteRabbit : BlackRabbit} 
-          alt="White Rabbit" 
+          src={getRabbitImage(space)} 
+          alt="Rabbit" 
           onClick = {isMoveAvailable ? () => moveRabbit(idx, space) : undefined}
           style={{
             objectFit: "contain",
@@ -81,24 +87,19 @@ function Rabbits({rabbitPositions, setRabbitPositions}: props) {
             filter: isMoveAvailable ? 'drop-shadow(0px 0px 5px white)' : ''}} />
       </Slide>
     )
-    // else if(space == BLACK_RABBIT) {
-    //   const isMoveAvailable = isMoveAvailableForBlackRabbit(idx);
-    //   return (
-    //     <Slide in={true}>
-    //       <Image 
-    //       // key = {idx}
-    //       src={BlackRabbit} 
-    //       alt="Black Rabbit" 
-    //       onClick = {isMoveAvailable ? () => moveRabbit(idx, BLACK_RABBIT) : undefined}
-    //       style={{
-    //         objectFit: "contain",
-    //         width: "100%", 
-    //         height: "100%",
-    //         filter: isMoveAvailable ? 'drop-shadow(0px 0px 5px white)' : ''}} />
-    //     </Slide>
-    //   )
-    // }
-    return;
+  }
+
+  const getRabbitImage = (rabbitType: number) => {
+    switch (rabbitType) {
+      case WHITE_RABBIT:
+        return WhiteRabbit;
+      case BLACK_RABBIT:
+        return BlackRabbit;
+      case EMPTY:
+        return prevMoveRabbit == WHITE_RABBIT ? WhiteRabbit : BlackRabbit
+
+    }
+
   }
 
   const isMoveAvailableForRabbit = (idx: number, rabbitType: number) => {
