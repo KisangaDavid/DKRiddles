@@ -166,10 +166,10 @@ function IntroductionPage() {
           <Grid size={{ sm: 6, lg: 3 }}>
             <PuzzleCard 
               puzzleImage = {mysteryLetter} 
-              puzzleName = "Puzzle in Progress!" 
+              puzzleName = "Jumping Rabbits" 
               puzzleNumber = {4}
-              puzzleDescription = "Come back later to find a a brand new puzzle from Mr. Riddle Man!"
-              puzzlePath = "/" 
+              puzzleDescription = "Reorganize the Riddleman's rabbits!"
+              puzzlePath = "/rabbitRiddle" 
               transitionDelay={shortDelay * 3}
             />
           </Grid>

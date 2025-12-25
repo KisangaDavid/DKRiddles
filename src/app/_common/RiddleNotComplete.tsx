@@ -35,7 +35,7 @@ function RiddleNotComplete({ puzzleNumber, puzzleTitle, blogLink } : props) {
           A Riddle Man does not reveal his secrets to one who has not solved his
           riddles! Solve puzzle #{puzzleNumber}, <i>{puzzleTitle}</i>, to gain
           access to this page. If you're truly stumped or think the puzzle is 
-          impossible, <a target="_blank" href={blogLink}>check out this blog post!</a>
+          impossible, check out <a target="_blank" href={blogLink}>this blog post</a> for a hint!
         </Typography>
       </Box>
     </Fade>

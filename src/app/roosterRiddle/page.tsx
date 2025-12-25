@@ -43,7 +43,7 @@ function RoosterRiddlePage() {
     let pilesIntForm = getPilesIntForm();
 
     if (pilesIntForm != null) {
-      let piles = convertIntToArray(pilesIntForm, NUM_BITS_PER_PILE, NUM_PILES); // TODO: check null value somewhere
+      let piles = convertIntToArray(pilesIntForm, NUM_BITS_PER_PILE, NUM_PILES); 
       let pilesToSet = piles.map(pile => 
         Array.from({ length: pile }, (_, i) => i)
       );
@@ -83,7 +83,7 @@ function RoosterRiddlePage() {
     setSelectedKernels(new Set());
     setSelectedPile(-1);
     setTimeout(() => {
-      executeRoosterMove(pileToTakeFrom, numToTake, pilesPostPlayerMove);;
+      executeRoosterMove(pileToTakeFrom, numToTake, pilesPostPlayerMove);
     }, longDelay);
   }
 

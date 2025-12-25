@@ -24,7 +24,7 @@ export const longTextFade = 2000;
 export const standardImageFade = 1500;
 
 export const shortDelay = 200;
-export const standardDelay = 250;
+export const standardDelay = 400;
 export const longDelay = 500;
 export const extraLongDelay = 750;
 
