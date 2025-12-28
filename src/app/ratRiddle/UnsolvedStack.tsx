@@ -2,7 +2,6 @@ import Stack from "@mui/material/Stack";
 import Slider from '@mui/material/Slider';
 import Fade from '@mui/material/Fade';
 import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
 import { standardTextFade } from "../_common/utils";
 
 interface props {
@@ -13,7 +12,6 @@ interface props {
   handleSliderChange: (event: Event, value: number) => void;
 }
 function UnsolvedStack({curDay, totalDays, path, allCheckedHouses, handleSliderChange} : props) {
-  const theme = useTheme();
   return (
     <Fade 
       in={true} 
@@ -42,7 +40,8 @@ function UnsolvedStack({curDay, totalDays, path, allCheckedHouses, handleSliderC
             On day {curDay + 1}, you trap houses{" "}
             {allCheckedHouses.length != 0 ? Math.min(...allCheckedHouses[curDay]) + 1 : 0}{" "}
             and{" "}{allCheckedHouses.length != 0 ? Math.max(...allCheckedHouses[curDay]) + 1 : 0}. 
-            The rat {curDay == 0 ? "starts in" : "scurries over to"} house {path[curDay] + 1}.
+            The rat {curDay == 0 ? "starts in house " : "has scurried over to house "}
+            {path[curDay] + 1}{curDay != 0 && " during the night"}.
           </p>
           </Stack>
       </Box>

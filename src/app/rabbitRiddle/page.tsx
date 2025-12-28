@@ -58,26 +58,28 @@ function RabbitRiddlePage() {
     setRabbitPositions(newRabbitPositions);
     setPrevMoveRabbit(rabbitType);
     setMovedTo(movedTo);
+    checkWin(newRabbitPositions);
+  }
+
+  const checkWin = (newRabbitPositions: number[]) => {
+    if(newRabbitPositions.every((val, idx) => val === endingRabbitPositions[idx])) {
+      setTimeout(() => {
+        localStorage.setItem(RABBIT_PUZZLE, SOLVED);
+        const newSolvedPuzzles = new Set(solvedPuzzles);
+        newSolvedPuzzles.add(RABBIT_PUZZLE);
+        setSolvedPuzzles(newSolvedPuzzles);
+        setSolved(true);
+      }, standardDelay);
+    }
   }
 
   const resetPuzzle = () => {
+    setSolved(false);
     setRabbitPositions(startingRabbitPositions);
     setPrevMoveJump(false);
     setPrevMoveRabbit(WHITE_RABBIT);
     setMovedTo(-1);
     setNotificationOpen(true);
-    setSolved(false);
-  }
-
-  if(rabbitPositions.every((val, idx) => val === endingRabbitPositions[idx])) {
-    
-    setTimeout(() => {
-      localStorage.setItem(RABBIT_PUZZLE, SOLVED);
-      const newSolvedPuzzles = new Set(solvedPuzzles);
-      newSolvedPuzzles.add(RABBIT_PUZZLE);
-      setSolvedPuzzles(newSolvedPuzzles);
-      setSolved(true);
-    }, standardDelay);
   }
 
   return (
@@ -98,18 +100,20 @@ function RabbitRiddlePage() {
       </>
     )}
     <RabbitRiddleDescription />
-    <Rabbits 
-      rabbitPositions={rabbitPositions} 
-      prevMoveRabbit={prevMoveRabbit} 
-      prevMoveJump={prevMoveJump} 
-      movedTo={movedTo}
-      moveRabbit={moveRabbit}
-    />
+    <Box sx={{display: "flex", flexDirection: "column", flexGrow: 1, alignItems: "center", justifyContent: "center", }}>
+      <Rabbits 
+        rabbitPositions={rabbitPositions} 
+        prevMoveRabbit={prevMoveRabbit} 
+        prevMoveJump={prevMoveJump} 
+        movedTo={movedTo}
+        moveRabbit={moveRabbit}
+      />
       <Fade in={solved}>
-        <Box sx={{display: "flex", flexGrow: 1, alignItems: "center"}}>
+        <Box sx={{display: "flex", mt: {xs: "2em", md: "5em"}}}>
           <Solved />
         </Box>
       </Fade>
+      </Box>
   </>
   )
 }

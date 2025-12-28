@@ -5,7 +5,7 @@ import { standardTextFade } from "../_common/utils";
 function RabbitRiddleDescription() {
   return (
     <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>
-      <Box sx={{ width: 'var(--pageWidthPercent)', position: "relative", mb: "3em" }}>
+      <Box sx={{ width: 'var(--pageWidthPercent)', position: "relative"}}>
         <p>
           You open the fourth envelope. Inside you find an unusually curt note, which reads:
           <br />

@@ -19,12 +19,11 @@ function RatRiddleDescription() {
           </i>
         </p>
         <p>
-          After arriving at the rat infested neighborhood and doing some preliminary
-          investigation, you discover that the neighborhood is actually being plagued
-          by just a single rat, which starts in a random house and sneaks over to an adjacent house every night.
-          Although you only have two rat traps, you know that if you trap houses 1 and 2 on the first day, 
-          2 and 3 on the second day, 3 and 4 on the third day, and so on, you can guarantee that
-          you'll catch the rat in 7 days. However, Mr. Riddle Man will not accept
+          After some preliminary investigation, you discover that the neighborhood is actually being plagued
+          by just a single sneaky rat. The rat starts in a random house and moves to an adjacent house every night.
+          Each day you can trap two houses - if the rat is in one of the two houses you trap, it will be caught. 
+          If you trap houses 1 and 2 on the first day, 2 and 3 on the second day, 3 and 4 on the third day, and so on,
+          you can guarantee that you'll catch the rat in 7 days. However, Mr. Riddle Man will not accept
           anything but perfection - what strategy can you employ that is guaranteed to
           catch the rat in the least amount of days?
         </p>

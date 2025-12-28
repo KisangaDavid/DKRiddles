@@ -28,7 +28,7 @@ function AboutSitePage() {
             Man!
           </Typography>
           <br /> 
-          <Typography align="left">
+          <Typography align="center">
             After completing a puzzle, check out the corresponding <i>Puzzle Breakdown</i> page 
             in the sidebar. The breakdown page describes the logic behind each puzzle, 
             its implementation, and any other interesting tidbits I came across while 
