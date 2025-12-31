@@ -80,6 +80,8 @@ function Rabbits({prevMoveRabbit, prevMoveJump, movedTo, rabbitPositions, moveRa
         return BlackRabbit;
       case EMPTY:
         return prevMoveRabbit == WHITE_RABBIT ? WhiteRabbit : BlackRabbit
+      default:
+        return WhiteRabbit;
     }
   }
 
