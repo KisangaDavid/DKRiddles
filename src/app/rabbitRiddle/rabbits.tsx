@@ -21,28 +21,19 @@ function Rabbits({prevMoveRabbit, prevMoveJump, movedTo, rabbitPositions, moveRa
 
   const getSlideDirection = (idx: number, rabbitType: number) => {
     if (rabbitType == WHITE_RABBIT && (idx > 0 && rabbitPositions[idx - 1] == EMPTY)) {
-      console.log(`idx ${idx} with rabbitType ${rabbitType} moves right 1`)
       return "right";
     }
     if (rabbitType == BLACK_RABBIT && (idx < rabbitPositions.length && rabbitPositions[idx + 1] == EMPTY)) {
-      console.log(`idx ${idx} with rabbitType ${rabbitType} moves left 1`)
       return "left";
     }
     if (rabbitType == EMPTY) {
-      const now = new Date()
-      console.log(now.toLocaleString());
-      console.log("prevMoveJump:" + prevMoveJump);
       if (prevMoveRabbit == WHITE_RABBIT && !prevMoveJump) {
-        console.log("prev move jump: " + prevMoveJump);
-        console.log(`idx ${idx} with rabbitType ${rabbitType} moves left 2`)
         return "left";
       }
       if (prevMoveRabbit == BLACK_RABBIT && !prevMoveJump) {
-        console.log(`idx ${idx} with rabbitType ${rabbitType} moves right 2`)
         return "right";
       }
     }
-    console.log(`idx ${idx} with rabbitType ${rabbitType} moves down`)
     return "down";
   }
 

@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar";
 import RiddleNotComplete from "../../_common/RiddleNotComplete";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
-import { SolvedPuzzlesContext, standardTextFade, RABBIT_PUZZLE, rabbitBlogLink } from '../../_common/utils'
+import { SolvedPuzzlesContext, standardTextFade, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2, rabbitBlogLink } from '../../_common/utils'
 import rabbitSolution from '../../../assets/rabbitSolution.gif'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -24,29 +24,31 @@ function RatRiddleBreakdownPage() {
         isPuzzlePage={false}
         resetFunc={undefined}
       />
-      {solvedPuzzles.has(RABBIT_PUZZLE) ?
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: {lg: "65%", xs: "var(--pageWidthPercent)"},
+          position: "relative",
+          mt: "2vh",
+          pb: "10em",
+          alignItems: "center",
+        }}
+      >
+      {solvedPuzzles.has(RABBIT_PUZZLE_P1) ?
         <Fade
           in={true}
           mountOnEnter
           unmountOnExit
           timeout={standardTextFade}
         >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              width: {lg: "65%", xs: "var(--pageWidthPercent)"},
-              position: "relative",
-              mt: "2vh",
-              pb: "10em",
-              alignItems: "center",
-            }}
-          >
+            <Box>
             <Typography variant="h4" sx={{ mb: "2vh" }}>
-              Solution
+              Part 1: Solution
             </Typography>
-             <Typography align="left">
+            <Typography align="left">
               The first step to solving the puzzle is figuring out how the rabbits move. With a little fiddling, the rules of rabbit movement are uncovered:
+            </Typography>
               <List>
                 <ListItem>
                   1. A rabbit may only move in the direction it is facing.
@@ -55,13 +57,14 @@ function RatRiddleBreakdownPage() {
                   2. A rabbit may move one space forward to an open spot, or it may jump over one other rabbit to reach an open spot.
                 </ListItem>
               </List>
-              With the rules settled, we move on to the winning strategy. The key trick to this puzzle is that the rabbits 
-              must be "interwoven". That is, we should never perform a move that puts two rabbits of the same color next 
-              to each other (until they reach their ending positions). This prevents deadlocks, situations in which 
-              there are no valid moves. That's it! Performing moves that interweave the rabbits and prevent premature 
-              deadlocks naturally leads to the solution: <br />
-              <br />
-            </Typography>
+              <Typography align="left">
+                With the rules settled, we move on to the winning strategy. The key trick to this puzzle is that the rabbits 
+                must be "interwoven". That is, we should never perform a move that puts two rabbits of the same color next 
+                to each other (until they reach their ending positions). This prevents deadlocks, situations in which 
+                there are no valid moves. That's it! Performing moves that interweave the rabbits and prevent premature 
+                deadlocks naturally leads to the solution: <br />
+                <br />
+              </Typography>
             <StyledBreakdownCard>
               <CardMedia
                 component="img"
@@ -77,10 +80,37 @@ function RatRiddleBreakdownPage() {
                 </Typography>
               </StyledBreakdownCardContent>
             </StyledBreakdownCard>
+
+            <br />
+            <br />
+            <br />
+
           </Box>
         </Fade>
       :
-      <RiddleNotComplete puzzleNumber={4} puzzleTitle={"Jumping Rabbits"} blogLink={rabbitBlogLink}/>}
+        <RiddleNotComplete puzzleNumber={4} puzzleTitle={"Jumping Rabbits"} blogLink={rabbitBlogLink}/>}
+      {solvedPuzzles.has(RABBIT_PUZZLE_P2) ? 
+        <>
+          <Typography variant="h4" sx={{ mb: "2vh" }}>
+            Part 2: Solution
+          </Typography>
+            <Typography align="left">
+              The first step to solving the puzzle is figuring out how the rabbits move. With a little fiddling, the rules of rabbit movement are uncovered:
+              With the rules settled, we move on to the winning strategy. The key trick to this puzzle is that the rabbits 
+              must be "interwoven". That is, we should never perform a move that puts two rabbits of the same color next 
+              to each other (until they reach their ending positions). This prevents deadlocks, situations in which 
+              there are no valid moves. That's it! Performing moves that interweave the rabbits and prevent premature 
+              deadlocks naturally leads to the solution: <br />
+              <br />
+            </Typography>
+          </>
+      :
+        <Typography align="left">
+          Complete part 2 of <i>The Sneaky Rat</i> to unlock the 
+          rest of the puzzle breakdown! If you're truly stumped on part 
+          2, <a target="_blank" href={rabbitBlogLink}>check out this blog post!</a>
+        </Typography>}
+        </Box>
     </>
   );
 }

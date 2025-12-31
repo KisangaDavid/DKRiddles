@@ -1,15 +1,14 @@
 'use client'
 
 import { useContext, useState } from 'react';
-import { useConfettiSize, standardDelay, SolvedPuzzlesContext, RABBIT_PUZZLE, SOLVED} from "../_common/utils";
+import { useConfettiSize, standardDelay, SolvedPuzzlesContext, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2, SOLVED} from "../_common/utils";
 import Confetti from "react-confetti";
 import RabbitRiddleDescription from './rabbitRiddleDescription';
 import Rabbits from './rabbits'
 import TopBar from '../_common/TopBar';
-import Solved from './solved';
-import Fade from '@mui/material/Fade';
 import Box from '@mui/material/Box';
 import BreakdownUnlockedNotification from '../_common/BreakdownUnlockedNotification';
+import BonusChallenge from './BonusChallenge';
 
 const EMPTY = 0;
 const WHITE_RABBIT = 1;
@@ -22,10 +21,12 @@ function RabbitRiddlePage() {
   const [prevMoveRabbit, setPrevMoveRabbit] = useState(WHITE_RABBIT);
   const [movedTo, setMovedTo] = useState(-1)
   const [prevMoveJump, setPrevMoveJump] = useState(false);
-  const [solved, setSolved] = useState(false);
+  const [p1Solved, setP1Solved] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(true);
-  const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
+  const [confetti, setConfetti] = useState(false);
   const [confettiWidth, confettiHeight] = useConfettiSize();
+  const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
+
 
   const moveRabbit = (idx: number, rabbitType: number) => {
     let newRabbitPositions = [...rabbitPositions];
@@ -64,22 +65,23 @@ function RabbitRiddlePage() {
   const checkWin = (newRabbitPositions: number[]) => {
     if(newRabbitPositions.every((val, idx) => val === endingRabbitPositions[idx])) {
       setTimeout(() => {
-        localStorage.setItem(RABBIT_PUZZLE, SOLVED);
+        localStorage.setItem(RABBIT_PUZZLE_P1, SOLVED);
         const newSolvedPuzzles = new Set(solvedPuzzles);
-        newSolvedPuzzles.add(RABBIT_PUZZLE);
+        newSolvedPuzzles.add(RABBIT_PUZZLE_P1);
         setSolvedPuzzles(newSolvedPuzzles);
-        setSolved(true);
+        setP1Solved(true);
       }, standardDelay);
     }
   }
 
   const resetPuzzle = () => {
-    setSolved(false);
+    setP1Solved(false);
     setRabbitPositions(startingRabbitPositions);
     setPrevMoveJump(false);
     setPrevMoveRabbit(WHITE_RABBIT);
     setMovedTo(-1);
     setNotificationOpen(true);
+    setConfetti(false);
   }
 
   return (
@@ -89,18 +91,12 @@ function RabbitRiddlePage() {
       isPuzzlePage={true}
       resetFunc={resetPuzzle}
     />
-    {solved && (
-      <>
-        <Confetti width={confettiWidth} height={confettiHeight} /> 
-        <BreakdownUnlockedNotification
-          open={notificationOpen}
-          onClose={() => setNotificationOpen(false)}
-          text="Rabbit Puzzle Breakdown Unlocked!"
-        />
-      </>
-    )}
+    {confetti && <Confetti width={confettiWidth} height={confettiHeight} />} 
     <RabbitRiddleDescription />
-    <Box sx={{display: "flex", flexDirection: "column", flexGrow: 1, alignItems: "center", justifyContent: "center", }}>
+    <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", my: {
+      xs: "3em",
+      md: "6em"
+    } }}>
       <Rabbits 
         rabbitPositions={rabbitPositions} 
         prevMoveRabbit={prevMoveRabbit} 
@@ -108,12 +104,24 @@ function RabbitRiddlePage() {
         movedTo={movedTo}
         moveRabbit={moveRabbit}
       />
-      <Fade in={solved}>
+    </Box>
+      {p1Solved && (
+      <>
+        <BreakdownUnlockedNotification
+          open={notificationOpen}
+          onClose={() => setNotificationOpen(false)}
+          text="Rabbit Puzzle Breakdown Part 1 Unlocked!"
+        />
+        <BonusChallenge setConfetti={setConfetti}/>
+      </>
+    )}
+    {/* {p1Solved && p2Solved && (
+      <Fade in={true} mountOnEnter unmountOnExit>
         <Box sx={{display: "flex", mt: {xs: "2em", md: "5em"}}}>
-          <Solved />
+          <BonusSubmitted answerCorrect={}/>
         </Box>
       </Fade>
-      </Box>
+    )}   */}
   </>
   )
 }

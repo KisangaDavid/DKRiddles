@@ -2,7 +2,7 @@ import Link from "next/link.js";
 import { useTheme } from "@mui/material/styles";
 import { useContext, FC } from "react";
 import { styled } from '@mui/material/styles';
-import { SolvedPuzzlesContext, HORSE_PUZZLE, ROOSTER_PUZZLE, RAT_PUZZLE_P1, RAT_PUZZLE_P2, RABBIT_PUZZLE } from './utils'
+import { SolvedPuzzlesContext, HORSE_PUZZLE, ROOSTER_PUZZLE, RAT_PUZZLE_P1, RAT_PUZZLE_P2, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2 } from './utils'
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -149,9 +149,10 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
          <Link href="/rabbitRiddle/">
           <ListItem disablePadding>
             <StyledListItemButton>
-              <StyledListItemIcon 
-                PassedIcon={solvedPuzzles.has(RABBIT_PUZZLE) ? CheckRoundedIcon : ExtensionIcon}
-                complete={solvedPuzzles.has(RABBIT_PUZZLE)}
+               <StyledListItemIcon 
+                PassedIcon={solvedPuzzles.has(RABBIT_PUZZLE_P1) ? CheckRoundedIcon : ExtensionIcon}
+                complete={solvedPuzzles.has(RABBIT_PUZZLE_P2)}
+                inProgress={solvedPuzzles.has(RABBIT_PUZZLE_P1)}
               />
               <StyledListItemText secondary={"Jumping Rabbits"} />
             </StyledListItemButton>
@@ -206,9 +207,10 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
           <Link href="/rabbitRiddle/breakdown/">
           <ListItem disablePadding>
             <StyledListItemButton>
-              <StyledListItemIcon 
+               <StyledListItemIcon 
                 PassedIcon={TipsAndUpdatesOutlinedIcon} 
-                complete={solvedPuzzles.has(RABBIT_PUZZLE)}
+                complete={solvedPuzzles.has(RABBIT_PUZZLE_P2)} 
+                inProgress={solvedPuzzles.has(RABBIT_PUZZLE_P1)}
               />
               <StyledListItemText secondary={"Rabbit Puzzle Breakdown"} />
             </StyledListItemButton>

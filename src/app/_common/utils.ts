@@ -8,8 +8,9 @@ export const RAT_PUZZLE_P1 = "RAT_P1";
 export const RAT_PUZZLE_P2 = "RAT_P2";
 export const HORSE_PUZZLE = "HORSE";
 export const ROOSTER_PUZZLE = "ROOSTER";
-export const RABBIT_PUZZLE = "RABBIT"
-export const ALL_PUZZLES = [RAT_PUZZLE_P1, RAT_PUZZLE_P2, HORSE_PUZZLE, ROOSTER_PUZZLE, RABBIT_PUZZLE];
+export const RABBIT_PUZZLE_P1 = "RABBIT_P1";
+export const RABBIT_PUZZLE_P2 = "RABBIT_P2";
+export const ALL_PUZZLES = [RAT_PUZZLE_P1, RAT_PUZZLE_P2, HORSE_PUZZLE, ROOSTER_PUZZLE, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2];
 
 export const blogLink = "https://blog.dkisanga.com";
 export const ratBlogLink = "https://blog.dkisanga.com/ratRiddle/";
@@ -28,6 +29,10 @@ export const standardDelay = 400;
 export const longDelay = 500;
 export const extraLongDelay = 750;
 
+
+export function getRandomInt(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min) + min);
+}
 
 export function convertIterableToInt(iterable: Iterable<number>, numBitsPerElement: number) {
     let intRepresentation = 0;
