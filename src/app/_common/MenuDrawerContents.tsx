@@ -131,7 +131,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
                 PassedIcon={solvedPuzzles.has(HORSE_PUZZLE) ? CheckRoundedIcon : ExtensionIcon}
                 complete={solvedPuzzles.has(HORSE_PUZZLE)}
               />
-              <StyledListItemText secondary={"The Horse Trifecta"} />
+              <StyledListItemText secondary={"Horse Trifecta"} />
             </StyledListItemButton>
           </ListItem>
         </Link>
@@ -153,7 +153,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
                 PassedIcon={solvedPuzzles.has(RABBIT_PUZZLE) ? CheckRoundedIcon : ExtensionIcon}
                 complete={solvedPuzzles.has(RABBIT_PUZZLE)}
               />
-              <StyledListItemText secondary={"The Jumping Rabbits"} />
+              <StyledListItemText secondary={"Jumping Rabbits"} />
             </StyledListItemButton>
           </ListItem> 
         </Link>

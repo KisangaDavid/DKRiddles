@@ -25,7 +25,7 @@ function HorseRiddleBreakdownPage() {
   return (
     <>
       <TopBar
-        text="Puzzle Breakdown #2: The Horse Trifecta"
+        text="Puzzle Breakdown #2: Horse Trifecta"
         isPuzzlePage={false}
         resetFunc={undefined}
       />
@@ -284,7 +284,7 @@ function HorseRiddleBreakdownPage() {
       ) : (
         <RiddleNotComplete
           puzzleNumber={2}
-          puzzleTitle={"The Horse Trifecta"}
+          puzzleTitle={"Horse Trifecta"}
           blogLink={horseBlogLink}
         />
       )}

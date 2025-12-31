@@ -8,19 +8,16 @@ import Chip from '@mui/material/Chip';
 import ratRiddleThumbnail from '../assets/ratRiddleThumbnail.png'
 import horseRiddleThumbnail from '../assets/horseTrifecta.png'
 import roosterRiddleThumbnail from '../assets/roosterRiddleThumbnail.png'
-import rabbitRiddleThumbnail from '../assets/rabbitRiddleThumbnail.png'
 import mysteryLetter from '../assets/mysteryLetter.jpg'
-import PuzzleCard from './_common/PuzzleCard'
+import PuzzleCard from './_common/PuzzleCard.jsx'
 import riddleManLetter from '../assets/riddleManLetter.jpg'
 import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
-import TopBar from './_common/TopBar';
-import { standardTextFade, standardImageFade, longTextFade, longDelay } from './_common/utils';
+import TopBar from './_common/TopBar.jsx';
 
 function IntroductionPage() {
 
-  const shortDelay = 200;
   const theme = useTheme();
   const [activatedChip, setActivatedChip] = useState(-1);
   const [shouldPreloadImgs, setShouldPreloadImgs] = useState(false)
@@ -29,11 +26,11 @@ function IntroductionPage() {
   
   return (
     <>
-      <TopBar text="Introduction" isPuzzlePage={false} resetFunc={undefined} />
-      <Fade in={true} timeout={1000}>
+      <TopBar text="Introduction" isPuzzlePage={false} />
+      <Fade in={true} timeout={theme.transitions.duration.standardTextFade}>
         <Box sx={{width: 'var(--pageWidthPercent)', position: "relative", mb:"1vh"}}>
           <p>
-            Mr. Riddle Man - a name shrouded in mystery. Renowned by many to be the world's
+            Mr. Riddle Man - a name shrouded in mystery. Renowed by many to be the world's
             foremost puzzle expert, he is often called upon to solve the world's toughest
             conundrums - and none have stumped him yet. Despite his world-famous status,
             no one knows his true identity. That's all you know about the man - at least
@@ -43,7 +40,7 @@ function IntroductionPage() {
         </Box>
       </Fade>
       <br />
-      <Fade in={true} timeout={standardTextFade}>
+      <Fade in={true} timeout={theme.transitions.duration.standardTextFade}>
         <Box
           sx={{
             display: 'flex',
@@ -89,7 +86,7 @@ function IntroductionPage() {
           }}
         >
           <Grid size={{ sm: 12, md: 6}}>
-            <Fade in={true} timeout={standardImageFade}>
+            <Fade in={true} timeout={theme.transitions.duration.standardImageFade}>
               <Box>
               <Image 
                 src={riddleManLetter} 
@@ -108,14 +105,14 @@ function IntroductionPage() {
           <Grid size={{ sm: 12, md: 6}} style={{display: "flex", justifyContent: 'center', alignItems: "center"}}>   
             <Fade 
               in={true}  
-              style = {{transitionDelay: longDelay + "ms"}} 
-              timeout={longTextFade}
+              style = {{transitionDelay: theme.delays.duration.longDelay}} 
+              timeout={theme.transitions.duration.longTextFade}
             >     
               <p style={{ textAlign: "left" }}>      
                 The letter reads: <br /> <br />
                 <i>
                   I am Mr. Riddle Man. I grow weary of my power and status, and so wish to
-                  pass the title of Mr. Riddle Man to another. Attached to this letter you
+                  pass the title of Mr. Riddle Man to another. Attatched to this letter you
                   shall find a set of envelopes. Each envelope contains a puzzle - solve them
                   all in their entirety, and I shall name you as my successor. Should you
                   choose to accept, I advise secrecy of the highest order - the identity of a
@@ -138,7 +135,7 @@ function IntroductionPage() {
             <PuzzleCard 
               puzzleImage = {ratRiddleThumbnail} 
               puzzleName = "The Sneaky Rat" 
-              puzzleNumber = {1} 
+              puzzleNumber = "1" 
               puzzleDescription = "Concoct the perfect plan to catch a sneaky rat!"
               puzzlePath = "/ratRiddle" 
               transitionDelay={0}
@@ -148,30 +145,30 @@ function IntroductionPage() {
             <PuzzleCard 
               puzzleImage = {horseRiddleThumbnail} 
               puzzleName = "Horse Trifecta" 
-              puzzleNumber = {2}
+              puzzleNumber = "2" 
               puzzleDescription = "Utilize your skills of deduction to win big at the horse races!"
               puzzlePath = "/horseRiddle" 
-              transitionDelay={shortDelay}
+              transitionDelay={theme.delays.duration.standardDelay}
             />
           </Grid>
           <Grid size={{ sm: 6, lg: 3 }}>
             <PuzzleCard 
               puzzleImage = {roosterRiddleThumbnail} 
               puzzleName = "The Undefeated Rooster" 
-              puzzleNumber = {3}
+              puzzleNumber = "3" 
               puzzleDescription = "Best the undefeated rooster in a battle of intellect!"
               puzzlePath = "/roosterRiddle" 
-              transitionDelay={shortDelay * 2}
+              transitionDelay={theme.delays.duration.standardDelay * 2}
             />
           </Grid>
           <Grid size={{ sm: 6, lg: 3 }}>
             <PuzzleCard 
-              puzzleImage = {rabbitRiddleThumbnail} 
-              puzzleName = "Jumping Rabbits" 
-              puzzleNumber = {4}
-              puzzleDescription = "Reason your way through reorganizing jumping rabbits!"
-              puzzlePath = "/rabbitRiddle" 
-              transitionDelay={shortDelay * 3}
+              puzzleImage = {mysteryLetter} 
+              puzzleName = "Puzzle in Progress!" 
+              puzzleNumber = "4" 
+              puzzleDescription = "Come back later to find a a brand new puzzle from Mr. Riddle Man!"
+              puzzlePath = "/" 
+              transitionDelay={theme.delays.duration.standardDelay * 3}
             />
           </Grid>
         </Grid>

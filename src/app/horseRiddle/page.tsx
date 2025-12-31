@@ -149,7 +149,7 @@ function HorseRiddlePage() {
   return (
     <>
       <TopBar
-        text="Envelope #2: The Horse Trifecta"
+        text="Envelope #2: Horse Trifecta"
         isPuzzlePage={true}
         resetFunc={resetPuzzle}
       />

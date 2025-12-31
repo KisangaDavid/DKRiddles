@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import Slide from "@mui/material/Slide";
 import WhiteRabbit from "../../assets/whiteRabbit.png"
-import BlackRabbit from "../../assets/emptyHouse.svg"
+import BlackRabbit from "../../assets/blackRabbit.png"
 import Image from 'next/image'
 import { standardDelay } from "../_common/utils";
 
@@ -64,7 +64,8 @@ function Rabbits({prevMoveRabbit, prevMoveJump, movedTo, rabbitPositions, moveRa
             objectFit: "contain",
             width: "100%", 
             height: "100%",
-            filter: isMoveAvailable ? 'drop-shadow(0px 0px 5px white)' : ''
+            filter: isMoveAvailable ? 'drop-shadow(0px 0px 5px white)' : '',
+            cursor: isMoveAvailable ? 'pointer' : 'default',
           }}
         />
       </Slide>

@@ -16,7 +16,7 @@ const WHITE_RABBIT = 1;
 const BLACK_RABBIT = 2;
 const startingRabbitPositions = [1,1,1,0,2,2,2];
 const endingRabbitPositions = [2,2,2,0,1,1,1];
-// TODO: black / white rabbits
+
 function RabbitRiddlePage() {
   const [rabbitPositions, setRabbitPositions] = useState(startingRabbitPositions);
   const [prevMoveRabbit, setPrevMoveRabbit] = useState(WHITE_RABBIT);
