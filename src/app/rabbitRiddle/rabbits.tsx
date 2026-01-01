@@ -3,7 +3,7 @@ import Slide from "@mui/material/Slide";
 import WhiteRabbit from "../../assets/whiteRabbit.png"
 import BlackRabbit from "../../assets/blackRabbit.png"
 import Image from 'next/image'
-import { standardDelay } from "../_common/utils";
+import { fastImageSlide } from "../_common/utils";
 
 const EMPTY = 0;
 const WHITE_RABBIT = 1;
@@ -45,7 +45,7 @@ function Rabbits({prevMoveRabbit, prevMoveJump, movedTo, rabbitPositions, moveRa
         mountOnEnter 
         unmountOnExit 
         direction={getSlideDirection(idx, space)} 
-        timeout={standardDelay}
+        timeout={fastImageSlide}
       > 
         <Image 
           src={getRabbitImage(space)} 

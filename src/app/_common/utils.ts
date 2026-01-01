@@ -18,6 +18,7 @@ export const horseBlogLink = "https://blog.dkisanga.com/horseRiddle/";
 export const roosterBlogLink = "https://blog.dkisanga.com/roosterRiddle/";
 export const rabbitBlogLink = "https://blog.dkisanga.com/rabbitRiddle/";
 
+export const fastImageSlide = 300;
 export const shortImageZoom = 500;
 export const shortImageFade = 750;
 export const standardTextFade = 1000;
@@ -25,6 +26,7 @@ export const longTextFade = 2000;
 export const standardImageFade = 1500;
 
 export const shortDelay = 200;
+export const slightlyShortDelay = 300;
 export const standardDelay = 400;
 export const longDelay = 500;
 export const extraLongDelay = 750;
