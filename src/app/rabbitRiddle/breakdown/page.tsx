@@ -63,7 +63,7 @@ function RatRiddleBreakdownPage() {
                 must be "interwoven". That is, we should never perform a move that puts two rabbits of the same color next 
                 to each other (until they reach their ending positions). This prevents deadlocks, situations in which 
                 there are no valid moves. That's it! Performing moves that interweave the rabbits and prevent premature 
-                deadlocks naturally leads to the solution: <br />
+                deadlocks will naturally lead you to the solution: <br />
                 <br />
               </Typography>
             <StyledBreakdownCard>
@@ -128,12 +128,12 @@ function RatRiddleBreakdownPage() {
               Now, notice that a "standard" move advances a rabbit by 1 space, while a "jump" advances a rabbit by 2 spaces. 
               This fact allows us to calculate the number of moves needed to rearrange the rabbits. We simply subtract the number of jumps
               performed from the total number of spaces the rabbits must traverse! Finding the total number 
-              of jumps performed is simple - each of the <i>n</i> white rabbits must jump or be jumped over by each of the <i>n</i> black rabbits.
+              of jumps performed is simple - each of the <i>n</i> white rabbits must jump over or be jumped over by each of the <i>n</i> black rabbits.
               Regardless of which scenario happens, a jump is performed, so the total number of jumps that occur while rearranging
               the rabbits is <i>n<sup>2</sup></i>.
               <br />
               <br />
-              Using the above expressions we can derive the formula for the number of moves needed to rearrange the rabbits: <i>2n<sup>2</sup> + 2n - n<sup>2</sup> = n<sup>2</sup>+2n</i>
+              Subtracting the number of jumps performed from the total number of spaces the rabbits must traverse gives us the exact formula for the number of moves needed to rearrange the rabbits: <i>2n<sup>2</sup> + 2n - n<sup>2</sup> = n<sup>2</sup>+2n</i>
             </Typography>
           </>
       :
