@@ -133,7 +133,8 @@ function RatRiddleBreakdownPage() {
               the rabbits is <i>n<sup>2</sup></i>.
               <br />
               <br />
-              Subtracting the number of jumps performed from the total number of spaces the rabbits must traverse gives us the exact formula for the number of moves needed to rearrange the rabbits: <i>2n<sup>2</sup> + 2n - n<sup>2</sup> = n<sup>2</sup>+2n</i>
+              Subtracting the number of jumps performed from the total number of spaces the rabbits must 
+              traverse gives us the exact formula for the number of moves needed to rearrange the rabbits: <i>2n<sup>2</sup> + 2n - n<sup>2</sup> = n<sup>2</sup>+2n</i>.
             </Typography>
           </>
       :
