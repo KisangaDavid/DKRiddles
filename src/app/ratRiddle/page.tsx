@@ -53,7 +53,7 @@ function RatRiddlePage() {
 };
 
   const submitRiddleAnswer = () => {
-    let allCheckedPositions = convertToAbsPos(allCheckedHouses.concat(curCheckedHouses));
+    let allCheckedPositions = convertToAbsPos(allCheckedHouses.concat(curCheckedHouses)).sort((a, b) => a - b);
     let counter = 0;
     let binaryString = ""
     allCheckedPositions.forEach((element: number) => {

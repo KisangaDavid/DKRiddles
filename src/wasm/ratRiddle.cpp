@@ -1,6 +1,8 @@
 #include "puzzleUtils.h"
 #include <vector>
 
+const int NUM_HOUSES = 8;
+
 struct Position {
   int row;
   int col;
@@ -31,8 +33,8 @@ class Node {
 
 class HouseRatRiddle {
   public:
-    HouseRatRiddle(int numDeletedNodes, int numHouses, int guessesPerDay) 
-      : m_numHouses {numHouses}, m_guessesPerDay {guessesPerDay}, m_numDays {numDeletedNodes / 2}
+    HouseRatRiddle(int numDeletedNodes, int numHouses) 
+      : m_numHouses {numHouses}, m_numDays {numDeletedNodes / 2}
       {
         nodes.resize(static_cast<std::size_t>(numHouses * m_numDays));
         buildGraph();
@@ -62,7 +64,6 @@ class HouseRatRiddle {
     Node startNode {};
     Node endNode {};
     const int m_numHouses {};
-    const int m_guessesPerDay {};
     const int m_numDays {};
 
     bool dfs(Node* curNode) {
@@ -99,10 +100,6 @@ class HouseRatRiddle {
       }
       Node::setIdGen(-2);
     }
-
-    int optimalNumGuesses() {
-      return m_guessesPerDay + 1;
-    }
     
     Position getPosition(Node node) {
       return Position {node.id / m_numHouses, node.id % m_numHouses};
@@ -134,7 +131,7 @@ uint32_t checkAnswer(uint64_t num1) {
     num1 >>= 1;
     ++position;
   }
-  HouseRatRiddle houseHatRiddle(static_cast<int>(deletedNodes.size()), 8, 2);
+  HouseRatRiddle houseHatRiddle(static_cast<int>(deletedNodes.size()), NUM_HOUSES);
   std::vector<uint32_t> path = houseHatRiddle.solve(deletedNodes); 
   if(path.size() == 0) {
     return static_cast<uint32_t>(-1);
