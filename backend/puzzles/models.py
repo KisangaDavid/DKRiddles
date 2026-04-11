@@ -7,6 +7,9 @@ class Puzzle(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'puzzles_puzzles' 
+
 class UserSolvedPuzzles(models.Model):
     userId = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
@@ -14,3 +17,6 @@ class UserSolvedPuzzles(models.Model):
     )
     solvedPuzzle = models.ForeignKey(Puzzle, on_delete=models.CASCADE)
     solvedTime = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'puzzles_solved_puzzles' 

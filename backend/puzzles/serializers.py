@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from puzzleBackend.models import Puzzle, UserSolvedPuzzles
+from puzzles.models import Puzzle, UserSolvedPuzzles
 
 class PuzzleSerializer(serializers.ModelSerializer):
     class Meta:

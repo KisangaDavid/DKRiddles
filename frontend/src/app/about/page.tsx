@@ -23,7 +23,7 @@ function AboutSitePage() {
       <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>      
         <Box sx={{ width: 'var(--pageWidthPercent)', position: "relative", mb: "8vh", mt: "2vh" }}>
           <Typography align="center">
-            Welcome to DKRiddles, an interactive puzzle website. Solve each
+            Solve each
             self-contained puzzle and uncover the secrets of the mysterious Mr. Riddle
             Man!
           </Typography>

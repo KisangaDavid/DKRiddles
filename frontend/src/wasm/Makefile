@@ -11,8 +11,7 @@ CPP_OPT_FLAGS = -Wall -Wno-unknown-attributes -Werror -Weffc++ -Wextra -Wconvers
 DLL_FLAGS = -shared 
 
 # WASM specific compile flags
-WASMCOMPFLAGS = --target=wasm32-wasi -fno-exceptions --sysroot=C:\Coding\wasi-sdk-25.0-x86_64-windows\share\wasi-sysroot -Xlinker --export-dynamic
-
+WASMCOMPFLAGS = --target=wasm32-wasi -fno-exceptions --sysroot="C:\Coding\wasi-sdk-25.0-x86_64-windows\share\wasi-sysroot" -Xlinker --export-dynamic
 # Source files
 SRCS = ratRiddle.cpp horseRiddle.cpp roosterRiddle.cpp rabbitRiddle.cpp puzzleUtils.cpp
 
@@ -24,7 +23,7 @@ OBJS = $(SRCS:.cpp=.o)
 # Wasm module name
 WASM_ALL_MODULES_NAME = "../../public/allModules.wasm
 
-DLL_FILE_NAME = "../../riddlesBackend/riddlesBackend/allModules.dll"
+DLL_FILE_NAME = "../../config/config/allModules.dll"
 
 # Default target (wasm binary)
 all: wasm
