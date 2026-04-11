@@ -2,7 +2,7 @@ import Stack from "@mui/material/Stack";
 import Slider from '@mui/material/Slider';
 import Fade from '@mui/material/Fade';
 import Box from '@mui/material/Box';
-import { standardTextFade } from "../_common/utils";
+import { standardTextFade } from "../_common/constants";
 
 interface props {
   curDay: number;

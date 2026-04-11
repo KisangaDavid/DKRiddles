@@ -1,5 +1,3 @@
-import { useTheme } from '@mui/material/styles';
-
 import Link from 'next/link.js';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
@@ -8,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { styled } from '@mui/material/styles';
 import { StaticImageData } from 'next/image';
-import { standardImageFade } from './utils';
+import { standardImageFade } from './constants';
 
 const StyledCard = styled(Card)({
   display: 'flex',
@@ -53,7 +51,6 @@ interface props {
   transitionDelay: number;
 }
 function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, puzzlePath, transitionDelay} : props) {
-  const theme = useTheme();
 
   return (
     <Fade in={true} timeout={standardImageFade} 

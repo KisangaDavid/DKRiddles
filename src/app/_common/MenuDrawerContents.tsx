@@ -2,7 +2,8 @@ import Link from "next/link.js";
 import { useTheme } from "@mui/material/styles";
 import { useContext, FC } from "react";
 import { styled } from '@mui/material/styles';
-import { SolvedPuzzlesContext, HORSE_PUZZLE, ROOSTER_PUZZLE, RAT_PUZZLE_P1, RAT_PUZZLE_P2, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2 } from './utils'
+import { SolvedPuzzlesContext } from './utils';
+import { HORSE_PUZZLE, ROOSTER_PUZZLE, RAT_PUZZLE_P1, RAT_PUZZLE_P2, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2 } from './constants'
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -11,6 +12,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import TipsAndUpdatesOutlinedIcon from '@mui/icons-material/TipsAndUpdatesOutlined';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleOutlined';
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import ExtensionIcon from '@mui/icons-material/Extension';
 import HomeIcon from '@mui/icons-material/Home';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
@@ -84,11 +87,27 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
             <StyledListItemText primary={"Close"} />
           </StyledListItemButton>
         </ListItem>
+        <Link href="/login/">
+          <ListItem disablePadding>
+            <StyledListItemButton>
+              <StyledListItemIcon PassedIcon={AccountCircleRoundedIcon} />
+              <StyledListItemText primary={"Log In"} />
+            </StyledListItemButton>
+          </ListItem>
+        </Link>
         <Link href="/">
           <ListItem disablePadding>    
             <StyledListItemButton>
               <StyledListItemIcon PassedIcon={HomeIcon} />
               <StyledListItemText primary={"Introduction"} />
+            </StyledListItemButton>
+          </ListItem>
+        </Link>
+        <Link href="/leaderboard/">
+          <ListItem disablePadding>
+            <StyledListItemButton>
+              <StyledListItemIcon PassedIcon={LeaderboardIcon} />
+              <StyledListItemText primary={"Leaderboard"} />
             </StyledListItemButton>
           </ListItem>
         </Link>
@@ -159,7 +178,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
           </ListItem> 
         </Link>
       </List>
-      <Divider />
+      {/* <Divider />
       <ListItem>
         <StyledListItemText primary={"All Puzzle Breakdowns"} />
       </ListItem>
@@ -215,8 +234,8 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
               <StyledListItemText secondary={"Rabbit Puzzle Breakdown"} />
             </StyledListItemButton>
           </ListItem>
-        </Link>
-      </List> 
+        </Link> */}
+      {/* </List>  */}
     </>
   );
 }

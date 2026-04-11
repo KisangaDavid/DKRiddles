@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-import { standardTextFade } from "../_common/utils";
+import { standardTextFade } from "../_common/constants";
 
 function RoosterRiddleDescription() {
   return (

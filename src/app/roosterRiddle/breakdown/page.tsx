@@ -10,7 +10,8 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar";
 import RiddleNotComplete from "../../_common/RiddleNotComplete";
-import { SolvedPuzzlesContext, ROOSTER_PUZZLE, standardTextFade, roosterBlogLink } from "../../_common/utils";
+import { SolvedPuzzlesContext } from "../../_common/utils";
+import { ROOSTER_PUZZLE, standardTextFade, roosterBlogLink } from "../../_common/constants";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
 
 function AboutRoosterRiddle() {

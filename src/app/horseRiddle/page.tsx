@@ -1,14 +1,12 @@
 'use client'
 
-import { useState, useCallback, useEffect, useContext, ChangeEvent } from "react";
+import { useState, useCallback, ChangeEvent } from "react";
+import axios from "axios";
 import { convertIterableToInt, 
   convertIntToArray, 
-  MAX_32_BIT_NUM, 
-  useConfettiSize, 
-  WasmContext,
-  longTextFade, 
-  longDelay
+  useConfettiSize
 } from "../_common/utils";
+import { MAX_32_BIT_NUM, longTextFade, longDelay, backendBaseUrl } from "../_common/constants";
 import Grid from "@mui/material/Grid";
 import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -36,6 +34,7 @@ const MAX_RACES_EXCEEDED_MSG = "You cannot race anymore horses! Please submit a 
 
 function HorseRiddlePage() {
   const [hasBeenReset, setHasBeenReset] = useState(false);
+  const [randSeed, setRandSeed] = useState(Math.floor(Math.random() * MAX_32_BIT_NUM));
   const [confetti, setConfetti] = useState(false);
   const [currentRace, setCurrentRace] = useState<number[]>([]);
   const [finishedRaces, setFinishedRaces] = useState<number[]>([]);
@@ -43,11 +42,6 @@ function HorseRiddlePage() {
   const [wrongReason, setWrongReason] = useState("");
   const [fastestHorses, setFastestHorses] = useState([-1, -1, -1]);
   const [confettiWidth, confettiHeight] = useConfettiSize();
-  const {wasmExports} = useContext(WasmContext);
-
-  useEffect(() => {
-    resetAndRandomizeHorses();
-  }, [wasmExports]);
 
   const resetPuzzle = useCallback(() => {
     setCurrentRace([]);
@@ -57,8 +51,8 @@ function HorseRiddlePage() {
     setWrongReason("");
     setFastestHorses([-1, -1, -1]);
     setHasBeenReset(true);
-    resetAndRandomizeHorses();
-  }, [wasmExports]);
+    randomizeSeed();
+  }, []);
 
   const addRemoveHorseToRace = (horseIdx: number) => {
     if (currentRace.includes(horseIdx)) {
@@ -101,20 +95,46 @@ function HorseRiddlePage() {
     intsOnly.length < 1 ? updateFastestHorses(horsePos, -1) : updateFastestHorses(horsePos, +intsOnly);
   };
 
-  const submitRace = () => {
-    let intRepHorsesToRace = convertIterableToInt(currentRace, NUM_BITS_PER_HORSE);
-    let intRes = (wasmExports?.submitRace as Function)(intRepHorsesToRace);
+  const submitRace = async () => {
+    let submittedHorsesInt = convertIterableToInt(currentRace, NUM_BITS_PER_HORSE);
+    const raceResponse = await axios.post(
+      `${backendBaseUrl}/puzzles/horseRiddle/raceHorses`,
+      {
+        randSeed,
+        submittedHorsesInt,
+      }
+    );
+
+    let intRes = parseInt(raceResponse.data);
     let horseOrder = convertIntToArray(intRes, NUM_BITS_PER_HORSE, RACE_LENGTH);
     setCurrentRace([]);
     setFinishedRaces([...finishedRaces, ...horseOrder.reverse()]);
     setWrongReason("");
   };
 
-  const checkAnswer = () => {
+  const checkAnswer = async () => {
     let horsesToSubmit = fastestHorses.map((num) => num - 1).reverse();
-    let horsesToSubmitInt = convertIterableToInt(horsesToSubmit,NUM_BITS_PER_HORSE);
-    let intRes = (wasmExports?.checkHorseRiddleAnswer as Function)(horsesToSubmitInt);
+    let fastestHorsesInt = convertIterableToInt(horsesToSubmit, NUM_BITS_PER_HORSE);
+    
+    const submittedRaces: number[] = [];
+    const numRaces = finishedRaces.length / RACE_LENGTH;
+    for (let i = 0; i < numRaces; i++) {
+      const raceHorses = finishedRaces.slice(i * RACE_LENGTH, (i + 1) * RACE_LENGTH).reverse();
+      const encodedRace = convertIterableToInt(raceHorses, NUM_BITS_PER_HORSE);
+      submittedRaces.push(encodedRace);
+    }
 
+    const checkResponse = await axios.post(
+      `${backendBaseUrl}/puzzles/horseRiddle/checkHorseRiddleAnswer`,
+      {
+        randSeed,
+        fastestHorsesInt,
+        submittedRaces,
+        numRaces
+      }
+    );
+    
+    let intRes = parseInt(checkResponse.data);
     let resVec = convertIntToArray(intRes, NUM_BITS_PER_HORSE, 3).reverse();
 
     switch (resVec[0]) {
@@ -137,10 +157,8 @@ function HorseRiddlePage() {
     }
   };
 
-  const resetAndRandomizeHorses = () => {
-    if (wasmExports != null) {
-      (wasmExports.resetAndRandomizeHorses as Function)(Math.floor(Math.random() * MAX_32_BIT_NUM));
-    }
+  const randomizeSeed = () => {
+    setRandSeed(Math.floor(Math.random() * MAX_32_BIT_NUM));
   }
 
   let trifectaBetFilled = !fastestHorses.includes(-1);

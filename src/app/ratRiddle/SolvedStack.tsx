@@ -1,17 +1,18 @@
+import axios from 'axios';
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 import BonusChallenge from "./BonusChallenge";
 import { useState, useContext, useEffect } from "react";
-import { SolvedPuzzlesContext, RAT_PUZZLE_P1, SOLVED, standardTextFade } from "../_common/utils";
+import { SolvedPuzzlesContext } from "../_common/utils";
+import { RAT_PUZZLE_P1, SOLVED, standardTextFade } from "../_common/constants";
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
 
 interface props {
   totalDays: number;
-  checkBonusAnswer: (numBonusHouses: number, ans: number) => boolean;
   setConfetti: (bool: boolean) => void;
 }
 
-function SolvedStack({ totalDays, checkBonusAnswer, setConfetti } : props) {
+function SolvedStack({ totalDays, setConfetti } : props) {
   const [notificationOpen, setNotificationOpen] = useState(totalDays == 4);
   const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
 
@@ -24,13 +25,13 @@ function SolvedStack({ totalDays, checkBonusAnswer, setConfetti } : props) {
     }
   }, [totalDays]);
 
+  
   return (
     <Box sx={{ position: "relative", top: "-4vw" }}>
       {totalDays == 4 ? 
         <>
           <BonusChallenge
             totalDays={totalDays}
-            checkBonusAnswer={checkBonusAnswer}
             setConfetti={setConfetti}
           />
           <BreakdownUnlockedNotification

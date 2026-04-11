@@ -8,7 +8,8 @@ import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar";
 import RiddleNotComplete from "../../_common/RiddleNotComplete";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
-import { SolvedPuzzlesContext, standardTextFade, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2, rabbitBlogLink } from '../../_common/utils'
+import { SolvedPuzzlesContext } from '../../_common/utils';
+import { standardTextFade, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2, rabbitBlogLink } from '../../_common/constants'
 import rabbitSolution from '../../../assets/rabbitSolution.gif'
 import rabbitMapping from '../../../assets/rabbitMappings.png'
 import List from '@mui/material/List';

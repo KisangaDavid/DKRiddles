@@ -2,7 +2,7 @@
 
 import { useTheme } from '@mui/material/styles';
 
-import { blogLink, longDelay, standardTextFade } from '../_common/utils';
+import { blogLink, longDelay, standardTextFade } from '../_common/constants';
 import Fade from '@mui/material/Fade';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import List from '@mui/material/List';

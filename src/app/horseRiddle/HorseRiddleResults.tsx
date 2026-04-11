@@ -8,7 +8,8 @@ import Fade from '@mui/material/Fade';
 import Box from "@mui/material/Box";
 import { Stack } from '@mui/material';
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
-import { SolvedPuzzlesContext, HORSE_PUZZLE, SOLVED, standardTextFade, standardImageFade, longTextFade } from "../_common/utils";
+import { SolvedPuzzlesContext } from "../_common/utils";
+import { HORSE_PUZZLE, SOLVED, standardTextFade, standardImageFade, longTextFade } from "../_common/constants";
 
 const MIN_NUM_RACES = 7;
 

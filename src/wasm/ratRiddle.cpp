@@ -110,37 +110,38 @@ class HouseRatRiddle {
     }
 };
 
-[[clang::export_name("checkRatBonusAnswer")]]
-uint32_t checkAnswer(uint32_t numBonusHouses, uint32_t bonusAnswer) {
-  uint32_t daysToEliminateAlternating = numBonusHouses / 3;
-  if (numBonusHouses % 3 == 0 && daysToEliminateAlternating % 2 == 0) {
-    return 2 * daysToEliminateAlternating - 1 == bonusAnswer;
+extern "C" {
+  __declspec(dllexport) uint32_t checkRatRiddleBonusAnswer(uint32_t numBonusHouses, uint32_t bonusAnswer) {
+    uint32_t daysToEliminateAlternating = numBonusHouses / 3;
+    if (numBonusHouses % 3 == 0 && daysToEliminateAlternating % 2 == 0) {
+      return 2 * daysToEliminateAlternating - 1 == bonusAnswer;
+    }
+    return 2 * daysToEliminateAlternating == bonusAnswer;
   }
-  return 2 * daysToEliminateAlternating == bonusAnswer;
 }
 
-
-[[clang::export_name("checkRatRiddleAnswer")]]
-uint32_t checkAnswer(uint64_t num1) {
-  int position = 0;
-  std::vector<int> deletedNodes {};
-  while(num1 > 0) {
-    if(num1 & 1) {
-      deletedNodes.push_back(position);
+extern "C" {
+    __declspec(dllexport) uint32_t checkRatRiddleAnswer(uint64_t num1) {
+    int position = 0;
+    std::vector<int> deletedNodes {};
+    while(num1 > 0) {
+      if(num1 & 1) {
+        deletedNodes.push_back(position);
+      }
+      num1 >>= 1;
+      ++position;
     }
-    num1 >>= 1;
-    ++position;
+    HouseRatRiddle houseHatRiddle(static_cast<int>(deletedNodes.size()), NUM_HOUSES);
+    std::vector<uint32_t> path = houseHatRiddle.solve(deletedNodes); 
+    if(path.size() == 0) {
+      return static_cast<uint32_t>(-1);
+    }
+    uint32_t toReturn {0};
+    uint32_t mask {};
+    for(std::size_t i=0; i < path.size(); i++) {
+      mask = path[i] << (i * 3);
+      toReturn |= mask;
+    }
+    return toReturn;
   }
-  HouseRatRiddle houseHatRiddle(static_cast<int>(deletedNodes.size()), NUM_HOUSES);
-  std::vector<uint32_t> path = houseHatRiddle.solve(deletedNodes); 
-  if(path.size() == 0) {
-    return static_cast<uint32_t>(-1);
-  }
-  uint32_t toReturn {0};
-  uint32_t mask {};
-  for(std::size_t i=0; i < path.size(); i++) {
-    mask = path[i] << (i * 3);
-    toReturn |= mask;
-  }
-  return toReturn;
 }

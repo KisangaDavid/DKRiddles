@@ -1,9 +1,6 @@
-import Grid from "@mui/material/Grid";
-import Slide from "@mui/material/Slide";
-import WhiteRabbit from "../../assets/whiteRabbit.png"
-import BlackRabbit from "../../assets/blackRabbit.png"
-import Image from 'next/image'
-import { getRandomInt, RABBIT_PUZZLE_P2, SOLVED, SolvedPuzzlesContext, standardDelay, standardTextFade, WasmContext } from "../_common/utils";
+import axios from 'axios'
+import { getRandomInt, SolvedPuzzlesContext } from "../_common/utils";
+import { RABBIT_PUZZLE_P2, SOLVED, backendBaseUrl, standardTextFade } from "../_common/constants";
 import SendIcon from "@mui/icons-material/Send";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
@@ -24,18 +21,20 @@ function BonusChallenge({setConfetti} : props) {
     const [answerToBonus, setAnswerToBonus] = useState(-1);
     const [bonusAnswerSubmitted, setBonusAnswerSubmitted] = useState(false);
     const [bonusAnswerRight, setBonusAnswerRight] = useState(false);
-    const {wasmExports} = useContext(WasmContext);
-      const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
+    const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
 
     useEffect(() => {
-      if (numBonusRabbits === -1 ) {
+      if (numBonusRabbits === -1) {
         setNumBonusRabbits(getRandomInt(MIN_NUMBER_BONUS_RABBITS, MAX_NUMBER_BONUS_RABBITS));
       }
     }, []);
-
+    const checkRabbitBonusAnswer = async (numBonusRabbits: number, answerToBonus: number) => {
+      const response = await axios.post(`${backendBaseUrl}/puzzles/rabbitRiddle/checkRabbitRiddleBonusAnswer`, {numBonusRabbits, answerToBonus});
+    return response.data.result === "success";
+    }
     // TODO: make updating local storage and adding a puzzle to context a util function?
-    const submitBonusAnswer = () => {
-      if ((wasmExports?.checkRabbitBonusAnswer as Function)(numBonusRabbits, answerToBonus)) {
+    const submitBonusAnswer = async () => {
+      if (await checkRabbitBonusAnswer(numBonusRabbits, answerToBonus)) {
         localStorage.setItem(RABBIT_PUZZLE_P2, SOLVED);
         const newSolvedPuzzles = new Set(solvedPuzzles);
         newSolvedPuzzles.add(RABBIT_PUZZLE_P2);

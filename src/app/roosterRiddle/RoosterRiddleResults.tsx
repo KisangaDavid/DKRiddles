@@ -3,7 +3,8 @@
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import { useState, useContext, useEffect } from "react";
-import { standardTextFade, SolvedPuzzlesContext, ROOSTER_PUZZLE, SOLVED } from "../_common/utils";
+import { SolvedPuzzlesContext } from "../_common/utils";
+import { standardTextFade, ROOSTER_PUZZLE, SOLVED } from "../_common/constants";
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
 
 interface props {

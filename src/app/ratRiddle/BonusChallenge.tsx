@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext, ChangeEventHandler, ChangeEvent } from "react";
 
+import axios from 'axios';
 import TextField from "@mui/material/TextField";
 import Fade from "@mui/material/Fade";
 import Zoom from "@mui/material/Zoom";
@@ -7,15 +8,15 @@ import Fab from "@mui/material/Fab";
 import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
-import { SolvedPuzzlesContext, RAT_PUZZLE_P2, SOLVED, standardTextFade } from "../_common/utils";
+import { SolvedPuzzlesContext } from "../_common/utils";
+import { RAT_PUZZLE_P2, SOLVED, backendBaseUrl, standardTextFade } from "../_common/constants";
 
 interface props {
-  checkBonusAnswer: (numBonus: number, ans: number) => boolean;
   setConfetti: (bool: boolean) => void;
   totalDays: number;
 }
 
-function BonusChallenge({checkBonusAnswer, setConfetti, totalDays} : props) {
+function BonusChallenge({setConfetti, totalDays} : props) {
   const [numBonusHouses, setNumBonusHouses] = useState(-1);
   const [answerToBonus, setAnswerToBonus] = useState(-1);
   const [bonusSubmitted, setBonusSubmitted] = useState(false);
@@ -29,8 +30,13 @@ function BonusChallenge({checkBonusAnswer, setConfetti, totalDays} : props) {
     }
   }, []);
 
-  const submitBonusAnswer = () => {
-    if (checkBonusAnswer(numBonusHouses, answerToBonus)) {
+  const checkBonusAnswer = async (numHouses: number, answerToBonus: number) => {
+    const response = await axios.post(`${backendBaseUrl}/puzzles/ratRiddle/checkRatRiddleBonusAnswer`, { numHouses, answerToBonus });
+    return response.data.result === "success";
+  }
+
+  const submitBonusAnswer = async () => {
+    if (await checkBonusAnswer(numBonusHouses, answerToBonus)) {
       setConfetti(true);
       setBonusCorrect(true);
       setNotificationOpen(true);

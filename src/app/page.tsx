@@ -16,7 +16,7 @@ import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
 import Box from "@mui/material/Box";
 import TopBar from './_common/TopBar';
-import { standardTextFade, standardImageFade, longTextFade, longDelay } from './_common/utils';
+import { standardTextFade, standardImageFade, longTextFade, longDelay } from './_common/constants';
 
 function IntroductionPage() {
 

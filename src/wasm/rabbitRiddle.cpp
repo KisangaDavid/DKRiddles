@@ -1,6 +1,7 @@
 #include "puzzleUtils.h"
 
-[[clang::export_name("checkRabbitBonusAnswer")]]
-bool checkRabbitBonusAnswer(uint32_t numRats, uint32_t submittedAnswer) {
-    return submittedAnswer == numRats * numRats + 2 * numRats;
+extern "C" {
+    __declspec(dllexport) bool checkRabbitRiddleBonusAnswer(uint32_t numRabbits, uint32_t submittedAnswer) {
+        return submittedAnswer == numRabbits * numRabbits + 2 * numRabbits;
+    }
 }

@@ -1,9 +1,10 @@
 'use client'
 
+import axios from 'axios';
 import { useState, useCallback } from 'react';
-import { useTheme } from '@mui/material/styles';
 import { useContext } from "react";
-import { WasmContext, useConfettiSize, longTextFade, standardTextFade, longDelay } from "../_common/utils";
+import { useConfettiSize } from "../_common/utils";
+import { backendBaseUrl, longTextFade, standardTextFade, longDelay } from "../_common/constants";
 
 import RowOfHouses from './RowOfHouses';
 import SolvedStack from './SolvedStack';
@@ -30,7 +31,6 @@ function RatRiddlePage() {
   const [curCheckedHouses, setCurCheckedHouses] = useState<Set<number>>(new Set());
   const [confettiWidth, confettiHeight] = useConfettiSize();
 
-  const {wasmExports} = useContext(WasmContext);
   const solved = path.length == 0;
 
   const trapHouse = (index: number) => {
@@ -52,7 +52,7 @@ function RatRiddlePage() {
     setCurCheckedHouses(new Set());
 };
 
-  const submitRiddleAnswer = () => {
+  const submitRiddleAnswer = async () => {
     let allCheckedPositions = convertToAbsPos(allCheckedHouses.concat(curCheckedHouses)).sort((a, b) => a - b);
     let counter = 0;
     let binaryString = ""
@@ -64,7 +64,9 @@ function RatRiddlePage() {
       binaryString += "1";
       counter++;
     });
-    let intPath = (wasmExports?.checkRatRiddleAnswer as Function)(BigInt(`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`));
+    let submittedPlan = (`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`);
+    let intPath = (await axios.post(`${backendBaseUrl}/puzzles/ratRiddle/checkRatRiddleAnswer`, { submittedPlan })).data;
+
     let path = []
     if (intPath != -1) {
       for (let i = 0; i <= curDay; i++) {
@@ -144,7 +146,6 @@ function RatRiddlePage() {
           {submittedTraps && solved && (
             <Box>
               <SolvedStack
-                checkBonusAnswer={(wasmExports?.checkRatBonusAnswer as (numBonusHouses: number, ans: number) => boolean)}
                 setConfetti={setConfetti}
                 totalDays={totalDays}
               />

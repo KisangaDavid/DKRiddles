@@ -1,35 +1,9 @@
 'use client'
+// TODO: make this not a client component
 
 import { createContext, useState, useLayoutEffect } from 'react';
-
-export const SOLVED = "S"
-export const MAX_32_BIT_NUM = 0xffffffff;
-export const RAT_PUZZLE_P1 = "RAT_P1";
-export const RAT_PUZZLE_P2 = "RAT_P2";
-export const HORSE_PUZZLE = "HORSE";
-export const ROOSTER_PUZZLE = "ROOSTER";
-export const RABBIT_PUZZLE_P1 = "RABBIT_P1";
-export const RABBIT_PUZZLE_P2 = "RABBIT_P2";
-export const ALL_PUZZLES = [RAT_PUZZLE_P1, RAT_PUZZLE_P2, HORSE_PUZZLE, ROOSTER_PUZZLE, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2];
-
-export const blogLink = "https://blog.dkisanga.com";
-export const ratBlogLink = "https://blog.dkisanga.com/ratRiddle/";
-export const horseBlogLink = "https://blog.dkisanga.com/horseRiddle/";
-export const roosterBlogLink = "https://blog.dkisanga.com/roosterRiddle/";
-export const rabbitBlogLink = "https://blog.dkisanga.com/rabbitRiddle/";
-
-export const fastImageSlide = 300;
-export const shortImageZoom = 500;
-export const shortImageFade = 750;
-export const standardTextFade = 1000;
-export const longTextFade = 2000;
-export const standardImageFade = 1500;
-
-export const shortDelay = 200;
-export const slightlyShortDelay = 300;
-export const standardDelay = 400;
-export const longDelay = 500;
-export const extraLongDelay = 750;
+import wretch, { Wretch, WretchError } from "wretch";
+import { AuthActions } from "@/src/app/auth/utils";
 
 
 export function getRandomInt(min: number, max: number): number {
@@ -87,8 +61,39 @@ export const SolvedPuzzlesContext = createContext<solvedPuzzlesContext>({
   setSolvedPuzzles: () => {}
 });
 
-interface wasmContext {
-  wasmExports: WebAssembly.Exports | null;
-} 
+const { handleJWTRefresh, storeToken, getToken } = AuthActions();
 
-export const WasmContext = createContext<wasmContext>({ wasmExports: null });
+const api = () => {
+  return (
+    wretch("http://localhost:8000") // Change this?
+      // Initialize authentication with the access token.
+      .auth(`Bearer ${getToken("access")}`)
+      // Catch 401 errors to refresh the token and retry the request.
+      .catcher(401, async (error: WretchError, request: Wretch) => {
+        try {
+          // Attempt to refresh the JWT token.
+          const { access } = (await handleJWTRefresh().json()) as {
+            access: string;
+          };
+
+          // Store the new access token.
+          storeToken(access, "access");
+
+          // Replay the original request with the new access token.
+          return request
+            .auth(`Bearer ${access}`)
+            .fetch()
+            .unauthorized(() => {
+              window.location.replace("/");
+            })
+            .json();
+        } catch (err) {
+          console.log("err with the request in fetcher" + err);
+        }
+      })
+  );
+};
+
+export const fetcher = (url: string): Promise<any> => {
+  return api().get(url).json();
+};

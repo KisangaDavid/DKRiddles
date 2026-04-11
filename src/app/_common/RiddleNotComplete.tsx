@@ -3,7 +3,7 @@ import { useTheme } from "@mui/material/styles";
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import Typography from '@mui/material/Typography';
-import { standardTextFade } from "./utils";
+import { standardTextFade } from "./constants";
 
 interface props {
   puzzleNumber: number;

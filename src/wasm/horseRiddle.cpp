@@ -1,7 +1,6 @@
 #include "puzzleUtils.h"
 #include <vector>
 
-const uint32_t NUM_SHUFFLES = 1000;
 const uint32_t NUM_TOTAL_HORSES = 25;
 const uint32_t NUM_HORSES_PER_RACE = 5;
 const uint32_t NUM_BITS_PER_HORSE = 5;
@@ -16,7 +15,7 @@ class Horse {
         uint32_t absolutePosition {};
         bool isDeleted {false};
 
-        Horse() : absolutePosition {positionGenerator++} {}
+        Horse(uint32_t absolutePosition) : absolutePosition {absolutePosition} {}
 
         std::vector<uint32_t> getSlowerThan() {
             return slowerThan;
@@ -30,31 +29,34 @@ class Horse {
 
     private:
         std::vector<uint32_t> slowerThan {};
-        static inline uint32_t positionGenerator {0};
 };
 
 class HorseRiddle {
     public:
         Horse* horses[25] {nullptr};
 
-        HorseRiddle() {
+        HorseRiddle(uint32_t randState) {
             initHorses();
-            randomizeHorseOrder(12, NUM_SHUFFLES);
+            randomizeHorseOrder(randState);
         }
 
         void initHorses() {
             for (uint32_t i {0}; i < NUM_TOTAL_HORSES; i++) {
-                horses[i] = new Horse();
+                horses[i] = new Horse(i);
             }
         }
     
-        std::vector<uint32_t> submitRace(std::vector<uint32_t> inputHorses) {
+        std::vector<uint32_t> raceHorses(std::vector<uint32_t> inputHorses) {
             std::vector<uint32_t> orderedHorses = getOrder(inputHorses);
-            updateOrderGraph(orderedHorses);
             return orderedHorses;
         }
 
-        std::vector<uint32_t> checkAnswer(std::vector<uint32_t> inputPositions) {
+        std::vector<uint32_t> checkAnswer(std::vector<uint32_t> inputPositions, uint32_t* submittedRaces, uint32_t numRaces) {
+            for (uint32_t i {0}; i < numRaces; i++) {
+                std::vector<uint32_t> submittedRace = puzzleUtils::convertIntToVec(submittedRaces[i], NUM_HORSES_PER_RACE, NUM_BITS_PER_HORSE);
+                updateOrderGraph(submittedRace);
+            }
+            
             for (uint32_t inputPosition : inputPositions) {
                 std::vector<uint32_t> sources = getSources();
                 if (sources.size() != 1) {
@@ -72,35 +74,14 @@ class HorseRiddle {
             return std::vector<uint32_t> {HORSE_ORDER_CORRECT_CODE, 0, 0};
         }
 
-        void resetDeletedHorses() {
-            for (Horse* horse : horses) {
-                horse->isDeleted = false;
-            }
-        }
-
-        void resetAndRandomizeHorses(uint32_t randState) {
-            for (Horse* horse : horses) {
-                horse->isDeleted = false;
-                horse->resetSlowerThan();
-            }
-            randomizeHorseOrder(randState, NUM_SHUFFLES);
-        }
-
     private:
-        void randomizeHorseOrder(uint32_t state, uint32_t num_shuffles) {
-            uint32_t idx1 {};
-            uint32_t idx2 {};
-            for(size_t i {0}; i < num_shuffles; i++) {
+        void randomizeHorseOrder(uint32_t state) {
+            for(uint32_t i = NUM_TOTAL_HORSES - 1; i > 0; i--) {
                 state = puzzleUtils::randomizer(state);
-                idx1 = state % 25;
-                state = puzzleUtils::randomizer(state);
-                idx2 = state % 25;
-                if (idx1 == idx2) {
-                    continue;
-                }
-                horses[idx1]->absolutePosition = horses[idx1]->absolutePosition ^ horses[idx2]->absolutePosition;
-                horses[idx2]->absolutePosition = horses[idx1]->absolutePosition ^ horses[idx2]->absolutePosition;
-                horses[idx1]->absolutePosition = horses[idx1]->absolutePosition ^ horses[idx2]->absolutePosition;
+                uint32_t j = state % (i + 1);
+                Horse* temp = horses[i];
+                horses[i] = horses[j];
+                horses[j] = temp;
             }
         }
         
@@ -150,36 +131,21 @@ class HorseRiddle {
         }
 };
 
-HorseRiddle& getHorseRiddle() {
-    static HorseRiddle horseRiddle;
-    return horseRiddle;
+extern "C" {
+    __declspec(dllexport) uint32_t submitRace(uint32_t randState, uint32_t input) {
+        HorseRiddle horseRiddle(randState);
+        std::vector<uint32_t> horsesToRace = puzzleUtils::convertIntToVec(input, NUM_HORSES_PER_RACE, NUM_BITS_PER_HORSE);
+        std::vector<uint32_t> raceResults = horseRiddle.raceHorses(horsesToRace);
+        return puzzleUtils::convertVecToInt(raceResults, NUM_BITS_PER_HORSE);
+    }
 }
 
-[[clang::export_name("resetHorsePuzzle")]]
-void initPuzzle(uint32_t state) {
-    HorseRiddle horseRiddle = getHorseRiddle();
-    horseRiddle.resetAndRandomizeHorses(state);
-}
-
-[[clang::export_name("resetAndRandomizeHorses")]]
-void resetAndRandomizeHorses(uint32_t randState) {
-    HorseRiddle horseRiddle = getHorseRiddle();
-    horseRiddle.resetAndRandomizeHorses(randState);
-}
-
-[[clang::export_name("submitRace")]]
-uint32_t submitRace(uint32_t input) {
-    HorseRiddle horseRiddle = getHorseRiddle();
-    std::vector<uint32_t> horsesToRace = puzzleUtils::convertIntToVec(input, NUM_HORSES_PER_RACE, NUM_BITS_PER_HORSE);
-    std::vector<uint32_t> raceResults = horseRiddle.submitRace(horsesToRace);
-    return puzzleUtils::convertVecToInt(raceResults, NUM_BITS_PER_HORSE);
-}
-
-[[clang::export_name("checkHorseRiddleAnswer")]]
-uint32_t checkAnswer(uint32_t input) {
-    HorseRiddle horseRiddle = getHorseRiddle();
-    std::vector<uint32_t> submittedHorses = puzzleUtils::convertIntToVec(input, NUM_HORSES_TO_SUBMIT, NUM_BITS_PER_HORSE);
-    std::vector<uint32_t> answer = horseRiddle.checkAnswer(submittedHorses);
-    horseRiddle.resetDeletedHorses();
-    return puzzleUtils::convertVecToInt(answer, NUM_BITS_PER_HORSE);
+extern "C" {
+    __declspec(dllexport) uint32_t checkHorseRiddleAnswer(uint32_t randState, uint32_t fastestHorsesInt, uint32_t* submittedRaces, uint32_t numRaces) {
+        HorseRiddle horseRiddle(randState);
+        std::vector<uint32_t> fastestHorses = puzzleUtils::convertIntToVec(fastestHorsesInt, NUM_HORSES_TO_SUBMIT, NUM_BITS_PER_HORSE);
+        std::vector<uint32_t> answer = horseRiddle.checkAnswer(fastestHorses, submittedRaces, numRaces);
+        // horseRiddle.resetDeletedHorses();
+        return puzzleUtils::convertVecToInt(answer, NUM_BITS_PER_HORSE);
+    }
 }    

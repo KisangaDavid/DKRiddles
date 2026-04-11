@@ -8,7 +8,7 @@ import Fade from '@mui/material/Fade'
 import Zoom from "@mui/material/Zoom";
 import Box from "@mui/material/Box";
 import Image from 'next/image'
-import { standardTextFade } from "../_common/utils";
+import { standardTextFade } from "../_common/constants";
 
 interface props {
   NUM_HOUSES: number;

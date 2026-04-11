@@ -4,7 +4,7 @@ import Image from 'next/image';
 import kernelImg from "../../assets/kernel.png";
 import Zoom from '@mui/material/Zoom';
 import Grid from "@mui/material/Grid";
-import { shortImageZoom } from '../_common/utils';
+import { shortImageZoom } from '../_common/constants';
 
 const NUM_COLUMNS_OF_KERNELS = 3;
 const MAX_NUM_KERNELS = 12;

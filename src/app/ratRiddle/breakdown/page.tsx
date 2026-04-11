@@ -9,7 +9,8 @@ import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar";
 import RiddleNotComplete from "../../_common/RiddleNotComplete";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
-import { SolvedPuzzlesContext, RAT_PUZZLE_P1, RAT_PUZZLE_P2, ratBlogLink, standardTextFade } from '../../_common/utils'
+import { SolvedPuzzlesContext } from '../../_common/utils';
+import { RAT_PUZZLE_P1, RAT_PUZZLE_P2, ratBlogLink, standardTextFade } from '../../_common/constants'
 import FourDayGraphImg from '../../../assets/FourDayGraph.png';
 import ValidGraphImg from '../../../assets/ValidGraph.png';
 import InvalidGraphImg from '../../../assets/InvalidGraph.png';

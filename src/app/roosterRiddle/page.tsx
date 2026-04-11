@@ -1,15 +1,13 @@
 'use client'
 
 import { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import { 
   convertIterableToInt, 
   convertIntToArray,
-  MAX_32_BIT_NUM, 
-  useConfettiSize, 
-  longTextFade,
-  WasmContext, 
-  longDelay
+  useConfettiSize
 } from "../_common/utils";
+import { MAX_32_BIT_NUM, longTextFade, longDelay, backendBaseUrl } from "../_common/constants";
 import RoosterRiddleDescription from './RoosterRiddleDescription';
 import RoosterMoveDescription from './RoosterMoveDescription';
 import RoosterRiddleResults from './RoosterRiddleResults';
@@ -33,14 +31,13 @@ function RoosterRiddlePage() {
   const [selectedPile, setSelectedPile] = useState(-1);
   const [roosterMove, setRoosterMove] = useState<[number, number[]]>([-1, [-1]]);
   const [confettiWidth, confettiHeight] = useConfettiSize();
-  const {wasmExports} = useContext(WasmContext);
 
   useEffect(() => {
       generateAndSetPiles();
-  }, [wasmExports]);
+  }, []);
 
-  const generateAndSetPiles = () => {
-    let pilesIntForm = getPilesIntForm();
+  const generateAndSetPiles = async () => {
+    let pilesIntForm = await getPilesIntForm();
 
     if (pilesIntForm != null) {
       let piles = convertIntToArray(pilesIntForm, NUM_BITS_PER_PILE, NUM_PILES); 
@@ -66,7 +63,8 @@ function RoosterRiddlePage() {
     }
   };
 
-  const submitMove = () => {
+  const submitMove = async () => {
+    const startTime = Date.now();
     let pileAfterRemoval = piles[selectedPile].filter(kernel => !selectedKernels.has(kernel));
     let pilesPostPlayerMove = [...piles.slice(0, selectedPile), pileAfterRemoval, ...piles.slice(selectedPile + 1)]
     let postPlayerPileSums = pilesPostPlayerMove.map(pile => pile.length);
@@ -75,16 +73,17 @@ function RoosterRiddlePage() {
       setGameIsWon(true);
       return;
     }
-    let randSource = Math.floor(Math.random() * MAX_32_BIT_NUM);
     let pilesIntRep = convertIterableToInt(postPlayerPileSums.reverse(), NUM_BITS_PER_PILE);
-    let roosterMove = (wasmExports?.getRoosterRiddleMove as Function)(pilesIntRep, randSource);
+    const roosterMoveResponse = await axios.post(`${backendBaseUrl}/puzzles/roosterRiddle/getRoosterRiddleMove`, { pileState: pilesIntRep });
+    let roosterMove = parseInt(roosterMoveResponse.data);
     let [numToTake, pileToTakeFrom] = convertIntToArray(roosterMove, NUM_BITS_PER_PILE, 2);
     setPiles(pilesPostPlayerMove);
     setSelectedKernels(new Set());
     setSelectedPile(-1);
+    const adjustedDelay = Math.max(0, longDelay - Date.now() + startTime);
     setTimeout(() => {
       executeRoosterMove(pileToTakeFrom, numToTake, pilesPostPlayerMove);
-    }, longDelay);
+    }, adjustedDelay);
   }
 
   const executeRoosterMove = (pileToTakeFrom: number, numToTake: number, pilesPostPlayerMove: Array<Array<number>>) => {
@@ -102,12 +101,9 @@ function RoosterRiddlePage() {
     setRoosterMove([-1, [-1]]);
   }
 
-  const getPilesIntForm = () => {
-    let piles = null;
-    if (wasmExports != null) {
-      piles = (wasmExports.getInitialPiles as Function)(Math.floor(Math.random() * MAX_32_BIT_NUM));
-    }
-    return piles;
+  const getPilesIntForm = async () => {
+    const response = await axios.post(`${backendBaseUrl}/puzzles/roosterRiddle/getInitialPiles`, { randSeed: Math.floor(Math.random() * MAX_32_BIT_NUM) });
+    return parseInt(response.data);
   }
 
   if (piles.length === NUM_PILES && piles.reduce((a, b) => a + b.length, 0) == 0) {
