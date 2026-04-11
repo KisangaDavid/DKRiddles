@@ -7,7 +7,7 @@ CPP_FLAGS = -Wall -Wno-unknown-attributes -Werror -Weffc++ -Wextra -Wconversion 
 # CPP general compiler flags for prod
 CPP_OPT_FLAGS = -Wall -Wno-unknown-attributes -Werror -Weffc++ -Wextra -Wconversion -Wsign-conversion -std=c++23 -Oz
 
-# TODO: compile to so file for so we can deploy on a linux box
+# TODO: option to compile to an so file for so we can deploy on a linux box
 DLL_FLAGS = -shared 
 
 # WASM specific compile flags
