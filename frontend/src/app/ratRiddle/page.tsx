@@ -1,9 +1,7 @@
 'use client'
 
-import axios from 'axios';
 import { useState, useCallback } from 'react';
-import { useContext } from "react";
-import { useConfettiSize } from "../_common/utils";
+import { poster, useConfettiSize } from "../_common/utils";
 import { backendBaseUrl, longTextFade, standardTextFade, longDelay } from "../_common/constants";
 
 import RowOfHouses from './RowOfHouses';
@@ -65,7 +63,7 @@ function RatRiddlePage() {
       counter++;
     });
     let submittedPlan = (`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`);
-    let intPath = (await axios.post(`${backendBaseUrl}/puzzles/ratRiddle/checkRatRiddleAnswer`, { submittedPlan })).data;
+    let intPath = (await poster(`/puzzles/ratRiddle/checkRatRiddleAnswer`, { submittedPlan })).data;
 
     let path = []
     if (intPath != -1) {

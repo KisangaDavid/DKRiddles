@@ -2,16 +2,19 @@ from django.http import HttpResponse
 import json
 
 import ctypes 
-from django.views.decorators.http import require_POST
+from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
-
 from puzzles.backendDll import allModules
-        
+
+# TODO: fill in types for all of the dll / so calls
 @csrf_exempt
-@require_POST
-async def checkRatRiddleAnswer(request):
+@api_view(['POST'])
+def checkRatRiddleAnswer(request):
     # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
     # my_lib.getInitialPiles.restype = ctypes.c_int
+    print(request.user)
+    print(request.headers)
+    print(request.user.is_authenticated)
     binaryStringPlan = json.loads(request.body)["submittedPlan"]
     intRepresentation = int(binaryStringPlan, 2)
     print(f"submittedPlan as intRepresentation: {intRepresentation}")
@@ -20,8 +23,8 @@ async def checkRatRiddleAnswer(request):
     return HttpResponse(result)
 
 @csrf_exempt
-@require_POST
-async def checkRatRiddleBonusAnswer(request):
+@api_view(['POST'])
+def checkRatRiddleBonusAnswer(request):
     # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
     # my_lib.getInitialPiles.restype = ctypes.c_int
     body = json.loads(request.body)
@@ -31,8 +34,8 @@ async def checkRatRiddleBonusAnswer(request):
     return HttpResponse(json.dumps({"result": "success" if result else "fail"}))
 
 @csrf_exempt
-@require_POST
-async def raceHorses(request):
+@api_view(['POST'])
+def raceHorses(request):
     # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
     # my_lib.getInitialPiles.restype = ctypes.c_int
     body = json.loads(request.body)
@@ -42,8 +45,8 @@ async def raceHorses(request):
     return HttpResponse(result)
 
 @csrf_exempt
-@require_POST
-async def checkHorseRiddleAnswer(request):
+@api_view(['POST'])
+def checkHorseRiddleAnswer(request):
     # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
     # my_lib.getInitialPiles.restype = ctypes.c_int
     body = json.loads(request.body)
@@ -56,8 +59,8 @@ async def checkHorseRiddleAnswer(request):
     return HttpResponse(result)
 
 @csrf_exempt
-@require_POST
-async def getInitialPiles(request):
+@api_view(['POST'])
+def getInitialPiles(request):
     # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
     # my_lib.getInitialPiles.restype = ctypes.c_int
     randSeed = int(json.loads(request.body)["randSeed"])
@@ -65,16 +68,16 @@ async def getInitialPiles(request):
 
 
 @csrf_exempt
-@require_POST
-async def getRoosterRiddleMove(request):
+@api_view(['POST'])
+def getRoosterRiddleMove(request):
     # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
     # my_lib.getInitialPiles.restype = ctypes.c_int
     pileState = int(json.loads(request.body)["pileState"])
     return HttpResponse(allModules.getRoosterRiddleMove(pileState))
 
 @csrf_exempt
-@require_POST
-async def checkRabbitRiddleBonusAnswer(request):
+@api_view(['POST'])
+def checkRabbitRiddleBonusAnswer(request):
     # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
     # my_lib.getInitialPiles.restype = ctypes.c_int
     body = json.loads(request.body)
