@@ -1,6 +1,5 @@
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -14,7 +13,6 @@ SECRET_KEY = 'django-insecure-!*c=v-^%$19^+e=bpjvrzgzqtx_6)6w)+9zum@rnk=5&*^+bu1
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -66,7 +64,7 @@ DJOSER = {
     "USERNAME_FIELD": "username"
 }
 
-SITE_NAME = "DK Riddles"
+SITE_NAME = "TheRiddleMan.com"
 
 DOMAIN = 'localhost:3000'
 
@@ -97,9 +95,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -107,14 +102,14 @@ DATABASES = {
     }
 }
 
-
 DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+AUTH_USER_MODEL = 'puzzles.user'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
         "OPTIONS": {
-            "min_length": 5,
+            "min_length": 6,
         }
     }
     # {
@@ -128,11 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
     # },
 ]
 
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/6.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -140,9 +130,5 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'

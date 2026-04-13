@@ -252,7 +252,7 @@ function HorseRiddlePage() {
                     alignItems: "center",
                     flexDirection: "column",
                     width: "100%",
-                    minHeight: "8.5em", // TODO: come back to this!
+                    minHeight: "8.5em", 
                   }}
                 >
                   Current Race:

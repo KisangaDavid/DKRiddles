@@ -4,7 +4,6 @@ interface props {
   answerCorrect: boolean
 }
 function Solved({answerCorrect} : props) {
-//  TODO: nested lists in <p>
 
   return (
     

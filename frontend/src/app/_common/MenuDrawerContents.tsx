@@ -87,7 +87,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
             <StyledListItemText primary={"Close"} />
           </StyledListItemButton>
         </ListItem>
-        <Link href="/login/">
+        <Link href="/auth/login/">
           <ListItem disablePadding>
             <StyledListItemButton>
               <StyledListItemIcon PassedIcon={AccountCircleRoundedIcon} />

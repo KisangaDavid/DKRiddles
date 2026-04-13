@@ -23,7 +23,7 @@ OBJS = $(SRCS:.cpp=.o)
 # Wasm module name
 WASM_ALL_MODULES_NAME = "../../public/allModules.wasm
 
-DLL_FILE_NAME = "../../config/config/allModules.dll"
+DLL_FILE_NAME_BASE = "../backend/puzzles/allModules
 
 # Default target (wasm binary)
 all: wasm
@@ -40,7 +40,7 @@ wasmAllOpt: $(SRCS)
 	$(CPP) $(CPP_OPT_FLAGS) $(WASMCOMPFLAGS) $^ -o $(WASM_ALL_MODULES_NAME) 
 
 dllFile: $(SRCS)
-	$(CPP) $(CPP_OPT_FLAGS) $(DLL_FLAGS) $^ -o $(DLL_FILE_NAME) 
+	$(CPP) $(CPP_OPT_FLAGS) $(DLL_FLAGS) $^ -o $(DLL_FILE_NAME_BASE).dll 
 	
 # Clean build artifacts
 clean:

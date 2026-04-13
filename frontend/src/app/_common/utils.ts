@@ -1,5 +1,5 @@
 'use client'
-// TODO: make this not a client component
+// TODO: move context out and make this not a client component
 
 import { createContext, useState, useLayoutEffect } from 'react';
 import wretch, { Wretch, WretchError } from "wretch";

@@ -123,7 +123,6 @@ function BonusChallenge({setConfetti, totalDays} : props) {
             <Box sx={{ display: "flex", justifyContent: "center" }}>
               <Box sx={{ textAlign: "center", position: "relative" }}>
                 <TextField
-                  sx={{}}
                   id="bonusAnswer"
                   variant="outlined"
                   size="small"
