@@ -23,7 +23,14 @@ const StyledCard = styled(Card)({
   },
 });
 
-function ProfileCard({user: user}) {
+interface ProfileCardProps {
+  user: {
+    username?: string;
+    email?: string;
+  }
+};
+
+function ProfileCard({user} : ProfileCardProps) {
     const router = useRouter();
     const handleLogout = () => {
     logout()

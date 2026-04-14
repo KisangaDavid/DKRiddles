@@ -61,7 +61,7 @@ export const SolvedPuzzlesContext = createContext<solvedPuzzlesContext>({
   setSolvedPuzzles: () => {}
 });
 
-const { handleJWTRefresh, storeToken, getToken } = AuthActions();
+const { handleJWTRefresh, storeToken, getToken, removeTokens } = AuthActions();
 
 const api = () => {
   const accessToken = getToken("access");
@@ -79,12 +79,14 @@ const api = () => {
           .auth(`Bearer ${access}`)
           .fetch()
           .unauthorized(() => {
+            removeTokens();
             window.location.replace("/");
           })
           .json();
       } catch (err) {
         console.error("Error refreshing token:", err);
-        window.location.replace("/"); // auto log out?
+        removeTokens();
+        window.location.replace("/");
         throw err; 
       }
     });

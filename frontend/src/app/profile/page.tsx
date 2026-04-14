@@ -15,6 +15,7 @@ function ProfilePage() {
         <TopBar
           text="Profile"
           isPuzzlePage={false}
+          resetFunc={undefined}
         />
       <ProfileCard user={user}/>
     
