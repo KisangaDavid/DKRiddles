@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getRandomInt, SolvedPuzzlesContext } from "../_common/utils";
+import { getRandomInt, poster, SolvedPuzzlesContext } from "../_common/utils";
 import { RABBIT_PUZZLE_P2, SOLVED, backendBaseUrl, standardTextFade } from "../_common/constants";
 import SendIcon from "@mui/icons-material/Send";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
@@ -29,8 +29,8 @@ function BonusChallenge({setConfetti} : props) {
       }
     }, []);
     const checkRabbitBonusAnswer = async (numBonusRabbits: number, answerToBonus: number) => {
-      const response = await axios.post(`${backendBaseUrl}/puzzles/rabbitRiddle/checkRabbitRiddleBonusAnswer`, {numBonusRabbits, answerToBonus});
-    return response.data.result === "success";
+      const result = (await poster(`/puzzles/rabbitRiddle/checkRabbitRiddleBonusAnswer`, {numBonusRabbits, answerToBonus})).result;
+      return result === "success";
     }
     // TODO: make updating local storage and adding a puzzle to context a util function?
     const submitBonusAnswer = async () => {

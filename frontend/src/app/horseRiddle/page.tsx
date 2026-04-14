@@ -4,7 +4,8 @@ import { useState, useCallback, ChangeEvent } from "react";
 import axios from "axios";
 import { convertIterableToInt, 
   convertIntToArray, 
-  useConfettiSize
+  useConfettiSize,
+  poster
 } from "../_common/utils";
 import { MAX_32_BIT_NUM, longTextFade, longDelay, backendBaseUrl } from "../_common/constants";
 import Grid from "@mui/material/Grid";
@@ -124,17 +125,17 @@ function HorseRiddlePage() {
       submittedRaces.push(encodedRace);
     }
 
-    const checkResponse = await axios.post(
-      `${backendBaseUrl}/puzzles/horseRiddle/checkHorseRiddleAnswer`,
+    const checkResponse = (await poster(
+      `/puzzles/horseRiddle/checkHorseRiddleAnswer`,
       {
         randSeed,
         fastestHorsesInt,
         submittedRaces,
         numRaces
       }
-    );
+    ));
     
-    let intRes = parseInt(checkResponse.data);
+    let intRes = parseInt(checkResponse);
     let resVec = convertIntToArray(intRes, NUM_BITS_PER_HORSE, 3).reverse();
 
     switch (resVec[0]) {

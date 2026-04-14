@@ -8,7 +8,7 @@ import Fab from "@mui/material/Fab";
 import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
-import { SolvedPuzzlesContext } from "../_common/utils";
+import { poster, SolvedPuzzlesContext } from "../_common/utils";
 import { RAT_PUZZLE_P2, SOLVED, backendBaseUrl, standardTextFade } from "../_common/constants";
 
 interface props {
@@ -31,8 +31,8 @@ function BonusChallenge({setConfetti, totalDays} : props) {
   }, []);
 
   const checkBonusAnswer = async (numHouses: number, answerToBonus: number) => {
-    const response = await axios.post(`${backendBaseUrl}/puzzles/ratRiddle/checkRatRiddleBonusAnswer`, { numHouses, answerToBonus });
-    return response.data.result === "success";
+    const result = (await poster(`/puzzles/ratRiddle/checkRatRiddleBonusAnswer`, { numHouses, answerToBonus })).result;
+    return result === "success";
   }
 
   const submitBonusAnswer = async () => {

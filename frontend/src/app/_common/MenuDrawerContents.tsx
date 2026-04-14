@@ -11,6 +11,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import LoginIcon from '@mui/icons-material/Login';
 import TipsAndUpdatesOutlinedIcon from '@mui/icons-material/TipsAndUpdatesOutlined';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
@@ -19,6 +20,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import { SvgIconProps } from "@mui/material/SvgIcon";
+import { AuthActions } from "@/src/app/auth/utils";
 
 const StyledListItemButton = styled(ListItemButton)({
   paddingTop: "1.5vh",
@@ -44,6 +46,8 @@ interface StyledListItemIconProps {
   complete?: boolean;
   inProgress?: boolean;
 }
+
+const { getToken } = AuthActions();
 
 function StyledListItemIcon({PassedIcon, complete = false, inProgress=false}: StyledListItemIconProps) { 
   const theme = useTheme();
@@ -87,14 +91,25 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
             <StyledListItemText primary={"Close"} />
           </StyledListItemButton>
         </ListItem>
-        <Link href="/auth/login/">
-          <ListItem disablePadding>
-            <StyledListItemButton>
-              <StyledListItemIcon PassedIcon={AccountCircleRoundedIcon} />
-              <StyledListItemText primary={"Log In"} />
-            </StyledListItemButton>
-          </ListItem>
-        </Link>
+        {getToken("access") ? 
+          <Link href="/profile">
+              <ListItem disablePadding>
+                <StyledListItemButton>
+                  <StyledListItemIcon PassedIcon={AccountCircleRoundedIcon} />
+                  <StyledListItemText primary={"Profile"} />
+                </StyledListItemButton>
+              </ListItem>
+            </Link>
+        :
+          <Link href="/auth/login/">
+            <ListItem disablePadding>
+              <StyledListItemButton>
+                <StyledListItemIcon PassedIcon={LoginIcon} />
+                <StyledListItemText primary={"Log In"} />
+              </StyledListItemButton>
+            </ListItem>
+          </Link>
+        }
         <Link href="/">
           <ListItem disablePadding>    
             <StyledListItemButton>

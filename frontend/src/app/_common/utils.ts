@@ -64,40 +64,39 @@ export const SolvedPuzzlesContext = createContext<solvedPuzzlesContext>({
 const { handleJWTRefresh, storeToken, getToken } = AuthActions();
 
 const api = () => {
-  return (
-    wretch("http://localhost:8000") // Change this?
-      // Initialize authentication with the access token.
-      .auth(`Bearer ${getToken("access")}`)
-      // Catch 401 errors to refresh the token and retry the request.
-      .catcher(401, async (error: WretchError, request: Wretch) => {
-        try {
-          // Attempt to refresh the JWT token.
-          const { access } = (await handleJWTRefresh().json()) as {
-            access: string;
-          };
+  const accessToken = getToken("access");
+  const baseApi = wretch("http://localhost:8000");
 
-          // Store the new access token.
-          storeToken(access, "access");
+  if (!accessToken) return baseApi.catcherFallback((err) => {console.log(err)});
 
-          // Replay the original request with the new access token.
-          return request
-            .auth(`Bearer ${access}`)
-            .fetch()
-            .unauthorized(() => {
-              window.location.replace("/");
-            })
-            .json();
-        } catch (err) {
-          console.log("err with the request in fetcher" + err);
-        }
-      })
-  );
+  return baseApi
+    .auth(`Bearer ${accessToken}`)
+    .catcher(401, async (_error: WretchError, request: Wretch) => {
+      try {
+        const { access } = await handleJWTRefresh().json() as { access: string };
+        storeToken(access, "access");
+        return request
+          .auth(`Bearer ${access}`)
+          .fetch()
+          .unauthorized(() => {
+            window.location.replace("/");
+          })
+          .json();
+      } catch (err) {
+        console.error("Error refreshing token:", err);
+        window.location.replace("/"); // auto log out?
+        throw err; 
+      }
+    });
 };
 
 export const fetcher = (url: string): Promise<any> => {
-  return api().get(url).json();
+  return api().url(url).get().json();
 };
 
-export const poster = (url: string, body: Record<string, any>): Promise<any> => {
-  return api().post(body, url).json();
+export const poster = (
+  url: string,
+  body: Record<string, any>
+): Promise<any> => {
+  return api().url(url).post(body).json();
 };

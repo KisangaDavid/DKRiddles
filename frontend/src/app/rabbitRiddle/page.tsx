@@ -1,7 +1,7 @@
 'use client'
 
 import { useContext, useState } from 'react';
-import { useConfettiSize, SolvedPuzzlesContext } from "../_common/utils";
+import { useConfettiSize, SolvedPuzzlesContext, poster } from "../_common/utils";
 import { standardDelay, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2, SOLVED } from "../_common/constants";
 import Confetti from "react-confetti";
 import RabbitRiddleDescription from './rabbitRiddleDescription';
@@ -19,6 +19,7 @@ const endingRabbitPositions = [2,2,2,0,1,1,1];
 
 function RabbitRiddlePage() {
   const [rabbitPositions, setRabbitPositions] = useState(startingRabbitPositions);
+  const [numMoves, setNumMoves] = useState(0)
   const [prevMoveRabbit, setPrevMoveRabbit] = useState(WHITE_RABBIT);
   const [movedTo, setMovedTo] = useState(-1)
   const [prevMoveJump, setPrevMoveJump] = useState(false);
@@ -56,26 +57,37 @@ function RabbitRiddlePage() {
         jump = true;
       }
     }
+    
     setPrevMoveJump(jump);
     setRabbitPositions(newRabbitPositions);
     setPrevMoveRabbit(rabbitType);
     setMovedTo(movedTo);
-    checkWin(newRabbitPositions);
+    checkWin(newRabbitPositions, numMoves + 1);
+    setNumMoves(prevNumMoves => prevNumMoves + 1)
   }
 
-  const checkWin = (newRabbitPositions: number[]) => {
+  const checkWin = async (newRabbitPositions: number[], numMoves: number) => {
     if(newRabbitPositions.every((val, idx) => val === endingRabbitPositions[idx])) {
-      setTimeout(() => {
-        localStorage.setItem(RABBIT_PUZZLE_P1, SOLVED);
-        const newSolvedPuzzles = new Set(solvedPuzzles);
-        newSolvedPuzzles.add(RABBIT_PUZZLE_P1);
-        setSolvedPuzzles(newSolvedPuzzles);
-        setP1Solved(true);
-      }, standardDelay);
+      const startTime = Date.now();
+      let result = (await poster(`/puzzles/rabbitRiddle/checkRabbitRiddleAnswer`, { numMoves })).result;
+      if(result == "success") {
+        const adjustedDelay = Math.max(0, standardDelay - Date.now() + startTime);
+        setTimeout(() => {
+          localStorage.setItem(RABBIT_PUZZLE_P1, SOLVED);
+          const newSolvedPuzzles = new Set(solvedPuzzles);
+          newSolvedPuzzles.add(RABBIT_PUZZLE_P1);
+          setSolvedPuzzles(newSolvedPuzzles);
+          setP1Solved(true);
+        }, adjustedDelay);
+      }
+      else {
+        console.log("You dirty cheater!")
+      }
     }
   }
 
   const resetPuzzle = () => {
+    setNumMoves(0)
     setP1Solved(false);
     setRabbitPositions(startingRabbitPositions);
     setPrevMoveJump(false);

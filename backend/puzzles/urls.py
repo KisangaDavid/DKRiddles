@@ -8,5 +8,6 @@ urlpatterns = [
     path('horseRiddle/raceHorses', views.raceHorses, name='raceHorses'),
     path('roosterRiddle/getInitialPiles', views.getInitialPiles, name='getInitialPiles'),
     path('roosterRiddle/getRoosterRiddleMove', views.getRoosterRiddleMove, name='getRoosterRiddleMove'),
-    path('rabbitRiddle/checkRabbitRiddleBonusAnswer', views.checkRabbitRiddleBonusAnswer, name='checkRabbitRiddleBonusAnswer'),
+    path('rabbitRiddle/checkRabbitRiddleAnswer', views.checkRabbitRiddleAnswer, name='checkRabbitRiddleAnswer'),
+    path('rabbitRiddle/checkRabbitRiddleBonusAnswer', views.checkRabbitRiddleBonusAnswer, name='checkRabbitRiddleBonusAnswer')
 ]
