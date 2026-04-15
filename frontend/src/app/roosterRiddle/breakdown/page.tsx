@@ -10,12 +10,12 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar";
 import RiddleNotComplete from "../../_common/RiddleNotComplete";
-import { SolvedPuzzlesContext } from "../../_common/utils";
 import { ROOSTER_PUZZLE, standardTextFade, roosterBlogLink } from "../../_common/constants";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
+import { SolvedPuzzlesContext } from "../../_common/SolvedPuzzlesContextProvider";
 
 function AboutRoosterRiddle() {
-  const { solvedPuzzles } = useContext(SolvedPuzzlesContext);
+  const { isSolved } = useContext(SolvedPuzzlesContext);
 
   return (
     <>
@@ -24,7 +24,7 @@ function AboutRoosterRiddle() {
         isPuzzlePage={false}
         resetFunc={undefined}
       />
-      {solvedPuzzles.has(ROOSTER_PUZZLE) ? (
+      {isSolved(ROOSTER_PUZZLE) ? (
         <Fade
           in={true}
           mountOnEnter

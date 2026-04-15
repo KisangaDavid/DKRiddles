@@ -1,27 +1,13 @@
-'use client'
-
 import "./globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import { useState, useEffect, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './_common/theme';
 import PageWrapper from "./_common/PageWrapper";
-import { SolvedPuzzlesContext } from "./_common/utils";
-import { ALL_PUZZLES } from "./_common/constants";
+import { SolvedPuzzlesContextProvider } from "./_common/SolvedPuzzlesContextProvider";
 
 export default function RootLayout({ children } : PropsWithChildren) {
-  const [solvedPuzzles, setSolvedPuzzles] = useState<Set<string>>(new Set());
-
-  useEffect(() => {
-    const newSolvedPuzzles = new Set<string>();
-    ALL_PUZZLES.forEach((element) => {
-      if(localStorage.getItem(element) != null) {
-        newSolvedPuzzles.add(element)
-      }
-    });
-    setSolvedPuzzles(newSolvedPuzzles);
-  }, []); 
 
   return (
     <html lang="en">
@@ -31,7 +17,7 @@ export default function RootLayout({ children } : PropsWithChildren) {
       </head>
       <body>
         <AppRouterCacheProvider>
-          <SolvedPuzzlesContext value={{solvedPuzzles, setSolvedPuzzles}}>
+          <SolvedPuzzlesContextProvider>
             <ThemeProvider theme={theme}>
               <CssBaseline />
               <div id="root">
@@ -40,7 +26,7 @@ export default function RootLayout({ children } : PropsWithChildren) {
                 </PageWrapper>
               </div>
             </ThemeProvider>
-          </SolvedPuzzlesContext>
+          </SolvedPuzzlesContextProvider>
         </AppRouterCacheProvider>
       </body>
     </html>

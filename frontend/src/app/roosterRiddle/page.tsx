@@ -74,7 +74,7 @@ function RoosterRiddlePage() {
 
     // }
     let pilesIntRep = convertIterableToInt(postPlayerPileSums.reverse(), NUM_BITS_PER_PILE);
-    const roosterMoveResponse = await poster(`/puzzles/roosterRiddle/getRoosterRiddleMove`, { pileState: pilesIntRep });
+    const roosterMoveResponse = await poster(`/puzzles/roosterRiddle/getRoosterRiddleMove`, { submittedInt: pilesIntRep });
     let roosterMove = parseInt(roosterMoveResponse);
     if (roosterMove == 0) {
       setPiles(pilesPostPlayerMove);
@@ -107,8 +107,8 @@ function RoosterRiddlePage() {
   }
 
   const getPilesIntForm = async () => {
-    const response = await axios.post(`${backendBaseUrl}/puzzles/roosterRiddle/getInitialPiles`, { randSeed: Math.floor(Math.random() * MAX_32_BIT_NUM) });
-    return parseInt(response.data);
+    const response = await poster(`/puzzles/roosterRiddle/getInitialPiles`, { submittedInt: Math.floor(Math.random() * MAX_32_BIT_NUM) });
+    return parseInt(response);
   }
 
   if (piles.length === NUM_PILES && piles.reduce((a, b) => a + b.length, 0) == 0) {

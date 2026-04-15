@@ -5,7 +5,8 @@ import { styled } from '@mui/material/styles';
 import { Card } from "@mui/material";
 import { AuthActions } from "../auth/utils";
 import { useRouter } from "next/navigation";
-
+import { useContext, useState } from "react";
+import { SolvedPuzzlesContext } from "../_common/SolvedPuzzlesContextProvider";
 const { logout, removeTokens } = AuthActions();
 
 const StyledCard = styled(Card)({
@@ -32,31 +33,33 @@ interface ProfileCardProps {
 
 function ProfileCard({user} : ProfileCardProps) {
     const router = useRouter();
+    const { clearSolvedPuzzles } = useContext(SolvedPuzzlesContext)
+    
     const handleLogout = () => {
-    logout()
-      .res(() => {
-        removeTokens();
+      logout()
+        .res(() => {
+          removeTokens();
+          clearSolvedPuzzles();
+          router.push("/");
+        })
+        .catch(() => {
+          removeTokens();
+          clearSolvedPuzzles();
+          router.push("/");
+        });
+    };
 
-        router.push("/");
-      })
-      .catch(() => {
-        removeTokens();
-        router.push("/");
-      });
-  };
-  
     return (
-        <StyledCard sx={{ width: {xs: "80%", sm: "65%", md: "50%", lg: "35%" }, mt: {xs: "2em", md: "4em"}}}>
-            <Typography variant="h5" sx={{mt:"0.5em"}}>Profile Information:</Typography>
-            <Typography>username: {user?.username}</Typography>
-            <Typography>email: {user?.email}</Typography>
-                    <button
+      <StyledCard sx={{ width: {xs: "80%", sm: "65%", md: "50%", lg: "35%" }, mt: {xs: "2em", md: "4em"}}}>
+        <Typography variant="h5" sx={{mt:"0.5em"}}>Profile Information:</Typography>
+        <Typography>username: {user?.username}</Typography>
+        <Typography>email: {user?.email}</Typography>
+        <button
           onClick={handleLogout}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
         >
           Disconnect
         </button>
-        </StyledCard>
+      </StyledCard>
     );
 };
 

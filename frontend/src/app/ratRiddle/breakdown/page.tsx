@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar";
 import RiddleNotComplete from "../../_common/RiddleNotComplete";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
-import { SolvedPuzzlesContext } from '../../_common/utils';
 import { RAT_PUZZLE_P1, RAT_PUZZLE_P2, ratBlogLink, standardTextFade } from '../../_common/constants'
 import FourDayGraphImg from '../../../assets/FourDayGraph.png';
 import ValidGraphImg from '../../../assets/ValidGraph.png';
@@ -18,10 +17,11 @@ import RatRiddleAboutPic1Img from '../../../assets/RatRiddleAboutPic1.jpg';
 import RatRiddleBreakdownPart2FullImg from '../../../assets/RatRiddleBreakdownPart2Full.png';
 import RatRiddleAlternatingImg from '../../../assets/RatRiddleAlternating.png';
 import RatRiddleBreakdown12HousesImg from '../../../assets/RatRiddleBreakdown12Houses.png';
+import { SolvedPuzzlesContext } from '../../_common/SolvedPuzzlesContextProvider';
 
 function RatRiddleBreakdownPage() {
 
-  const {solvedPuzzles} = useContext(SolvedPuzzlesContext);
+  const { isSolved } = useContext(SolvedPuzzlesContext);
 
   return (
     <>
@@ -30,7 +30,7 @@ function RatRiddleBreakdownPage() {
         isPuzzlePage={false}
         resetFunc={undefined}
       />
-      {solvedPuzzles.has(RAT_PUZZLE_P1) ?
+      {isSolved(RAT_PUZZLE_P1) ?
         <Fade
           in={true}
           mountOnEnter
@@ -177,7 +177,7 @@ function RatRiddleBreakdownPage() {
             <Typography variant="h4" sx={{ mb: "2vh" }}>
               Part 2: Intuition
             </Typography>
-            {solvedPuzzles.has(RAT_PUZZLE_P2) ? 
+            {isSolved(RAT_PUZZLE_P2) ? 
               <>
                 <Typography align="left">
                   To calculate how many days it would take to catch the rat for an arbitrary

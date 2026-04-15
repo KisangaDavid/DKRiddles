@@ -2,7 +2,6 @@ import Link from "next/link.js";
 import { useTheme } from "@mui/material/styles";
 import { useContext, FC } from "react";
 import { styled } from '@mui/material/styles';
-import { SolvedPuzzlesContext } from './utils';
 import { HORSE_PUZZLE, ROOSTER_PUZZLE, RAT_PUZZLE_P1, RAT_PUZZLE_P2, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2 } from './constants'
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -21,6 +20,7 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 import { SvgIconProps } from "@mui/material/SvgIcon";
 import { AuthActions } from "@/src/app/auth/utils";
+import { SolvedPuzzlesContext } from "./SolvedPuzzlesContextProvider";
 
 const StyledListItemButton = styled(ListItemButton)({
   paddingTop: "1.5vh",
@@ -75,7 +75,7 @@ interface props {
 }
 
 function MenuDrawerContents({setMenuDrawerOpen}: props) {
-  let {solvedPuzzles} = useContext(SolvedPuzzlesContext);
+  let { isSolved } = useContext(SolvedPuzzlesContext);
   return (
     <>
       <List sx={{
@@ -150,9 +150,9 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
           <ListItem disablePadding>      
             <StyledListItemButton>
               <StyledListItemIcon 
-                PassedIcon={solvedPuzzles.has(RAT_PUZZLE_P1) ? CheckRoundedIcon : ExtensionIcon}
-                complete={solvedPuzzles.has(RAT_PUZZLE_P2)}
-                inProgress={solvedPuzzles.has(RAT_PUZZLE_P1)}
+                PassedIcon={isSolved(RAT_PUZZLE_P1) ? CheckRoundedIcon : ExtensionIcon}
+                complete={isSolved(RAT_PUZZLE_P2)}
+                inProgress={isSolved(RAT_PUZZLE_P1)}
               />
               <StyledListItemText secondary={"The Sneaky Rat"} />
             </StyledListItemButton>
@@ -162,8 +162,8 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
           <ListItem disablePadding>
             <StyledListItemButton>
               <StyledListItemIcon 
-                PassedIcon={solvedPuzzles.has(HORSE_PUZZLE) ? CheckRoundedIcon : ExtensionIcon}
-                complete={solvedPuzzles.has(HORSE_PUZZLE)}
+                PassedIcon={isSolved(HORSE_PUZZLE) ? CheckRoundedIcon : ExtensionIcon}
+                complete={isSolved(HORSE_PUZZLE)}
               />
               <StyledListItemText secondary={"Horse Trifecta"} />
             </StyledListItemButton>
@@ -173,8 +173,8 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
           <ListItem disablePadding>
             <StyledListItemButton>
               <StyledListItemIcon 
-                PassedIcon={solvedPuzzles.has(ROOSTER_PUZZLE) ? CheckRoundedIcon : ExtensionIcon}
-                complete={solvedPuzzles.has(ROOSTER_PUZZLE)}
+                PassedIcon={isSolved(ROOSTER_PUZZLE) ? CheckRoundedIcon : ExtensionIcon}
+                complete={isSolved(ROOSTER_PUZZLE)}
               />
               <StyledListItemText secondary={"The Undefeated Rooster"} />
             </StyledListItemButton>
@@ -184,9 +184,9 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
           <ListItem disablePadding>
             <StyledListItemButton>
                <StyledListItemIcon 
-                PassedIcon={solvedPuzzles.has(RABBIT_PUZZLE_P1) ? CheckRoundedIcon : ExtensionIcon}
-                complete={solvedPuzzles.has(RABBIT_PUZZLE_P2)}
-                inProgress={solvedPuzzles.has(RABBIT_PUZZLE_P1)}
+                PassedIcon={isSolved(RABBIT_PUZZLE_P1) ? CheckRoundedIcon : ExtensionIcon}
+                complete={isSolved(RABBIT_PUZZLE_P2)}
+                inProgress={isSolved(RABBIT_PUZZLE_P1)}
               />
               <StyledListItemText secondary={"Jumping Rabbits"} />
             </StyledListItemButton>
@@ -209,8 +209,8 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
             <StyledListItemButton>
               <StyledListItemIcon 
                 PassedIcon={TipsAndUpdatesOutlinedIcon} 
-                complete={solvedPuzzles.has(RAT_PUZZLE_P2)} 
-                inProgress={solvedPuzzles.has(RAT_PUZZLE_P1)}
+                complete={isSolved(RAT_PUZZLE_P2)} 
+                inProgress={isSolved(RAT_PUZZLE_P1)}
               />
               <StyledListItemText secondary={"Rat Puzzle Breakdown"} />
             </StyledListItemButton>
@@ -221,7 +221,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
             <StyledListItemButton>
               <StyledListItemIcon 
                 PassedIcon={TipsAndUpdatesOutlinedIcon} 
-                complete={solvedPuzzles.has(HORSE_PUZZLE)}
+                complete={isSolved(HORSE_PUZZLE)}
               />
               <StyledListItemText secondary={"Horse Puzzle Breakdown"} />
             </StyledListItemButton>
@@ -232,7 +232,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
             <StyledListItemButton>
               <StyledListItemIcon 
                 PassedIcon={TipsAndUpdatesOutlinedIcon} 
-                complete={solvedPuzzles.has(ROOSTER_PUZZLE)}
+                complete={isSolved(ROOSTER_PUZZLE)}
               />
               <StyledListItemText secondary={"Rooster Puzzle Breakdown"} />
             </StyledListItemButton>
@@ -243,8 +243,8 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
             <StyledListItemButton>
                <StyledListItemIcon 
                 PassedIcon={TipsAndUpdatesOutlinedIcon} 
-                complete={solvedPuzzles.has(RABBIT_PUZZLE_P2)} 
-                inProgress={solvedPuzzles.has(RABBIT_PUZZLE_P1)}
+                complete={isSolved(RABBIT_PUZZLE_P2)} 
+                inProgress={isSolved(RABBIT_PUZZLE_P1)}
               />
               <StyledListItemText secondary={"Rabbit Puzzle Breakdown"} />
             </StyledListItemButton>

@@ -51,15 +51,34 @@ export function useConfettiSize() {
   return size;
 }
 
-interface solvedPuzzlesContext {
-  solvedPuzzles: Set<string>;
-  setSolvedPuzzles: (puzzles: Set<string>) => void;
-} 
+// interface solvedPuzzlesContext {
+//   solvedPuzzles: Set<string>;
+//   setSolvedPuzzles: (puzzles: Set<string>) => void;
+// } 
 
-export const SolvedPuzzlesContext = createContext<solvedPuzzlesContext>({
-  solvedPuzzles: new Set<string>(),
-  setSolvedPuzzles: () => {}
-});
+// export const SolvedPuzzlesContext = createContext<solvedPuzzlesContext>({
+//   solvedPuzzles: new Set<string>(),
+//   setSolvedPuzzles: () => {}
+// });
+
+// export const SolvedPuzzlesContextProvider = ({ children }) => {
+//   // 1. Load data ONCE at page load using a function in useState
+//   const [data, setData] = useState(() => {
+//     const savedData = localStorage.getItem('myAppData');
+//     return savedData ? JSON.parse(savedData) : { user: null, theme: 'light' };
+//   });
+
+//   // 2. Optional: Keep localStorage in sync when state changes
+//   useEffect(() => {
+//     localStorage.setItem('myAppData', JSON.stringify(data));
+//   }, [data]);
+
+//   return (
+//     <MyContext.Provider value={{ data, setData }}>
+//       {children}
+//     </MyContext.Provider>
+//   );
+// };
 
 const { handleJWTRefresh, storeToken, getToken, removeTokens } = AuthActions();
 

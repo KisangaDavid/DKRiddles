@@ -8,16 +8,16 @@ import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar";
 import RiddleNotComplete from "../../_common/RiddleNotComplete";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
-import { SolvedPuzzlesContext } from '../../_common/utils';
 import { standardTextFade, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2, rabbitBlogLink } from '../../_common/constants'
 import rabbitSolution from '../../../assets/rabbitSolution.gif'
 import rabbitMapping from '../../../assets/rabbitMappings.png'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import { SolvedPuzzlesContext } from '../../_common/SolvedPuzzlesContextProvider';
 
 function RatRiddleBreakdownPage() {
 
-  const {solvedPuzzles} = useContext(SolvedPuzzlesContext);
+  const { isSolved } = useContext(SolvedPuzzlesContext);
 
   return (
     <>
@@ -37,7 +37,7 @@ function RatRiddleBreakdownPage() {
           alignItems: "center",
         }}
       >
-      {solvedPuzzles.has(RABBIT_PUZZLE_P1) ?
+      {isSolved(RABBIT_PUZZLE_P1) ?
         <Fade
           in={true}
           mountOnEnter
@@ -91,7 +91,7 @@ function RatRiddleBreakdownPage() {
         </Fade>
       :
         <RiddleNotComplete puzzleNumber={4} puzzleTitle={"Jumping Rabbits"} blogLink={rabbitBlogLink}/>}
-      {solvedPuzzles.has(RABBIT_PUZZLE_P2) ? 
+      {isSolved(RABBIT_PUZZLE_P2) ? 
         <>
           <Typography variant="h4" sx={{ mb: "2vh" }}>
             Part 2: Solution

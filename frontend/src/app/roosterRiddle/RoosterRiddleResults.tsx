@@ -3,9 +3,9 @@
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import { useState, useContext, useEffect } from "react";
-import { SolvedPuzzlesContext } from "../_common/utils";
-import { standardTextFade, ROOSTER_PUZZLE, SOLVED } from "../_common/constants";
+import { standardTextFade, ROOSTER_PUZZLE } from "../_common/constants";
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
+import { SolvedPuzzlesContext } from "../_common/SolvedPuzzlesContextProvider";
 
 interface props {
   gameIsWon: boolean;
@@ -14,14 +14,11 @@ interface props {
 function RoosterRiddleResults({ gameIsWon } : props) {
   const [notificationOpen, setNotificationOpen] = useState(gameIsWon);
 
-  const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
+  const { markSolved } = useContext(SolvedPuzzlesContext);
 
   useEffect(() => {
-    if (gameIsWon && !solvedPuzzles.has(ROOSTER_PUZZLE)) {
-      localStorage.setItem(ROOSTER_PUZZLE, SOLVED);
-      const newSolvedPuzzles = new Set(solvedPuzzles);
-      newSolvedPuzzles.add(ROOSTER_PUZZLE);
-      setSolvedPuzzles(newSolvedPuzzles);
+    if (gameIsWon) { 
+      markSolved(ROOSTER_PUZZLE);
     }
   }, [gameIsWon]);
 

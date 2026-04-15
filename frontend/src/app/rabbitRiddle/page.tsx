@@ -1,8 +1,8 @@
 'use client'
 
 import { useContext, useState } from 'react';
-import { useConfettiSize, SolvedPuzzlesContext, poster } from "../_common/utils";
-import { standardDelay, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2, SOLVED } from "../_common/constants";
+import { useConfettiSize, poster } from "../_common/utils";
+import { standardDelay, RABBIT_PUZZLE_P1, SOLVED } from "../_common/constants";
 import Confetti from "react-confetti";
 import RabbitRiddleDescription from './rabbitRiddleDescription';
 import Rabbits from './rabbits'
@@ -10,6 +10,7 @@ import TopBar from '../_common/TopBar';
 import Box from '@mui/material/Box';
 import BreakdownUnlockedNotification from '../_common/BreakdownUnlockedNotification';
 import BonusChallenge from './BonusChallenge';
+import { SolvedPuzzlesContext } from '../_common/SolvedPuzzlesContextProvider';
 
 const EMPTY = 0;
 const WHITE_RABBIT = 1;
@@ -27,7 +28,7 @@ function RabbitRiddlePage() {
   const [notificationOpen, setNotificationOpen] = useState(true);
   const [confetti, setConfetti] = useState(false);
   const [confettiWidth, confettiHeight] = useConfettiSize();
-  const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
+  const { markSolved } = useContext(SolvedPuzzlesContext);
 
 
   const moveRabbit = (idx: number, rabbitType: number) => {
@@ -69,14 +70,11 @@ function RabbitRiddlePage() {
   const checkWin = async (newRabbitPositions: number[], numMoves: number) => {
     if(newRabbitPositions.every((val, idx) => val === endingRabbitPositions[idx])) {
       const startTime = Date.now();
-      let result = (await poster(`/puzzles/rabbitRiddle/checkRabbitRiddleAnswer`, { numMoves })).result;
+      let result = (await poster(`/puzzles/rabbitRiddle/checkRabbitRiddleAnswer`, { submittedInt: numMoves })).result;
       if(result == "success") {
         const adjustedDelay = Math.max(0, standardDelay - Date.now() + startTime);
         setTimeout(() => {
-          localStorage.setItem(RABBIT_PUZZLE_P1, SOLVED);
-          const newSolvedPuzzles = new Set(solvedPuzzles);
-          newSolvedPuzzles.add(RABBIT_PUZZLE_P1);
-          setSolvedPuzzles(newSolvedPuzzles);
+          markSolved(RABBIT_PUZZLE_P1);
           setP1Solved(true);
         }, adjustedDelay);
       }
@@ -128,13 +126,6 @@ function RabbitRiddlePage() {
         <BonusChallenge setConfetti={setConfetti}/>
       </>
     )}
-    {/* {p1Solved && p2Solved && (
-      <Fade in={true} mountOnEnter unmountOnExit>
-        <Box sx={{display: "flex", mt: {xs: "2em", md: "5em"}}}>
-          <BonusSubmitted answerCorrect={}/>
-        </Box>
-      </Fade>
-    )}   */}
   </>
   )
 }

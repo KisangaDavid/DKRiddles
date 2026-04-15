@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { poster, useConfettiSize } from "../_common/utils";
-import { backendBaseUrl, longTextFade, standardTextFade, longDelay } from "../_common/constants";
+import { longTextFade, standardTextFade, longDelay } from "../_common/constants";
 
 import RowOfHouses from './RowOfHouses';
 import SolvedStack from './SolvedStack';

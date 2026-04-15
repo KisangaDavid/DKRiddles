@@ -1,12 +1,12 @@
-import axios from 'axios'
-import { getRandomInt, poster, SolvedPuzzlesContext } from "../_common/utils";
-import { RABBIT_PUZZLE_P2, SOLVED, backendBaseUrl, standardTextFade } from "../_common/constants";
+import { getRandomInt, poster } from "../_common/utils";
+import { RABBIT_PUZZLE_P2, standardTextFade } from "../_common/constants";
 import SendIcon from "@mui/icons-material/Send";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Zoom, Fab, Fade } from "@mui/material";
 import BonusSubmitted from "./BonusSubmitted";
+import { SolvedPuzzlesContext } from "../_common/SolvedPuzzlesContextProvider";
 
 const MIN_NUMBER_BONUS_RABBITS = 6;
 const MAX_NUMBER_BONUS_RABBITS = 12;
@@ -21,7 +21,7 @@ function BonusChallenge({setConfetti} : props) {
     const [answerToBonus, setAnswerToBonus] = useState(-1);
     const [bonusAnswerSubmitted, setBonusAnswerSubmitted] = useState(false);
     const [bonusAnswerRight, setBonusAnswerRight] = useState(false);
-    const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
+    const { markSolved } = useContext(SolvedPuzzlesContext);
 
     useEffect(() => {
       if (numBonusRabbits === -1) {
@@ -35,10 +35,7 @@ function BonusChallenge({setConfetti} : props) {
     // TODO: make updating local storage and adding a puzzle to context a util function?
     const submitBonusAnswer = async () => {
       if (await checkRabbitBonusAnswer(numBonusRabbits, answerToBonus)) {
-        localStorage.setItem(RABBIT_PUZZLE_P2, SOLVED);
-        const newSolvedPuzzles = new Set(solvedPuzzles);
-        newSolvedPuzzles.add(RABBIT_PUZZLE_P2);
-        setSolvedPuzzles(newSolvedPuzzles);
+        markSolved(RABBIT_PUZZLE_P2);
         setBonusAnswerSubmitted(true);
         setBonusAnswerRight(true);
         setConfetti(true);

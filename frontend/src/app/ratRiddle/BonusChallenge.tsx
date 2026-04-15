@@ -8,8 +8,9 @@ import Fab from "@mui/material/Fab";
 import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
-import { poster, SolvedPuzzlesContext } from "../_common/utils";
+import { poster } from "../_common/utils";
 import { RAT_PUZZLE_P2, SOLVED, backendBaseUrl, standardTextFade } from "../_common/constants";
+import { SolvedPuzzlesContext } from "../_common/SolvedPuzzlesContextProvider";
 
 interface props {
   setConfetti: (bool: boolean) => void;
@@ -22,7 +23,7 @@ function BonusChallenge({setConfetti, totalDays} : props) {
   const [bonusSubmitted, setBonusSubmitted] = useState(false);
   const [bonusCorrect, setBonusCorrect] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
-  const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
+  const { markSolved } = useContext(SolvedPuzzlesContext);
 
   useEffect(() => {
     if (numBonusHouses === -1 ) {
@@ -40,10 +41,7 @@ function BonusChallenge({setConfetti, totalDays} : props) {
       setConfetti(true);
       setBonusCorrect(true);
       setNotificationOpen(true);
-      localStorage.setItem(RAT_PUZZLE_P2, SOLVED);
-      const newSolvedPuzzles = new Set(solvedPuzzles);
-      newSolvedPuzzles.add(RAT_PUZZLE_P2);
-      setSolvedPuzzles(newSolvedPuzzles);
+      markSolved(RAT_PUZZLE_P2);
     }
     setBonusSubmitted(true);
   };

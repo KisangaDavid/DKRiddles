@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar";
 import RiddleNotComplete from "../../_common/RiddleNotComplete";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
-import { SolvedPuzzlesContext } from "../../_common/utils";
 import { HORSE_PUZZLE, horseBlogLink, standardTextFade } from "../../_common/constants";
 import HorseBreakdownCompleteGraph from "../../../assets/horseBreakdownCompleteGraph.png";
 import HorseBreakdown2ndPlaceGraph from "../../../assets/horseBreakdown2ndPlaceGraph.png";
@@ -19,9 +18,10 @@ import HorseBreakdown3rdPlaceGraph from "../../../assets/horseBreakdown3rdPlaceG
 import HorseBreakdown4thPlaceGraph from "../../../assets/horseBreakdown4thPlaceGraph.png";
 import HorseBreakdown5thPlaceGraph from "../../../assets/horseBreakdown5thPlaceGraph.png";
 import RacesBreakdown from "../../../assets/racesBreakdown.jpg";
+import { SolvedPuzzlesContext } from "../../_common/SolvedPuzzlesContextProvider";
 
 function HorseRiddleBreakdownPage() {
-  const { solvedPuzzles } = useContext(SolvedPuzzlesContext);
+  const { isSolved } = useContext(SolvedPuzzlesContext);
 
   return (
     <>
@@ -30,7 +30,7 @@ function HorseRiddleBreakdownPage() {
         isPuzzlePage={false}
         resetFunc={undefined}
       />
-      {solvedPuzzles.has(HORSE_PUZZLE) ? (
+      {isSolved(HORSE_PUZZLE) ? (
         <Fade
           in={true}
           mountOnEnter

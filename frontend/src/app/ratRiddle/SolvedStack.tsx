@@ -1,11 +1,10 @@
-import axios from 'axios';
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 import BonusChallenge from "./BonusChallenge";
 import { useState, useContext, useEffect } from "react";
-import { SolvedPuzzlesContext } from "../_common/utils";
 import { RAT_PUZZLE_P1, SOLVED, standardTextFade } from "../_common/constants";
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
+import { SolvedPuzzlesContext } from "../_common/SolvedPuzzlesContextProvider";
 
 interface props {
   totalDays: number;
@@ -14,14 +13,11 @@ interface props {
 
 function SolvedStack({ totalDays, setConfetti } : props) {
   const [notificationOpen, setNotificationOpen] = useState(totalDays == 4);
-  const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
+  const { markSolved } = useContext(SolvedPuzzlesContext);
 
   useEffect(() => {
-    if (totalDays == 4 && !solvedPuzzles.has(RAT_PUZZLE_P1)) {
-      localStorage.setItem(RAT_PUZZLE_P1, SOLVED);
-      const newSolvedPuzzles = new Set(solvedPuzzles);
-      newSolvedPuzzles.add(RAT_PUZZLE_P1);
-      setSolvedPuzzles(newSolvedPuzzles);
+    if (totalDays == 4) { 
+      markSolved(RAT_PUZZLE_P1);
     }
   }, [totalDays]);
 

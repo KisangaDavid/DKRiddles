@@ -8,8 +8,8 @@ import Fade from '@mui/material/Fade';
 import Box from "@mui/material/Box";
 import { Stack } from '@mui/material';
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
-import { SolvedPuzzlesContext } from "../_common/utils";
-import { HORSE_PUZZLE, SOLVED, standardTextFade, standardImageFade, longTextFade } from "../_common/constants";
+import { HORSE_PUZZLE, standardTextFade, standardImageFade, longTextFade } from "../_common/constants";
+import { SolvedPuzzlesContext } from '../_common/SolvedPuzzlesContextProvider';
 
 const MIN_NUM_RACES = 7;
 
@@ -21,17 +21,12 @@ function HorseRiddleResults({numRaces, setConfetti} : props) {
   const theme = useTheme();
 
   const [notificationOpen, setNotificationOpen] = useState(numRaces == 7);
-  const { solvedPuzzles, setSolvedPuzzles } = useContext(SolvedPuzzlesContext);
+  const { markSolved } = useContext(SolvedPuzzlesContext);
   
   useEffect(() => {
     if (numRaces == MIN_NUM_RACES) {
       setConfetti(true);
-      if(!solvedPuzzles.has(HORSE_PUZZLE)) {
-        localStorage.setItem(HORSE_PUZZLE, SOLVED);
-        const newSolvedPuzzles = new Set(solvedPuzzles);
-        newSolvedPuzzles.add(HORSE_PUZZLE);
-        setSolvedPuzzles(newSolvedPuzzles);
-      }
+      markSolved(HORSE_PUZZLE);
     }
   }, [numRaces]);
 
