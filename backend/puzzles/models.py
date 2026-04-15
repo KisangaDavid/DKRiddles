@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.db.models.functions import Lower
 
 
 class PuzzleNames(models.TextChoices):
@@ -24,6 +25,15 @@ class User(AbstractUser):
 
     class Meta:
         db_table = 'puzzles_users' 
+        constraints = [
+            models.UniqueConstraint(
+                Lower('username'),
+                name="unique_case_insensitive_username"
+            ),
+             models.UniqueConstraint(
+                Lower('email'),
+                name="unique_case_insensitive_email"
+            )]
 
 
 class UserSolvedPuzzles(models.Model):

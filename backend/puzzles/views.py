@@ -1,110 +1,106 @@
-from django.http import HttpResponse
-import json
-
 import ctypes 
+
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
+
+from puzzles.serializers import CheckHorseRiddleAnswerSerializer, CheckRabbitRiddleBonusAnswerSerializer, CheckRatRiddleAnswerSerializer, RaceHorsesSerializer, CheckRatRiddleBonusAnswerSerializer, SingleIntSerializer
 from puzzles.models import UserSolvedPuzzles, PuzzleNames
 from puzzles.backendDll import allModules
 
 HORSE_PUZZLE_MIN_RACES = 7  
 RABBIT_RIDDLE_BASE_NUM_RABBITS = 3
 
-# TODO: fill in types for all of the dll / so calls in backendDll.py
-# TODO: could pass in rand seed and history of moves? use user id as well to make it super unique?
 @csrf_exempt
 @api_view(['POST'])
 def checkRatRiddleAnswer(request):
-    binaryStringPlan = json.loads(request.body)["submittedPlan"]
-    intRepresentation = int(binaryStringPlan, 2)
-    result = allModules.checkRatRiddleAnswer(intRepresentation)
+    data = deserialize_request(request, CheckRatRiddleAnswerSerializer)
+    result = allModules.checkRatRiddleAnswer(data["submittedPlan"])
     if result == -1 and request.user.is_authenticated:
         updateSolvedPuzzle(request.user, PuzzleNames.RAT_PUZZLE_P1)
-    return HttpResponse(result)
+    return Response(result)
 
 @csrf_exempt
 @api_view(['POST'])
 def checkRatRiddleBonusAnswer(request):
-    # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
-    # my_lib.getInitialPiles.restype = ctypes.c_int
-    body = json.loads(request.body)
-    numHouses = int(body["numHouses"])
-    answerToBonus = int(body["answerToBonus"])
-    result = allModules.checkRatRiddleBonusAnswer(numHouses, answerToBonus)
+    data = deserialize_request(request, CheckRatRiddleBonusAnswerSerializer)
+    result = allModules.checkRatRiddleBonusAnswer(
+        data["numHouses"],
+        data["answerToBonus"]
+    )
     if result and request.user.is_authenticated:
         updateSolvedPuzzle(request.user, PuzzleNames.RAT_PUZZLE_P2)
-    return HttpResponse(json.dumps({"result": "success" if result else "fail"}))
+    return Response({"result": "success" if result else "fail"})
 
 @csrf_exempt
 @api_view(['POST'])
 def checkHorseRiddleAnswer(request):
-    # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
-    # my_lib.getInitialPiles.restype = ctypes.c_int
-    body = json.loads(request.body)
-    randSeed = int(body["randSeed"])
-    fastestHorsesInt = int(body["fastestHorsesInt"])
-    submittedRaces = body["submittedRaces"]
-    numRaces = int(body["numRaces"])
-    submittedRaces = (ctypes.c_uint32 * numRaces)(*submittedRaces)
-    result = allModules.checkHorseRiddleAnswer(randSeed, fastestHorsesInt, submittedRaces, numRaces)
-    if result == 0 and numRaces == HORSE_PUZZLE_MIN_RACES and request.user.is_authenticated:
+    data = deserialize_request(request, CheckHorseRiddleAnswerSerializer)
+    submittedRaces = (ctypes.c_uint32 * data["numRaces"])(*data["submittedRaces"])
+    result = allModules.checkHorseRiddleAnswer(
+        data["randSeed"],
+        data["fastestHorsesInt"],
+        submittedRaces,
+        data["numRaces"]
+    )
+    if result == 0 and data["numRaces"] == HORSE_PUZZLE_MIN_RACES and request.user.is_authenticated:
         updateSolvedPuzzle(request.user, PuzzleNames.HORSE_PUZZLE_P1)
-    return HttpResponse(result)
+    return Response(result)
 
 @csrf_exempt
 @api_view(['POST'])
 def checkRabbitRiddleAnswer(request):
-    # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
-    # my_lib.getInitialPiles.restype = ctypes.c_int
-    body = json.loads(request.body)
-    numMoves = int(body["numMoves"])
-    result = allModules.checkRabbitRiddleBonusAnswer(RABBIT_RIDDLE_BASE_NUM_RABBITS, numMoves)
+    data = deserialize_request(request, SingleIntSerializer)
+    result = allModules.checkRabbitRiddleBonusAnswer(
+        RABBIT_RIDDLE_BASE_NUM_RABBITS,
+        data["submittedInt"]
+    )
     if result and request.user.is_authenticated:
         updateSolvedPuzzle(request.user, PuzzleNames.RABBIT_PUZZLE_P1)
-    return HttpResponse(json.dumps({"result": "success" if result else "fail"}))
+    return Response({"result": "success" if result else "fail"})
 
 @csrf_exempt
 @api_view(['POST'])
 def checkRabbitRiddleBonusAnswer(request):
-    # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
-    # my_lib.getInitialPiles.restype = ctypes.c_int
-    body = json.loads(request.body)
-    numRabbits = int(body["numBonusRabbits"])
-    answerToBonus = int(body["answerToBonus"])
-    result = allModules.checkRabbitRiddleBonusAnswer(numRabbits, answerToBonus)
+    data = deserialize_request(request, CheckRabbitRiddleBonusAnswerSerializer)
+    result = allModules.checkRabbitRiddleBonusAnswer(
+        data["numBonusRabbits"],
+        data["answerToBonus"]
+    )
     if result and request.user.is_authenticated:
         updateSolvedPuzzle(request.user, PuzzleNames.RABBIT_PUZZLE_P2)
-    return HttpResponse(json.dumps({"result": "success" if result else "fail"}))
+    return Response({"result": "success" if result else "fail"})
 
 @csrf_exempt
 @api_view(['POST'])
 def getRoosterRiddleMove(request):
-    # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
-    # my_lib.getInitialPiles.restype = ctypes.c_int
-    pileState = int(json.loads(request.body)["pileState"])
-    roosterMove = allModules.getRoosterRiddleMove(pileState)
+    data = deserialize_request(request, SingleIntSerializer)
+    roosterMove = allModules.getRoosterRiddleMove(data["submittedInt"])
     if roosterMove == 0 and request.user.is_authenticated:
         updateSolvedPuzzle(request.user, PuzzleNames.ROOSTER_PUZZLE_P1)
-    return HttpResponse(roosterMove)
+    return Response(roosterMove)
 
 @csrf_exempt
 @api_view(['POST'])
 def raceHorses(request):
-    # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
-    # my_lib.getInitialPiles.restype = ctypes.c_int
-    body = json.loads(request.body)
-    randSeed = int(body["randSeed"])
-    submittedHorses = int(body["submittedHorsesInt"])
-    result = allModules.submitRace(randSeed, submittedHorses)
-    return HttpResponse(result)
+    data = deserialize_request(request, RaceHorsesSerializer)
+    result = allModules.submitRace(
+        data["randSeed"],
+        data["submittedHorsesInt"]
+    )
+    return Response(result)
 
 @csrf_exempt
 @api_view(['POST'])
 def getInitialPiles(request):
-    # my_lib.getInitialPiles.argtypes = [ctypes.c_int, ctypes.c_int]
-    # my_lib.getInitialPiles.restype = ctypes.c_int
-    randSeed = int(json.loads(request.body)["randSeed"])
-    return HttpResponse(allModules.getInitialPiles(randSeed))
+    data = deserialize_request(request, SingleIntSerializer)
+    result = allModules.getInitialPiles(data["submittedInt"])
+    return Response(result)
+
+def deserialize_request(request, serializer_class):
+    serializer = serializer_class(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    return serializer.validated_data
 
 def updateSolvedPuzzle(puzzleUser, solvedPuzzleName):
     _, created = UserSolvedPuzzles.objects.get_or_create(

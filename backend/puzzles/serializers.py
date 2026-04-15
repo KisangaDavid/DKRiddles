@@ -1,14 +1,58 @@
 from rest_framework import serializers
-from puzzles.models import Puzzle, UserSolvedPuzzles
+from djoser.serializers import UserCreateSerializer
+from django.contrib.auth import get_user_model
+from puzzles.models import UserSolvedPuzzles
 
-class PuzzleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Puzzle
-        fields = ['name', 'numberSolved', 'created', 'updated', 'id']
-        read_only_fields = ['created', 'updated', 'id']
+User = get_user_model()
 
 class UserSolvedPuzzlesSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserSolvedPuzzles
-        fields = ['id', 'userId', 'solvedPuzzle', 'solvedTime']
+        fields = ['id', 'user', 'solvedPuzzle', 'solvedTime']
         read_only_fields = ['solvedTime', 'id']
+
+
+class CaseInsensitiveUserCreateSerializer(UserCreateSerializer):
+    def validate_username(self, value):
+        if User.objects.filter(username__iexact=value).exists():
+            raise serializers.ValidationError("A user with that username already exists.")
+        return value
+
+    class Meta(UserCreateSerializer.Meta):
+        model = User
+        fields = ("id", "username", "password")
+
+class SingleIntSerializer(serializers.Serializer):
+    submittedInt = serializers.IntegerField()
+
+class CheckRatRiddleAnswerSerializer(serializers.Serializer):
+    submittedInt = serializers.IntegerField()
+
+class CheckRatRiddleBonusAnswerSerializer(serializers.Serializer):
+    numHouses = serializers.IntegerField()
+    answerToBonus = serializers.IntegerField()
+
+class CheckHorseRiddleAnswerSerializer(serializers.Serializer):
+    randSeed = serializers.IntegerField()
+    fastestHorsesInt = serializers.IntegerField()
+    submittedRaces = serializers.ListField(
+        child=serializers.IntegerField()
+    )
+    numRaces = serializers.IntegerField()
+
+class RaceHorsesSerializer(serializers.Serializer):
+    randSeed = serializers.IntegerField()
+    submittedHorsesInt = serializers.IntegerField()
+
+class CheckRabbitRiddleBonusAnswerSerializer(serializers.Serializer):
+    numBonusRabbits = serializers.IntegerField()
+    answerToBonus = serializers.IntegerField()
+
+class CheckRatRiddleAnswerSerializer(serializers.Serializer):
+    submittedPlan = serializers.CharField()
+
+    def validate_submittedPlan(self, value):
+        try:
+            return int(value, 2)
+        except ValueError:
+            raise serializers.ValidationError("Invalid binary string")
