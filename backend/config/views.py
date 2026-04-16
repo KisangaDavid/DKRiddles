@@ -34,11 +34,9 @@ def getProfileInfo(request):
                 .order_by('solvedTime')
     )
     username = request.user.username
-    email = request.user.email
     dateJoined = request.user.date_joined
-    solved_list = [{"puzzleName": entry.solvedPuzzle, "solvedTime": entry.solvedTime} for entry in solved]
-
-    return Response({"username": username, "dateJoined": dateJoined, "email": email, "solvedPuzzles": solved_list})
+    solvedDict = {entry.solvedPuzzle: entry.solvedTime for entry in solved}
+    return Response({"username": username, "dateJoined": dateJoined, "solvedPuzzles": solvedDict})
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])

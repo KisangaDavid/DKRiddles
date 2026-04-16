@@ -40,7 +40,7 @@ const StyledListItemText = styled(ListItemText)({
     fontSize: "14px",
   },
 });
-// TODO: get rid of theme here?
+// TODO: names on leaderboard?
 interface StyledListItemIconProps {
   PassedIcon: FC<SvgIconProps>;
   complete?: boolean;

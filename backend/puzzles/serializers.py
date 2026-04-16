@@ -13,14 +13,24 @@ class UserSolvedPuzzlesSerializer(serializers.ModelSerializer):
 
 
 class CaseInsensitiveUserCreateSerializer(UserCreateSerializer):
+    # email = serializers.EmailField()
     def validate_username(self, value):
         if User.objects.filter(username__iexact=value).exists():
             raise serializers.ValidationError("A user with that username already exists.")
         return value
 
+    # def validate_email(self, value):
+    #     if value:
+    #         value = value.lower()
+    #         if User.objects.filter(email__iexact=value).exists():
+    #             raise serializers.ValidationError(
+    #                 "A user with that email already exists."
+    #             )
+    #     return value
+    
     class Meta(UserCreateSerializer.Meta):
         model = User
-        fields = ("id", "username", "password")
+        fields = ("username", "password", "email")
 
 class SingleIntSerializer(serializers.Serializer):
     submittedInt = serializers.IntegerField()
