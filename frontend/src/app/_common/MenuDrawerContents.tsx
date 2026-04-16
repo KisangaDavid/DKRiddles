@@ -40,7 +40,7 @@ const StyledListItemText = styled(ListItemText)({
     fontSize: "14px",
   },
 });
-
+// TODO: get rid of theme here?
 interface StyledListItemIconProps {
   PassedIcon: FC<SvgIconProps>;
   complete?: boolean;
@@ -193,9 +193,9 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
           </ListItem> 
         </Link>
       </List>
-      {/* <Divider />
+      <Divider />
       <ListItem>
-        <StyledListItemText primary={"All Puzzle Breakdowns"} />
+        <StyledListItemText primary={"Unlocked Breakdowns"} />
       </ListItem>
       <List sx={{
         padding: '8px',
@@ -204,53 +204,61 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
         gap: 0,
         }}
       >
-        <Link href="/ratRiddle/breakdown/">
-          <ListItem disablePadding>
-            <StyledListItemButton>
-              <StyledListItemIcon 
-                PassedIcon={TipsAndUpdatesOutlinedIcon} 
-                complete={isSolved(RAT_PUZZLE_P2)} 
-                inProgress={isSolved(RAT_PUZZLE_P1)}
-              />
-              <StyledListItemText secondary={"Rat Puzzle Breakdown"} />
-            </StyledListItemButton>
-          </ListItem>
-        </Link>
-        <Link href="/horseRiddle/breakdown/">
-          <ListItem disablePadding>
-            <StyledListItemButton>
-              <StyledListItemIcon 
-                PassedIcon={TipsAndUpdatesOutlinedIcon} 
-                complete={isSolved(HORSE_PUZZLE)}
-              />
-              <StyledListItemText secondary={"Horse Puzzle Breakdown"} />
-            </StyledListItemButton>
-          </ListItem>
-        </Link>
-        <Link href="/roosterRiddle/breakdown/">
-          <ListItem disablePadding>
-            <StyledListItemButton>
-              <StyledListItemIcon 
-                PassedIcon={TipsAndUpdatesOutlinedIcon} 
-                complete={isSolved(ROOSTER_PUZZLE)}
-              />
-              <StyledListItemText secondary={"Rooster Puzzle Breakdown"} />
-            </StyledListItemButton>
-          </ListItem>
-        </Link>
+        { isSolved(RAT_PUZZLE_P1) && 
+          <Link href="/ratRiddle/breakdown/">
+            <ListItem disablePadding>
+              <StyledListItemButton>
+                <StyledListItemIcon 
+                  PassedIcon={TipsAndUpdatesOutlinedIcon} 
+                  complete={isSolved(RAT_PUZZLE_P2)} 
+                  inProgress={isSolved(RAT_PUZZLE_P1)}
+                />
+                <StyledListItemText secondary={"Rat Puzzle Breakdown"} />
+              </StyledListItemButton>
+            </ListItem>
+          </Link>
+        }
+        { isSolved(HORSE_PUZZLE) &&
+          <Link href="/horseRiddle/breakdown/">
+            <ListItem disablePadding>
+              <StyledListItemButton>
+                <StyledListItemIcon 
+                  PassedIcon={TipsAndUpdatesOutlinedIcon} 
+                  complete={isSolved(HORSE_PUZZLE)}
+                />
+                <StyledListItemText secondary={"Horse Puzzle Breakdown"} />
+              </StyledListItemButton>
+            </ListItem>
+          </Link>
+        }
+        { isSolved(ROOSTER_PUZZLE) &&
+          <Link href="/roosterRiddle/breakdown/">
+            <ListItem disablePadding>
+              <StyledListItemButton>
+                <StyledListItemIcon 
+                  PassedIcon={TipsAndUpdatesOutlinedIcon} 
+                  complete={isSolved(ROOSTER_PUZZLE)}
+                />
+                <StyledListItemText secondary={"Rooster Puzzle Breakdown"} />
+              </StyledListItemButton>
+            </ListItem>
+          </Link>
+        }
+        { isSolved(RABBIT_PUZZLE_P1) &&
           <Link href="/rabbitRiddle/breakdown/">
-          <ListItem disablePadding>
-            <StyledListItemButton>
-               <StyledListItemIcon 
-                PassedIcon={TipsAndUpdatesOutlinedIcon} 
-                complete={isSolved(RABBIT_PUZZLE_P2)} 
-                inProgress={isSolved(RABBIT_PUZZLE_P1)}
-              />
-              <StyledListItemText secondary={"Rabbit Puzzle Breakdown"} />
-            </StyledListItemButton>
-          </ListItem>
-        </Link> */}
-      {/* </List>  */}
+            <ListItem disablePadding>
+              <StyledListItemButton>
+                <StyledListItemIcon 
+                  PassedIcon={TipsAndUpdatesOutlinedIcon} 
+                  complete={isSolved(RABBIT_PUZZLE_P2)} 
+                  inProgress={isSolved(RABBIT_PUZZLE_P1)}
+                />
+                <StyledListItemText secondary={"Rabbit Puzzle Breakdown"} />
+              </StyledListItemButton>
+            </ListItem>
+          </Link> 
+        }
+       </List> 
     </>
   );
 }

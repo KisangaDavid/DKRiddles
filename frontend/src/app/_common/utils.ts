@@ -103,9 +103,9 @@ const api = () => {
           })
           .json();
       } catch (err) {
-        console.error("Error refreshing token:", err);
+        alert("Session expired. Please log in again.");
         removeTokens();
-        window.location.replace("/");
+        window.location.replace("/auth/login");
         throw err; 
       }
     });

@@ -21,7 +21,8 @@ const LoginForm = () => {
   const router = useRouter();
   const { login, storeToken } = AuthActions();
   const [newUser, setNewUser] = useState<string | null>(() => {
-  if (typeof window === "undefined") return null; 
+  if (typeof window === "undefined") 
+    return null; 
   const stored = sessionStorage.getItem("newUser");
   if (stored) {
     sessionStorage.removeItem("newUser");
@@ -41,7 +42,6 @@ const LoginForm = () => {
       .json((json) => {
         storeToken(json.access, "access");
         storeToken(json.refresh, "refresh");
-
         router.push("/profile");
       })
       .catch((err) => {
