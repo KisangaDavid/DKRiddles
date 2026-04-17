@@ -1,39 +1,37 @@
 "use client"
 
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthActions } from "@/src/app/auth/utils";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { standardTextFade } from "@/src/app/_common/constants";
 import StyledCard from "@/src/app/_common/StyledCard";
 import { Fade, TextField, Typography } from "@mui/material";
 import SubmitButton from "@/src/app/_common/SubmitButton";
+import { useState } from "react";
+import { set } from "js-cookie";
+
 type FormData = {
   password: string;
 };
 
-const ResetPasswordConfirmationForm = () => {
+type Props = {
+  uid: string;
+  token: string;
+};
+
+const ResetPasswordConfirmationForm = ({ uid, token }: Props) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const { resetPasswordConfirm } = AuthActions();
 
-  const searchParams = useSearchParams();
-
-  const [uid, setUid] = useState("");
-  const [token, setToken] = useState("");
-
-  useEffect(() => {
-    if (searchParams.get("uid") && searchParams.get("token")) {
-      setUid(searchParams.get("uid") as string);
-      setToken(searchParams.get("token") as string);
-    }
-  }, [searchParams]);
 
   const onSubmit = async (data: FormData) => {
+    setLoading(true);
     try {
       await resetPasswordConfirm(
         data.password,
@@ -45,9 +43,10 @@ const ResetPasswordConfirmationForm = () => {
       router.push("/auth/login");
     } catch (err) {
       alert("Failed to reset password. Please try again.");
+      setLoading(false);
     }
   };
-
+  // TODO: add custom 404 not found page
   return (
     <Fade unmountOnExit mountOnEnter in={true} timeout={standardTextFade}>
         <StyledCard sx={{ width: {xs: "80%", sm: "60%", md: "45%", lg: "30%" }, mt: {xs: "2em", md: "4em"}}}>
@@ -66,7 +65,7 @@ const ResetPasswordConfirmationForm = () => {
                 {errors.password && (
                     <span className="text-xs text-red-600">Password is required</span>
                 )}
-                <SubmitButton sx={{width: "80%", mt: "1.5em", mb: "1em"}}>
+                <SubmitButton sx={{width: "80%", mt: "1.5em", mb: "1em"}} loading={loading}>
                     <Typography>Reset Password</Typography>
                 </SubmitButton>
             </form>

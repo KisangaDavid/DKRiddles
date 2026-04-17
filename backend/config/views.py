@@ -9,8 +9,9 @@ from rest_framework.permissions import IsAuthenticated
 
 from django.core.exceptions import ObjectDoesNotExist
 
-from puzzles.models import UserSolvedPuzzles
-
+from puzzles.models import UserSolvedPuzzles, User
+from django.core.cache import cache
+from .settings import LEADERBOARD_CACHE_KEY, CACHE_TIMEOUT 
 
 class LogoutView(APIView):
     permission_classes = (AllowAny,)
@@ -39,7 +40,11 @@ def getProfileInfo(request):
     return Response({"username": username, "dateJoined": dateJoined, "solvedPuzzles": solvedDict})
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def getLeaderboardInfo(request):
+    def fetch_leaderboard():
+        return (User.objects
+                .order_by('-numPuzzlesSolved')[:10]
+                .values('username', 'numPuzzlesSolved'))
 
-    return Response({})
+    topUsers = cache.get_or_set(LEADERBOARD_CACHE_KEY, fetch_leaderboard, CACHE_TIMEOUT)
+    return Response(list(topUsers))

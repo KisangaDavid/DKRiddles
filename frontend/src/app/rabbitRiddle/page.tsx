@@ -1,8 +1,8 @@
 'use client'
 
 import { useContext, useState } from 'react';
-import { useConfettiSize, poster } from "../_common/utils";
-import { standardDelay, RABBIT_PUZZLE_P1, SOLVED } from "../_common/constants";
+import { useConfettiSize, poster } from "../_common/ClientUtils";
+import { standardDelay, RABBIT_PUZZLE_P1 } from "../_common/constants";
 import Confetti from "react-confetti";
 import RabbitRiddleDescription from './rabbitRiddleDescription';
 import Rabbits from './rabbits'

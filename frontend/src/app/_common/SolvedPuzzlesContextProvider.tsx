@@ -7,12 +7,14 @@ interface SolvedPuzzlesContextType {
   markSolved: (id: string) => void;
   clearSolvedPuzzles: () => void;
   isSolved: (id: string) => boolean;
+  resetSolvedPuzzles: (puzzles: Record<string, string>) => void;
 }
 
 export const SolvedPuzzlesContext = createContext<SolvedPuzzlesContextType>({
   markSolved: () => {},
   clearSolvedPuzzles: () => {},
   isSolved: () => false,
+  resetSolvedPuzzles: () => {},
 });
 
 export const SolvedPuzzlesContextProvider = ({children}: {children: ReactNode}) => {
@@ -41,12 +43,22 @@ export const SolvedPuzzlesContextProvider = ({children}: {children: ReactNode}) 
         ALL_PUZZLES.forEach((id) => localStorage.removeItem(id));
     };
 
+      const resetSolvedPuzzles = (puzzles: Record<string, string>) => {
+        ALL_PUZZLES.forEach((id) => localStorage.removeItem(id));
+        const newSolvedPuzzles = new Set<string>();
+        Object.keys(puzzles).forEach(key => {
+            newSolvedPuzzles.add(key);
+            localStorage.setItem(key, SOLVED);
+        });
+        setSolvedPuzzles(newSolvedPuzzles);
+      };
+
     const isSolved = (puzzle: string) => {
         return solvedPuzzles.has(puzzle);
     };
 
   return (
-    <SolvedPuzzlesContext.Provider value={{markSolved, clearSolvedPuzzles, isSolved}}>
+    <SolvedPuzzlesContext.Provider value={{markSolved, clearSolvedPuzzles, isSolved, resetSolvedPuzzles}}>
       {children}
     </SolvedPuzzlesContext.Provider>
   );

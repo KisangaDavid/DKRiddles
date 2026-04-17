@@ -1,7 +1,8 @@
 import Card from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import { ReactNode, forwardRef } from "react";
-import { SxProps, Theme } from "@mui/material";
+import { Fade, SxProps, Theme } from "@mui/material";
+import { standardTextFade } from "./constants";
 
 const StyledCardWrapper = styled(Card)({
   display: "flex",
@@ -27,9 +28,11 @@ interface StyledCardProps {
 const StyledCard = forwardRef<HTMLDivElement, StyledCardProps>(
   function StyledCard({ children, sx }, ref) {
     return (
-      <StyledCardWrapper ref={ref} sx={sx}>
-        {children}
-      </StyledCardWrapper>
+      <Fade in={true} timeout={standardTextFade} unmountOnExit mountOnEnter>
+        <StyledCardWrapper ref={ref} sx={sx}>
+          {children}
+        </StyledCardWrapper>
+      </Fade>
     );
   }
 );

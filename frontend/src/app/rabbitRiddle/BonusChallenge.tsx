@@ -1,4 +1,5 @@
-import { getRandomInt, poster } from "../_common/utils";
+import { getRandomInt } from "../_common/utils";
+import { poster } from "../_common/ClientUtils";
 import { RABBIT_PUZZLE_P2, standardTextFade } from "../_common/constants";
 import SendIcon from "@mui/icons-material/Send";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
@@ -32,7 +33,7 @@ function BonusChallenge({setConfetti} : props) {
       const result = (await poster(`/puzzles/rabbitRiddle/checkRabbitRiddleBonusAnswer`, {numBonusRabbits, answerToBonus})).result;
       return result === "success";
     }
-    // TODO: make updating local storage and adding a puzzle to context a util function?
+
     const submitBonusAnswer = async () => {
       if (await checkRabbitBonusAnswer(numBonusRabbits, answerToBonus)) {
         markSolved(RABBIT_PUZZLE_P2);

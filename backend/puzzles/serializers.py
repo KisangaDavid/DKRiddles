@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from djoser.serializers import UserCreateSerializer
+from better_profanity import profanity
 from django.contrib.auth import get_user_model
 from puzzles.models import UserSolvedPuzzles
 
@@ -13,20 +14,24 @@ class UserSolvedPuzzlesSerializer(serializers.ModelSerializer):
 
 
 class CaseInsensitiveUserCreateSerializer(UserCreateSerializer):
-    # email = serializers.EmailField()
+    email = serializers.EmailField(required=False, allow_blank=True)
     def validate_username(self, value):
+        if profanity.contains_profanity(value):
+            raise serializers.ValidationError(
+                "Please choose a different username."
+            )
         if User.objects.filter(username__iexact=value).exists():
-            raise serializers.ValidationError("A user with that username already exists.")
+            raise serializers.ValidationError("An account with that username already exists.")
         return value
 
-    # def validate_email(self, value):
-    #     if value:
-    #         value = value.lower()
-    #         if User.objects.filter(email__iexact=value).exists():
-    #             raise serializers.ValidationError(
-    #                 "A user with that email already exists."
-    #             )
-    #     return value
+    def validate_email(self, value):
+        if value:
+            value = value.lower()
+            if User.objects.filter(email__iexact=value).exists():
+                raise serializers.ValidationError(
+                    "An account with that email already exists."
+                )
+        return value
     
     class Meta(UserCreateSerializer.Meta):
         model = User

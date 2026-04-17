@@ -13,12 +13,12 @@ function SolvedPuzzleRow({ puzzleName, dateSolved }: Props) {
         day: "numeric",
         year: "numeric",
       })
-    : "Not Solved";
+    : "";
 
   return (
     <Grid container size={12} alignItems="center" sx={{my: "0.5em"}}>
       <Grid size={6}>
-        <Typography variant="body2">{puzzleName}</Typography>
+        <Typography variant="body2">{puzzleName}{stringDateSolved ? " ✔️" : ""}</Typography>
       </Grid>
       <Grid size={6}>
         <Typography variant="body2">{stringDateSolved}</Typography>

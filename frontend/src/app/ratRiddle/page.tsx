@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useCallback } from 'react';
-import { poster, useConfettiSize } from "../_common/utils";
+import { poster, useConfettiSize } from "../_common/ClientUtils";
+
 import { longTextFade, standardTextFade, longDelay } from "../_common/constants";
 
 import RowOfHouses from './RowOfHouses';

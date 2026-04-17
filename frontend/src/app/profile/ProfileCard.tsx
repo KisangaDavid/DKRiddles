@@ -1,42 +1,33 @@
 "use client"
 
-import { Divider, Grid, Typography } from "@mui/material";
-import { styled } from '@mui/material/styles';
-import { Card } from "@mui/material";
+import { Button, Divider, Grid, Typography } from "@mui/material";
 import { AuthActions } from "../auth/utils";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { SolvedPuzzlesContext } from "../_common/SolvedPuzzlesContextProvider";
-import { fetcher } from "../_common/utils";
+import { fetcher } from "../_common/ClientUtils";
 import useSWR from "swr";
-import SubmitButton from "../_common/SubmitButton";
 import SolvedPuzzleRow from "./SolvedPuzzleRow";
 import { ALL_PUZZLE_TITLES, ALL_PUZZLES } from "../_common/constants";
+import StyledCard from "../_common/StyledCard";
 
 const { logout, removeTokens } = AuthActions();
-const StyledCard = styled(Card)({
-  display: 'flex',
-  flexDirection: 'column',
-  padding: 0,
-  height: '100%',
-  background: 'hsla(220, 35%, 3%, 0.4)',
-  border: `1px solid hsla(0, 0%, 23%, 0.60)`,
-  boxShadow: 'hsla(223, 41%, 3%, 0.70) 0px 0px 20px 0px, hsla(220, 29%, 8%, 0.80) 0px 0px 20px 0px',
-  '&:focus-visible': {
-    outline: '3px solid',
-    outlineColor: 'hsla(210, 98%, 48%, 0.5)',
-    outlineOffset: '2px',
-  },
-});
 
 function ProfileCard() {
     const router = useRouter();
-    const { clearSolvedPuzzles } = useContext(SolvedPuzzlesContext)
-    const { data: { username, dateJoined, solvedPuzzles } = {}, isLoading } = useSWR(
+    const { clearSolvedPuzzles, resetSolvedPuzzles } = useContext(SolvedPuzzlesContext)
+
+    const { data: { username = "", dateJoined = " ", solvedPuzzles  } = {}, isLoading } = useSWR(
         "/getProfileInfo",
         fetcher,
         {keepPreviousData: true}
     );
+
+    useEffect(() => {
+      if (solvedPuzzles) {
+        resetSolvedPuzzles(solvedPuzzles);
+      }
+  }, [solvedPuzzles]);
 
     const dateJoinedStr = dateJoined
       ? new Date(dateJoined).toLocaleDateString("en-US", {
@@ -46,8 +37,12 @@ function ProfileCard() {
         })
       : "";
 
-  const numPuzzlesSolved = Object.keys(solvedPuzzles || {}).length;
+  const numPuzzlesSolved = solvedPuzzles
+    ? Object.keys(solvedPuzzles).length
+    : -1;
+    
   const numSolvedEmoji =
+  numPuzzlesSolved === -1 ? "":
     numPuzzlesSolved === 0 ? "💩":
     numPuzzlesSolved === 1 ? "😬" :
     numPuzzlesSolved === 2 ? "😒" :
@@ -73,7 +68,7 @@ function ProfileCard() {
 
     return (
       <StyledCard sx={{ display: "flex", alignItems: "center", width: {xs: "85%", sm: "70%", md: "55%", lg: "45%" }, mt: {xs: "2em", md: "4em"}}}>
-        <Typography align="left" variant="h5" sx={{mt:"0.5em"}}>{username} {numSolvedEmoji}</Typography>
+        <Typography align="left" variant="h5" sx={{mt:"0.5em"}}>{username || <br />} {numSolvedEmoji}</Typography>
         <Typography variant="h6" sx={{mt:"0.5em"}}>Date Joined: {dateJoinedStr}</Typography>
         <Divider sx={{width: "80%", my: "0.5em"}} />
         <Typography sx={{mb: "1em"}}>{Object.keys(solvedPuzzles || {}).length} / {ALL_PUZZLES.length} Puzzles solved</Typography>
@@ -84,15 +79,31 @@ function ProfileCard() {
             <Grid size={6} sx={{mb: "1em"}}>
               <Typography variant="h6" fontWeight="bold">Solve Date</Typography>
             </Grid>
-          {!isLoading && ALL_PUZZLE_TITLES.map((puzzleName, idx) => (
-            <SolvedPuzzleRow key={idx} puzzleName={puzzleName} dateSolved={solvedPuzzles[(ALL_PUZZLES[idx])]}/> 
+          {ALL_PUZZLE_TITLES.map((puzzleName, idx) => (
+            <SolvedPuzzleRow key={idx} puzzleName={puzzleName} dateSolved={!isLoading ? solvedPuzzles[(ALL_PUZZLES[idx])] : ""}/> 
           ))}
           </Grid>
-        <SubmitButton sx={{width: {xs: "40%", md: "25%"}, mt: "1em", mb: "2em"}}
-          onClick={handleLogout}
-        >
-          <Typography>Log Out</Typography>
-        </SubmitButton>
+            <Button
+              onClick={handleLogout}
+              sx={{
+                paddingLeft: "1.75rem",
+                paddingRight: "1.75rem",
+                mb: "2em",
+                lineHeight: "1",
+                color: "white",
+                textTransform: "none",
+                transition: "background-color 200ms, color 200ms",
+                backgroundColor: "rgba(204, 48, 48, 0.85)", // soft red
+                borderRadius: "0.375rem",
+                border: "none",
+                cursor: "pointer",
+                "&:hover": {
+                  backgroundColor: "rgba(163, 24, 24, 0.95)", // slightly stronger red
+                },
+              }}
+            >
+              <Typography>Log Out</Typography>
+            </Button>
       </StyledCard>
     );
 };

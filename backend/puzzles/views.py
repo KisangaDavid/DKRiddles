@@ -7,9 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 from puzzles.serializers import CheckHorseRiddleAnswerSerializer, CheckRabbitRiddleBonusAnswerSerializer, CheckRatRiddleAnswerSerializer, RaceHorsesSerializer, CheckRatRiddleBonusAnswerSerializer, SingleIntSerializer
 from puzzles.models import UserSolvedPuzzles, PuzzleNames
 from puzzles.backendDll import allModules
-
-HORSE_PUZZLE_MIN_RACES = 7  
-RABBIT_RIDDLE_BASE_NUM_RABBITS = 3
+from django.core.cache import cache
+from config.settings import RABBIT_RIDDLE_BASE_NUM_RABBITS, HORSE_PUZZLE_MIN_RACES, LEADERBOARD_CACHE_KEY
 
 @csrf_exempt
 @api_view(['POST'])
@@ -108,5 +107,6 @@ def updateSolvedPuzzle(puzzleUser, solvedPuzzleName):
         solvedPuzzle=solvedPuzzleName
     )
     if created:
+        cache.delete(LEADERBOARD_CACHE_KEY)
         puzzleUser.numPuzzlesSolved += 1
         puzzleUser.save(update_fields=["numPuzzlesSolved"])

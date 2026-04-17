@@ -2,7 +2,6 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
@@ -47,6 +46,14 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '3000/day',
+        'anon': '1500/day'
+    }
 }
 
 SIMPLE_JWT = {
@@ -118,15 +125,6 @@ AUTH_PASSWORD_VALIDATORS = [
             "min_length": 6,
         }
     }
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    # },
 ]
 
 LANGUAGE_CODE = 'en-us'
@@ -138,3 +136,9 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+
+# Constants
+LEADERBOARD_CACHE_KEY = "leaderboard_top_10"
+CACHE_TIMEOUT = 60 * 30
+HORSE_PUZZLE_MIN_RACES = 7  
+RABBIT_RIDDLE_BASE_NUM_RABBITS = 3

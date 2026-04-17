@@ -77,7 +77,6 @@ function RowOfHouses({
                     width: "100%"
                   }}
               />
-              {/* TODO: figure out a nicer solution here */}
               <Box
                   sx={{overflow: "clip", height: {xs: "12vw", sm: "7vw"}}}
               >

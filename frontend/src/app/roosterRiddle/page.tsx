@@ -1,14 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { 
-  convertIterableToInt, 
-  convertIntToArray,
-  useConfettiSize,
-  poster
-} from "../_common/utils";
-import { MAX_32_BIT_NUM, longTextFade, longDelay, backendBaseUrl } from "../_common/constants";
+import { convertIterableToInt, convertIntToArray} from "../_common/utils";
+import { useConfettiSize, poster} from "../_common/ClientUtils";
+import { MAX_32_BIT_NUM, longTextFade, longDelay } from "../_common/constants";
 import RoosterRiddleDescription from './RoosterRiddleDescription';
 import RoosterMoveDescription from './RoosterMoveDescription';
 import RoosterRiddleResults from './RoosterRiddleResults';
@@ -69,10 +64,7 @@ function RoosterRiddlePage() {
     let pileAfterRemoval = piles[selectedPile].filter(kernel => !selectedKernels.has(kernel));
     let pilesPostPlayerMove = [...piles.slice(0, selectedPile), pileAfterRemoval, ...piles.slice(selectedPile + 1)]
     let postPlayerPileSums = pilesPostPlayerMove.map(pile => pile.length);
-    // if (postPlayerPileSums.reduce((a, b) => a + b, 0) == 0) {
-    //   // TODO: send history of moves, check if everything checks out instead of just the request
-
-    // }
+    // TODO idea: send history of moves, check if everything checks out instead of just the request
     let pilesIntRep = convertIterableToInt(postPlayerPileSums.reverse(), NUM_BITS_PER_PILE);
     const roosterMoveResponse = await poster(`/puzzles/roosterRiddle/getRoosterRiddleMove`, { submittedInt: pilesIntRep });
     let roosterMove = parseInt(roosterMoveResponse);

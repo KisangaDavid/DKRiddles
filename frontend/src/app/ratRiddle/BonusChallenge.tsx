@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext, ChangeEventHandler, ChangeEvent } from "react";
+import { useState, useEffect, useContext, ChangeEvent } from "react";
 
-import axios from 'axios';
 import TextField from "@mui/material/TextField";
 import Fade from "@mui/material/Fade";
 import Zoom from "@mui/material/Zoom";
@@ -8,8 +7,8 @@ import Fab from "@mui/material/Fab";
 import Box from "@mui/material/Box";
 import SendIcon from "@mui/icons-material/Send";
 import BreakdownUnlockedNotification from "../_common/BreakdownUnlockedNotification";
-import { poster } from "../_common/utils";
-import { RAT_PUZZLE_P2, SOLVED, backendBaseUrl, standardTextFade } from "../_common/constants";
+import { poster } from "../_common/ClientUtils";
+import { RAT_PUZZLE_P2, standardTextFade } from "../_common/constants";
 import { SolvedPuzzlesContext } from "../_common/SolvedPuzzlesContextProvider";
 
 interface props {

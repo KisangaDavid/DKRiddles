@@ -2,11 +2,8 @@
 
 import { useState, useCallback, ChangeEvent } from "react";
 import axios from "axios";
-import { convertIterableToInt, 
-  convertIntToArray, 
-  useConfettiSize,
-  poster
-} from "../_common/utils";
+import { convertIterableToInt, convertIntToArray } from "../_common/utils";
+import { useConfettiSize, poster} from "../_common/ClientUtils";
 import { MAX_32_BIT_NUM, longTextFade, longDelay, backendBaseUrl } from "../_common/constants";
 import Grid from "@mui/material/Grid";
 import { Stack } from "@mui/material";

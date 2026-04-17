@@ -20,16 +20,18 @@ type FormData = {
 };
 
 const CreateAccountForm = () => {
-    const [backendError, setBackendError] = useState<Record<string, string>>({});
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<FormData>();
     const router = useRouter();
+    const [backendError, setBackendError] = useState<Record<string, string>>({});
+    const [loading, setLoading] = useState(false);
     const { register: registerUser} = AuthActions();
 
     const onSubmit = (data: FormData) => {
+        setLoading(true);
         registerUser(data.email, data.username, data.password)
             .json(() => {
               sessionStorage.setItem("newUser", data.username);
@@ -37,7 +39,9 @@ const CreateAccountForm = () => {
             })
             .catch((err) => {
               setBackendError(JSON.parse(err.message));
+              setLoading(false);
             });
+            
     };
 
     return (
@@ -113,7 +117,7 @@ const CreateAccountForm = () => {
                   <Typography style={{fontSize: "0.875em", color: "#b81818"}}>{errors.email.message}</Typography>
                 )}
               </Box>
-              <SubmitButton sx={{width: "80%", mt: "0.3em", mb: "2em"}}>
+              <SubmitButton sx={{width: "80%", mt: "0.3em", mb: "2em"}} loading={loading}>
                 <Typography>Create Account</Typography>
               </SubmitButton>
           </form>

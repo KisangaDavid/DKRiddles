@@ -6,6 +6,7 @@ import StyledCard from "../../../_common/StyledCard";
 import { Typography, TextField, Box, Fade } from "@mui/material";
 import SubmitButton from "@/src/app/_common/SubmitButton";
 import { standardTextFade } from "@/src/app/_common/constants";
+import { useRouter } from "next/dist/client/components/navigation";
 
 type FormData = {
   email: string;
@@ -18,11 +19,13 @@ const ResetPasswordForm = () => {
     formState: { errors },
   } = useForm<FormData>();
   const { resetPassword } = AuthActions();
-
+  
+  const router  = useRouter();
   const onSubmit = async (data: FormData) => {
     try {
       await resetPassword(data.email).res();
       alert("If the provided email has a corresponding account, the password reset email has been sent. Please check your inbox.");
+      router.push('/auth/login');
     } catch (err) {
       alert("Failed to send password reset email. Please try again.");
     }

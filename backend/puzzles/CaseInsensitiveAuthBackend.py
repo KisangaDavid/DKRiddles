@@ -13,6 +13,3 @@ class CaseInsensitiveAuthBackend(ModelBackend):
             if user.check_password(password):
                 return user
         return None
-
-
-    # TODO: Make emails unique and case insensitive
