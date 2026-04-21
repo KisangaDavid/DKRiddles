@@ -66,6 +66,9 @@ function RoosterRiddlePage() {
     let postPlayerPileSums = pilesPostPlayerMove.map(pile => pile.length);
     // TODO idea: send history of moves, check if everything checks out instead of just the request
     let pilesIntRep = convertIterableToInt(postPlayerPileSums.reverse(), NUM_BITS_PER_PILE);
+    setPiles(pilesPostPlayerMove);
+    setSelectedKernels(new Set());
+    setSelectedPile(-1);
     const roosterMoveResponse = await poster(`/puzzles/roosterRiddle/getRoosterRiddleMove`, { submittedInt: pilesIntRep });
     let roosterMove = parseInt(roosterMoveResponse);
     if (roosterMove == 0) {
@@ -74,9 +77,7 @@ function RoosterRiddlePage() {
       return;
     }
     let [numToTake, pileToTakeFrom] = convertIntToArray(roosterMove, NUM_BITS_PER_PILE, 2);
-    setPiles(pilesPostPlayerMove);
-    setSelectedKernels(new Set());
-    setSelectedPile(-1);
+
     const adjustedDelay = Math.max(0, longDelay - Date.now() + startTime);
     setTimeout(() => {
       executeRoosterMove(pileToTakeFrom, numToTake, pilesPostPlayerMove);

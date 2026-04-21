@@ -50,7 +50,6 @@ function BonusChallenge({setConfetti} : props) {
       const intsOnly = e.target.value.replace(/[^0-9]/g, "");
       e.target.value = intsOnly;
       intsOnly.length < 1 ? setAnswerToBonus(-1) : setAnswerToBonus(+intsOnly);
-      console.log(answerToBonus);
     };
 
   return ( 

@@ -11,7 +11,6 @@ type Props = {
 
 async function ResetPasswordConfirmationPage({ searchParams }: Props) {
   const { uid = "", token = "" } = await searchParams;
-  console.log(searchParams);
   return (
     <>
       <TopBar text="Reset Password" isPuzzlePage={false} resetFunc={undefined} />

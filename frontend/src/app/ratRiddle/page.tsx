@@ -21,6 +21,7 @@ const NUM_HOUSES = 8;
 
 function RatRiddlePage() {
   const [submittedTraps, setSubmittedTraps] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [confetti, setConfetti] = useState(false);
   const [path, setPath] = useState<number[]>([]);
   const [curDay, setCurDay] = useState(0);
@@ -52,6 +53,7 @@ function RatRiddlePage() {
 };
 
   const submitRiddleAnswer = async () => {
+    setLoading(true);
     let allCheckedPositions = convertToAbsPos(allCheckedHouses.concat(curCheckedHouses)).sort((a, b) => a - b);
     let counter = 0;
     let binaryString = ""
@@ -138,7 +140,7 @@ function RatRiddlePage() {
                 variant="contained" disabled={curCheckedHouses.size !== 2 || curDay > 5} 
                     onClick={nextDay}>&nbsp;&nbsp;Next Day&nbsp;&nbsp;</Button>
                 <Button variant="contained" disabled={curCheckedHouses.size !== 2} 
-                    onClick={submitRiddleAnswer}>Submit Answer</Button>
+                    onClick={submitRiddleAnswer} loading={loading}>Submit Answer</Button>
               </Stack>
             </Fade>
           )}
