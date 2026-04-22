@@ -24,7 +24,7 @@ const ResetPasswordForm = () => {
   const onSubmit = async (data: FormData) => {
     try {
       await resetPassword(data.email).res();
-      alert("If the provided email has a corresponding account, the password reset email has been sent. Please check your inbox.");
+      alert("If the provided email has a corresponding account, the password reset email has been sent. Please check your inbox and spam folder.");
       router.push('/auth/login');
     } catch (err) {
       alert("Failed to send password reset email. Please try again.");

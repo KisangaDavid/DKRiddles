@@ -76,12 +76,14 @@ function RatRiddlePage() {
       }
       path.reverse();
     }
+    setLoading(false);
     setAllCheckedHouses(allCheckedHouses.concat(curCheckedHouses));
     setCurCheckedHouses(new Set());
     setTotalDays(curDay + 1);
     setCurDay(0);
     setSubmittedTraps(true);
     setPath(path);
+    
   }
 
   const resetPuzzle = useCallback(() => {
@@ -91,6 +93,7 @@ function RatRiddlePage() {
     setSubmittedTraps(false);
     setPath([]);
     setPrevDay(-1);
+    setLoading(false);
     setConfetti(false)}, []
   );
 

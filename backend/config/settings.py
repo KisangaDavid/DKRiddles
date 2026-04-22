@@ -1,19 +1,12 @@
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!*c=v-^%$19^+e=bpjvrzgzqtx_6)6w)+9zum@rnk=5&*^+bu1' # Temp key for dev
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-# Application definition
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+DEBUG = False
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -50,17 +43,12 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle'
     ],
+    # TODO: more granular throttling for registration endpoint if needed
     'DEFAULT_THROTTLE_RATES': {
         'user': '3000/day',
-        'anon': '1500/day'
+        'anon': '1000/day'
     }
 }
-
-SIMPLE_JWT = {
-    "AUTH_HEADER_TYPES": ("Bearer",),
-}
-
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 DJOSER = {
     "PASSWORD_RESET_CONFIRM_URL": "auth/password/reset-password-confirmation/?uid={uid}&token={token}",
@@ -73,16 +61,57 @@ DJOSER = {
     "USERNAME_FIELD": "username"
 }
 
-SITE_NAME = "TheRiddleMan.com"
+AUTH_USER_MODEL = 'puzzles.user'
 
-DOMAIN = 'localhost:3000'
+AUTHENTICATION_BACKENDS = [
+    'puzzles.CaseInsensitiveAuthBackend.CaseInsensitiveAuthBackend'
+]
 
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {
+            "min_length": 6,
+        }
+    }
+]
+
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ("Bearer",)
+}
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db' / 'db.sqlite3',
+    }
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+# SECURE_HSTS_SECONDS = 3600 
+# SECURE_SSL_REDIRECT = True
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
-
-ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -99,38 +128,15 @@ TEMPLATES = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = [
-    'puzzles.CaseInsensitiveAuthBackend.CaseInsensitiveAuthBackend',
-]
+ROOT_URLCONF = 'config.urls'
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+SITE_NAME = "TheRiddleMan.com"
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db' / 'db.sqlite3',
-    }
-}
-
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
-    }
-}
-
-DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
-AUTH_USER_MODEL = 'puzzles.user'
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-        "OPTIONS": {
-            "min_length": 6,
-        }
-    }
-]
+DOMAIN = 'localhost:3000'
 
 LANGUAGE_CODE = 'en-us'
 
@@ -142,7 +148,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# Constants
+# Other Constants
+MIN_USERNAME_LENGTH = 3
 LEADERBOARD_CACHE_KEY = "leaderboard_top_10"
 CACHE_TIMEOUT = 60 * 30
 HORSE_PUZZLE_MIN_RACES = 7  

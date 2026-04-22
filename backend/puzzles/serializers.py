@@ -1,3 +1,4 @@
+from config.settings import MIN_USERNAME_LENGTH
 from rest_framework import serializers
 from djoser.serializers import UserCreateSerializer
 from better_profanity import profanity
@@ -16,6 +17,11 @@ class UserSolvedPuzzlesSerializer(serializers.ModelSerializer):
 class CaseInsensitiveUserCreateSerializer(UserCreateSerializer):
     email = serializers.EmailField(required=False, allow_blank=True)
     def validate_username(self, value):
+        if len(value) < MIN_USERNAME_LENGTH:
+            raise serializers.ValidationError(
+                f"Username must be at least {MIN_USERNAME_LENGTH} characters long."
+        )
+
         if profanity.contains_profanity(value):
             raise serializers.ValidationError(
                 "Please choose a different username."

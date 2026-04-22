@@ -50,6 +50,8 @@ function HorseRiddlePage() {
     setWrongReason("");
     setFastestHorses([-1, -1, -1]);
     setHasBeenReset(true);
+    setRaceLoading(false);
+    setSubmitLoading(false);
     randomizeSeed();
   }, []);
 
