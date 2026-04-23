@@ -17,7 +17,7 @@ export const RABBIT_PUZZLE_P2_TITLE = "Jumping Rabbits (Part 2)";
 export const ALL_PUZZLES = [RAT_PUZZLE_P1, RAT_PUZZLE_P2, HORSE_PUZZLE, ROOSTER_PUZZLE, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2];
 export const ALL_PUZZLE_TITLES = [RAT_PUZZLE_P1_TITLE, RAT_PUZZLE_P2_TITLE, HORSE_PUZZLE_TITLE, ROOSTER_PUZZLE_TITLE, RABBIT_PUZZLE_P1_TITLE, RABBIT_PUZZLE_P2_TITLE];
 
-export const backendBaseUrl = 'http://127.0.0.1:8000/'
+export const backendBaseUrl = 'https://127.0.0.1:8000/'
 export const blogLink = "https://blog.dkisanga.com";
 export const ratBlogLink = "https://blog.dkisanga.com/ratRiddle/";
 export const horseBlogLink = "https://blog.dkisanga.com/horseRiddle/";

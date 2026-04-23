@@ -30,7 +30,7 @@ const { handleJWTRefresh, storeToken, getToken, removeTokens } = AuthActions();
 
 const api = () => {
   const accessToken = getToken("access");
-  const baseApi = wretch("http://localhost:8000");
+  const baseApi = wretch("https://localhost:8000");
 
   if (!accessToken) return baseApi.catcherFallback((err) => {console.log(err)});
 
