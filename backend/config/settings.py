@@ -6,7 +6,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
-DEBUG = False
+DEBUG = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -40,13 +40,17 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.ScopedRateThrottle',
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle'
     ],
     # TODO: more granular throttling for registration endpoint if needed
     'DEFAULT_THROTTLE_RATES': {
-        'user': '3000/day',
-        'anon': '1000/day'
+        'user': '3000/d',
+        'anon': '1000/d',
+        'register': '8/m',
+        'reset_password': '2/m',
+        'log_in': '8/m'
     }
 }
 

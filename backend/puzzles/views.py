@@ -2,7 +2,6 @@ import ctypes
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.views.decorators.csrf import csrf_exempt
 
 from puzzles.serializers import CheckHorseRiddleAnswerSerializer, CheckRabbitRiddleBonusAnswerSerializer, CheckRatRiddleAnswerSerializer, RaceHorsesSerializer, CheckRatRiddleBonusAnswerSerializer, SingleIntSerializer
 from puzzles.models import UserSolvedPuzzles, PuzzleNames

@@ -19,25 +19,25 @@ const removeTokens = () => {
 };
 
 const register = (email: string, username: string, password: string) => {
-  return api.post({ email, username, password }, "/auth/users/");
+  return api.post({ email, username, password }, "auth/users/");
 };
 
 const login = (username: string, password: string) => {
-  return api.post({ username, password }, "/auth/jwt/create");
+  return api.post({ username, password }, "auth/jwt/create");
 };
 
 const logout = () => {
   const refreshToken = getToken("refresh");
-  return api.post({ refresh: refreshToken }, "/auth/logout/");
+  return api.post({ refresh: refreshToken }, "auth/logout/");
 };
 
 const handleJWTRefresh = () => {
   const refreshToken = getToken("refresh");
-  return api.post({ refresh: refreshToken }, "/auth/jwt/refresh");
+  return api.post({ refresh: refreshToken }, "auth/jwt/refresh");
 };
 
 const resetPassword = (email: string) => {
-  return api.post({ email }, "/auth/users/reset_password/");
+  return api.post({ email }, "auth/users/reset_password/");
 };
 
 const resetPasswordConfirm = (
@@ -48,7 +48,7 @@ const resetPasswordConfirm = (
 ) => {
   return api.post(
     { uid, token, new_password, re_new_password },
-    "/auth/users/reset_password_confirm/"
+    "auth/users/reset_password_confirm/"
   );
 };
 

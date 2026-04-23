@@ -15,7 +15,7 @@ class UserSolvedPuzzlesSerializer(serializers.ModelSerializer):
 
 
 class CaseInsensitiveUserCreateSerializer(UserCreateSerializer):
-    email = serializers.EmailField(required=False, allow_blank=True)
+    email = serializers.EmailField(required=False, trim_whitespace=False, allow_blank=True, error_messages={"invalid": "Enter a valid email address or leave the field blank."})
     def validate_username(self, value):
         if len(value) < MIN_USERNAME_LENGTH:
             raise serializers.ValidationError(
