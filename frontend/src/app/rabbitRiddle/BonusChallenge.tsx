@@ -30,7 +30,7 @@ function BonusChallenge({setConfetti} : props) {
       }
     }, []);
     const checkRabbitBonusAnswer = async (numBonusRabbits: number, answerToBonus: number) => {
-      const result = (await poster(`/puzzles/rabbitRiddle/checkRabbitRiddleBonusAnswer`, {numBonusRabbits, answerToBonus})).result;
+      const result = (await poster(`puzzles/rabbitRiddle/checkRabbitRiddleBonusAnswer`, {numBonusRabbits, answerToBonus})).result;
       return result === "success";
     }
 

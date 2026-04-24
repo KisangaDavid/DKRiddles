@@ -66,7 +66,7 @@ function RatRiddlePage() {
       counter++;
     });
     let submittedPlan = (`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`);
-    let intPath = (await poster(`/puzzles/ratRiddle/checkRatRiddleAnswer`, { submittedPlan }));
+    let intPath = (await poster(`puzzles/ratRiddle/checkRatRiddleAnswer`, { submittedPlan }));
 
     let path = []
     if (intPath != -1) {

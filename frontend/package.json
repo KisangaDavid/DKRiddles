@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "devDebug": "next dev --webpack",
+    "devDebug": "next dev",
     "build": "next build",
-    "postbuild": "python ./scripts/fixBuildPrefetchPaths.py",
     "start": "next start",
     "lint": "eslint"
   },

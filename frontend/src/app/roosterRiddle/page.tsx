@@ -69,7 +69,7 @@ function RoosterRiddlePage() {
     setPiles(pilesPostPlayerMove);
     setSelectedKernels(new Set());
     setSelectedPile(-1);
-    const roosterMoveResponse = await poster(`/puzzles/roosterRiddle/getRoosterRiddleMove`, { submittedInt: pilesIntRep });
+    const roosterMoveResponse = await poster(`puzzles/roosterRiddle/getRoosterRiddleMove`, { submittedInt: pilesIntRep });
     let roosterMove = parseInt(roosterMoveResponse);
     if (roosterMove == 0) {
       setPiles(pilesPostPlayerMove);
@@ -100,7 +100,7 @@ function RoosterRiddlePage() {
   }
 
   const getPilesIntForm = async () => {
-    const response = await poster(`/puzzles/roosterRiddle/getInitialPiles`, { submittedInt: Math.floor(Math.random() * MAX_32_BIT_NUM) });
+    const response = await poster(`puzzles/roosterRiddle/getInitialPiles`, { submittedInt: Math.floor(Math.random() * MAX_32_BIT_NUM) });
     return parseInt(response);
   }
 

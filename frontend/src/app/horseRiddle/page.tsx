@@ -100,7 +100,7 @@ function HorseRiddlePage() {
     setRaceLoading(true);
     let submittedHorsesInt = convertIterableToInt(currentRace, NUM_BITS_PER_HORSE);
     const raceResponse = await poster(
-      `/puzzles/horseRiddle/raceHorses`,
+      `puzzles/horseRiddle/raceHorses`,
       {
         randSeed,
         submittedHorsesInt,
@@ -129,7 +129,7 @@ function HorseRiddlePage() {
     }
 
     const checkResponse = (await poster(
-      `/puzzles/horseRiddle/checkHorseRiddleAnswer`,
+      `puzzles/horseRiddle/checkHorseRiddleAnswer`,
       {
         randSeed,
         fastestHorsesInt,
