@@ -96,6 +96,7 @@ CACHES = {
         "LOCATION": "redis://127.0.0.1:6379",
     }
 }
+SESSION_ENGINE = "django.contrib.sessions.backends.cache" 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

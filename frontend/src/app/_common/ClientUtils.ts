@@ -31,7 +31,8 @@ const { handleJWTRefresh, storeToken, getToken, removeTokens } = AuthActions();
 
 const api = () => {
   const accessToken = getToken("access");
-  const baseApi = wretch(backendBaseUrl);
+  console.log("backendBaseUrl: " + backendBaseUrl);
+  const baseApi = wretch(backendBaseUrl).options({ credentials: 'include' });
 
   if (!accessToken) return baseApi.catcherFallback((err) => {console.log(err)});
 
