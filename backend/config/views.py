@@ -21,6 +21,10 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 class RegisterThrottle(ScopedRateThrottle):
     scope = "register"
+
+    def get_cache_key(self, request, view):
+        return getSessionBasedCacheKey(self, request)
+
     def allow_request(self, request, view):
         allowed = super().allow_request(request, view)
         if not allowed:
@@ -32,6 +36,10 @@ class RegisterThrottle(ScopedRateThrottle):
 
 class ResetPasswordThrottle(ScopedRateThrottle):
     scope = "reset_password"
+
+    def get_cache_key(self, request, view):
+        return getSessionBasedCacheKey(self, request)
+
     def allow_request(self, request, view):
         allowed = super().allow_request(request, view)
         if not allowed:
@@ -43,6 +51,10 @@ class ResetPasswordThrottle(ScopedRateThrottle):
 
 class LoginThrottle(ScopedRateThrottle):
     scope = "log_in"
+
+    def get_cache_key(self, request, view):
+        return getSessionBasedCacheKey(self, request)
+
     def allow_request(self, request, view):
         allowed = super().allow_request(request, view)
         if not allowed:
@@ -51,6 +63,7 @@ class LoginThrottle(ScopedRateThrottle):
             unit = "minute" if minutes == 1 else "minutes"
             raise Throttled(detail=f"Too many login attempts! Try again in {minutes} {unit}.")
         return allowed
+
 
 class CustomUserViewSet(UserViewSet):
     # print(self.action)
@@ -97,7 +110,15 @@ def getProfileInfo(request):
 def getLeaderboardInfo(request):
     def fetch_leaderboard():
         return (User.objects
+                .filter(numPuzzlesSolved__gt=0)
                 .order_by('-numPuzzlesSolved')[:10]
                 .values('username', 'numPuzzlesSolved'))
     topUsers = cache.get_or_set(LEADERBOARD_CACHE_KEY, fetch_leaderboard, CACHE_TIMEOUT)
     return Response(list(topUsers))
+
+def getSessionBasedCacheKey(self, request):
+    if not request.session.session_key:
+        request.session.create()
+    ident = request.session.session_key
+    print(f"request session sessionKey: {request.session.session_key}")
+    return self.cache_format % {'scope': self.scope, 'ident': ident}

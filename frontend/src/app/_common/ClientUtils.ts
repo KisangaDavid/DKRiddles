@@ -31,7 +31,6 @@ const { handleJWTRefresh, storeToken, getToken, removeTokens } = AuthActions();
 
 const api = () => {
   const accessToken = getToken("access");
-  console.log("backendBaseUrl: " + backendBaseUrl);
   const baseApi = wretch(backendBaseUrl).options({ credentials: 'include' });
 
   if (!accessToken) return baseApi.catcherFallback((err) => {console.log(err)});
@@ -64,6 +63,5 @@ export const fetcher = (url: string): Promise<any> => {
 };
 
 export const poster = (url: string, body: Record<string, any>): Promise<any> => {
-  console.log("backendBaseUrl: " + backendBaseUrl);
   return api().url(url).post(body).json();
 };

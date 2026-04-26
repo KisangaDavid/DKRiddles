@@ -2,7 +2,7 @@ import wretch from "wretch";
 import Cookies from "js-cookie";
 import { backendBaseUrl } from "../_common/constants";
 
-const api = wretch(backendBaseUrl).accept("application/json");
+const api = wretch(backendBaseUrl).options({ credentials: 'include' }).accept("application/json");
 
 
 const storeToken = (token: string, type: "access" | "refresh") => {

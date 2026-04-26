@@ -39,17 +39,10 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    'DEFAULT_THROTTLE_CLASSES': [
-        'rest_framework.throttling.ScopedRateThrottle',
-        'rest_framework.throttling.AnonRateThrottle',
-        'rest_framework.throttling.UserRateThrottle'
-    ],
     'DEFAULT_THROTTLE_RATES': {
-        'user': '3000/d',
-        'anon': '1000/d',
-        'register': '8/m',
+        'register': '6/m',
         'reset_password': '2/m',
-        'log_in': '8/m'
+        'log_in': '6/m'
     }
 }
 
@@ -107,6 +100,7 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_AGE=86400
 SESSION_COOKIE_SECURE = True
 SECURE_HSTS_SECONDS = 3600 
 SECURE_SSL_REDIRECT = True
