@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/rabbitRiddle/layout,_N_T_/rabbitRiddle/breakdown/layout,_N_T_/rabbitRiddle/breakdown/page,_N_T_/rabbitRiddle/breakdown"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/rabbitRiddle/breakdown/__PAGE__",
+    "/rabbitRiddle/breakdown",
+    "/rabbitRiddle",
+    "/_index",
+    "/_head"
+  ]
+}

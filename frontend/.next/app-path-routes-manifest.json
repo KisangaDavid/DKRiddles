@@ -1,0 +1,21 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/about/page": "/about",
+  "/auth/createAccount/page": "/auth/createAccount",
+  "/auth/login/page": "/auth/login",
+  "/auth/password/reset-password-confirmation/page": "/auth/password/reset-password-confirmation",
+  "/auth/password/reset-password/page": "/auth/password/reset-password",
+  "/favicon.ico/route": "/favicon.ico",
+  "/horseRiddle/breakdown/page": "/horseRiddle/breakdown",
+  "/horseRiddle/page": "/horseRiddle",
+  "/leaderboard/page": "/leaderboard",
+  "/page": "/",
+  "/profile/page": "/profile",
+  "/rabbitRiddle/breakdown/page": "/rabbitRiddle/breakdown",
+  "/rabbitRiddle/page": "/rabbitRiddle",
+  "/ratRiddle/breakdown/page": "/ratRiddle/breakdown",
+  "/ratRiddle/page": "/ratRiddle",
+  "/roosterRiddle/breakdown/page": "/roosterRiddle/breakdown",
+  "/roosterRiddle/page": "/roosterRiddle"
+}

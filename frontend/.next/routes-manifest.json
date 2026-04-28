@@ -1,0 +1,173 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "app",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:file((?!\\.well-known(?:/.*)?)(?:[^/]+/)*[^/]+\\.\\w+)/",
+      "destination": "/:file",
+      "internal": true,
+      "priority": true,
+      "missing": [
+        {
+          "type": "header",
+          "key": "x-nextjs-data"
+        }
+      ],
+      "statusCode": 308,
+      "regex": "^(?:/((?!\\.well-known(?:/.*)?)(?:[^/]+/)*[^/]+\\.\\w+))/$"
+    },
+    {
+      "source": "/:notfile((?!\\.well-known(?:/.*)?)(?:[^/]+/)*[^/\\.]+)",
+      "destination": "/:notfile/",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?!\\.well-known(?:/.*)?)(?:[^/]+/)*[^/\\.]+))$"
+    }
+  ],
+  "headers": [],
+  "onMatchHeaders": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/about",
+      "regex": "^/about(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/about(?:/)?$"
+    },
+    {
+      "page": "/auth/createAccount",
+      "regex": "^/auth/createAccount(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth/createAccount(?:/)?$"
+    },
+    {
+      "page": "/auth/login",
+      "regex": "^/auth/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth/login(?:/)?$"
+    },
+    {
+      "page": "/auth/password/reset-password",
+      "regex": "^/auth/password/reset\\-password(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth/password/reset\\-password(?:/)?$"
+    },
+    {
+      "page": "/auth/password/reset-password-confirmation",
+      "regex": "^/auth/password/reset\\-password\\-confirmation(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/auth/password/reset\\-password\\-confirmation(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/horseRiddle",
+      "regex": "^/horseRiddle(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/horseRiddle(?:/)?$"
+    },
+    {
+      "page": "/horseRiddle/breakdown",
+      "regex": "^/horseRiddle/breakdown(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/horseRiddle/breakdown(?:/)?$"
+    },
+    {
+      "page": "/leaderboard",
+      "regex": "^/leaderboard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/leaderboard(?:/)?$"
+    },
+    {
+      "page": "/profile",
+      "regex": "^/profile(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/profile(?:/)?$"
+    },
+    {
+      "page": "/rabbitRiddle",
+      "regex": "^/rabbitRiddle(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/rabbitRiddle(?:/)?$"
+    },
+    {
+      "page": "/rabbitRiddle/breakdown",
+      "regex": "^/rabbitRiddle/breakdown(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/rabbitRiddle/breakdown(?:/)?$"
+    },
+    {
+      "page": "/ratRiddle",
+      "regex": "^/ratRiddle(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/ratRiddle(?:/)?$"
+    },
+    {
+      "page": "/ratRiddle/breakdown",
+      "regex": "^/ratRiddle/breakdown(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/ratRiddle/breakdown(?:/)?$"
+    },
+    {
+      "page": "/roosterRiddle",
+      "regex": "^/roosterRiddle(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/roosterRiddle(?:/)?$"
+    },
+    {
+      "page": "/roosterRiddle/breakdown",
+      "regex": "^/roosterRiddle/breakdown(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/roosterRiddle/breakdown(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

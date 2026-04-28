@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/horseRiddle/layout,_N_T_/horseRiddle/breakdown/layout,_N_T_/horseRiddle/breakdown/page,_N_T_/horseRiddle/breakdown"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/horseRiddle/breakdown/__PAGE__",
+    "/horseRiddle/breakdown",
+    "/horseRiddle",
+    "/_index",
+    "/_head"
+  ]
+}
