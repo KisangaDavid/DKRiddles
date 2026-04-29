@@ -8,14 +8,14 @@ router = DefaultRouter()
 router.register("users", CustomUserViewSet, basename="users")
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("auth/jwt/create", views.ThrottledLoginView.as_view(), name="jwt-create"),
-    path("auth/", include(router.urls)),
-    path("auth/", include("djoser.urls")),
-    path("auth/", include("djoser.urls.jwt")),
-    path("auth/logout/", views.LogoutView.as_view()),
-    path('puzzles/', include('puzzles.urls')), 
-    path('getProfileInfo', views.getProfileInfo, name='getProfileInfo'),
-    path('getLeaderboardInfo', views.getLeaderboardInfo, name='getLeaderboardInfo')
+    path('be/admin/', admin.site.urls),
+    path("be/auth/jwt/create", views.ThrottledLoginView.as_view(), name="jwt-create"),
+    path("be/auth/", include(router.urls)),
+    path("be/auth/", include("djoser.urls")),
+    path("be/auth/", include("djoser.urls.jwt")),
+    path("be/auth/logout/", views.LogoutView.as_view()),
+    path('be/puzzles/', include('puzzles.urls')), 
+    path('be/getProfileInfo', views.getProfileInfo, name='getProfileInfo'),
+    path('be/getLeaderboardInfo', views.getLeaderboardInfo, name='getLeaderboardInfo')
 ]
 
