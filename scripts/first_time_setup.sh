@@ -22,7 +22,8 @@ sudo systemctl daemon-reload
 cd ../backend
 python3 -m venv .venv
 source .venv/bin/activate
-python3 manage.py migrate
 pip install -r requirements.txt
+python3 manage.py migrate
+python3 manage.py collectstatic --noinput
 cd ../frontend
 sudo npm i --verbose
