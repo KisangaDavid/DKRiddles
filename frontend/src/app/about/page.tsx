@@ -39,7 +39,7 @@ function AboutSitePage() {
               href={blogLink}
             >
               check out my blog site!
-            </a>
+            </a> If you have any other questions or issues with the site, feel free to shoot me an email at <i>thebigdkindustries@gmail.com</i>.
           </Typography>
         </Box>
       </Fade>
@@ -68,38 +68,30 @@ function AboutSitePage() {
               <ListItemText  
                 primary={
                   <Typography align="center" variant="h6">
-                    Typescript Rewrite
+                    &nbsp; &nbsp; Global Leaderboards ✔️
                   </Typography>
                 } 
               />
-               <ListItemIcon sx={{display: "flex", position: "absolute", right: "-20px"}}>
-                <CheckRoundedIcon fontSize = "large" sx={{color: theme.palette.success.main }} />
-              </ListItemIcon>
-            </ListItem>
-            <ListItem>
-              <ListItemText  
-                  primary={
-                    <Typography align="center" variant="h6">
-                      Mobile Friendly Layouts
-                    </Typography>
-                  } 
-              />
-                <ListItemIcon sx={{display: "flex", position: "absolute", right: "-45px"}}>
-                  <CheckRoundedIcon fontSize = "large" sx={{color: theme.palette.success.main }} />
-                </ListItemIcon>
             </ListItem>
             <ListItem>
               <ListItemText  
                 primary={
                   <Typography align="center" variant="h6">
-                    Migrate to Nextjs 
+                    &nbsp; &nbsp; Authentication & Stat tracking ✔️
                   </Typography>
                 } 
               />
-              <ListItemIcon sx={{display: "flex", position: "absolute", right: "-15px"}}>
-                <CheckRoundedIcon fontSize = "large" sx={{color: theme.palette.success.main }} />
-              </ListItemIcon>
             </ListItem>
+            <ListItem>
+              <ListItemText  
+                  primary={
+                    <Typography align="center" variant="h6">
+                      &nbsp; &nbsp; Mobile Friendly Layouts ✔️
+                    </Typography>
+                  } 
+              />
+            </ListItem>
+
           </List> 
         </Fade>
       </Box>

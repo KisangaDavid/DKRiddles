@@ -1,3 +1,5 @@
+from concurrent.futures import wait
+
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework.views import APIView
@@ -6,12 +8,77 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import Throttled
 
 from django.core.exceptions import ObjectDoesNotExist
 
 from puzzles.models import UserSolvedPuzzles, User
 from django.core.cache import cache
 from .settings import LEADERBOARD_CACHE_KEY, CACHE_TIMEOUT 
+from djoser.views import UserViewSet
+from rest_framework.throttling import AnonRateThrottle, ScopedRateThrottle
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class RegisterThrottle(ScopedRateThrottle):
+    scope = "register"
+
+    def get_cache_key(self, request, view):
+        return getSessionBasedCacheKey(self, request)
+
+    def allow_request(self, request, view):
+        allowed = super().allow_request(request, view)
+        if not allowed:
+            wait = self.wait()
+            minutes = int(wait) // 60 + 1
+            unit = "minute" if minutes == 1 else "minutes"
+            raise Throttled(detail=f"Too many account creation attempts! Try again in {minutes} {unit}.")
+        return allowed
+
+class ResetPasswordThrottle(ScopedRateThrottle):
+    scope = "reset_password"
+
+    def get_cache_key(self, request, view):
+        return getSessionBasedCacheKey(self, request)
+
+    def allow_request(self, request, view):
+        allowed = super().allow_request(request, view)
+        if not allowed:
+            wait = self.wait()
+            minutes = int(wait) // 60 + 1
+            unit = "minute" if minutes == 1 else "minutes"
+            raise Throttled(detail=f"Too many password reset attempts! Try again in {minutes} {unit}.")
+        return allowed
+
+class LoginThrottle(ScopedRateThrottle):
+    scope = "log_in"
+
+    def get_cache_key(self, request, view):
+        return getSessionBasedCacheKey(self, request)
+
+    def allow_request(self, request, view):
+        allowed = super().allow_request(request, view)
+        if not allowed:
+            wait = self.wait()
+            minutes = int(wait) // 60 + 1
+            unit = "minute" if minutes == 1 else "minutes"
+            raise Throttled(detail=f"Too many login attempts! Try again in {minutes} {unit}.")
+        return allowed
+
+
+class CustomUserViewSet(UserViewSet):
+    # print(self.action)
+    def get_throttles(self):
+        if self.action == "create":
+            self.throttle_scope = "register"
+            return [RegisterThrottle()]
+        if self.action == "reset_password":
+            self.throttle_scope = "reset_password"
+            return [ResetPasswordThrottle()]
+        return super().get_throttles()
+   
+class ThrottledLoginView(TokenObtainPairView):
+    throttle_scope = "log_in"
+    throttle_classes = [LoginThrottle]
 
 class LogoutView(APIView):
     permission_classes = (AllowAny,)
@@ -43,8 +110,15 @@ def getProfileInfo(request):
 def getLeaderboardInfo(request):
     def fetch_leaderboard():
         return (User.objects
+                .filter(numPuzzlesSolved__gt=0)
                 .order_by('-numPuzzlesSolved')[:10]
                 .values('username', 'numPuzzlesSolved'))
-
     topUsers = cache.get_or_set(LEADERBOARD_CACHE_KEY, fetch_leaderboard, CACHE_TIMEOUT)
     return Response(list(topUsers))
+
+def getSessionBasedCacheKey(self, request):
+    if not request.session.session_key:
+        request.session.create()
+    ident = request.session.session_key
+    print(f"request session sessionKey: {request.session.session_key}")
+    return self.cache_format % {'scope': self.scope, 'ident': ident}

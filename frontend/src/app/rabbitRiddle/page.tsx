@@ -70,7 +70,7 @@ function RabbitRiddlePage() {
   const checkWin = async (newRabbitPositions: number[], numMoves: number) => {
     if(newRabbitPositions.every((val, idx) => val === endingRabbitPositions[idx])) {
       const startTime = Date.now();
-      let result = (await poster(`/puzzles/rabbitRiddle/checkRabbitRiddleAnswer`, { submittedInt: numMoves })).result;
+      let result = (await poster(`puzzles/rabbitRiddle/checkRabbitRiddleAnswer`, { submittedInt: numMoves })).result;
       if(result == "success") {
         const adjustedDelay = Math.max(0, standardDelay - Date.now() + startTime);
         setTimeout(() => {

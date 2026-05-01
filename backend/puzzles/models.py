@@ -19,6 +19,11 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, null=True, blank=True)
     numPuzzlesSolved = models.IntegerField(default=0)
 
+    def save(self, *args, **kwargs):
+        if self.email == "":
+            self.email = None
+        super().save(*args, **kwargs)
+
     class Meta:
         db_table = 'puzzles_users' 
         constraints = [
@@ -30,7 +35,7 @@ class User(AbstractUser):
                 Lower('email'),
                 name="unique_case_insensitive_email"
             )
-            ]
+        ]
 
 
 class UserSolvedPuzzles(models.Model):

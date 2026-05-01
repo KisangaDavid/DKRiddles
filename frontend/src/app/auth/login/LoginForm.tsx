@@ -40,19 +40,17 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   
   const { clearSolvedPuzzles } = useContext(SolvedPuzzlesContext);
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormData) => {
     setLoading(true);
-    login(data.username, data.password)
+    await login(data.username, data.password)
       .json((json) => {
         storeToken(json.access, "access");
         storeToken(json.refresh, "refresh");
         clearSolvedPuzzles();
         router.push("/profile");
       })
-      .catch((err) => {
-        setError("root", { type: "manual", message: JSON.parse(err.message).detail});
-        setLoading(false);
-      });
+      .catch((err) => setError("root", { type: "manual", message: JSON.parse(err.message).detail}));
+    setLoading(false);
   };
 
   return (
@@ -71,9 +69,9 @@ const LoginForm = () => {
                 onChange: (e) => setError("root", { type: "manual", message: ""}) 
               })}
             />
-            <Box sx={{minHeight: "1.4em"}}>
+            <Box sx={{minHeight: "1.4em", display: "flex", justifyContent: "center"}}>
             {errors.username && (
-              <Typography style={{fontSize: "0.875em", color: "#b81818" }}>Username is required</Typography>
+              <Typography sx={{fontSize: "0.875em", color: "#b81818", width: "80%" }}>Username is required</Typography>
             )}
             </Box>
           </div>
@@ -93,18 +91,18 @@ const LoginForm = () => {
                 onChange: (e) => setError("root", { type: "manual", message: ""})
               })}
             />
-            <Box sx={{minHeight: "1.4em"}}>
+            <Box sx={{minHeight: "1.4em", display: "flex", justifyContent: "center"}}>
             {errors.password && (
-              <Typography style={{fontSize: "0.875em", color: "#b81818" }}>Password is required</Typography>
+              <Typography style={{fontSize: "0.875em", color: "#b81818", width: "80%"  }}>Password is required</Typography>
             )}
             </Box>
           <SubmitButton sx={{width: "80%", mt: "0.3em"}} loading={loading}>
             <Typography>Log in</Typography>
           </SubmitButton>
-          <Box sx={{minHeight: "1.4em", my:"0.5em"}}>
+           <Box sx={{minHeight: "1.4em", display: "flex", justifyContent: "center"}}>
           {errors.root &&
             (
-              <Typography style={{fontSize: "0.875em", color: "#b81818" }}>{errors.root.message}</Typography>
+              <Typography style={{fontSize: "0.875em", color: "#b81818", width: "80%"  }}>{errors.root.message}</Typography>
             )
         }
           </Box>

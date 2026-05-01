@@ -3,6 +3,7 @@
 import { useState, useLayoutEffect } from 'react';
 import wretch, { Wretch, WretchError } from "wretch";
 import { AuthActions } from "@/src/app/auth/utils";
+import { backendBaseUrl } from './constants';
 
 export function getConfettiHeight() {
     const rootElement = document.getElementById('root');
@@ -30,7 +31,7 @@ const { handleJWTRefresh, storeToken, getToken, removeTokens } = AuthActions();
 
 const api = () => {
   const accessToken = getToken("access");
-  const baseApi = wretch("http://localhost:8000");
+  const baseApi = wretch(backendBaseUrl).options({ credentials: 'include' });
 
   if (!accessToken) return baseApi.catcherFallback((err) => {console.log(err)});
 

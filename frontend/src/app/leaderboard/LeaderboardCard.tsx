@@ -8,8 +8,8 @@ import LeaderboardRow from "./LeaderboardRow";
 import { standardTextFade } from "../_common/constants";
 
 function LeaderboardCard() {
-    const { data, isLoading } = useSWR(
-        "/getLeaderboardInfo",
+    const { data } = useSWR(
+        "getLeaderboardInfo",
         fetcher,
         {keepPreviousData: true}
     );

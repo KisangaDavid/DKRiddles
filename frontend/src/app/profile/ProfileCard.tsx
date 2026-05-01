@@ -18,7 +18,7 @@ function ProfileCard() {
     const { clearSolvedPuzzles, resetSolvedPuzzles } = useContext(SolvedPuzzlesContext)
 
     const { data: { username = "", dateJoined = " ", solvedPuzzles  } = {}, isLoading } = useSWR(
-        "/getProfileInfo",
+        "getProfileInfo",
         fetcher,
         {keepPreviousData: true}
     );

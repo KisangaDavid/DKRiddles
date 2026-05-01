@@ -30,18 +30,25 @@ const CreateAccountForm = () => {
     const [loading, setLoading] = useState(false);
     const { register: registerUser} = AuthActions();
 
-    const onSubmit = (data: FormData) => {
+    const onSubmit = async (data: FormData) => {
         setLoading(true);
-        registerUser(data.email, data.username, data.password)
+        await registerUser(data.email, data.username, data.password)
             .json(() => {
               sessionStorage.setItem("newUser", data.username);
               router.push("/auth/login");
             })
             .catch((err) => {
-              setBackendError(JSON.parse(err.message));
-              setLoading(false);
+              if (err.status == 429) {
+                console.log("error is", err);
+                console.log("error message is", err.message);
+                // console.log()
+                setBackendError({ email: JSON.parse(err.message).detail});
+              }
+              else {
+                setBackendError(JSON.parse(err.message));
+              }
             });
-            
+        setLoading(false);          
     };
 
     return (
@@ -61,12 +68,12 @@ const CreateAccountForm = () => {
                   onChange: (e) => setBackendError((prev) => ({ ...prev, username: "" }))
                 })}
               />
-              <Box sx={{minHeight: "1.4em"}}>
+              <Box sx={{minHeight: "1.4em",  display: "flex", justifyContent: "center"}}>
                 {!errors.username && backendError.username && (
-                  <Typography style={{fontSize: "0.875em", color: "#b81818"}}>{backendError.username}</Typography>
+                  <Typography sx={{fontSize: "0.875em", color: "#b81818", width: "80%"}}>{backendError.username}</Typography>
                 )}
                 {errors.username && (
-                  <Typography style={{fontSize: "0.875em", color: "#b81818"}}>{errors.username.message}</Typography>
+                  <Typography sx={{fontSize: "0.875em", color: "#b81818", width: "80%"}}>{errors.username.message}</Typography>
                 )}
               </Box>
             </div>
@@ -86,12 +93,12 @@ const CreateAccountForm = () => {
                   onChange: (e) => setBackendError((prev) => ({ ...prev, password: "" })) 
                 })}
               />
-              <Box sx={{minHeight: "1.4em"}}>
+              <Box sx={{minHeight: "1.4em", display: "flex", justifyContent: "center"}}>
                 {!errors.password && backendError.password && (
-                  <Typography style={{fontSize: "0.875em", color: "#b81818" }}>{backendError.password}</Typography>
+                  <Typography sx={{fontSize: "0.875em", color: "#b81818", width: "80%"}}>{backendError.password}</Typography>
                 )}
                 {errors.password && (
-                    <Typography style={{fontSize: "0.875em", color: "#b81818" }}>{errors.password.message}</Typography>
+                    <Typography sx={{fontSize: "0.875em", color: "#b81818", width: "80%"}}>{errors.password.message}</Typography>
                 )}
               </Box>
               <TextField
@@ -109,12 +116,12 @@ const CreateAccountForm = () => {
                   onChange: (e) => setBackendError((prev) => ({ ...prev, email: "" }))
                 })}
               />
-              <Box sx={{minHeight: "1.4em"}}>
+              <Box sx={{minHeight: "1.4em", display: "flex", justifyContent: "center"}}>
                 {!errors.email && backendError.email && (
-                  <Typography style={{fontSize: "0.875em", color: "#b81818"}}>{backendError.email}</Typography>
+                  <Typography sx={{fontSize: "0.875em", color: "#b81818", width: "80%"}}>{backendError.email}</Typography>
                 )}
                 {errors.email && (
-                  <Typography style={{fontSize: "0.875em", color: "#b81818"}}>{errors.email.message}</Typography>
+                  <Typography sx={{fontSize: "0.875em", color: "#b81818", width: "80%"}}>{errors.email.message}</Typography>
                 )}
               </Box>
               <SubmitButton sx={{width: "80%", mt: "0.3em", mb: "2em"}} loading={loading}>

@@ -31,7 +31,7 @@ function BonusChallenge({setConfetti, totalDays} : props) {
   }, []);
 
   const checkBonusAnswer = async (numHouses: number, answerToBonus: number) => {
-    const result = (await poster(`/puzzles/ratRiddle/checkRatRiddleBonusAnswer`, { numHouses, answerToBonus })).result;
+    const result = (await poster(`puzzles/ratRiddle/checkRatRiddleBonusAnswer`, { numHouses, answerToBonus })).result;
     return result === "success";
   }
 

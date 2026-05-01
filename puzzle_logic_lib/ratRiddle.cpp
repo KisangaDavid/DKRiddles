@@ -111,7 +111,7 @@ class HouseRatRiddle {
 };
 
 extern "C" {
-  __declspec(dllexport) uint32_t checkRatRiddleBonusAnswer(uint32_t numBonusHouses, uint32_t bonusAnswer) {
+  __attribute__((visibility("default"))) uint32_t checkRatRiddleBonusAnswer(uint32_t numBonusHouses, uint32_t bonusAnswer) {
     uint32_t daysToEliminateAlternating = numBonusHouses / 3;
     if (numBonusHouses % 3 == 0 && daysToEliminateAlternating % 2 == 0) {
       return 2 * daysToEliminateAlternating - 1 == bonusAnswer;
@@ -121,7 +121,7 @@ extern "C" {
 }
 
 extern "C" {
-    __declspec(dllexport) uint32_t checkRatRiddleAnswer(uint64_t num1) {
+    __attribute__((visibility("default"))) uint32_t checkRatRiddleAnswer(uint64_t num1) {
     int position = 0;
     std::vector<int> deletedNodes {};
     while(num1 > 0) {

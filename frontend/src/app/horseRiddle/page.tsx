@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useCallback, ChangeEvent } from "react";
-import axios from "axios";
 import { convertIterableToInt, convertIntToArray } from "../_common/utils";
 import { useConfettiSize, poster} from "../_common/ClientUtils";
 import { MAX_32_BIT_NUM, longTextFade, longDelay, backendBaseUrl } from "../_common/constants";
@@ -32,6 +31,8 @@ const MAX_RACES_EXCEEDED_MSG = "You cannot race anymore horses! Please submit a 
 
 function HorseRiddlePage() {
   const [hasBeenReset, setHasBeenReset] = useState(false);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [raceLoading, setRaceLoading] = useState(false);
   const [randSeed, setRandSeed] = useState(Math.floor(Math.random() * MAX_32_BIT_NUM));
   const [confetti, setConfetti] = useState(false);
   const [currentRace, setCurrentRace] = useState<number[]>([]);
@@ -49,6 +50,8 @@ function HorseRiddlePage() {
     setWrongReason("");
     setFastestHorses([-1, -1, -1]);
     setHasBeenReset(true);
+    setRaceLoading(false);
+    setSubmitLoading(false);
     randomizeSeed();
   }, []);
 
@@ -94,23 +97,26 @@ function HorseRiddlePage() {
   };
 
   const submitRace = async () => {
+    setRaceLoading(true);
     let submittedHorsesInt = convertIterableToInt(currentRace, NUM_BITS_PER_HORSE);
-    const raceResponse = await axios.post(
-      `${backendBaseUrl}/puzzles/horseRiddle/raceHorses`,
+    const raceResponse = await poster(
+      `puzzles/horseRiddle/raceHorses`,
       {
         randSeed,
         submittedHorsesInt,
       }
     );
 
-    let intRes = parseInt(raceResponse.data);
+    let intRes = parseInt(raceResponse);
     let horseOrder = convertIntToArray(intRes, NUM_BITS_PER_HORSE, RACE_LENGTH);
     setCurrentRace([]);
     setFinishedRaces([...finishedRaces, ...horseOrder.reverse()]);
     setWrongReason("");
+    setRaceLoading(false);
   };
 
   const checkAnswer = async () => {
+    setSubmitLoading(true);
     let horsesToSubmit = fastestHorses.map((num) => num - 1).reverse();
     let fastestHorsesInt = convertIterableToInt(horsesToSubmit, NUM_BITS_PER_HORSE);
     
@@ -123,7 +129,7 @@ function HorseRiddlePage() {
     }
 
     const checkResponse = (await poster(
-      `/puzzles/horseRiddle/checkHorseRiddleAnswer`,
+      `puzzles/horseRiddle/checkHorseRiddleAnswer`,
       {
         randSeed,
         fastestHorsesInt,
@@ -153,6 +159,7 @@ function HorseRiddlePage() {
       default:
         setWrongReason("Something has gone terribly wrong. Please refresh the page!");
     }
+    setSubmitLoading(false);
   };
 
   const randomizeSeed = () => {
@@ -302,6 +309,7 @@ function HorseRiddlePage() {
                   <Button
                     variant="contained"
                     disabled={!trifectaBetFilled || trifectaErrorMessage !== ""}
+                    loading = {submitLoading}
                     onClick={checkAnswer}
                   >
                     Place Trifecta Bet
@@ -311,6 +319,7 @@ function HorseRiddlePage() {
                 <Button
                   variant="contained"
                   onClick={() => submitRace()}
+                  loading = {raceLoading}
                   disabled={currentRace.length != 5 || (finishedRaces.length >= MAX_NUM_RACES * RACE_LENGTH)}
                 >
                   Race Horses!

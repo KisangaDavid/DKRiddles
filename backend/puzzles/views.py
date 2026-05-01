@@ -2,15 +2,13 @@ import ctypes
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.views.decorators.csrf import csrf_exempt
 
 from puzzles.serializers import CheckHorseRiddleAnswerSerializer, CheckRabbitRiddleBonusAnswerSerializer, CheckRatRiddleAnswerSerializer, RaceHorsesSerializer, CheckRatRiddleBonusAnswerSerializer, SingleIntSerializer
 from puzzles.models import UserSolvedPuzzles, PuzzleNames
-from puzzles.backendDll import allModules
+from puzzles.soFile import allModules
 from django.core.cache import cache
 from config.settings import RABBIT_RIDDLE_BASE_NUM_RABBITS, HORSE_PUZZLE_MIN_RACES, LEADERBOARD_CACHE_KEY
 
-@csrf_exempt
 @api_view(['POST'])
 def checkRatRiddleAnswer(request):
     data = deserialize_request(request, CheckRatRiddleAnswerSerializer)
@@ -19,7 +17,6 @@ def checkRatRiddleAnswer(request):
         updateSolvedPuzzle(request.user, PuzzleNames.RAT_PUZZLE_P1)
     return Response(result)
 
-@csrf_exempt
 @api_view(['POST'])
 def checkRatRiddleBonusAnswer(request):
     data = deserialize_request(request, CheckRatRiddleBonusAnswerSerializer)
@@ -31,7 +28,6 @@ def checkRatRiddleBonusAnswer(request):
         updateSolvedPuzzle(request.user, PuzzleNames.RAT_PUZZLE_P2)
     return Response({"result": "success" if result else "fail"})
 
-@csrf_exempt
 @api_view(['POST'])
 def checkHorseRiddleAnswer(request):
     data = deserialize_request(request, CheckHorseRiddleAnswerSerializer)
@@ -46,7 +42,6 @@ def checkHorseRiddleAnswer(request):
         updateSolvedPuzzle(request.user, PuzzleNames.HORSE_PUZZLE_P1)
     return Response(result)
 
-@csrf_exempt
 @api_view(['POST'])
 def checkRabbitRiddleAnswer(request):
     data = deserialize_request(request, SingleIntSerializer)
@@ -58,7 +53,6 @@ def checkRabbitRiddleAnswer(request):
         updateSolvedPuzzle(request.user, PuzzleNames.RABBIT_PUZZLE_P1)
     return Response({"result": "success" if result else "fail"})
 
-@csrf_exempt
 @api_view(['POST'])
 def checkRabbitRiddleBonusAnswer(request):
     data = deserialize_request(request, CheckRabbitRiddleBonusAnswerSerializer)
@@ -70,7 +64,6 @@ def checkRabbitRiddleBonusAnswer(request):
         updateSolvedPuzzle(request.user, PuzzleNames.RABBIT_PUZZLE_P2)
     return Response({"result": "success" if result else "fail"})
 
-@csrf_exempt
 @api_view(['POST'])
 def getRoosterRiddleMove(request):
     data = deserialize_request(request, SingleIntSerializer)
@@ -79,7 +72,6 @@ def getRoosterRiddleMove(request):
         updateSolvedPuzzle(request.user, PuzzleNames.ROOSTER_PUZZLE_P1)
     return Response(roosterMove)
 
-@csrf_exempt
 @api_view(['POST'])
 def raceHorses(request):
     data = deserialize_request(request, RaceHorsesSerializer)
@@ -89,7 +81,6 @@ def raceHorses(request):
     )
     return Response(result)
 
-@csrf_exempt
 @api_view(['POST'])
 def getInitialPiles(request):
     data = deserialize_request(request, SingleIntSerializer)

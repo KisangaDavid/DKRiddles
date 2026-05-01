@@ -132,7 +132,7 @@ class HorseRiddle {
 };
 
 extern "C" {
-    __declspec(dllexport) uint32_t submitRace(uint32_t randState, uint32_t input) {
+    __attribute__((visibility("default"))) uint32_t submitRace(uint32_t randState, uint32_t input) {
         HorseRiddle horseRiddle(randState);
         std::vector<uint32_t> horsesToRace = puzzleUtils::convertIntToVec(input, NUM_HORSES_PER_RACE, NUM_BITS_PER_HORSE);
         std::vector<uint32_t> raceResults = horseRiddle.raceHorses(horsesToRace);
@@ -141,7 +141,7 @@ extern "C" {
 }
 
 extern "C" {
-    __declspec(dllexport) uint32_t checkHorseRiddleAnswer(uint32_t randState, uint32_t fastestHorsesInt, uint32_t* submittedRaces, uint32_t numRaces) {
+    __attribute__((visibility("default"))) uint32_t checkHorseRiddleAnswer(uint32_t randState, uint32_t fastestHorsesInt, uint32_t* submittedRaces, uint32_t numRaces) {
         HorseRiddle horseRiddle(randState);
         std::vector<uint32_t> fastestHorses = puzzleUtils::convertIntToVec(fastestHorsesInt, NUM_HORSES_TO_SUBMIT, NUM_BITS_PER_HORSE);
         std::vector<uint32_t> answer = horseRiddle.checkAnswer(fastestHorses, submittedRaces, numRaces);

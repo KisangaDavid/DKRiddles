@@ -30,7 +30,7 @@ function BonusChallenge({setConfetti} : props) {
       }
     }, []);
     const checkRabbitBonusAnswer = async (numBonusRabbits: number, answerToBonus: number) => {
-      const result = (await poster(`/puzzles/rabbitRiddle/checkRabbitRiddleBonusAnswer`, {numBonusRabbits, answerToBonus})).result;
+      const result = (await poster(`puzzles/rabbitRiddle/checkRabbitRiddleBonusAnswer`, {numBonusRabbits, answerToBonus})).result;
       return result === "success";
     }
 
@@ -50,7 +50,6 @@ function BonusChallenge({setConfetti} : props) {
       const intsOnly = e.target.value.replace(/[^0-9]/g, "");
       e.target.value = intsOnly;
       intsOnly.length < 1 ? setAnswerToBonus(-1) : setAnswerToBonus(+intsOnly);
-      console.log(answerToBonus);
     };
 
   return ( 

@@ -21,6 +21,7 @@ const NUM_HOUSES = 8;
 
 function RatRiddlePage() {
   const [submittedTraps, setSubmittedTraps] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [confetti, setConfetti] = useState(false);
   const [path, setPath] = useState<number[]>([]);
   const [curDay, setCurDay] = useState(0);
@@ -52,6 +53,7 @@ function RatRiddlePage() {
 };
 
   const submitRiddleAnswer = async () => {
+    setLoading(true);
     let allCheckedPositions = convertToAbsPos(allCheckedHouses.concat(curCheckedHouses)).sort((a, b) => a - b);
     let counter = 0;
     let binaryString = ""
@@ -64,7 +66,7 @@ function RatRiddlePage() {
       counter++;
     });
     let submittedPlan = (`0b${ [...binaryString.padEnd(64, "0")].reverse().join('')}`);
-    let intPath = (await poster(`/puzzles/ratRiddle/checkRatRiddleAnswer`, { submittedPlan }));
+    let intPath = (await poster(`puzzles/ratRiddle/checkRatRiddleAnswer`, { submittedPlan }));
 
     let path = []
     if (intPath != -1) {
@@ -74,12 +76,14 @@ function RatRiddlePage() {
       }
       path.reverse();
     }
+    setLoading(false);
     setAllCheckedHouses(allCheckedHouses.concat(curCheckedHouses));
     setCurCheckedHouses(new Set());
     setTotalDays(curDay + 1);
     setCurDay(0);
     setSubmittedTraps(true);
     setPath(path);
+    
   }
 
   const resetPuzzle = useCallback(() => {
@@ -89,6 +93,7 @@ function RatRiddlePage() {
     setSubmittedTraps(false);
     setPath([]);
     setPrevDay(-1);
+    setLoading(false);
     setConfetti(false)}, []
   );
 
@@ -138,7 +143,7 @@ function RatRiddlePage() {
                 variant="contained" disabled={curCheckedHouses.size !== 2 || curDay > 5} 
                     onClick={nextDay}>&nbsp;&nbsp;Next Day&nbsp;&nbsp;</Button>
                 <Button variant="contained" disabled={curCheckedHouses.size !== 2} 
-                    onClick={submitRiddleAnswer}>Submit Answer</Button>
+                    onClick={submitRiddleAnswer} loading={loading}>Submit Answer</Button>
               </Stack>
             </Fade>
           )}

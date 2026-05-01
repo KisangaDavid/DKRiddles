@@ -4,10 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "devDebug": "next dev --webpack",
+    "devDebug": "next dev",
     "build": "next build",
-    "postbuild": "python ./scripts/fixBuildPrefetchPaths.py",
-    "start": "next start",
+    "start": "next start -H 127.0.0.1 -p 3000",
     "lint": "eslint"
   },
   "dependencies": {
@@ -17,7 +16,6 @@
     "@mui/icons-material": "^7.3.5",
     "@mui/material": "^7.3.5",
     "@mui/material-nextjs": "^7.3.5",
-    "axios": "^1.14.0",
     "js-cookie": "^3.0.5",
     "next": "^16.0.10",
     "react": "19.2.0",

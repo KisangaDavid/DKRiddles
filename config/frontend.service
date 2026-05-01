@@ -1,0 +1,13 @@
+[Unit]
+Description=TheRiddleMan_frontend
+After=network.target
+
+[Service]
+Environment=NODE_ENV=production
+WorkingDirectory=/home/ubuntu/DKRiddles/frontend
+ExecStart=/usr/local/bin/npm run start
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
