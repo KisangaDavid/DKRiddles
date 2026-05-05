@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import CardMedia from '@mui/material/CardMedia';
+import Image from 'next/image';
 import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar";
 import RiddleNotComplete from "../../_common/RiddleNotComplete";
@@ -67,15 +68,22 @@ function RatRiddleBreakdownPage() {
                 deadlocks will naturally lead you to the solution: <br />
                 <br />
               </Typography>
-            <StyledBreakdownCard>
+            <StyledBreakdownCard sx={{width: "100%"}}>
               <CardMedia
-                component="img"
-                image={rabbitSolution.src}
                 sx={{
                   width: "100%",
+                  position: "relative",
                   objectFit: "contain",
+                  aspectRatio: "1417 / 205"
                 }}
-              />
+              >
+               <Image
+                  src={rabbitSolution}
+                  alt={"Races Breakdown graph"}
+                  fill 
+                  style={{ objectFit: 'contain' }} 
+                />
+              </CardMedia>
               <StyledBreakdownCardContent>
                 <Typography align="center">
                   Animation showing the solution
@@ -103,15 +111,22 @@ function RatRiddleBreakdownPage() {
 
               </Typography>
               <br />    
-                <StyledBreakdownCard>
-              <CardMedia
-                component="img"
-                image={rabbitMapping.src}
-                sx={{
-                  width: "100%",
-                  objectFit: "contain",
-                }}
-              />
+              <StyledBreakdownCard sx={{width: "100%"}}>
+                <CardMedia
+                  sx={{
+                    width: "100%",
+                    position: "relative",
+                    objectFit: "contain",
+                    aspectRatio: "1891 / 356"
+                  }}
+                >
+                  <Image
+                    src={rabbitMapping}
+                    alt={"Rabbit Mapping"}
+                    fill 
+                    style={{ objectFit: 'contain' }} 
+                  />
+                </CardMedia>
               <StyledBreakdownCardContent>
                 <Typography align="center">
                   Each rabbit must switch positions with the opposing rabbit of the corresponding color to reach their ending position.
@@ -135,7 +150,7 @@ function RatRiddleBreakdownPage() {
               <br />
               <br />
               Subtracting the number of jumps performed from the total number of spaces the rabbits must 
-              traverse gives us the exact formula for the number of moves needed to rearrange the rabbits: <i>2n<sup>2</sup> + 2n - n<sup>2</sup> = n<sup>2</sup>+2n</i>.
+              traverse gives us the exact formula for the number of moves needed to rearrange the rabbits: <i>2n<sup>2</sup> + 2n - n<sup>2</sup> = n<sup>2</sup> + 2n</i>.
             </Typography>
           </>
       :

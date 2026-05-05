@@ -7,6 +7,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar";
+import Image from 'next/image';
 import RiddleNotComplete from "../../_common/RiddleNotComplete";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
 import { RAT_PUZZLE_P1, RAT_PUZZLE_P2, ratBlogLink, standardTextFade } from '../../_common/constants'
@@ -63,15 +64,22 @@ function RatRiddleBreakdownPage() {
               definitively conclude that the rat started in an odd numbered house!
             </Typography>
             <br />
-            <StyledBreakdownCard>
+            <StyledBreakdownCard sx={{width: "100%"}}>
               <CardMedia
-                component="img"
-                image={RatRiddleAboutPic1Img.src}
                 sx={{
-                  width: "100%",
-                  objectFit: "contain",
+                   width: "100%",
+                    position: "relative",
+                    aspectRatio: "1565 / 389",
+                    objectFit: "contain",
                 }}
-              />
+              >
+                <Image
+                  src={RatRiddleAboutPic1Img}
+                  alt={"Rat Riddle Movement Pic"}
+                  fill 
+                  style={{ objectFit: 'contain' }} 
+                />
+              </CardMedia>
               <StyledBreakdownCardContent>
                 <Typography align="center">
                   If a rat is currently in house 6 or 8, it must move to either
@@ -116,13 +124,20 @@ function RatRiddleBreakdownPage() {
             <br />
             <StyledBreakdownCard sx={{width: {xs: "75%", sm: "50%"}}}>
               <CardMedia
-                component="img"
-                image={FourDayGraphImg.src}
                 sx={{
                   width: "100%",
+                  position: "relative",
+                  aspectRatio: "900 / 820",
                   objectFit: "contain",
                 }}
-              />
+              >
+                <Image
+                  src={FourDayGraphImg}
+                  alt={"Rat Riddle Four Day Graph"}
+                  fill 
+                  style={{ objectFit: 'contain' }} 
+                />
+              </CardMedia>
               <StyledBreakdownCardContent>
                 <Typography align="center">
                   The graph built for a 4 day solution. Each row represents a day.
@@ -140,15 +155,22 @@ function RatRiddleBreakdownPage() {
             </Typography>
             <br />
             <Stack direction="row" gap="0.5em">
-              <StyledBreakdownCard>
+              <StyledBreakdownCard sx={{width: "100%"}}>
                 <CardMedia
-                  component="img"
-                  image={InvalidGraphImg.src}
                   sx={{
                     width: "100%",
+                    position: "relative",
+                    aspectRatio: "900 / 820",
                     objectFit: "contain",
                   }}
-                />
+                >
+                  <Image
+                    src={InvalidGraphImg}
+                    alt={"Rat Riddle Invalid Graph"}
+                    fill 
+                    style={{ objectFit: 'contain' }} 
+                  />
+                </CardMedia>
                 <StyledBreakdownCardContent>
                   <Typography align="center">
                     An invalid solution to the puzzle. There are still many paths
@@ -156,15 +178,22 @@ function RatRiddleBreakdownPage() {
                   </Typography>
                 </StyledBreakdownCardContent>
               </StyledBreakdownCard>
-              <StyledBreakdownCard>
+              <StyledBreakdownCard sx={{width: "100%"}}>
                 <CardMedia
-                  component="img"
-                  image={ValidGraphImg.src}
                   sx={{
                     width: "100%",
+                    position: "relative",
+                    aspectRatio: "900 / 820",
                     objectFit: "contain",
                   }}
-                />
+                >
+                  <Image
+                    src={ValidGraphImg}
+                    alt={"Rat Riddle Valid Graph"}
+                    fill 
+                    style={{ objectFit: 'contain' }} 
+                  />
+                </CardMedia>
                 <StyledBreakdownCardContent>
                   <Typography align="center">
                     A valid (and optimal!) solution to the puzzle. There is no
@@ -189,31 +218,45 @@ function RatRiddleBreakdownPage() {
                   houses in which the rat is guaranteed to run into a rattrap in the future.
                 </Typography>
                 <br />
-                <Stack direction="row" gap="0.5em">
-                  <StyledBreakdownCard>
+                <Stack direction="row" gap="0.5em" sx={{width: "100%"}}>
+                  <StyledBreakdownCard sx={{width: "100%"}}>
                     <CardMedia
-                      component="img"
-                      image={RatRiddleAlternatingImg.src}
                       sx={{
                         width: "100%",
+                        position: "relative",
+                        aspectRatio: "1240 / 832",
                         objectFit: "contain",
                       }}
-                    />
+                    >
+                      <Image
+                        src={RatRiddleAlternatingImg}
+                        alt={"Rat Riddle Alternating Graph"}
+                        fill 
+                        style={{ objectFit: 'contain' }} 
+                      />
+                    </CardMedia>
                     <StyledBreakdownCardContent>
                       <Typography align="center">
                         Half the houses can be eliminated in 3 days
                       </Typography>
                     </StyledBreakdownCardContent>
                   </StyledBreakdownCard>
-                  <StyledBreakdownCard>
+                  <StyledBreakdownCard sx={{width: "100%"}}>
                     <CardMedia
-                      component="img"
-                      image={RatRiddleBreakdownPart2FullImg.src}
                       sx={{
                         width: "100%",
-                        objectFit: "contain",
+                        position: "relative",
+                        aspectRatio: "1240 / 832",
+                        objectFit: "contain"
                       }}
-                    />
+                    >
+                      <Image
+                        src={RatRiddleBreakdownPart2FullImg}
+                        alt={"Rat Riddle Breakdown Part 2 Full Graph"}
+                        fill 
+                        style={{ objectFit: 'contain' }} 
+                      />
+                    </CardMedia>
                     <StyledBreakdownCardContent>
                       <Typography align="center">
                         The rat is guaranteed to be caught in 6 days
@@ -237,13 +280,20 @@ function RatRiddleBreakdownPage() {
                 <br />
                 <StyledBreakdownCard sx={{width: {xs: "var(--pageWidthPercent)", sm: "50%"}}}>
                   <CardMedia
-                    component="img"
-                    image={RatRiddleBreakdown12HousesImg.src}
                     sx={{
                       width: "100%",
-                      objectFit: "contain",
+                      position: "relative",
+                      aspectRatio: "1360 / 800",
+                      objectFit: "contain"
                     }}
-                  />
+                  >
+                    <Image
+                      src={RatRiddleBreakdown12HousesImg}
+                      alt={"Rat Riddle Breakdown 12 Houses Graph"}
+                      fill 
+                      style={{ objectFit: 'contain' }} 
+                    />
+                  </CardMedia>
                   <StyledBreakdownCardContent>
                     <Typography align="center">
                       With 12 houses, the rat can be caught in 7 days. The above mentioned "head start" is visible on day 4. 

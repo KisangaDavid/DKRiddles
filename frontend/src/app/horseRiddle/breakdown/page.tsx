@@ -9,6 +9,7 @@ import ListItem from '@mui/material/ListItem';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import TopBar from "../../_common/TopBar";
+import Image from 'next/image';
 import RiddleNotComplete from "../../_common/RiddleNotComplete";
 import { StyledBreakdownCard, StyledBreakdownCardContent } from "../../_common/BreakdownCard";
 import { HORSE_PUZZLE, horseBlogLink, standardTextFade } from "../../_common/constants";
@@ -143,13 +144,20 @@ function HorseRiddleBreakdownPage() {
             <br />
             <StyledBreakdownCard sx={{width: {xs: "95%", sm: "75%"}}}>
               <CardMedia
-                component="img"
-                image={RacesBreakdown.src}
                 sx={{
                   width: "100%",
+                  position: "relative",
+                  aspectRatio: "729 / 374",
                   objectFit: "contain",
                 }}
-              />
+              >
+                <Image
+                  src={RacesBreakdown}
+                  alt={"races breakdown"}
+                  fill 
+                  style={{ objectFit: 'contain' }} 
+                />
+              </CardMedia>
               <StyledBreakdownCardContent>
                 <Typography align="center">
                   An example of the optimal racing strategy. In this
@@ -175,13 +183,20 @@ function HorseRiddleBreakdownPage() {
             <br />
             <StyledBreakdownCard sx={{width: {xs: "75%", sm: "50%"}}}>
               <CardMedia
-                component="img"
-                image={HorseBreakdownCompleteGraph.src}
                 sx={{
                   width: "100%",
+                  position: "relative",
                   objectFit: "contain",
+                  aspectRatio: "680 / 680"
                 }}
-              />
+              >
+               <Image
+                  src={HorseBreakdownCompleteGraph}
+                  alt={"Races Breakdown graph"}
+                  fill 
+                  style={{ objectFit: 'contain' }} 
+                />
+                </CardMedia>
               <StyledBreakdownCardContent>
                 <Typography align="center">
                   The graph built for the example series of races given above.
@@ -201,13 +216,20 @@ function HorseRiddleBreakdownPage() {
             <Stack direction="row" gap="0.3em">
               <StyledBreakdownCard  sx={{width: "100%"}}>
                 <CardMedia
-                  component="img"
-                  image={HorseBreakdown2ndPlaceGraph.src}
                   sx={{
                     width: "100%",
-                    objectFit: "contain",
+                    position: "relative",
+                    aspectRatio: "680 / 680",
+                    objectFit: "contain"
                   }}
-                />
+                >
+                  <Image
+                    src={HorseBreakdown2ndPlaceGraph}
+                    alt={"Races Breakdown graph"}
+                    fill 
+                    style={{ objectFit: 'contain' }} 
+                  />
+                </CardMedia>
                 <StyledBreakdownCardContent>
                   <Typography align="center">
                     After removing horse 21 from the graph, horse 25 becomes the
@@ -217,13 +239,20 @@ function HorseRiddleBreakdownPage() {
               </StyledBreakdownCard>
               <StyledBreakdownCard sx={{width: "100%"}}>
                 <CardMedia
-                  component="img"
-                  image={HorseBreakdown3rdPlaceGraph.src}
                   sx={{
                     width: "100%",
+                    position: "relative",
+                    aspectRatio: "680 / 680",
                     objectFit: "contain",
                   }}
-                />
+                >
+                  <Image
+                    src={HorseBreakdown3rdPlaceGraph}
+                    alt={"Races Breakdown 3rd Place graph"}
+                    fill 
+                    style={{ objectFit: 'contain' }} 
+                  />
+                </CardMedia>
                 <StyledBreakdownCardContent>
                   <Typography align="center">
                     After removing horse 25 from the graph, horse 16 becomes the
@@ -233,13 +262,20 @@ function HorseRiddleBreakdownPage() {
               </StyledBreakdownCard>
               <StyledBreakdownCard sx={{width: "100%"}}>
                 <CardMedia
-                  component="img"
-                  image={HorseBreakdown4thPlaceGraph.src}
                   sx={{
                     width: "100%",
+                    position: "relative",
+                    aspectRatio: "680 / 680",
                     objectFit: "contain",
                   }}
-                />
+                >
+                  <Image
+                    src={HorseBreakdown4thPlaceGraph}
+                    alt={"Races Breakdown graph"}
+                    fill 
+                    style={{ objectFit: 'contain' }} 
+                  />
+                </CardMedia>
                 <StyledBreakdownCardContent>
                   <Typography align="center">
                     After removing horse 16 from the graph, horse 18 becomes the
@@ -259,13 +295,20 @@ function HorseRiddleBreakdownPage() {
             <br />
             <StyledBreakdownCard sx={{width: {xs: "75%", sm: "50%"}}}>
               <CardMedia
-                component="img"
-                image={HorseBreakdown5thPlaceGraph.src}
                 sx={{
                   width: "100%",
+                  position: "relative",
                   objectFit: "contain",
+                  aspectRatio: "680 / 680"
                 }}
-              />
+              >
+                <Image
+                  src={HorseBreakdown5thPlaceGraph}
+                  alt={"Races Breakdown graph"}
+                  fill 
+                  style={{ objectFit: 'contain' }} 
+                />
+              </CardMedia>
               <StyledBreakdownCardContent>
                 <Typography align="center" justifyContent={"center"}>
                   After removing horse 18 from the graph, there are now two

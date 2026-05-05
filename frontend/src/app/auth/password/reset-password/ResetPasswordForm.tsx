@@ -7,6 +7,7 @@ import { Typography, TextField, Box, Fade } from "@mui/material";
 import SubmitButton from "@/src/app/_common/SubmitButton";
 import { standardTextFade } from "@/src/app/_common/constants";
 import { useRouter } from "next/dist/client/components/navigation";
+import { useState } from "react";
 
 type FormData = {
   email: string;
@@ -21,8 +22,10 @@ const ResetPasswordForm = () => {
   const { resetPassword } = AuthActions();
   
   const router  = useRouter();
+  const [loading, setLoading] = useState(false);
   const onSubmit = async (data: FormData) => {
-      await resetPassword(data.email).json(() => {
+      setLoading(true);
+      await resetPassword(data.email).res(() => {
         alert("If the provided email has a corresponding account, the password reset email has been sent. Please check your inbox and spam folder.");
         router.push('/auth/login');
       })
@@ -34,6 +37,7 @@ const ResetPasswordForm = () => {
           alert("Failed to send the password reset email. Please make sure the input email is correct and try again.");
         }
       });
+      setLoading(false);
   };
     return (
       <Fade in={true} mountOnEnter unmountOnExit timeout={standardTextFade}>
@@ -48,7 +52,6 @@ const ResetPasswordForm = () => {
                     label="Email"
                     {...register("email", { 
                     required: true,
-                    // onChange: (e) => setError("root", { type: "manual", message: ""}) 
                     })}
                 />
                 <Box sx={{minHeight: "1.4em"}}>
@@ -56,7 +59,7 @@ const ResetPasswordForm = () => {
                     <Typography style={{fontSize: "0.875em", color: "#b81818" }}>Email is required</Typography>
                 )}
                 </Box>
-              <SubmitButton sx={{width: "80%", mt: "0.3em", mb: "1em"}}>
+              <SubmitButton sx={{width: "80%", mt: "0.3em", mb: "1em"}} loading={loading}>
                 <Typography>Send Reset Email</Typography>
               </SubmitButton>
             </form>

@@ -89,7 +89,7 @@ function RowOfHouses({
                   unmountOnExit
                   in={submittedTraps ? path[curDay] == index: false}
                 >
-                  <img src={rat.src} alt="rat" style={{objectFit: "contain", height: "100%", width: "100%"}} />
+                  <Image src={rat} alt="rat" style={{objectFit: "contain", height: "100%", width: "100%"}} />
                 </Slide>
                 <Slide
                   direction="up"

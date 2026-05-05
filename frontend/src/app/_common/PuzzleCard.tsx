@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import Image from "next/image";
 import { styled } from '@mui/material/styles';
 import { StaticImageData } from 'next/image';
 import { standardImageFade } from './constants';
@@ -58,16 +59,24 @@ function PuzzleCard({puzzleImage, puzzleNumber, puzzleName, puzzleDescription, p
     <Link href={puzzlePath}>
       <StyledCard> 
         <CardMedia
-            component="img"
-            image={puzzleImage.src}
-            sx={{
-                borderBottom: '1px solid',
-                borderColor: 'divider',
-                height: "100%",
-                backgroundImage: 
-                  "radial-gradient(ellipse 55% 55% at 50% 50%, hsla(210, 68%, 11%, 1.00), hsla(208, 100.00%, 3.70%, 0.64))"
-            }}
-        />
+          sx={{
+            borderBottom: '1px solid',
+            borderColor: 'divider',
+            height: "100%",
+            position: "relative", 
+            width: '100%', 
+            aspectRatio: '612 / 445',
+            backgroundImage: 
+              "radial-gradient(ellipse 55% 55% at 50% 50%, hsla(210, 68%, 11%, 1.00), hsla(208, 100.00%, 3.70%, 0.64))"
+          }}
+        >
+          <Image
+            src={puzzleImage}
+            alt={puzzleName}
+            fill 
+            style={{ objectFit: 'contain' }} 
+          />
+        </CardMedia>
         <StyledCardContent>
           <Typography gutterBottom variant="caption" component="div">
             Envelope #{puzzleNumber}

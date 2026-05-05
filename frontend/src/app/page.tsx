@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useTheme } from '@mui/material/styles';
 
 import Image from 'next/image.js';
@@ -9,7 +9,6 @@ import ratRiddleThumbnail from '../assets/ratRiddleThumbnail.png'
 import horseRiddleThumbnail from '../assets/horseTrifecta.png'
 import roosterRiddleThumbnail from '../assets/roosterRiddleThumbnail.png'
 import rabbitRiddleThumbnail from '../assets/rabbitRiddleThumbnail.png'
-import mysteryLetter from '../assets/mysteryLetter.jpg'
 import PuzzleCard from './_common/PuzzleCard'
 import riddleManLetter from '../assets/riddleManLetter.jpg'
 import Fade from '@mui/material/Fade';
@@ -23,9 +22,6 @@ function IntroductionPage() {
   const shortDelay = 200;
   const theme = useTheme();
   const [activatedChip, setActivatedChip] = useState(-1);
-  const [shouldPreloadImgs, setShouldPreloadImgs] = useState(false)
-
-  useEffect(() => setShouldPreloadImgs(true), []);
   
   return (
     <>
@@ -134,7 +130,7 @@ function IntroductionPage() {
       }
       {activatedChip == 1 &&
         <Grid container spacing={2} columns={12} direction = "row" sx={{width: 'var(--pageWidthPercent)'}}>
-          <Grid size={{ sm: 6, lg: 3 }}>
+          <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <PuzzleCard 
               puzzleImage = {ratRiddleThumbnail} 
               puzzleName = "The Sneaky Rat" 
@@ -144,7 +140,7 @@ function IntroductionPage() {
               transitionDelay={0}
             />
           </Grid>
-          <Grid size={{ sm: 6, lg: 3 }}>
+          <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <PuzzleCard 
               puzzleImage = {horseRiddleThumbnail} 
               puzzleName = "Horse Trifecta" 
@@ -154,7 +150,7 @@ function IntroductionPage() {
               transitionDelay={shortDelay}
             />
           </Grid>
-          <Grid size={{ sm: 6, lg: 3 }}>
+          <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <PuzzleCard 
               puzzleImage = {roosterRiddleThumbnail} 
               puzzleName = "The Undefeated Rooster" 
@@ -164,7 +160,7 @@ function IntroductionPage() {
               transitionDelay={shortDelay * 2}
             />
           </Grid>
-          <Grid size={{ sm: 6, lg: 3 }}>
+          <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <PuzzleCard 
               puzzleImage = {rabbitRiddleThumbnail} 
               puzzleName = "Jumping Rabbits" 
@@ -175,46 +171,6 @@ function IntroductionPage() {
             />
           </Grid>
         </Grid>
-      }
-      {shouldPreloadImgs && 
-        <Box sx={{display: "none"}}>
-          hello
-          <Image
-            src={ratRiddleThumbnail}
-            alt=""
-            width={1}
-            height={1}
-            loading="eager"
-          />
-          <Image
-            src={horseRiddleThumbnail}
-            alt=""
-            width={1}
-            height={1}
-            loading="eager"
-          />
-          <Image
-            src={riddleManLetter}
-            alt=""
-            width={1}
-            height={1}
-            loading="eager"
-          />
-          <Image
-            src={roosterRiddleThumbnail}
-            alt=""
-            width={1}
-            height={1}
-            loading="eager"
-          />
-          <Image
-            src={mysteryLetter}
-            alt=""
-            width={1}
-            height={1}
-            loading="eager"
-          />
-        </Box>
       }
     </>
   );

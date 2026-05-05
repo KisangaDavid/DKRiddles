@@ -80,10 +80,16 @@ function TopBar({text, isPuzzlePage, resetFunc} : props) {
         open={menuDrawerOpen} 
         onClose={() => setMenuDrawerOpen(false)}
         aria-hidden={false}
-        slotProps={{
+         slotProps={{
           paper: {
             sx: { 
-              backgroundImage: 'radial-gradient(ellipse 100% 150% at 160% 50%, hsl(210, 100%, 16%), hsla(210, 95.00%, 6.80%, 0.64))' 
+              backgroundImage: 'radial-gradient(ellipse 100% 150% at 160% 50%, hsl(210, 100%, 16%), hsla(210, 95.00%, 6.80%, 0.64))',
+              overflowY: 'auto',
+              '&::-webkit-scrollbar': {
+                display: 'none',
+              },
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
             }
           }
         }}>
