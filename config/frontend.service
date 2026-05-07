@@ -1,3 +1,5 @@
+# Configuration for the frontend service. Automatically enabled as part of the first-time setup script.
+
 [Unit]
 Description=TheRiddleMan_frontend
 After=network.target

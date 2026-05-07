@@ -1,3 +1,5 @@
+# Configuration for the gunicorn service. Automatically enabled as part of the first-time setup script.
+
 [Unit]
 Description=Gunicorn daemon for Django
 After=network.target

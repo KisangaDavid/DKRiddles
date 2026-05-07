@@ -1,0 +1,2 @@
+# Cronjob to backup the sqlite database to an S3 bucket once a day at 2am.
+0 2 * * * /usr/local/bin/aws s3 cp ~/DKRiddles/backend/db/db.sqlite3 s3://____S3_BUCKET_NAME____/db_backup_$(date +\%Y-\%m-\%d)
