@@ -81,7 +81,4 @@ The Riddle Man is a full-stack web application featuring interactive logic puzzl
 
 ##  Contact
 
-For bug reports or feature suggestions, contact me using the email in the about page on the site!
-
-
-**Enjoy solving riddles at [The Riddle Man](https://www.theriddleman.com)!**
+For bug reports or feature suggestions, contact me using the email in the about page on the site.
