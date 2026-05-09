@@ -1,25 +1,39 @@
 # The Riddle Man
 
-Full-stack web application featuring interactive logic puzzles with user authentication, stat tracking, global leaderboards, and real-time puzzle validation.
+The Riddle Man is a full-stack web application featuring interactive logic puzzles with stat tracking, global leaderboards, and real-time puzzle validation. Check out the live site at [www.theriddleman.com!](https://www.theriddleman.com)
 
-**Live Site:** [theriddleman.com](https://www.theriddleman.com)
+## Puzzles
+**The Sneaky Rat:** Concoct the perfect plan to catch a sneaky rat! (2 puzzles)
+  
+  <img width="1589" height="778" alt="image" src="https://github.com/user-attachments/assets/47d057ee-bb95-4f6d-aacb-da2d516697ea" />
+  <br />
+  <br />
+  
+**Horse Trifecta:** Utilize your skills of deduction to win big at the horse races!
+  
+  <img width="1584" height="891" alt="image" src="https://github.com/user-attachments/assets/06243cf0-8966-43f8-8c35-9ebf1b9493e4" />
+  <br />
+  <br />
+**The Undefeated Rooster:** Best the undefeated rooster in a battle of intellect!
+  
+  <img width="1600" height="875" alt="image" src="https://github.com/user-attachments/assets/7c395f3c-2f16-43d5-93c8-b80cb4375c05" />
+  <br />
+  <br />
+**Jumping Rabbits:** Reason your way through reorganizing jumping rabbits! (2 puzzles)
+  
+  <img width="1569" height="540" alt="image" src="https://github.com/user-attachments/assets/fd47eb00-fa71-4d8f-882d-35ef1e03a820" />
+  <br />
 
-### Puzzles
-- **The Sneaky Rat** - Concoct the perfect plan to catch a sneaky rat! (2 puzzles)
-- **Horse Trifecta** - Utilize your skills of deduction to win big at the horse races!
-- **The Undefeated Rooster** - Best the undefeated rooster in a battle of intellect!
-- **Jumping Rabbits** - Reason your way through reorganizing jumping rabbits! (2 puzzles)
-
-### Features
+## Features
 - 6 Interactive puzzles
 - User authentication & persistent user profiles
+-  Global leaderboard with user rankings
 - Puzzle solving history and progress tracking
-- Global leaderboard with user rankings
 - Real-time puzzle validation
 - In-depth puzzle breakdowns accessible after solving each puzzle
 - Password-reset emails for users who provided an email during signup
 
-### Technical Details
+## Technical Details
 - Secure JWT-based authentication
 - SSL / TLS compliant
 - Server-side puzzle validation
@@ -29,30 +43,30 @@ Full-stack web application featuring interactive logic puzzles with user authent
 - Automatic restart of downed services using the systemd system manager
 
 
-## 💻 Tech Stack
+## Tech Stack
 
-### Frontend
+#### Frontend
 | Technology | Purpose |
 |------------|---------|
 | **Next.js 16** | React framework with SSR & much more |
 | **TypeScript** | Static typing for JavaScript |
 | **Material-UI (MUI)** | Component library |
 
-### Backend
+#### Backend
 | Technology | Purpose |
 |------------|---------|
 | **Django 5.2** | Web framework |
 | **Redis** | Caching and session management |
 | **SQLite** | Database  |
 
-### Puzzle Logic Library
+#### Puzzle Logic Library
 | Technology | Purpose |
 |------------|---------|
 | **C++** | Core puzzle logic |
 | **Make** | Build automation for core puzzle logic |
 | **ctypes** | Python-C++ integration |
 
-### Infrastructure 
+#### Infrastructure 
 | Technology | Purpose |
 |------------|---------|
 | **Nginx** | Reverse proxy and static file serving |
@@ -66,6 +80,6 @@ Full-stack web application featuring interactive logic puzzles with user authent
 ##  Contact
 
 For bug reports or feature suggestions, contact me using the email in the about page on the site!
----
+
 
 **Enjoy solving riddles at [The Riddle Man](https://www.theriddleman.com)!**
