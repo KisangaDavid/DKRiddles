@@ -14,11 +14,13 @@ The Riddle Man is a full-stack web application featuring interactive logic puzzl
   <img width="1584" height="891" alt="image" src="https://github.com/user-attachments/assets/06243cf0-8966-43f8-8c35-9ebf1b9493e4" />
   <br />
   <br />
+  
 **The Undefeated Rooster:** Best the undefeated rooster in a battle of intellect!
   
   <img width="1600" height="875" alt="image" src="https://github.com/user-attachments/assets/7c395f3c-2f16-43d5-93c8-b80cb4375c05" />
   <br />
   <br />
+  
 **Jumping Rabbits:** Reason your way through reorganizing jumping rabbits! (2 puzzles)
   
   <img width="1569" height="540" alt="image" src="https://github.com/user-attachments/assets/fd47eb00-fa71-4d8f-882d-35ef1e03a820" />
