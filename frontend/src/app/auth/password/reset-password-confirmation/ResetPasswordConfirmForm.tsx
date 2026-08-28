@@ -8,7 +8,6 @@ import StyledCard from "@/src/app/_common/StyledCard";
 import { Fade, TextField, Typography } from "@mui/material";
 import SubmitButton from "@/src/app/_common/SubmitButton";
 import { useState } from "react";
-import { set } from "js-cookie";
 
 type FormData = {
   password: string;

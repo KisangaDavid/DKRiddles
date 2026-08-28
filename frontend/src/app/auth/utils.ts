@@ -3,6 +3,11 @@ import Cookies from "js-cookie";
 import { backendBaseUrl, googleClientId } from "../_common/constants";
 
 const api = wretch(backendBaseUrl).options({ credentials: 'include' }).accept("application/json");
+type GoogleTokens = {
+  access: string;
+  refresh: string;
+  pendingSignup?: boolean;
+};
 
 
 const storeToken = (token: string, type: "access" | "refresh") => {
@@ -22,27 +27,50 @@ const register = (email: string, username: string, password: string) => {
   return api.post({ email, username, password }, "auth/users/");
 };
 
-const login = async (idToken: string) => {
+const getGoogleJwt = async (): Promise<GoogleTokens> => {
+  const tokens = await api
+    .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
+    .post({}, "auth/get-jwt/")
+    .json<GoogleTokens>();
+  return {
+    access: tokens.access,
+    refresh: tokens.refresh,
+  };
+};
+
+const login = async (idToken: string): Promise<GoogleTokens> => {
   await api.get("auth/csrf/").res();
+  try {
+    await api
+      .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
+      .post({
+        provider: "google",
+        process: "login",
+        token: {
+          id_token: idToken,
+          client_id: googleClientId
+        }
+      }, "_allauth/browser/v1/auth/provider/token")
+        .res();
+  } catch (error) {
+    if (error instanceof Error && (error as { status?: number }).status === 401) {
+      return { access: "", refresh: "", pendingSignup: true };
+    }
+    throw error;
+  }
+  return getGoogleJwt();
+};
+
+const completeProviderSignup = async (username: string) => {
   await api
     .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
-    .post({
-      provider: "google",
-      process: "login",
-      token: {
-        id_token: idToken,
-        client_id: googleClientId
-      }
-    }, "_allauth/browser/v1/auth/provider/token")
-      .res();
-    const tokens = await api
-      .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
-      .post({}, "auth/get-jwt/")
-      .json<{ access: string; refresh: string }>();
-  return {
-      access: tokens.access,
-      refresh: tokens.refresh,
-  };
+    .post({ username }, "_allauth/browser/v1/auth/provider/signup")
+    .res();
+  return getGoogleJwt();
+};
+
+const setUsername = (username: string) => {
+  return api.patch({ username }, "setUsername");
 };
 
 const logout = () => {
@@ -84,6 +112,8 @@ const resetPasswordConfirm = (
 export const AuthActions = () => {
   return {
     login,
+    completeProviderSignup,
+    setUsername,
     resetPasswordConfirm,
     handleJWTRefresh,
     register,

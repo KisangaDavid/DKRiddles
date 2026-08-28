@@ -113,6 +113,12 @@ const LoginForm = () => {
                   onSuccess={async (credRes) => {
                     try {
                       const tokens = await login(credRes.credential || "");
+                      console.log(tokens)
+                      if (tokens.pendingSignup) {
+                        console.log("Pending signup, redirecting to choose username page");
+                        router.push("/auth/choose-username");
+                        return;
+                      }
                       storeToken(tokens.access, "access");
                       storeToken(tokens.refresh, "refresh");
                       clearSolvedPuzzles();

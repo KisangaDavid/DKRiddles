@@ -22,6 +22,8 @@ from .settings import LEADERBOARD_CACHE_KEY, CACHE_TIMEOUT
 from djoser.views import UserViewSet
 from rest_framework.throttling import AnonRateThrottle, ScopedRateThrottle
 from rest_framework_simplejwt.views import TokenObtainPairView
+from better_profanity import profanity
+from .settings import MIN_USERNAME_LENGTH, PENDING_USERNAME_PREFIX
 
 class RegisterThrottle(ScopedRateThrottle):
     scope = "register"
@@ -125,6 +127,34 @@ def getProfileInfo(request):
     dateJoined = request.user.date_joined
     solvedDict = {entry.solvedPuzzle: entry.solvedTime for entry in solved}
     return Response({"username": username, "dateJoined": dateJoined, "solvedPuzzles": solvedDict})
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def setUsername(request):
+    username = request.data.get("username", "")
+    if not isinstance(username, str):
+        return Response({"username": "Username is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    username = username.strip()
+    if len(username) < MIN_USERNAME_LENGTH:
+        return Response(
+            {"username": f"Username must be at least {MIN_USERNAME_LENGTH} characters long."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    if profanity.contains_profanity(username):
+        return Response(
+            {"username": "Please choose a different username."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    if User.objects.filter(username__iexact=username).exclude(pk=request.user.pk).exists():
+        return Response(
+            {"username": "An account with that username already exists."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    request.user.username = username
+    request.user.save(update_fields=["username"])
+    return Response({"username": username})
 
 @api_view(['GET'])
 def getLeaderboardInfo(request):

@@ -18,6 +18,7 @@ urlpatterns = [
     path("be/auth/get-jwt/", views.issueGoogleJwt, name="get-jwt"),
     path('be/puzzles/', include('puzzles.urls')), 
     path('be/getProfileInfo', views.getProfileInfo, name='getProfileInfo'),
+    path('be/setUsername', views.setUsername, name='setUsername'),
     path('be/getLeaderboardInfo', views.getLeaderboardInfo, name='getLeaderboardInfo'),
     path('be/accounts/', include('allauth.urls')),
     path("be/_allauth/", include("allauth.headless.urls")),
