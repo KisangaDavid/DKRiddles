@@ -10,6 +10,7 @@ import SubmitButton from "@/src/app/_common/SubmitButton";
 import BreakdownUnlockedNotification from "@/src/app/_common/BreakdownUnlockedNotification";
 import StyledCard from "@/src/app/_common/StyledCard";
 import { SolvedPuzzlesContext } from "../../_common/SolvedPuzzlesContextProvider";
+import { GoogleLogin } from "@react-oauth/google";
 
 // TODO: investigate back button from forgot password page
 
@@ -40,23 +41,24 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   
   const { clearSolvedPuzzles } = useContext(SolvedPuzzlesContext);
-  const onSubmit = async (data: FormData) => {
-    setLoading(true);
-    await login(data.username, data.password)
-      .json((json) => {
-        storeToken(json.access, "access");
-        storeToken(json.refresh, "refresh");
-        clearSolvedPuzzles();
-        router.push("/profile");
-      })
-      .catch((err) => setError("root", { type: "manual", message: JSON.parse(err.message).detail}));
-    setLoading(false);
-  };
+  // const onSubmit = async (data: FormData) => {
+  //   setLoading(true);
+  //   await login(data.username, data.password)
+  //     .json((json) => {
+  //       storeToken(json.access, "access");
+  //       storeToken(json.refresh, "refresh");
+  //       clearSolvedPuzzles();
+  //       router.push("/profile");
+  //     })
+  //     .catch((err) => setError("root", { type: "manual", message: JSON.parse(err.message).detail}));
+  //   setLoading(false);
+  // };
 
   return (
-      <StyledCard sx={{ width: {xs: "80%", sm: "60%", md: "45%", lg: "30%" }, mt: {xs: "2em", md: "4em"}}}>
+      <StyledCard sx={{ width: {xs: "80%", sm: "60%", md: "45%", lg: "30%" }, mt: {xs: "2em", md: "4em"}, justifyContent:"center",
+          alignItems:"center"}}>
         <Typography variant="h5" sx={{my:"0.5em"}}>Log in to your account</Typography>
-        <form onSubmit={handleSubmit(onSubmit)} style={{ marginTop: "1em" }}>
+        {/* <form onSubmit={handleSubmit(onSubmit)} style={{ marginTop: "1em" }}>
           <div>
             <TextField
               sx = {{width: "80%"}}
@@ -106,12 +108,34 @@ const LoginForm = () => {
             )
         }
           </Box>
-        </form>
+        </form> */}
+        <GoogleLogin 
+                  onSuccess={async (credRes) => {
+                    try {
+                      const tokens = await login(credRes.credential || "");
+                      storeToken(tokens.access, "access");
+                      storeToken(tokens.refresh, "refresh");
+                      clearSolvedPuzzles();
+                      router.push("/profile");
+                    } catch (error) {
+                      console.error("Google login failed", error);
+                    }
+                  }}
+                  onError={() => {
+                      console.error("Google login failed");
+                    }
+                  }
+                  width="80%"
+                  // size="large"
+                  shape = "pill"
+                  // useOneTap
+                  containerProps={{ style: { marginTop: "1.5em", marginBottom: "2em" } }}
+                  />
         <Stack
           direction="column"
           justifyContent="center"
           alignItems="center"
-          spacing={2}
+          spacing={0.5}
           sx={{mb: "1em"}}
         >
           <Link

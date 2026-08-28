@@ -6,11 +6,15 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.exceptions import Throttled
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
+from allauth.headless import app_settings as headless_settings
 
 from puzzles.models import UserSolvedPuzzles, User
 from django.core.cache import cache
@@ -92,7 +96,23 @@ class LogoutView(APIView):
             return Response(status=status.HTTP_200_OK)
         except (ObjectDoesNotExist, TokenError):
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        
+
+@ensure_csrf_cookie
+def getCsrfToken(request):
+    return JsonResponse({"detail": "CSRF cookie set"})
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication])
+@permission_classes([IsAuthenticated])
+def issueGoogleJwt(request):
+    token_data = headless_settings.TOKEN_STRATEGY.create_access_token_payload(request)
+    if not token_data or "refresh_token" not in token_data:
+        return Response({"detail": "Could not create authentication tokens."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    return Response({
+        "access": token_data["access_token"],
+        "refresh": token_data["refresh_token"],
+    })
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getProfileInfo(request):

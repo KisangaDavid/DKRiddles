@@ -18,6 +18,7 @@ export const ALL_PUZZLES = [RAT_PUZZLE_P1, RAT_PUZZLE_P2, HORSE_PUZZLE, ROOSTER_
 export const ALL_PUZZLE_TITLES = [RAT_PUZZLE_P1_TITLE, RAT_PUZZLE_P2_TITLE, HORSE_PUZZLE_TITLE, ROOSTER_PUZZLE_TITLE, RABBIT_PUZZLE_P1_TITLE, RABBIT_PUZZLE_P2_TITLE];
 
 export const backendBaseUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL
+export const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
 export const blogLink = "https://blog.dkisanga.com";
 export const ratBlogLink = "https://blog.dkisanga.com/ratRiddle/";
 export const horseBlogLink = "https://blog.dkisanga.com/horseRiddle/";

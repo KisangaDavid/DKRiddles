@@ -1,5 +1,8 @@
+"use client";
+
 import Fade from '@mui/material/Fade';
 import { standardTextFade } from '@/src/app/_common/constants';
+import { GoogleLogin } from '@react-oauth/google';
 import TopBar from '@/src/app/_common/TopBar';
 import LoginForm from "./LoginForm";
 import Box from '@mui/material/Box';

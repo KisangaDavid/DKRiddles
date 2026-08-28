@@ -39,10 +39,11 @@ const api = () => {
     .auth(`Bearer ${accessToken}`)
     .catcher(401, async (_error: WretchError, request: Wretch) => {
       try {
-        const { access } = await handleJWTRefresh().json() as { access: string };
-        storeToken(access, "access");
+        const tokens = await handleJWTRefresh();
+        storeToken(tokens.access, "access");
+        storeToken(tokens.refresh, "refresh");
         return request
-          .auth(`Bearer ${access}`)
+          .auth(`Bearer ${tokens.access}`)
           .fetch()
           .unauthorized(() => {
             removeTokens();

@@ -1,6 +1,6 @@
 import wretch from "wretch";
 import Cookies from "js-cookie";
-import { backendBaseUrl } from "../_common/constants";
+import { backendBaseUrl, googleClientId } from "../_common/constants";
 
 const api = wretch(backendBaseUrl).options({ credentials: 'include' }).accept("application/json");
 
@@ -22,8 +22,27 @@ const register = (email: string, username: string, password: string) => {
   return api.post({ email, username, password }, "auth/users/");
 };
 
-const login = (username: string, password: string) => {
-  return api.post({ username, password }, "auth/jwt/create");
+const login = async (idToken: string) => {
+  await api.get("auth/csrf/").res();
+  await api
+    .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
+    .post({
+      provider: "google",
+      process: "login",
+      token: {
+        id_token: idToken,
+        client_id: googleClientId
+      }
+    }, "_allauth/browser/v1/auth/provider/token")
+      .res();
+    const tokens = await api
+      .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
+      .post({}, "auth/get-jwt/")
+      .json<{ access: string; refresh: string }>();
+  return {
+      access: tokens.access,
+      refresh: tokens.refresh,
+  };
 };
 
 const logout = () => {
@@ -31,9 +50,19 @@ const logout = () => {
   return api.post({ refresh: refreshToken }, "auth/logout/");
 };
 
-const handleJWTRefresh = () => {
+const handleJWTRefresh = async () => {
   const refreshToken = getToken("refresh");
-  return api.post({ refresh: refreshToken }, "auth/jwt/refresh");
+  const response = await api
+    .post({ refresh_token: refreshToken }, "_allauth/app/v1/tokens/refresh")
+    .json<{ data: { access_token: string; refresh_token?: string } }>();
+  if (!refreshToken) {
+    throw new Error("No refresh token is available.");
+  }
+  const nextRefreshToken = response.data.refresh_token ?? refreshToken;
+  return {
+    access: response.data.access_token,
+    refresh: nextRefreshToken,
+  };
 };
 
 const resetPassword = (email: string) => {
