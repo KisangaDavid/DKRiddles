@@ -66,3 +66,7 @@ export const fetcher = (url: string): Promise<any> => {
 export const poster = (url: string, body: Record<string, any>): Promise<any> => {
   return api().url(url).post(body).json();
 };
+
+export const patcher = (url: string, body: Record<string, any>): Promise<any> => {
+  return api().url(url).patch(body).json();
+};

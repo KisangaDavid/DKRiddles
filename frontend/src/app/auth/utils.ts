@@ -3,12 +3,25 @@ import Cookies from "js-cookie";
 import { backendBaseUrl, googleClientId } from "../_common/constants";
 
 const api = wretch(backendBaseUrl).options({ credentials: 'include' }).accept("application/json");
-type GoogleTokens = {
+type LoginResponse = {
   access: string;
   refresh: string;
-  pendingSignup?: boolean;
+  email?: string;
+  pendingUsernameChoice?: boolean;
 };
 
+interface DjangoLoginResponse {
+  status: number;
+  data: {
+    user: {
+      username: string;
+      email: string;
+    };
+  }
+  meta: {
+    is_authenticated: boolean;
+  }
+}
 
 const storeToken = (token: string, type: "access" | "refresh") => {
   Cookies.set(type + "Token", token);
@@ -27,47 +40,47 @@ const register = (email: string, username: string, password: string) => {
   return api.post({ email, username, password }, "auth/users/");
 };
 
-const getGoogleJwt = async (): Promise<GoogleTokens> => {
+const getJwts = async (): Promise<LoginResponse> => {
   const tokens = await api
     .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
     .post({}, "auth/get-jwt/")
-    .json<GoogleTokens>();
+    .json<LoginResponse>();
+  console.log("tokens are", tokens)
   return {
     access: tokens.access,
     refresh: tokens.refresh,
   };
 };
 
-const login = async (idToken: string): Promise<GoogleTokens> => {
+const login = async (jwt: string): Promise<LoginResponse> => {
   await api.get("auth/csrf/").res();
-  try {
-    await api
-      .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
-      .post({
-        provider: "google",
-        process: "login",
-        token: {
-          id_token: idToken,
-          client_id: googleClientId
-        }
-      }, "_allauth/browser/v1/auth/provider/token")
-        .res();
-  } catch (error) {
-    if (error instanceof Error && (error as { status?: number }).status === 401) {
-      return { access: "", refresh: "", pendingSignup: true };
-    }
-    throw error;
-  }
-  return getGoogleJwt();
+  // TODO: better way to do csrf token
+  console.log("should be id token:", jwt)
+  console.log("within the try stuff")
+  const django_login_response: DjangoLoginResponse = await api
+    .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
+    .post({
+      provider: "google",
+      process: "login",
+      token: {
+        id_token: jwt,
+        client_id: googleClientId
+      }
+    }, "_allauth/browser/v1/auth/provider/token")
+    .json();
+    const pendingUsernameChoice = django_login_response.data.user.username.startsWith("__pending__");
+    const email = django_login_response.data.user.email;
+    const tokens = await getJwts();
+    return { ...tokens, email, pendingUsernameChoice };
 };
 
-const completeProviderSignup = async (username: string) => {
-  await api
-    .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
-    .post({ username }, "_allauth/browser/v1/auth/provider/signup")
-    .res();
-  return getGoogleJwt();
-};
+// const completeProviderSignup = async (username: string, email: string) => {
+//   await api
+//     .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
+//     .post({ username, email }, "_allauth/browser/v1/auth/provider/signup")
+//     .res();
+//   return getJwts();
+// };
 
 const setUsername = (username: string) => {
   return api.patch({ username }, "setUsername");
@@ -112,7 +125,6 @@ const resetPasswordConfirm = (
 export const AuthActions = () => {
   return {
     login,
-    completeProviderSignup,
     setUsername,
     resetPasswordConfirm,
     handleJWTRefresh,

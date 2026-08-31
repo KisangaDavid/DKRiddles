@@ -7,13 +7,6 @@ from puzzles.models import UserSolvedPuzzles
 
 User = get_user_model()
 
-class UserSolvedPuzzlesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserSolvedPuzzles
-        fields = ['id', 'user', 'solvedPuzzle', 'solvedTime']
-        read_only_fields = ['solvedTime', 'id']
-
-
 class CaseInsensitiveUserCreateSerializer(UserCreateSerializer):
     email = serializers.EmailField(required=False, trim_whitespace=False, allow_blank=True, error_messages={"invalid": "Enter a valid email address or leave the field blank."})
     def validate_username(self, value):
@@ -46,8 +39,6 @@ class CaseInsensitiveUserCreateSerializer(UserCreateSerializer):
 class SingleIntSerializer(serializers.Serializer):
     submittedInt = serializers.IntegerField()
 
-class CheckRatRiddleAnswerSerializer(serializers.Serializer):
-    submittedInt = serializers.IntegerField()
 
 class CheckRatRiddleBonusAnswerSerializer(serializers.Serializer):
     numHouses = serializers.IntegerField()

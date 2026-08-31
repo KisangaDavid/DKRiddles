@@ -35,7 +35,8 @@ const CreateAccountForm = () => {
         await registerUser(data.email, data.username, data.password)
             .json(() => {
               sessionStorage.setItem("newUser", data.username);
-              router.push("/auth/login");
+              router.push("/auth/login"); 
+              // TODO: see if this is necessary
             })
             .catch((err) => {
               if (err.status == 429) {

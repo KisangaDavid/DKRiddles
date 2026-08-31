@@ -1,5 +1,3 @@
-from concurrent.futures import wait
-
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework.views import APIView
@@ -20,71 +18,10 @@ from puzzles.models import UserSolvedPuzzles, User
 from django.core.cache import cache
 from .settings import LEADERBOARD_CACHE_KEY, CACHE_TIMEOUT 
 from djoser.views import UserViewSet
-from rest_framework.throttling import AnonRateThrottle, ScopedRateThrottle
+from rest_framework.throttling import ScopedRateThrottle
 from rest_framework_simplejwt.views import TokenObtainPairView
 from better_profanity import profanity
 from .settings import MIN_USERNAME_LENGTH, PENDING_USERNAME_PREFIX
-
-class RegisterThrottle(ScopedRateThrottle):
-    scope = "register"
-
-    def get_cache_key(self, request, view):
-        return getSessionBasedCacheKey(self, request)
-
-    def allow_request(self, request, view):
-        allowed = super().allow_request(request, view)
-        if not allowed:
-            wait = self.wait()
-            minutes = int(wait) // 60 + 1
-            unit = "minute" if minutes == 1 else "minutes"
-            raise Throttled(detail=f"Too many account creation attempts! Try again in {minutes} {unit}.")
-        return allowed
-
-class ResetPasswordThrottle(ScopedRateThrottle):
-    scope = "reset_password"
-
-    def get_cache_key(self, request, view):
-        return getSessionBasedCacheKey(self, request)
-
-    def allow_request(self, request, view):
-        allowed = super().allow_request(request, view)
-        if not allowed:
-            wait = self.wait()
-            minutes = int(wait) // 60 + 1
-            unit = "minute" if minutes == 1 else "minutes"
-            raise Throttled(detail=f"Too many password reset attempts! Try again in {minutes} {unit}.")
-        return allowed
-
-class LoginThrottle(ScopedRateThrottle):
-    scope = "log_in"
-
-    def get_cache_key(self, request, view):
-        return getSessionBasedCacheKey(self, request)
-
-    def allow_request(self, request, view):
-        allowed = super().allow_request(request, view)
-        if not allowed:
-            wait = self.wait()
-            minutes = int(wait) // 60 + 1
-            unit = "minute" if minutes == 1 else "minutes"
-            raise Throttled(detail=f"Too many login attempts! Try again in {minutes} {unit}.")
-        return allowed
-
-
-class CustomUserViewSet(UserViewSet):
-    # print(self.action)
-    def get_throttles(self):
-        if self.action == "create":
-            self.throttle_scope = "register"
-            return [RegisterThrottle()]
-        if self.action == "reset_password":
-            self.throttle_scope = "reset_password"
-            return [ResetPasswordThrottle()]
-        return super().get_throttles()
-   
-class ThrottledLoginView(TokenObtainPairView):
-    throttle_scope = "log_in"
-    throttle_classes = [LoginThrottle]
 
 class LogoutView(APIView):
     permission_classes = (AllowAny,)
@@ -131,30 +68,31 @@ def getProfileInfo(request):
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def setUsername(request):
-    username = request.data.get("username", "")
-    if not isinstance(username, str):
-        return Response({"username": "Username is required."}, status=status.HTTP_400_BAD_REQUEST)
-
-    username = username.strip()
-    if len(username) < MIN_USERNAME_LENGTH:
+    print(request.user)
+    newUsername = request.data.get("username", "")
+    newUsername = newUsername.strip()
+    if not request.user.username.startswith(PENDING_USERNAME_PREFIX):
+        return Response({"username": "Unable to change your username at this time."}, status=status.HTTP_400_BAD_REQUEST)
+    if not newUsername.isalnum():
+        return Response({"username": "Username must be alphanumeric with no spaces."}, status=status.HTTP_400_BAD_REQUEST)
+    if len(newUsername) < MIN_USERNAME_LENGTH:
         return Response(
             {"username": f"Username must be at least {MIN_USERNAME_LENGTH} characters long."},
             status=status.HTTP_400_BAD_REQUEST,
         )
-    if profanity.contains_profanity(username):
+    if profanity.contains_profanity(newUsername):
         return Response(
             {"username": "Please choose a different username."},
             status=status.HTTP_400_BAD_REQUEST,
         )
-    if User.objects.filter(username__iexact=username).exclude(pk=request.user.pk).exists():
+    if User.objects.filter(username__iexact=newUsername).exclude(pk=request.user.pk).exists():
         return Response(
             {"username": "An account with that username already exists."},
             status=status.HTTP_400_BAD_REQUEST,
         )
-
-    request.user.username = username
+    request.user.username = newUsername
     request.user.save(update_fields=["username"])
-    return Response({"username": username})
+    return Response({"username": newUsername})
 
 @api_view(['GET'])
 def getLeaderboardInfo(request):

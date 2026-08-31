@@ -7,12 +7,11 @@ import { Box, TextField, Typography } from "@mui/material";
 import SubmitButton from "@/src/app/_common/SubmitButton";
 import StyledCard from "@/src/app/_common/StyledCard";
 import { AuthActions } from "../utils";
+import { patcher } from "../../_common/ClientUtils";
 
 type FormData = { username: string };
-
 export default function ChooseUsernameForm() {
   const router = useRouter();
-  const { completeProviderSignup, storeToken } = AuthActions();
   const [loading, setLoading] = useState(false);
   const [backendError, setBackendError] = useState("");
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
@@ -21,10 +20,8 @@ export default function ChooseUsernameForm() {
     setLoading(true);
     setBackendError("");
     try {
-      const tokens = await completeProviderSignup(username);
-      storeToken(tokens.access, "access");
-      storeToken(tokens.refresh, "refresh");
-      router.push("/profile");
+        await patcher("setUsername", { username });
+        router.push("/profile");
     } catch (error: unknown) {
       try {
         const details = JSON.parse(error instanceof Error ? error.message : "");

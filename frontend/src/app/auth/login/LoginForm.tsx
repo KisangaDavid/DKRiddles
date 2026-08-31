@@ -11,6 +11,7 @@ import BreakdownUnlockedNotification from "@/src/app/_common/BreakdownUnlockedNo
 import StyledCard from "@/src/app/_common/StyledCard";
 import { SolvedPuzzlesContext } from "../../_common/SolvedPuzzlesContextProvider";
 import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode, JwtPayload } from "jwt-decode";
 
 // TODO: investigate back button from forgot password page
 
@@ -18,6 +19,10 @@ type FormData = {
   username: string;
   password: string;
 };
+
+interface CredentialPayload extends JwtPayload {
+  email: string;
+}
 
 const LoginForm = () => {
   const router = useRouter();
@@ -112,15 +117,25 @@ const LoginForm = () => {
         <GoogleLogin 
                   onSuccess={async (credRes) => {
                     try {
-                      const tokens = await login(credRes.credential || "");
-                      console.log(tokens)
-                      if (tokens.pendingSignup) {
+                      console.log("cred res:", credRes)
+                      
+                      const djangoResponse = await login(credRes.credential || "");
+                      // if username is not pending, do it
+                      // TODO: only do this if prev was authenticated
+                      console.log("django response:", djangoResponse)
+                      storeToken(djangoResponse.access, "access");
+                      storeToken(djangoResponse.refresh, "refresh");
+                      clearSolvedPuzzles();
+                      if (djangoResponse.pendingUsernameChoice) {
+                        const pendingUserInfo = jwtDecode(credRes.credential || "") as CredentialPayload;
+                        sessionStorage.setItem("pendingUserEmail", pendingUserInfo.email);
                         console.log("Pending signup, redirecting to choose username page");
                         router.push("/auth/choose-username");
                         return;
                       }
-                      storeToken(tokens.access, "access");
-                      storeToken(tokens.refresh, "refresh");
+                      // gotta check if the user is a __pending__ user. If they are, redirect.
+                      storeToken(djangoResponse.access, "access");
+                      storeToken(djangoResponse.refresh, "refresh");
                       clearSolvedPuzzles();
                       router.push("/profile");
                     } catch (error) {

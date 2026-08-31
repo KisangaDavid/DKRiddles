@@ -51,9 +51,7 @@ class UserSolvedPuzzles(models.Model):
                 name="unique_user_solvedPuzzle"
             )]
 
-# def profile_path(instance, filename): 
-#     return 'user_{0}/{1}'.format(instance.user.id, filename)
-
+# TODO: hook up image stuff
 # class Profile(models.Model):
 #     user = models.OneToOneField(User, on_delete=models.CASCADE)
 #     avatar = models.ImageField( 
