@@ -64,6 +64,15 @@ function AboutSitePage() {
                 } 
               />
             </ListItem>
+              <ListItem>
+              <ListItemText  
+                primary={
+                  <Typography align="center" variant="h6">
+                    &nbsp; &nbsp; Google Sign In ✔️
+                  </Typography>
+                } 
+              />
+            </ListItem>
             <ListItem>
               <ListItemText  
                 primary={
@@ -77,7 +86,7 @@ function AboutSitePage() {
               <ListItemText  
                 primary={
                   <Typography align="center" variant="h6">
-                    &nbsp; &nbsp; Authentication & Stat tracking ✔️
+                    &nbsp; &nbsp; Stat Tracking ✔️
                   </Typography>
                 } 
               />

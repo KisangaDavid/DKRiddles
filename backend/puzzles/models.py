@@ -18,6 +18,7 @@ class User(AbstractUser):
     last_name = None
     email = models.EmailField(unique=True, null=True, blank=True)
     numPuzzlesSolved = models.IntegerField(default=0)
+    pfp_url = models.TextField(null=True, blank=True) 
 
     def save(self, *args, **kwargs):
         if self.email == "":
@@ -50,15 +51,3 @@ class UserSolvedPuzzles(models.Model):
                 fields=["user", "solvedPuzzle"],
                 name="unique_user_solvedPuzzle"
             )]
-
-# TODO: hook up image stuff
-# class Profile(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     avatar = models.ImageField( 
-#         default='profile/default.jpg', 
-#         upload_to = profile_path
-#     )
-#     bio = models.TextField()
-
-#     def __str__(self):
-#         return self.user.username

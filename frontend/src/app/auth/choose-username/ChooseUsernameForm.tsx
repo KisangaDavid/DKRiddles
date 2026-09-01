@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { Box, TextField, Typography } from "@mui/material";
 import SubmitButton from "@/src/app/_common/SubmitButton";
 import StyledCard from "@/src/app/_common/StyledCard";
-import { AuthActions } from "../utils";
 import { patcher } from "../../_common/ClientUtils";
 
 type FormData = { username: string };

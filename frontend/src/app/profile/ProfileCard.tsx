@@ -3,21 +3,23 @@
 import { Button, Divider, Grid, Typography } from "@mui/material";
 import { AuthActions } from "../auth/utils";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 import { SolvedPuzzlesContext } from "../_common/SolvedPuzzlesContextProvider";
+import { getNumPuzzlesSolvedEmoji } from "../_common/utils";
 import { fetcher } from "../_common/ClientUtils";
 import useSWR from "swr";
 import SolvedPuzzleRow from "./SolvedPuzzleRow";
-import { ALL_PUZZLE_TITLES, ALL_PUZZLES } from "../_common/constants";
+import { ALL_PUZZLE_TITLES, ALL_PUZZLES, SS_PFP_URL } from "../_common/constants";
+import Image from 'next/image'
 import StyledCard from "../_common/StyledCard";
 
-const { logout, removeTokens } = AuthActions();
+const { removeTokens } = AuthActions();
 
 function ProfileCard() {
     const router = useRouter();
     const { clearSolvedPuzzles, resetSolvedPuzzles } = useContext(SolvedPuzzlesContext)
 
-    const { data: { username = "", dateJoined = " ", solvedPuzzles  } = {}, isLoading } = useSWR(
+    const { data: { username = "", dateJoined = " ", userPfpLink = "", solvedPuzzles  } = {}, isLoading } = useSWR(
         "getProfileInfo",
         fetcher,
         {keepPreviousData: true}
@@ -41,34 +43,18 @@ function ProfileCard() {
     ? Object.keys(solvedPuzzles).length
     : -1;
     
-  const numSolvedEmoji =
-  numPuzzlesSolved === -1 ? "":
-    numPuzzlesSolved === 0 ? "💩":
-    numPuzzlesSolved === 1 ? "😬" :
-    numPuzzlesSolved === 2 ? "😒" :
-    numPuzzlesSolved === 3 ? "😐" :
-    numPuzzlesSolved === 4 ? "😤" :
-    numPuzzlesSolved === 5 ? "🔥" :
-    numPuzzlesSolved === 6 ? "👑" :
-    "👺";
+  const numSolvedEmoji = getNumPuzzlesSolvedEmoji(numPuzzlesSolved);
 
     const handleLogout = () => {
-      logout()
-        .res(() => {
-          removeTokens();
-          clearSolvedPuzzles();
-          router.push("/auth/login");
-        })
-        .catch(() => {
-          removeTokens();
-          clearSolvedPuzzles();
-          router.push("/auth/login");
-        });
+      removeTokens();
+      sessionStorage.removeItem(SS_PFP_URL)
+      router.push("/auth/login")
     };
 
     return (
-      <StyledCard sx={{ display: "flex", alignItems: "center", width: {xs: "85%", sm: "70%", md: "55%", lg: "45%" }, mt: {xs: "2em", md: "4em"}}}>
-        <Typography align="left" variant="h5" sx={{mt:"0.5em"}}>{username || <br />} {numSolvedEmoji}</Typography>
+      <StyledCard sx={{ display: "flex", position: "relative", alignItems: "center", width: {xs: "85%", sm: "70%", md: "55%", lg: "45%" }, mt: {xs: "2em", md: "4em"}}}>
+          <Typography align="left" variant="h5" sx={{mt:"0.5em"}}>
+           {username} {numSolvedEmoji}</Typography>
         <Typography variant="h6" sx={{mt:"0.5em"}}>Date Joined: {dateJoinedStr}</Typography>
         <Divider sx={{width: "80%", my: "0.5em"}} />
         <Typography sx={{mb: "1em"}}>{Object.keys(solvedPuzzles || {}).length} / {ALL_PUZZLES.length} Puzzles solved</Typography>

@@ -20,3 +20,15 @@ export function convertIntToArray(intRepresentation: number, numBitsPerElement: 
     }
     return array
 }
+
+export function getNumPuzzlesSolvedEmoji(numPuzzlesSolved: number) {
+  return numPuzzlesSolved === -1 ? "":
+    numPuzzlesSolved === 0 ? "💩":
+    numPuzzlesSolved === 1 ? "😬" :
+    numPuzzlesSolved === 2 ? "😒" :
+    numPuzzlesSolved === 3 ? "😐" :
+    numPuzzlesSolved === 4 ? "😤" :
+    numPuzzlesSolved === 5 ? "🔥" :
+    numPuzzlesSolved === 6 ? "👑" :
+    "👺";
+}

@@ -1,40 +1,7 @@
-from config.settings import MIN_USERNAME_LENGTH
 from rest_framework import serializers
-from djoser.serializers import UserCreateSerializer
-from better_profanity import profanity
 from django.contrib.auth import get_user_model
-from puzzles.models import UserSolvedPuzzles
 
 User = get_user_model()
-
-class CaseInsensitiveUserCreateSerializer(UserCreateSerializer):
-    email = serializers.EmailField(required=False, trim_whitespace=False, allow_blank=True, error_messages={"invalid": "Enter a valid email address or leave the field blank."})
-    def validate_username(self, value):
-        if len(value) < MIN_USERNAME_LENGTH:
-            raise serializers.ValidationError(
-                f"Username must be at least {MIN_USERNAME_LENGTH} characters long."
-        )
-
-        if profanity.contains_profanity(value):
-            raise serializers.ValidationError(
-                "Please choose a different username."
-            )
-        if User.objects.filter(username__iexact=value).exists():
-            raise serializers.ValidationError("An account with that username already exists.")
-        return value
-
-    def validate_email(self, value):
-        if value:
-            value = value.lower()
-            if User.objects.filter(email__iexact=value).exists():
-                raise serializers.ValidationError(
-                    "An account with that email already exists."
-                )
-        return value
-    
-    class Meta(UserCreateSerializer.Meta):
-        model = User
-        fields = ("username", "password", "email")
 
 class SingleIntSerializer(serializers.Serializer):
     submittedInt = serializers.IntegerField()

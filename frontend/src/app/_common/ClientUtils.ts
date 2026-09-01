@@ -3,7 +3,7 @@
 import { useState, useLayoutEffect } from 'react';
 import wretch, { Wretch, WretchError } from "wretch";
 import { AuthActions } from "@/src/app/auth/utils";
-import { backendBaseUrl } from './constants';
+import { backendBaseUrl, SS_PFP_URL } from './constants';
 
 export function getConfettiHeight() {
     const rootElement = document.getElementById('root');
@@ -53,6 +53,7 @@ const api = () => {
       } catch (err) {
         alert("Session expired. Please log in again.");
         removeTokens();
+        sessionStorage.removeItem(SS_PFP_URL)
         window.location.replace("/auth/login");
         throw err; 
       }

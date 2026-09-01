@@ -1,11 +1,19 @@
 import wretch from "wretch";
 import Cookies from "js-cookie";
-import { backendBaseUrl, googleClientId } from "../_common/constants";
+import { backendBaseUrl, googleClientId, SS_PFP_URL } from "../_common/constants";
 
 const api = wretch(backendBaseUrl).options({ credentials: 'include' }).accept("application/json");
+
+type SetupConnResponse = {
+  access: string;
+  refresh: string;
+  pfp_url?: string;
+};
+
 type LoginResponse = {
   access: string;
   refresh: string;
+  pfp_url?: string;
   email?: string;
   pendingUsernameChoice?: boolean;
 };
@@ -40,15 +48,16 @@ const register = (email: string, username: string, password: string) => {
   return api.post({ email, username, password }, "auth/users/");
 };
 
-const getJwts = async (): Promise<LoginResponse> => {
-  const tokens = await api
+const setupConn = async (): Promise<SetupConnResponse> => {
+  const res = await api
     .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
-    .post({}, "auth/get-jwt/")
-    .json<LoginResponse>();
-  console.log("tokens are", tokens)
+    .post({}, "auth/set-up-conn/")
+    .json<SetupConnResponse>();
+  console.log("res is", res)
   return {
-    access: tokens.access,
-    refresh: tokens.refresh,
+    access: res.access,
+    refresh: res.refresh,
+    pfp_url: res.pfp_url
   };
 };
 
@@ -70,25 +79,15 @@ const login = async (jwt: string): Promise<LoginResponse> => {
     .json();
     const pendingUsernameChoice = django_login_response.data.user.username.startsWith("__pending__");
     const email = django_login_response.data.user.email;
-    const tokens = await getJwts();
-    return { ...tokens, email, pendingUsernameChoice };
+    const setupConnResponse = await setupConn();
+    if (setupConnResponse.pfp_url) {
+      sessionStorage.setItem(SS_PFP_URL, setupConnResponse.pfp_url);
+  }
+    return { ...setupConnResponse, email, pendingUsernameChoice };
 };
-
-// const completeProviderSignup = async (username: string, email: string) => {
-//   await api
-//     .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
-//     .post({ username, email }, "_allauth/browser/v1/auth/provider/signup")
-//     .res();
-//   return getJwts();
-// };
 
 const setUsername = (username: string) => {
   return api.patch({ username }, "setUsername");
-};
-
-const logout = () => {
-  const refreshToken = getToken("refresh");
-  return api.post({ refresh: refreshToken }, "auth/logout/");
 };
 
 const handleJWTRefresh = async () => {
@@ -132,7 +131,6 @@ export const AuthActions = () => {
     resetPassword,
     storeToken,
     getToken,
-    logout,
     removeTokens,
   };
 };

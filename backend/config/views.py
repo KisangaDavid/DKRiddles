@@ -1,5 +1,3 @@
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework import status
@@ -7,34 +5,16 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.exceptions import Throttled
+from django.urls import resolve
 
-from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from allauth.headless import app_settings as headless_settings
-
 from puzzles.models import UserSolvedPuzzles, User
 from django.core.cache import cache
 from .settings import LEADERBOARD_CACHE_KEY, CACHE_TIMEOUT 
-from djoser.views import UserViewSet
-from rest_framework.throttling import ScopedRateThrottle
-from rest_framework_simplejwt.views import TokenObtainPairView
 from better_profanity import profanity
-from .settings import MIN_USERNAME_LENGTH, PENDING_USERNAME_PREFIX
-
-class LogoutView(APIView):
-    permission_classes = (AllowAny,)
-    authentication_classes = ()
-
-    def post(self, request):
-        try:
-            refresh_token = request.data["refresh"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-            return Response(status=status.HTTP_200_OK)
-        except (ObjectDoesNotExist, TokenError):
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+from .settings import MIN_USERNAME_LENGTH, PENDING_USERNAME_PREFIX, MAX_USERNAME_LENGTH
 
 @ensure_csrf_cookie
 def getCsrfToken(request):
@@ -43,13 +23,16 @@ def getCsrfToken(request):
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated])
-def issueGoogleJwt(request):
+def setUpConn(request):
+    pfp_url = request.user.pfp_url
+    print(f"pfp_url within setUpConn: {pfp_url}")
     token_data = headless_settings.TOKEN_STRATEGY.create_access_token_payload(request)
     if not token_data or "refresh_token" not in token_data:
         return Response({"detail": "Could not create authentication tokens."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response({
         "access": token_data["access_token"],
         "refresh": token_data["refresh_token"],
+        "pfp_url": pfp_url
     })
 
 @api_view(['GET'])
@@ -62,8 +45,9 @@ def getProfileInfo(request):
     )
     username = request.user.username
     dateJoined = request.user.date_joined
+    userPfpLink = request.user.pfp_url
     solvedDict = {entry.solvedPuzzle: entry.solvedTime for entry in solved}
-    return Response({"username": username, "dateJoined": dateJoined, "solvedPuzzles": solvedDict})
+    return Response({"username": username, "dateJoined": dateJoined, "solvedPuzzles": solvedDict, "userPfpLink": userPfpLink})
 
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
@@ -72,12 +56,17 @@ def setUsername(request):
     newUsername = request.data.get("username", "")
     newUsername = newUsername.strip()
     if not request.user.username.startswith(PENDING_USERNAME_PREFIX):
-        return Response({"username": "Unable to change your username at this time."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"username": f"Your username has already been set to {request.user.username}."}, status=status.HTTP_400_BAD_REQUEST)
     if not newUsername.isalnum():
         return Response({"username": "Username must be alphanumeric with no spaces."}, status=status.HTTP_400_BAD_REQUEST)
     if len(newUsername) < MIN_USERNAME_LENGTH:
         return Response(
             {"username": f"Username must be at least {MIN_USERNAME_LENGTH} characters long."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    if len(newUsername) >= MAX_USERNAME_LENGTH:
+        return Response(
+            {"username": f"Username must be less than 20 characters long."},
             status=status.HTTP_400_BAD_REQUEST,
         )
     if profanity.contains_profanity(newUsername):
