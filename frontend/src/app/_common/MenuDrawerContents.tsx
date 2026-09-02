@@ -2,7 +2,7 @@ import Link from "next/link.js";
 import { useTheme } from "@mui/material/styles";
 import { useContext, FC } from "react";
 import { styled } from '@mui/material/styles';
-import { HORSE_PUZZLE, ROOSTER_PUZZLE, RAT_PUZZLE_P1, RAT_PUZZLE_P2, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2 } from './constants'
+import { HORSE_PUZZLE, ROOSTER_PUZZLE, RAT_PUZZLE_P1, RAT_PUZZLE_P2, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2, PROFILE_SLUG, LOGIN_SLUG, LEADERBOARD_SLUG, ABOUT_SLUG, HOME_SLUG, RAT_RIDDLE_SLUG, HORSE_RIDDLE_SLUG, ROOSTER_RIDDLE_SLUG, RABBIT_RIDDLE_SLUG, BREAKDOWN_SLUG } from './constants'
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -92,7 +92,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
           </StyledListItemButton>
         </ListItem>
         {getToken("access") ? 
-          <Link href="/profile">
+          <Link href={PROFILE_SLUG}>
               <ListItem disablePadding>
                 <StyledListItemButton>
                   <StyledListItemIcon PassedIcon={AccountCircleRoundedIcon} />
@@ -101,16 +101,16 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
               </ListItem>
             </Link>
         :
-          <Link href="/auth/login/">
+          <Link href={LOGIN_SLUG}>
             <ListItem disablePadding>
               <StyledListItemButton>
                 <StyledListItemIcon PassedIcon={LoginIcon} />
-                <StyledListItemText primary={"Log In"} />
+                <StyledListItemText primary={"Sign In"} />
               </StyledListItemButton>
             </ListItem>
           </Link>
         }
-        <Link href="/">
+        <Link href={HOME_SLUG}>
           <ListItem disablePadding>    
             <StyledListItemButton>
               <StyledListItemIcon PassedIcon={HomeIcon} />
@@ -118,7 +118,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
             </StyledListItemButton>
           </ListItem>
         </Link>
-        <Link href="/leaderboard/">
+        <Link href={LEADERBOARD_SLUG}>
           <ListItem disablePadding>
             <StyledListItemButton>
               <StyledListItemIcon PassedIcon={LeaderboardIcon} />
@@ -126,7 +126,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
             </StyledListItemButton>
           </ListItem>
         </Link>
-        <Link href="/about/">
+        <Link href={ABOUT_SLUG}>
           <ListItem disablePadding>
             <StyledListItemButton>
               <StyledListItemIcon PassedIcon={InfoOutlinedIcon} />
@@ -146,7 +146,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
         gap: 0,
         }}
       >
-        <Link href="/ratRiddle/">
+        <Link href={RAT_RIDDLE_SLUG}>
           <ListItem disablePadding>      
             <StyledListItemButton>
               <StyledListItemIcon 
@@ -158,7 +158,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
             </StyledListItemButton>
           </ListItem> 
         </Link>     
-        <Link href="/horseRiddle/">
+        <Link href={HORSE_RIDDLE_SLUG}>
           <ListItem disablePadding>
             <StyledListItemButton>
               <StyledListItemIcon 
@@ -169,7 +169,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
             </StyledListItemButton>
           </ListItem>
         </Link>
-        <Link href="/roosterRiddle/">
+        <Link href={ROOSTER_RIDDLE_SLUG}>
           <ListItem disablePadding>
             <StyledListItemButton>
               <StyledListItemIcon 
@@ -180,7 +180,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
             </StyledListItemButton>
           </ListItem> 
         </Link>
-         <Link href="/rabbitRiddle/">
+         <Link href={RABBIT_RIDDLE_SLUG}>
           <ListItem disablePadding>
             <StyledListItemButton>
                <StyledListItemIcon 
@@ -205,7 +205,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
         }}
       >
         { isSolved(RAT_PUZZLE_P1) && 
-          <Link href="/ratRiddle/breakdown/">
+          <Link href={RAT_RIDDLE_SLUG + BREAKDOWN_SLUG}>
             <ListItem disablePadding>
               <StyledListItemButton>
                 <StyledListItemIcon 
@@ -219,7 +219,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
           </Link>
         }
         { isSolved(HORSE_PUZZLE) &&
-          <Link href="/horseRiddle/breakdown/">
+          <Link href={HORSE_RIDDLE_SLUG + BREAKDOWN_SLUG}>
             <ListItem disablePadding>
               <StyledListItemButton>
                 <StyledListItemIcon 
@@ -232,7 +232,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
           </Link>
         }
         { isSolved(ROOSTER_PUZZLE) &&
-          <Link href="/roosterRiddle/breakdown/">
+          <Link href={ROOSTER_RIDDLE_SLUG + BREAKDOWN_SLUG}>
             <ListItem disablePadding>
               <StyledListItemButton>
                 <StyledListItemIcon 
@@ -245,7 +245,7 @@ function MenuDrawerContents({setMenuDrawerOpen}: props) {
           </Link>
         }
         { isSolved(RABBIT_PUZZLE_P1) &&
-          <Link href="/rabbitRiddle/breakdown/">
+          <Link href={RABBIT_RIDDLE_SLUG + BREAKDOWN_SLUG}>
             <ListItem disablePadding>
               <StyledListItemButton>
                 <StyledListItemIcon 

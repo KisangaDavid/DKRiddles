@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Divider, Grid, Typography } from "@mui/material";
+import { Button, Divider, Grid, Link, Typography } from "@mui/material";
 import { AuthActions } from "../auth/utils";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect } from "react";
@@ -9,7 +9,7 @@ import { getNumPuzzlesSolvedEmoji } from "../_common/utils";
 import { fetcher } from "../_common/ClientUtils";
 import useSWR from "swr";
 import SolvedPuzzleRow from "./SolvedPuzzleRow";
-import { ALL_PUZZLE_TITLES, ALL_PUZZLES, SS_PFP_URL } from "../_common/constants";
+import { ALL_PUZZLE_TITLES, ALL_PUZZLES, CHOOSE_USERNAME_SLUG, LOGIN_SLUG, PENDING_USERNAME, SS_PFP_URL } from "../_common/constants";
 import Image from 'next/image'
 import StyledCard from "../_common/StyledCard";
 
@@ -48,13 +48,15 @@ function ProfileCard() {
     const handleLogout = () => {
       removeTokens();
       sessionStorage.removeItem(SS_PFP_URL)
-      router.push("/auth/login")
+      router.push(LOGIN_SLUG)
     };
-
+    console.log("username is:" + username)
     return (
       <StyledCard sx={{ display: "flex", position: "relative", alignItems: "center", width: {xs: "85%", sm: "70%", md: "55%", lg: "45%" }, mt: {xs: "2em", md: "4em"}}}>
-          <Typography align="left" variant="h5" sx={{mt:"0.5em"}}>
-           {username} {numSolvedEmoji}</Typography>
+          {username.startsWith(PENDING_USERNAME) ? <Link align="center" variant="h5" sx={{mt:"0.5em", mx: "1em"}} href={CHOOSE_USERNAME_SLUG} >
+           User registration is incomplete. Please click here to select a username.</Link>
+           : <Typography align="left" variant="h5" sx={{mt:"0.5em"}}>
+           {username} {numSolvedEmoji}</Typography>}
         <Typography variant="h6" sx={{mt:"0.5em"}}>Date Joined: {dateJoinedStr}</Typography>
         <Divider sx={{width: "80%", my: "0.5em"}} />
         <Typography sx={{mb: "1em"}}>{Object.keys(solvedPuzzles || {}).length} / {ALL_PUZZLES.length} Puzzles solved</Typography>

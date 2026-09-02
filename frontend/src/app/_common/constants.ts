@@ -15,6 +15,19 @@ export const RABBIT_PUZZLE_P1_TITLE = "Jumping Rabbits (Part 1)";
 export const RABBIT_PUZZLE_P2_TITLE = "Jumping Rabbits (Part 2)";
 
 export const SS_PFP_URL = "pfp_url"
+export const PENDING_USERNAME = "__PENDING__"
+
+export const HOME_SLUG = "/"
+export const ABOUT_SLUG = "/about"
+export const PROFILE_SLUG = "/profile"
+export const LOGIN_SLUG = "/auth/signIn"
+export const CHOOSE_USERNAME_SLUG = "/auth/choose-username"
+export const LEADERBOARD_SLUG = "/leaderboard"
+export const RAT_RIDDLE_SLUG = "/ratRiddle"
+export const HORSE_RIDDLE_SLUG = "/horseRiddle"
+export const ROOSTER_RIDDLE_SLUG = "/roosterRiddle"
+export const RABBIT_RIDDLE_SLUG = "/rabbitRiddle"
+export const BREAKDOWN_SLUG = "/breakdown"
 
 export const ALL_PUZZLES = [RAT_PUZZLE_P1, RAT_PUZZLE_P2, HORSE_PUZZLE, ROOSTER_PUZZLE, RABBIT_PUZZLE_P1, RABBIT_PUZZLE_P2];
 export const ALL_PUZZLE_TITLES = [RAT_PUZZLE_P1_TITLE, RAT_PUZZLE_P2_TITLE, HORSE_PUZZLE_TITLE, ROOSTER_PUZZLE_TITLE, RABBIT_PUZZLE_P1_TITLE, RABBIT_PUZZLE_P2_TITLE];

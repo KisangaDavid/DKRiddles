@@ -12,7 +12,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import MenuIcon from '@mui/icons-material/Menu';
 import Drawer from '@mui/material/Drawer';
 import MenuDrawerContents from './MenuDrawerContents';
-import { SS_PFP_URL } from './constants';
+import { PROFILE_SLUG, SS_PFP_URL } from './constants';
 import Avatar from '@mui/material/Avatar';
 import { useRouter } from 'next/navigation';
 
@@ -34,7 +34,7 @@ function TopBar({ text, isPuzzlePage, resetFunc }: Props) {
   }, []);
 
   const handleAvatarClick = () => {
-    router.push('/profile');
+    router.push(PROFILE_SLUG);
   };
 
   console.log('dat stuff outside the use effect: ' + pfpUrl);
@@ -126,6 +126,9 @@ function TopBar({ text, isPuzzlePage, resetFunc }: Props) {
                 <Avatar
                   alt="User Profile"
                   src={pfpUrl}
+                  slotProps={{
+                    img: { referrerPolicy: 'no-referrer' }
+                  }}
                   sx={{
                     '&:hover': {
                       cursor: 'pointer',
@@ -166,4 +169,4 @@ function TopBar({ text, isPuzzlePage, resetFunc }: Props) {
   );
 }
 
-export default TopBar;
+export default memo(TopBar);

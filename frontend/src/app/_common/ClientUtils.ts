@@ -51,7 +51,7 @@ const api = () => {
           })
           .json();
       } catch (err) {
-        alert("Session expired. Please log in again.");
+        alert("Session expired. Please sign in again.");
         removeTokens();
         sessionStorage.removeItem(SS_PFP_URL)
         window.location.replace("/auth/login");

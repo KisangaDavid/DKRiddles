@@ -1,5 +1,3 @@
-from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -81,21 +79,18 @@ def setUsername(request):
         )
     request.user.username = newUsername
     request.user.save(update_fields=["username"])
+    print(f"request.user.numPuzzlesSolved: {request.user.numPuzzlesSolved}")
+    if request.user.numPuzzlesSolved > 0:
+        cache.delete(LEADERBOARD_CACHE_KEY)
     return Response({"username": newUsername})
 
 @api_view(['GET'])
 def getLeaderboardInfo(request):
     def fetch_leaderboard():
         return (User.objects
-                .filter(numPuzzlesSolved__gt=0)
+                .filter(numPuzzlesSolved__gt=0,)
+                .exclude(username__startswith=PENDING_USERNAME_PREFIX)
                 .order_by('-numPuzzlesSolved')[:10]
                 .values('username', 'numPuzzlesSolved'))
     topUsers = cache.get_or_set(LEADERBOARD_CACHE_KEY, fetch_leaderboard, CACHE_TIMEOUT)
     return Response(list(topUsers))
-
-def getSessionBasedCacheKey(self, request):
-    if not request.session.session_key:
-        request.session.create()
-    ident = request.session.session_key
-    print(f"request session sessionKey: {request.session.session_key}")
-    return self.cache_format % {'scope': self.scope, 'ident': ident}

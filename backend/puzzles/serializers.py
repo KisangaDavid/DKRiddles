@@ -6,7 +6,6 @@ User = get_user_model()
 class SingleIntSerializer(serializers.Serializer):
     submittedInt = serializers.IntegerField()
 
-
 class CheckRatRiddleBonusAnswerSerializer(serializers.Serializer):
     numHouses = serializers.IntegerField()
     answerToBonus = serializers.IntegerField()

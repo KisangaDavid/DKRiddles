@@ -7,10 +7,10 @@ export async function proxy(request: NextRequest) {
   const accessToken = cookieStore.get("accessToken");
 
   if (!accessToken) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+    return NextResponse.redirect(new URL("/auth/signIn", request.url));
   }
 }
-
+// TODO: transition to using kebab case for all urls
 export const config = {
   matcher: ["/profile"],
 };

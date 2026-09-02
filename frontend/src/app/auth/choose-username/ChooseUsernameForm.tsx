@@ -7,8 +7,10 @@ import { Box, TextField, Typography } from "@mui/material";
 import SubmitButton from "@/src/app/_common/SubmitButton";
 import StyledCard from "@/src/app/_common/StyledCard";
 import { patcher } from "../../_common/ClientUtils";
+import { PROFILE_SLUG } from "../../_common/constants";
 
 type FormData = { username: string };
+
 export default function ChooseUsernameForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -20,11 +22,11 @@ export default function ChooseUsernameForm() {
     setBackendError("");
     try {
         await patcher("setUsername", { username });
-        router.push("/profile");
+        router.push(PROFILE_SLUG);
     } catch (error: unknown) {
       try {
         const details = JSON.parse(error instanceof Error ? error.message : "");
-        setBackendError(details.username || "Unable to save that username.");
+        setBackendError(details.username || "Unable to select that username.");
       } catch {
         setBackendError("Unable to save that username.");
       }
@@ -36,7 +38,7 @@ export default function ChooseUsernameForm() {
   return (
     <StyledCard sx={{ width: { xs: "80%", sm: "60%", md: "45%", lg: "30%" }, mt: { xs: "2em", md: "4em" } }}>
       <Typography variant="h5" sx={{ my: "0.5em" }}>Select a username</Typography>
-      <Typography sx={{ width: "80%", mb: "1em" }}>This will show up on the global leaderboard.</Typography>
+      <Typography sx={{ width: "100%", mb: "1em" }}>This will show up on your profile and the global leaderboard.</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
           sx={{ width: "80%" }}

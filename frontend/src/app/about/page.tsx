@@ -1,21 +1,13 @@
-'use client'
-
-import { useTheme } from '@mui/material/styles';
-
 import { blogLink, longDelay, standardTextFade } from '../_common/constants';
 import Fade from '@mui/material/Fade';
-import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import Box from "@mui/material/Box";
 import TopBar from '../_common/TopBar';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 
 function AboutSitePage() {
-
-  const theme = useTheme();
 
   return (
     <>

@@ -1,6 +1,6 @@
 import wretch from "wretch";
 import Cookies from "js-cookie";
-import { backendBaseUrl, googleClientId, SS_PFP_URL } from "../_common/constants";
+import { backendBaseUrl, googleClientId, PENDING_USERNAME, SS_PFP_URL } from "../_common/constants";
 
 const api = wretch(backendBaseUrl).options({ credentials: 'include' }).accept("application/json");
 
@@ -62,10 +62,11 @@ const setupConn = async (): Promise<SetupConnResponse> => {
 };
 
 const login = async (jwt: string): Promise<LoginResponse> => {
-  await api.get("auth/csrf/").res();
-  // TODO: better way to do csrf token
-  console.log("should be id token:", jwt)
-  console.log("within the try stuff")
+  let csrfToken = Cookies.get("csrftoken");
+  if (!csrfToken) {
+    await api.get("auth/csrf/").res();
+    csrfToken = Cookies.get("csrftoken");
+  }
   const django_login_response: DjangoLoginResponse = await api
     .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
     .post({
@@ -77,7 +78,7 @@ const login = async (jwt: string): Promise<LoginResponse> => {
       }
     }, "_allauth/browser/v1/auth/provider/token")
     .json();
-    const pendingUsernameChoice = django_login_response.data.user.username.startsWith("__pending__");
+    const pendingUsernameChoice = django_login_response.data.user.username.startsWith(PENDING_USERNAME);
     const email = django_login_response.data.user.email;
     const setupConnResponse = await setupConn();
     if (setupConnResponse.pfp_url) {
