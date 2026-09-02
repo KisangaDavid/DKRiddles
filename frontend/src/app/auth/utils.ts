@@ -53,7 +53,6 @@ const setupConn = async (): Promise<SetupConnResponse> => {
     .headers({ "X-CSRFToken": Cookies.get("csrftoken") ?? "" })
     .post({}, "auth/set-up-conn/")
     .json<SetupConnResponse>();
-  console.log("res is", res)
   return {
     access: res.access,
     refresh: res.refresh,

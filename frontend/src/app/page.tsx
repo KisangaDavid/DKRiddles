@@ -155,7 +155,7 @@ function IntroductionPage() {
               puzzleImage = {roosterRiddleThumbnail} 
               puzzleName = "The Undefeated Rooster" 
               puzzleNumber = {3}
-              puzzleDescription = "Best the undefeated rooster in a battle of intellect!"
+              puzzleDescription = "Beat the undefeated rooster in a battle of wits!"
               puzzlePath = "/roosterRiddle" 
               transitionDelay={shortDelay * 2}
             />
@@ -165,7 +165,7 @@ function IntroductionPage() {
               puzzleImage = {rabbitRiddleThumbnail} 
               puzzleName = "Jumping Rabbits" 
               puzzleNumber = {4}
-              puzzleDescription = "Reason your way through reorganizing jumping rabbits!"
+              puzzleDescription = "Reason your way through reorganizing rabbits!"
               puzzlePath = "/rabbitRiddle" 
               transitionDelay={shortDelay * 3}
             />

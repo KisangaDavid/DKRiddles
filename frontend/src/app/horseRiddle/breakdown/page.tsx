@@ -154,6 +154,7 @@ function HorseRiddleBreakdownPage() {
                 <Image
                   src={RacesBreakdown}
                   alt={"races breakdown"}
+                  sizes="(max-width: 1200px) var(--pageWidthPercent), 65vw"
                   fill 
                   style={{ objectFit: 'contain' }} 
                 />
@@ -194,6 +195,7 @@ function HorseRiddleBreakdownPage() {
                   src={HorseBreakdownCompleteGraph}
                   alt={"Races Breakdown graph"}
                   fill 
+                  sizes="(max-width: 1200px) var(--pageWidthPercent), 65vw"
                   style={{ objectFit: 'contain' }} 
                 />
                 </CardMedia>
@@ -226,6 +228,7 @@ function HorseRiddleBreakdownPage() {
                   <Image
                     src={HorseBreakdown2ndPlaceGraph}
                     alt={"Races Breakdown graph"}
+                    sizes="(max-width: 1200px) calc(var(--pageWidthPercent) / 3), calc(65vw / 3)"
                     fill 
                     style={{ objectFit: 'contain' }} 
                   />
@@ -250,6 +253,7 @@ function HorseRiddleBreakdownPage() {
                     src={HorseBreakdown3rdPlaceGraph}
                     alt={"Races Breakdown 3rd Place graph"}
                     fill 
+                    sizes="(max-width: 1200px) calc(var(--pageWidthPercent) / 3), calc(65vw / 3)"
                     style={{ objectFit: 'contain' }} 
                   />
                 </CardMedia>
@@ -273,6 +277,7 @@ function HorseRiddleBreakdownPage() {
                     src={HorseBreakdown4thPlaceGraph}
                     alt={"Races Breakdown graph"}
                     fill 
+                    sizes="(max-width: 1200px) calc(var(--pageWidthPercent) / 3), calc(65vw / 3)"
                     style={{ objectFit: 'contain' }} 
                   />
                 </CardMedia>
@@ -306,6 +311,7 @@ function HorseRiddleBreakdownPage() {
                   src={HorseBreakdown5thPlaceGraph}
                   alt={"Races Breakdown graph"}
                   fill 
+                  sizes="(max-width: 1200px) var(--pageWidthPercent), 65vw"
                   style={{ objectFit: 'contain' }} 
                 />
               </CardMedia>

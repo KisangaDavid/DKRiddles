@@ -79,7 +79,7 @@ function RabbitRiddlePage() {
         }, adjustedDelay);
       }
       else {
-        console.log("You dirty cheater!")
+        console.log("Hey! No cheating!")
       }
     }
   }

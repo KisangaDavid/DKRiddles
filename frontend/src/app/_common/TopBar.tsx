@@ -37,8 +37,6 @@ function TopBar({ text, isPuzzlePage, resetFunc }: Props) {
     router.push(PROFILE_SLUG);
   };
 
-  console.log('dat stuff outside the use effect: ' + pfpUrl);
-
   return (
     <>
       <AppBar

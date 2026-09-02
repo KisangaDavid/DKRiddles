@@ -23,7 +23,6 @@ def getCsrfToken(request):
 @permission_classes([IsAuthenticated])
 def setUpConn(request):
     pfp_url = request.user.pfp_url
-    print(f"pfp_url within setUpConn: {pfp_url}")
     token_data = headless_settings.TOKEN_STRATEGY.create_access_token_payload(request)
     if not token_data or "refresh_token" not in token_data:
         return Response({"detail": "Could not create authentication tokens."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -50,7 +49,6 @@ def getProfileInfo(request):
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def setUsername(request):
-    print(request.user)
     newUsername = request.data.get("username", "")
     newUsername = newUsername.strip()
     if not request.user.username.startswith(PENDING_USERNAME_PREFIX):
@@ -79,7 +77,6 @@ def setUsername(request):
         )
     request.user.username = newUsername
     request.user.save(update_fields=["username"])
-    print(f"request.user.numPuzzlesSolved: {request.user.numPuzzlesSolved}")
     if request.user.numPuzzlesSolved > 0:
         cache.delete(LEADERBOARD_CACHE_KEY)
     return Response({"username": newUsername})

@@ -77,6 +77,8 @@ function RatRiddleBreakdownPage() {
                   src={RatRiddleAboutPic1Img}
                   alt={"Rat Riddle Movement Pic"}
                   fill 
+                  sizes="(max-width: 1200px) var(--pageWidthPercent), 65vw"
+                  loading="eager"
                   style={{ objectFit: 'contain' }} 
                 />
               </CardMedia>
@@ -135,6 +137,7 @@ function RatRiddleBreakdownPage() {
                   src={FourDayGraphImg}
                   alt={"Rat Riddle Four Day Graph"}
                   fill 
+                  sizes="(max-width: 1200px) var(--pageWidthPercent), 65vw"
                   style={{ objectFit: 'contain' }} 
                 />
               </CardMedia>
@@ -168,6 +171,7 @@ function RatRiddleBreakdownPage() {
                     src={InvalidGraphImg}
                     alt={"Rat Riddle Invalid Graph"}
                     fill 
+                    sizes="(max-width: 1200px) var(--pageWidthPercent), 65vw"
                     style={{ objectFit: 'contain' }} 
                   />
                 </CardMedia>
@@ -191,6 +195,7 @@ function RatRiddleBreakdownPage() {
                     src={ValidGraphImg}
                     alt={"Rat Riddle Valid Graph"}
                     fill 
+                    sizes="(max-width: 1200px) var(--pageWidthPercent), 65vw"
                     style={{ objectFit: 'contain' }} 
                   />
                 </CardMedia>
@@ -232,6 +237,7 @@ function RatRiddleBreakdownPage() {
                         src={RatRiddleAlternatingImg}
                         alt={"Rat Riddle Alternating Graph"}
                         fill 
+                        sizes="(max-width: 1200px) var(--pageWidthPercent), 65vw"
                         style={{ objectFit: 'contain' }} 
                       />
                     </CardMedia>
@@ -254,6 +260,7 @@ function RatRiddleBreakdownPage() {
                         src={RatRiddleBreakdownPart2FullImg}
                         alt={"Rat Riddle Breakdown Part 2 Full Graph"}
                         fill 
+                        sizes="(max-width: 1200px) var(--pageWidthPercent), 65vw"
                         style={{ objectFit: 'contain' }} 
                       />
                     </CardMedia>
@@ -291,6 +298,7 @@ function RatRiddleBreakdownPage() {
                       src={RatRiddleBreakdown12HousesImg}
                       alt={"Rat Riddle Breakdown 12 Houses Graph"}
                       fill 
+                      sizes="(max-width: 1200px) var(--pageWidthPercent), 65vw"
                       style={{ objectFit: 'contain' }} 
                     />
                   </CardMedia>

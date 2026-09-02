@@ -18,16 +18,18 @@ export const SolvedPuzzlesContext = createContext<SolvedPuzzlesContextType>({
 });
 
 export const SolvedPuzzlesContextProvider = ({children}: {children: ReactNode}) => {
-    const [solvedPuzzles, setSolvedPuzzles] = useState<Set<string>>(() => {
-        if (typeof window === "undefined") 
-            return new Set();
-        const puzzleState = new Set<string>();
-        ALL_PUZZLES.forEach((puzzle) => {
-        if (localStorage.getItem(puzzle) === SOLVED) {
-            puzzleState.add(puzzle);
-        }});
-        return puzzleState;
-    });
+  const [solvedPuzzles, setSolvedPuzzles] = useState<Set<string>>(new Set());
+  useEffect(() => {
+  const puzzleState = new Set<string>();
+
+  ALL_PUZZLES.forEach((puzzle) => {
+      if (localStorage.getItem(puzzle) === SOLVED) {
+        puzzleState.add(puzzle);
+      }
+  });
+
+      setSolvedPuzzles(puzzleState);
+  }, []);
 
     const markSolved = (id: string) => {
         setSolvedPuzzles((prev) => {

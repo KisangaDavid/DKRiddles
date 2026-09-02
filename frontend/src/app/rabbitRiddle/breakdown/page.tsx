@@ -79,8 +79,11 @@ function RatRiddleBreakdownPage() {
               >
                <Image
                   src={rabbitSolution}
-                  alt={"Races Breakdown graph"}
+                  alt={"Rabbit Breakdown animation"}
                   fill 
+                  unoptimized={true}
+                  loading="eager"
+                  sizes="(max-width: 1200px) var(--pageWidthPercent), 65vw"
                   style={{ objectFit: 'contain' }} 
                 />
               </CardMedia>
@@ -123,6 +126,7 @@ function RatRiddleBreakdownPage() {
                   <Image
                     src={rabbitMapping}
                     alt={"Rabbit Mapping"}
+                    sizes="(max-width: 1200px) var(--pageWidthPercent), 65vw"
                     fill 
                     style={{ objectFit: 'contain' }} 
                   />

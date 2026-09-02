@@ -50,7 +50,6 @@ function ProfileCard() {
       sessionStorage.removeItem(SS_PFP_URL)
       router.push(LOGIN_SLUG)
     };
-    console.log("username is:" + username)
     return (
       <StyledCard sx={{ display: "flex", position: "relative", alignItems: "center", width: {xs: "85%", sm: "70%", md: "55%", lg: "45%" }, mt: {xs: "2em", md: "4em"}}}>
           {username.startsWith(PENDING_USERNAME) ? <Link align="center" variant="h5" sx={{mt:"0.5em", mx: "1em"}} href={CHOOSE_USERNAME_SLUG} >
