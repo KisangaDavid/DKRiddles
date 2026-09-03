@@ -1,6 +1,8 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TopBar from "../_common/TopBar";
+import Fade from "@mui/material/Fade";
+import { standardTextFade } from "../_common/constants";
 
 function TermsOfServicePage() {
   return (
@@ -10,7 +12,7 @@ function TermsOfServicePage() {
         isPuzzlePage={false}
         resetFunc={undefined}
       />
-
+      <Fade in={true}  timeout={standardTextFade}>    
       <Box
         sx={{
           display: "flex",
@@ -90,13 +92,14 @@ function TermsOfServicePage() {
           align="left"
           sx={{ width: "100%", mt: "3vh", mb:"0.5em" }}
         >
-          6. Contact Us
+          4. Contact Us
         </Typography>
 
         <Typography align="left" sx={{ width: "100%" }}>
           If you have questions about these terms, you may contact TheRiddleMan team at thebigdkindustries@gmail.com.
         </Typography>
       </Box>
+    </Fade>
     </>
   );
 }

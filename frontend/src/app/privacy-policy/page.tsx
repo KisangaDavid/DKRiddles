@@ -1,8 +1,8 @@
-'use client'
-
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TopBar from "../_common/TopBar";
+import Fade from "@mui/material/Fade";
+import { standardTextFade } from "../_common/constants";
 
 function PrivacyPolicyPage() {
   return (
@@ -12,7 +12,7 @@ function PrivacyPolicyPage() {
         isPuzzlePage={false}
         resetFunc={undefined}
       />
-
+        <Fade in={true} timeout={standardTextFade}>     
       <Box
         sx={{
           display: "flex",
@@ -89,6 +89,7 @@ function PrivacyPolicyPage() {
           us at thebigdkindustries@gmail.
         </Typography>
       </Box>
+      </Fade>
     </>
   );
 }
